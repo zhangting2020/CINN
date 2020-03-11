@@ -177,3 +177,39 @@ Module is the container of LoweredFuncs and Buffers.
 There might be more than one module in an generated execution.
 
 The Module can compile to a backends.
+** Transforms
+Here are the transforms those will support
+*** Split
+Powered directly by polyhedral compilation.
+*** Tile
+Powered directly by polyhedral compilation.
+*** Reorder
+*** Vectorize
+The ~Vecotrize~ transform is powered by heuristic, we found it is hard to express in polyhedral compilation.
+
+A straightforward example is converting the following code to X86 SIMD
+
+#+BEGIN_SRC C++
+  for (int i = 0; i < 8; i++) {
+    C[i] = A[i] + B[i];
+  }
+#+END_SRC
+
+First, lets get the equivalent IR representation:
+
+
+#+BEGIN_SRC C++
+  ir::For(i, 0, 8, i < 8)
+      .body(C[i] = A[i] + B[i])
+#+END_SRC
+
+The pre-requirements of Vectorize is that the stride of the forloop should be fixed, and all the operations in body support vectorization.
+
+The vectorize period are as follows
+
+1. vectorize all the operators
+2. vectorize all the memory.
+
+
+
+
