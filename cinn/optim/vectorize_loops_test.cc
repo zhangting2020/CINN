@@ -279,5 +279,49 @@ void matmul(const struct cinn_buffer_t *_A, const struct cinn_buffer_t *_B, stru
   EXPECT_EQ(Context::Global().info_rgt().Get<int>("vectorized_forloop_count"), 1);
 }
 
+TEST(Vectorize, basic) {
+  Var x("x");
+  Var y("y");
+  Var z("z");
+  Var k("k");
+
+  {
+    Expr expr = x;
+    detail::Vectorize(z, 8, &expr);
+    EXPECT_EQ(GetStreamCnt(expr), "x");
+  }
+
+  {
+    Expr expr = z;
+    detail::Vectorize(z, 8, &expr);
+    EXPECT_EQ(GetStreamCnt(expr), "Ramp(0,1,8)");
+  }
+
+  {
+    Expr expr = x + z + 1;
+    detail::Vectorize(z, 8, &expr);
+    EXPECT_EQ(GetStreamCnt(expr), "Ramp((1 + (x + 0)),1,8)");
+    LOG(INFO) << "expr " << expr;
+  }
+
+  {
+    Expr expr = x * 2 + z * 3 + 1;
+    detail::Vectorize(z, 8, &expr);
+    EXPECT_EQ(GetStreamCnt(expr), "Ramp((1 + ((x * 2) + (0 * 3))),(1 * 3),8)");
+  }
+
+  {
+    Expr expr = x * 2 + z + 1;
+    detail::Vectorize(z, 8, &expr);
+    // EXPECT_EQ(GetStreamCnt(expr), "Ramp((1 + ((x * 2) + (0 * 3))),(1 * 3),8)");
+    LOG(INFO) << "expr " << expr;
+  }
+  {
+    Expr expr = (k + ((32768 * x) + ((32 * y) + (128 * z))));
+    detail::Vectorize(k, 8, &expr);
+    LOG(INFO) << "expr " << expr;
+  }
+}
+
 }  // namespace optim
 }  // namespace cinn

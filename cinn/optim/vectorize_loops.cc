@@ -72,9 +72,10 @@ class Vectorizer : public IRMutator<Expr *> {
   }
 
   void Visit(const _Var_ *op, Expr *expr) override {
+    LOG(INFO) << "var " << *expr << " target " << op->name;
     if (op->name == var->name) {
+      LOG(INFO) << "** vectorize var";
       *expr = Expr(ramp_);
-      return;
     }
   }
 
@@ -120,13 +121,16 @@ class Vectorizer : public IRMutator<Expr *> {
     LOG(INFO) << "vistor Load " << *expr;
     auto *node  = expr->As<Load>();
     auto index0 = node->index;
+    LOG(INFO) << "Load index " << node->index;
     // We ignore the predicate here.
     Visit(&node->index);
+    LOG(INFO) << "get index " << node->index;
     if (index0.same_as(node->index)) return;
 
     int width = node->index.type().lanes();
 
     *expr = Load::Make(node->tensor, node->index);
+    LOG(INFO) << "expr " << *expr;
   }
 
   void Visit(const Call *op, Expr *expr) override { LOG(ERROR) << "Ignore widen Call node"; }
@@ -175,7 +179,6 @@ class Vectorizer : public IRMutator<Expr *> {
 
   template <typename T>
   void MutateAddSubOperator(const T *op, Expr *expr) {
-    LOG(INFO) << "mutate add sub op " << *expr;
     auto *node = expr->As<T>();
     Expr a0    = node->a();
     Expr b0    = node->b();
@@ -217,7 +220,8 @@ class Vectorizer : public IRMutator<Expr *> {
       if (node->a().type().lanes() == node->b().type().lanes()) {
         // case: Ramp(a, 1, 8) + Ramp(b, 1, 8) = Ramp(a+b, 1, 8)
         if (a_ramp_n && b_ramp_n) {
-          *expr = Ramp::Make(T::Make(a_ramp_n->base, b_ramp_n->base), T::Make(a_ramp_n->stride, b_ramp_n->stride), a_ramp_n->lanes);
+          *expr = Ramp::Make(
+              T::Make(a_ramp_n->base, b_ramp_n->base), T::Make(a_ramp_n->stride, b_ramp_n->stride), a_ramp_n->lanes);
           return;
         }
 
