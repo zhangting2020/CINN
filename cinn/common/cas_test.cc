@@ -24,7 +24,6 @@ TEST(CAS, SimplifyPower_0) {
     auto p0 = ir::Power::Make(x, Expr(0));
     LOG(INFO) << "p0 " << p0;
     auto p2 = CasSimplify(p0);
-    LOG(INFO) << "simplified " << p2;
     EXPECT_EQ(GetStreamCnt(p2), "1");
   }
   {  // x^1 = x
@@ -218,8 +217,12 @@ TEST(CAS, FracOp) {
   EXPECT_EQ(GetStreamCnt(u3), "((1/32) * (65536 * (y * z)))");
   // 32768 * (32x + y) + y
   auto u4 = AutoSimplify(Expr(32768) * (((Expr(32) * x) + y) / 32));
-  LOG(INFO) << u4;
   EXPECT_EQ(GetStreamCnt(u4), "((32768 * (y/32)) + (32768 * x))");
+
+  common::cas_intervals_t interval;
+  interval.emplace("y", CasInterval{0, 31});
+  auto u5 = AutoSimplify(Expr(32768) * (((Expr(32) * x) + y) / 32), interval);
+  EXPECT_EQ(GetStreamCnt(u5), "(32768 * x)");
 }
 
 TEST(CAS, IntConnerCase) {

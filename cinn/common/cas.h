@@ -10,19 +10,20 @@ namespace common {
  * Interval of a _Var_.
  */
 struct CasInterval {
-  CasInterval(int l, int r) : l(l), r(r) {}
-  int l, r;
+  CasInterval(int64_t l, int64_t r) : l(l), r(r) {}
+  int64_t l, r;
 
   friend std::ostream& operator<<(std::ostream& os, const CasInterval& i) {
     os << "Interval[" << i.l << ", " << i.r << "]";
     return os;
   }
 };
+using cas_intervals_t = std::unordered_map<std::string, CasInterval>;
 
-Expr AutoSimplify(Expr u, const std::unordered_map<std::string, CasInterval>& var_intervals = {});
+Expr AutoSimplify(Expr u, const cas_intervals_t& var_intervals = {});
 
 //! Simplify a CAS expression.
-Expr CasSimplify(Expr u, const std::unordered_map<std::string, CasInterval>& var_intervals = {});
+Expr CasSimplify(Expr u, const cas_intervals_t& var_intervals = {});
 
 namespace detail {
 
@@ -40,7 +41,7 @@ struct ExprPosCmp {
 };
 
 struct CasSimplifyMutator {
-  CasSimplifyMutator(const std::unordered_map<std::string, CasInterval> var_intervals) : var_intervals(var_intervals) {}
+  CasSimplifyMutator(const cas_intervals_t& var_intervals) : var_intervals(var_intervals) {}
 
   Expr operator()(Expr u);
 
@@ -52,7 +53,7 @@ struct CasSimplifyMutator {
   std::vector<Expr> SimplifySumRec(const std::vector<Expr>& operands);
   Expr SimplifyMod(Expr u);
   Expr SimplifyFracOp(Expr expr);
-  Expr FurtherSimplifyFracWithInterval(Expr expr, const std::unordered_map<std::string, CasInterval>& var_intervals);
+  Expr FurtherSimplifyFracWithInterval(Expr expr, const cas_intervals_t& var_intervals);
   Expr SimplifyIntegerPower(Expr u);
 
  private:

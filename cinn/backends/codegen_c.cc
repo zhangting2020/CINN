@@ -291,7 +291,7 @@ void CodeGenC::Visit(const ir::Reduce *op) {
 }
 
 void CodeGenC::Visit(const ir::Ramp *op) {
-  os() << "StackVec<" << op->lanes << "," << PrintType(op->type().ElementOf()) << ">::Ramp(";
+  os() << "StackVec<" << PrintType(op->type().ElementOf()) << "," << op->lanes << ">::Ramp(";
   Print(op->base);
   os() << ", ";
   Print(op->stride);

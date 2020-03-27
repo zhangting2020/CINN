@@ -15,7 +15,7 @@ namespace cinn {
 namespace common {
 using namespace ir;  // NOLINT
 
-Expr AutoSimplify(Expr u, const std::unordered_map<std::string, CasInterval>& var_intervals) {
+Expr AutoSimplify(Expr u, const cas_intervals_t& var_intervals) {
   u = detail::ConvertCinnToCAS(u);
   u = CasSimplify(u, var_intervals);
   u = detail::ConvertCasToCinn(u);
@@ -843,7 +843,6 @@ Expr CasSimplifyMutator::operator()(Expr u) {
   if (u.As<FracOp>()) {
     u        = SimplifyFracOp(u);
     auto tmp = FurtherSimplifyFracWithInterval(u, var_intervals);
-    LOG(INFO) << "futher simplify result " << tmp;
     if (!tmp.same_as(u)) return operator()(tmp);
     return u;
   }
@@ -1123,28 +1122,21 @@ bool IsMonotonical(Expr u, Var v) {
 }
 
 // Should be called after SimplifyFracOp. If y is integer and $y\in \[0, 3\]$, then y/4=0
-Expr CasSimplifyMutator::FurtherSimplifyFracWithInterval(
-    Expr expr, const std::unordered_map<std::string, CasInterval>& var_intervals) {
-  LOG(INFO) << "futher simplify frac " << expr << " " << expr.node_type();
+Expr CasSimplifyMutator::FurtherSimplifyFracWithInterval(Expr expr, const cas_intervals_t& var_intervals) {
   auto* node = expr.As<FracOp>();
   if (!node) return expr;
   auto a = CasSimplify(node->a(), var_intervals);
   auto b = CasSimplify(node->b(), var_intervals);
-
-  LOG(INFO) << "a " << a << " " << a.node_type();
-  LOG(INFO) << "b " << b << " " << b.node_type();
 
   auto* ai = a.As<IntImm>();
   auto* bi = b.As<IntImm>();
   auto* av = a.As<_Var_>();
   auto* bv = b.As<_Var_>();
   auto* ap = a.As<Product>();
-  LOG(INFO) << "var_intervals.size " << var_intervals.size();
   // case: y / 4, y\in[0,3]
   if (bi) {
     if (av) {
       auto it = var_intervals.find(av->name);
-      if (it != var_intervals.end()) LOG(INFO) << "found " << av->name;
       if (it != var_intervals.end() && std::abs(it->second.r) < std::abs(bi->value) &&
           std::abs(it->second.l) < std::abs(bi->value))
         return make_const(a.type(), 0);
@@ -1155,10 +1147,6 @@ Expr CasSimplifyMutator::FurtherSimplifyFracWithInterval(
     if (bv) {
       auto it     = var_intervals.find(bv->name);
       auto ai_abs = std::abs(ai->value);
-      if (it != var_intervals.end()) {
-        LOG(INFO) << "found " << bv->name << " " << it->second << " "
-                  << " ai " << ai_abs;
-      }
       if (it != var_intervals.end() && std::abs(it->second.r) > ai_abs && std::abs(it->second.l) > ai_abs) {
         return make_const(a.type(), 0);
       }
@@ -1278,9 +1266,7 @@ Expr CasSimplifyMutator::SimplifyFracOp(Expr expr) {
 
 }  // namespace detail
 
-Expr CasSimplify(Expr u, const std::unordered_map<std::string, CasInterval>& var_intervals) {
-  return detail::CasSimplifyMutator(var_intervals)(u);
-}
+Expr CasSimplify(Expr u, const cas_intervals_t& var_intervals) { return detail::CasSimplifyMutator(var_intervals)(u); }
 
 }  // namespace common
 }  // namespace cinn

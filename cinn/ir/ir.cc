@@ -406,6 +406,8 @@ Expr Ramp::Make(Expr base, Expr stride, int lanes) {
   CHECK(stride.defined());
   CHECK(base.type().valid());
   CHECK(stride.type().valid());
+  CHECK_EQ(base.type().lanes(), 1);
+  CHECK_EQ(stride.type().lanes(), 1);
   CHECK_EQ(stride.type(), Int(32));
   CHECK_GT(lanes, 0);
 

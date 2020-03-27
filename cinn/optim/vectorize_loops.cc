@@ -117,6 +117,7 @@ class Vectorizer : public IRMutator<Expr *> {
   }
 
   void Visit(const Load *op, Expr *expr) override {
+    LOG(INFO) << "vistor Load " << *expr;
     auto *node  = expr->As<Load>();
     auto index0 = node->index;
     // We ignore the predicate here.
@@ -174,6 +175,7 @@ class Vectorizer : public IRMutator<Expr *> {
 
   template <typename T>
   void MutateAddSubOperator(const T *op, Expr *expr) {
+    LOG(INFO) << "mutate add sub op " << *expr;
     auto *node = expr->As<T>();
     Expr a0    = node->a();
     Expr b0    = node->b();
@@ -187,6 +189,8 @@ class Vectorizer : public IRMutator<Expr *> {
       const Ramp *a_ramp_n = node->a().template As<Ramp>();
       const Ramp *b_ramp_n = node->b().template As<Ramp>();
       if (node->a().type().lanes() == 1 && b_ramp_n) {
+        CHECK_EQ(b_ramp_n->base.type().lanes(), 1);
+        CHECK_EQ(b_ramp_n->stride.type().lanes(), 1);
         // a + Ramp(base,stride,lanes) = Ramp(base+a, stride,lanes)
         *expr = Ramp::Make(T::Make(node->a(), b_ramp_n->base),  // base
                            b_ramp_n->stride,                    // stride
@@ -194,10 +198,43 @@ class Vectorizer : public IRMutator<Expr *> {
         return;
       }
       if (node->b().type().lanes() == 1 && a_ramp_n) {
+        CHECK_EQ(a_ramp_n->base.type().lanes(), 1);
+        CHECK_EQ(a_ramp_n->stride.type().lanes(), 1);
         *expr = Ramp::Make(T::Make(node->b(), a_ramp_n->base),  // base
                            a_ramp_n->stride,                    // stride
                            a_ramp_n->lanes);
         return;
+      }
+
+      auto *a_broadcast_n = node->a().template As<ir::Broadcast>();
+      auto *b_broadcast_n = node->b().template As<ir::Broadcast>();
+
+      // a Ramp +/- a Broadcast
+      auto ramp_T_broadcast = [&](const Broadcast *broadcast, const Ramp *ramp) {
+        CHECK_EQ(broadcast->lanes, ramp->lanes);
+        *expr = Ramp::Make(T::Make(ramp->base, broadcast->value), ramp->stride, ramp->lanes);
+      };
+      if (node->a().type().lanes() == node->b().type().lanes()) {
+        // case: Ramp(a, 1, 8) + Ramp(b, 1, 8) = Ramp(a+b, 1, 8)
+        if (a_ramp_n && b_ramp_n) {
+          *expr = Ramp::Make(T::Make(a_ramp_n->base, b_ramp_n->base), T::Make(a_ramp_n->stride, b_ramp_n->stride), a_ramp_n->lanes);
+          return;
+        }
+
+        if (a_ramp_n && b_broadcast_n) {
+          ramp_T_broadcast(b_broadcast_n, a_ramp_n);
+          return;
+        }
+
+        if (a_broadcast_n && b_ramp_n) {
+          ramp_T_broadcast(a_broadcast_n, b_ramp_n);
+          return;
+        }
+
+        if (a_broadcast_n && b_broadcast_n) {
+          *expr = Broadcast::Make(T::Make(a_broadcast_n->value, b_broadcast_n->value), a_broadcast_n->lanes);
+          return;
+        }
       }
     }
 
@@ -239,6 +276,7 @@ class Vectorizer : public IRMutator<Expr *> {
 
   template <typename T>
   Expr BinaryOperatorVec(const T *op, Expr *expr) {
+    LOG(INFO) << "vec operator " << *expr;
     auto *node = expr->As<T>();
     Expr a0    = node->a();
     Expr b0    = node->b();
