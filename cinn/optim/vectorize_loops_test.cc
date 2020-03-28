@@ -3,7 +3,9 @@
 #include <gtest/gtest.h>
 
 #include "cinn/cinn.h"
+#include "cinn/common/ir.h"
 #include "cinn/ir/ir_operators.h"
+#include "cinn/lang/placeholder.h"
 #include "cinn/optim/ir_simplify.h"
 #include "cinn/optim/transform_polyfor_to_for.h"
 #include "cinn/utils/string.h"
@@ -313,12 +315,28 @@ TEST(Vectorize, basic) {
   {
     Expr expr = x * 2 + z + 1;
     detail::Vectorize(z, 8, &expr);
-    // EXPECT_EQ(GetStreamCnt(expr), "Ramp((1 + ((x * 2) + (0 * 3))),(1 * 3),8)");
-    LOG(INFO) << "expr " << expr;
+    EXPECT_EQ(GetStreamCnt(expr), "Ramp((1 + ((x * 2) + 0)),1,8)");
   }
   {
     Expr expr = (k + ((32768 * x) + ((32 * y) + (128 * z))));
     detail::Vectorize(k, 8, &expr);
+    EXPECT_EQ(GetStreamCnt(expr), "Ramp((((32768 * x) + ((32 * y) + (128 * z))) + 0),1,8)");
+  }
+
+  lang::Placeholder<float> A("A", {10, 10});
+  {
+    Expr expr = Load::Make(Expr(Tensor(A)), x + 10 * y + z) + 10.f;
+    detail::Vectorize(x, 8, &expr);
+    LOG(INFO) << "expr " << expr;
+  }
+
+  {
+    Var v0("v", Float(32));
+    Expr body = v0 + Load::Make(Expr(Tensor(A)), x + 10 * y + z) + 10.f;
+    Expr expr =
+        For::Make(z, common::make_const(0), common::make_const(8), ForType::Vectorized, DeviceAPI::UNK, body);
+    Target target;
+    VectorizeLoops(&expr, target);
     LOG(INFO) << "expr " << expr;
   }
 }

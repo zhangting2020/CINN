@@ -61,12 +61,14 @@ struct SimplifyLoadMutator : public ir::IRMutator<ir::Expr*> {
 
   void Visit(const Load* expr, Expr* op) override {
     auto* node = op->As<Load>();
+    LOG(INFO) << "Simplify Load " << *op;
     if (common::IsPureMath(node->index)) {
       PartialSimplify(&node->index);
     } else {
       SimplifyButStoreLoadMutator mutator(var_intervals_);
       mutator(&node->index);
     }
+    LOG(INFO) << "Get " << node->index;
   }
 
   void Visit(const For* op, Expr* expr) override {
@@ -74,7 +76,6 @@ struct SimplifyLoadMutator : public ir::IRMutator<ir::Expr*> {
     auto* extent_i = op->extent.As<IntImm>();
     if (min_i && extent_i) {
       var_intervals_.emplace(op->loop_var->name, common::CasInterval{min_i->value, extent_i->value - 1});
-      LOG(INFO) << "found interval " << op->loop_var->name;
     }
 
     auto* node = expr->As<For>();

@@ -64,10 +64,11 @@ isl::ast_node AstGen::Build() {
 
   isl::union_map transformed_schedule = transform().apply_range(schedule);
   auto schedule_domain                = transformed_schedule.intersect_domain(domain());
-  VLOG(4) << "domain: " << domain();
-  VLOG(4) << "transform schedule " << stages()[0]->transform();
+  LOG(INFO) << "domain: " << domain();
+  LOG(INFO) << "transform schedule " << stages()[0]->transform();
   VLOG(4) << "schedule: " << schedule;
   VLOG(4) << "schedule_domain: " << schedule_domain;
+  LOG(INFO)<<"Schedule " << schedule_domain;
   auto ast = ast_build.node_from_schedule_map(schedule_domain);
   LOG(INFO) << "\n" << isl_ast_node_to_C_str(ast.get());
   VLOG(2) << "\n" << isl_ast_node_to_C_str(ast.get());

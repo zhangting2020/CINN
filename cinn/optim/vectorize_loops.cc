@@ -320,7 +320,7 @@ struct VectorizeLoops_ : public IRMutator<Expr *> {
 
       VLOG(2) << "Vectorizing " << forloop->loop_var << " extent " << extent;
       VLOG(2) << "body:\n" << node->body;
-      Vectorizer(forloop->loop_var, extent).Visit(&node->body);
+      detail::Vectorize(forloop->loop_var, extent, &node->body);
       VLOG(2) << "after vectorize body:\n" << node->body;
 
       // Remove the forloop.
@@ -332,7 +332,6 @@ struct VectorizeLoops_ : public IRMutator<Expr *> {
 };
 
 void VectorizeLoops(Expr *expr, const Target &target) {
-  optim::TransformPolyForToFor(expr);
 
   return VectorizeLoops_(target)(expr);
 }

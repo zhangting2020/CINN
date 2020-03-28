@@ -256,5 +256,17 @@ TEST(CAS, IntConnerCase) {
   EXPECT_EQ(GetStreamCnt(u8), "(-1/y)");
 }
 
+TEST(real_case, basic) {
+  Var j_outer("j_outer");
+  Var j_inner_outer("j_inner_outer");
+  Var j_inner_inner("j_inner_inner");
+  Var k_outer("k_outer");
+  Var k_inner("k_inner");
+  auto u8 = AutoSimplify(((((((((32 * j_outer) + (8 * j_inner_outer)) + j_inner_inner) / 32) * 1024) * 32) +
+                           (((4 * k_outer) + k_inner) * 32)) +
+                          ((((32 * j_outer) + (8 * j_inner_outer)) + j_inner_inner) % 32)));
+  LOG(INFO) << u8;
+}
+
 }  // namespace common
 }  // namespace cinn
