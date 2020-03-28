@@ -331,10 +331,7 @@ struct VectorizeLoops_ : public IRMutator<Expr *> {
   }
 };
 
-void VectorizeLoops(Expr *expr, const Target &target) {
-
-  return VectorizeLoops_(target)(expr);
-}
+void VectorizeLoops(Expr *expr, const Target &target) { return VectorizeLoops_(target)(expr); }
 
 namespace detail {
 

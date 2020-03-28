@@ -77,6 +77,25 @@ class AstGen {
 void IslAstNodeToCinnExpr(const isl::ast_node& node, ir::Expr* expr);
 void IslAstExprToCinnExpr(const isl::ast_expr& node, ir::Expr* expr);
 
+/**
+ * Get the transform from the standard scope to this integer index.
+ * e.g. Given 2*x+3, domain: {S[i]:}, get { S[i] -> S[2*x+3] }
+ * @domain The domain of the statement.
+ * @indices The integer expressions for axis.
+ */
+isl::map IndexExprToIslTransform(const isl::set& domain, const std::vector<Expr>& indices);
+
+/**
+ * Get a array index from the ISL astgen. It will use ISL to do integer computation and simplify, but heavier than the
+ * normal replace-compute way. We use this method to get accurate index when mod(%) is in the index expression.
+ * @param domain The domain of statement.
+ * @scope_transform The map from domain's scope to this index's. e.g. the Load node PackedB[i%32], the transform is
+ * { S[i] -> S[i%32] }.
+ * @transform The result of statements's transform.
+ * @returns The final index expression.
+ */
+Expr TransformIndexInAstgen(const isl::set& domain, const isl::map& scope_transform, const isl::map& transform);
+
 namespace detail {
 
 //! Get tuple name of a ast node.

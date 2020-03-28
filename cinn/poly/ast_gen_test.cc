@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "cinn/ir/ir.h"
+#include "cinn/ir/ir_operators.h"
 #include "cinn/ir/ir_printer.h"
 #include "cinn/lang/tensor.h"
 
@@ -37,6 +38,17 @@ TEST(ast_gen, basic) {
 
     LOG(INFO) << "\n" << e;
   }
+}
+
+TEST(ast_gen, IndexExprToIslTransform) {
+  auto ctx = Context::Global().isl_ctx();
+  isl::set domain(ctx, "{ S[i,j] : 0<i,j<100 }");
+
+  Var i("i");
+  Var j("j");
+
+  auto transform = IndexExprToIslTransform(domain, {i, j % 100 + 1});
+  EXPECT_EQ(utils::GetStreamCnt(transform), "{ S[i, j] -> XXX[i, o1] : (-1 - j + o1) mod 100 = 0 and 0 < o1 <= 100 }");
 }
 
 }  // namespace poly

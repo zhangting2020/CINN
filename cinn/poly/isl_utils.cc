@@ -64,13 +64,25 @@ isl::union_set SetsToUnionSet(const std::vector<isl::set> &sets) {
   return uset;
 }
 
-std::string isl_map_get_statement_repr(__isl_keep isl_map *map, isl_dim_type type) {
+std::string isl_get_statement_repr(__isl_keep isl_map *map, isl_dim_type type) {
   CHECK(map);
   auto tuple_name = isl_map_get_tuple_name(map, type);
   std::vector<std::string> dims;
 
   for (int i = 0; i < isl_map_dim(map, type); i++) {
     dims.push_back(isl_map_get_dim_name(map, type, i));
+  }
+  return StringFormat("%s[%s]", tuple_name, Join(dims, ", ").c_str());
+}
+
+std::string isl_get_statement_repr(isl_set *set) {
+  CHECK(set);
+
+  auto tuple_name = isl_set_get_tuple_name(set);
+  std::vector<std::string> dims;
+
+  for (int i = 0; i < isl_set_dim(set, isl_dim_set); i++) {
+    dims.push_back(isl_set_get_dim_name(set, isl_dim_set, i));
   }
   return StringFormat("%s[%s]", tuple_name, Join(dims, ", ").c_str());
 }

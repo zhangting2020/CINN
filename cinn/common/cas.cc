@@ -842,7 +842,7 @@ Expr CasSimplifyMutator::operator()(Expr u) {
 
   if (u.As<FracOp>()) {
     LOG(INFO) << "simplify frac " << u;
-    u        = SimplifyFracOp(u);
+    u = SimplifyFracOp(u);
     LOG(INFO) << "get frac " << u;
     auto tmp = FurtherSimplifyFracWithInterval(u, var_intervals);
     LOG(INFO) << "get further frac " << tmp;

@@ -333,8 +333,7 @@ TEST(Vectorize, basic) {
   {
     Var v0("v", Float(32));
     Expr body = v0 + Load::Make(Expr(Tensor(A)), x + 10 * y + z) + 10.f;
-    Expr expr =
-        For::Make(z, common::make_const(0), common::make_const(8), ForType::Vectorized, DeviceAPI::UNK, body);
+    Expr expr = For::Make(z, common::make_const(0), common::make_const(8), ForType::Vectorized, DeviceAPI::UNK, body);
     Target target;
     VectorizeLoops(&expr, target);
     LOG(INFO) << "expr " << expr;

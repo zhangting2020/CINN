@@ -2,6 +2,8 @@
 
 #include "cinn/common/common.h"
 #include "cinn/ir/ir.h"
+#include "cinn/ir/ir_printer.h"
+#include "cinn/ir/ir_visitor.h"
 
 namespace cinn {
 namespace poly {
@@ -68,7 +70,7 @@ isl::ast_node AstGen::Build() {
   LOG(INFO) << "transform schedule " << stages()[0]->transform();
   VLOG(4) << "schedule: " << schedule;
   VLOG(4) << "schedule_domain: " << schedule_domain;
-  LOG(INFO)<<"Schedule " << schedule_domain;
+  LOG(INFO) << "Schedule " << schedule_domain;
   auto ast = ast_build.node_from_schedule_map(schedule_domain);
   LOG(INFO) << "\n" << isl_ast_node_to_C_str(ast.get());
   VLOG(2) << "\n" << isl_ast_node_to_C_str(ast.get());
@@ -114,7 +116,7 @@ isl::ast_expr CreateIslAstIndexExpression(isl_ast_build* build, const isl::map& 
   isl::map schedule = isl::manage(isl_map_from_union_map(isl_ast_build_get_schedule(build)));
 
   // get identity access from schedule.
-  auto statement       = isl_map_get_statement_repr(schedule.get(), isl_dim_in);
+  auto statement       = isl_get_statement_repr(schedule.get(), isl_dim_in);
   auto statement_set   = isl::manage(isl_set_read_from_str(isl_map_get_ctx(schedule.get()),
                                                          utils::StringFormat("{ %s : }", statement.c_str()).c_str()));
   auto identity_access = isl::manage(isl_set_identity(statement_set.release()));
@@ -389,6 +391,19 @@ AstGen::AstGen(const isl::set& context, const std::vector<Stage*>& stages, const
     : context_(context), schedule_group_(group) {
   for (auto* x : stages) stages_.emplace_back(x);
   InitIslAstConfig();
+}
+
+isl::map IndexExprToIslTransform(const isl::set& domain, const std::vector<Expr>& indices) {
+  auto statement_repr          = isl_get_statement_repr(domain.get());
+  std::string range_tuple_name = "XXX";
+  std::vector<std::string> indice_reprs;
+  for (auto& indice : indices) {
+    indice_reprs.push_back(utils::GetStreamCnt(indice));
+  }
+
+  auto repr = utils::StringFormat(
+      "{ %s -> %s[%s] }", statement_repr.c_str(), range_tuple_name.c_str(), utils::Join(indice_reprs, ", ").c_str());
+  return isl::map(Context::Global().isl_ctx(), repr);
 }
 
 }  // namespace poly

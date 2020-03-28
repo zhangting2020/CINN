@@ -28,7 +28,9 @@ isl::union_set SetsToUnionSet(const std::vector<isl::set>& sets);
 isl::set SetGetDims(isl::set set, const std::vector<int>& dims);
 
 //! Get a representation of the tuple in the map.
-std::string isl_map_get_statement_repr(__isl_keep isl_map* map, isl_dim_type type);
+std::string isl_get_statement_repr(__isl_keep isl_map* map, isl_dim_type type);
+//! Get a representation of the tuple in the set.
+std::string isl_get_statement_repr(__isl_keep isl_set* set);
 
 isl_set* __isl_give isl_get_precending_aixs(isl_set* __isl_take set, int level);
 
