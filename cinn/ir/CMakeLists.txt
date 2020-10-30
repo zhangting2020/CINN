@@ -16,6 +16,9 @@ set(srcs
     tensor.cc
     )
 
+add_subdirectory(def)
+
+
 foreach(cpp ${srcs})
   set(core_src
       "${core_src};cinn/ir/${cpp}"
