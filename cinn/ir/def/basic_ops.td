@@ -25,6 +25,16 @@ class Basic_BinaryOp<string mnemonic, string desc> : Basic_Op<mnemonic, [NoSideE
   let results = (outs BasicType:$out);
 }
 
+class Basic_VarBase<string suffix, Type type> : Basic_Op<mnemonic, type> {
+  let summary = "var operation";
+  let description = [{}];
+}
+
+def Basic_Var_I32 : Basic_VarBase<"i32", I32>;
+def Basic_Var_I64 : Basic_VarBase<"i64", I32>;
+def Basic_Var_F32 : Basic_VarBase<"f32", I32>;
+def Basic_Var_F32 : Basic_VarBase<"f32", I32>;
+
 
 // === binary operations
 // @{
@@ -62,8 +72,72 @@ def Basic_Or : LogicalBinaryOp<"or"> {
   This operation get the logical OR of two operands.
   }];
 }
-
 // @}
 
+def Basic_Let : Basic_Op<"let", [NoSideEffect]> {
+  let summary = "let operation";
+  let description = [{
+    Create a local variable with a default value.
+  }];
+
+  let arguments = (ins AnyType:$value, StrAttr:$var_name);
+  let results = (outs AnyType);
+}
+
+def Basic_IntrinsicCall : Basic_Op<"intrinsic_call", [NoSideEffect]> {
+  let summary = "intrinsic_call operation";
+  let description = [{
+    Call an intrisic.
+  }];
+
+  let arguments = (ins StrAttr:$name, Variadic<AnyType>:$read_args,
+                   Variadic<AnyType>:$write_args);
+}
+
+def Basic_ExternCall : Basic_Op<"extern_call", [NoSideEffect]> {
+  let summary = "extern_call operation";
+  let description = [{
+    Call an enternal function.
+  }];
+
+  let arguments = (ins StrAttr:$name, Variadic<AnyType>:$read_args,
+                   Variadic<AnyType>:$write_args);
+}
+
+// Reduce operations
+// @{
+class Basic_Reduce<string type> : Basic_Op<"reduce." # type, [NoSideEffect]> {
+  let summary = "reduce." # type # " operation";
+  let description = [{
+    Reduce operation.
+  }];
+
+  let arguments = (ins BasicType:$init, BasicType:$body, Variadic<StrAttr>:$reduce_axis);
+  let results = (outs);
+}
+
+def Basic_ReduceSum : Basic_Reduce<"sum">;
+// @}
+
+def Basic_Select : Basic_Op<"select", [NoSideEffect]> {
+  let summary = "select operation";
+  let description = [{
+   Evaluates `true_value` and `false_value` then selects between them based on `condition`.
+  }];
+
+  let arguments = (ins BoolType:$condition, BasicType:$true_value, BasicType:$false_value);
+  let results = (outs BasicType);
+}
+
+// Load store operations
+// @{
+class Basic_LoadStore<string name> : Basic_Op<name, [NoSideEffect]> {
+  let arguments = (ins TensorType:$tensor, Variadic<IndiceType>:indices);
+  let results = (outs BasicType);
+};
+
+def Basic_Load : Basic_LoadStore<"load">;
+def Basic_Store : Basic_LoadStore<"store">;
+// @}
 
 #endif  // IR_BASIC_OPS

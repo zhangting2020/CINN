@@ -24,7 +24,7 @@ cinn_exec_check(test_mlir_exec_on_basic ./mlir_tests/basic.mlir)
 cinn_exec_check(test_mlir_exec_on_shape ./mlir_tests/shape.mlir)
 cinn_exec_check(test_mlir_exec_on_dense_tensor ./mlir_tests/dense_tensor.mlir)
 
-add_executable(cinn-exec mlir_exec.cc)
+add_executable(cinn-exec mlir_exec.cc ../ir/def/basic_ops.cc)
 target_link_libraries(cinn-exec core ${MLIR_IR_LIBS})
 
 foreach(cpp ${srcs})
