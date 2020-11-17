@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JIT in CINN &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Schedule Primitives in CINN" href="schedule_primitives.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-tutorials-jit-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="jit-in-cinn">
+<span id="sphx-glr-tutorials-jit-py"></span><h1>JIT in CINN<a class="headerlink" href="#jit-in-cinn" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we will introduce the JIT module that execute the DSL on X86 and NV GPU.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cinn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cinn</span> <span class="k">import</span> <span class="n">runtime</span>
+</pre></div>
+</div>
+<p>declare some variables for latter use</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">bn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="decleare-the-computation">
+<h2>Decleare the computation<a class="headerlink" href="#decleare-the-computation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">])</span>
+
+<span class="n">kr</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s2">&quot;kr&quot;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">],</span>
+    <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">cinn</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">kr</span><span class="o">.</span><span class="n">expr</span><span class="p">())</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">kr</span><span class="o">.</span><span class="n">expr</span><span class="p">(),</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">[</span><span class="n">kr</span><span class="p">]),</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">)</span>
+
+<span class="n">stages</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">create_stages</span><span class="p">([</span><span class="n">C</span><span class="p">])</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Target</span><span class="p">()</span>
+<span class="n">builder</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Module</span><span class="o">.</span><span class="n">Builder</span><span class="p">(</span><span class="s2">&quot;matmul&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;matmul&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">])</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_function</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="n">module</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-jit-engine">
+<h2>Create a JIT engine.<a class="headerlink" href="#create-a-jit-engine" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jit</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">ExecutionEngine</span><span class="p">()</span>
+<span class="n">jit</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Execute the compiled function</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">cinn_buffer_t</span><span class="p">(</span>
+    <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span></a></a></a></a><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">int</span><span class="p">(),</span> <span class="n">k</span><span class="o">.</span><span class="n">int</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span>
+    <span class="n">runtime</span><span class="o">.</span><span class="n">cinn_x86_device</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">cinn_buffer_t</span><span class="p">(</span>
+    <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.randn" title="numpy.random.randn" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span></a></a></a></a><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">int</span><span class="p">(),</span> <span class="n">k</span><span class="o">.</span><span class="n">int</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span>
+    <span class="n">runtime</span><span class="o">.</span><span class="n">cinn_x86_device</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">cinn_buffer_t</span><span class="p">(</span>
+    <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.zeros" title="numpy.zeros" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.zeros" title="numpy.zeros" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.zeros" title="numpy.zeros" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-function"><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.zeros" title="numpy.zeros" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-function"><span class="n">np</span><span class="o">.</span><span class="n">zeros</span></a></a></a></a><span class="p">([</span><span class="n">m</span><span class="o">.</span><span class="n">int</span><span class="p">(),</span> <span class="n">n</span><span class="o">.</span><span class="n">int</span><span class="p">()])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="n">runtime</span><span class="o">.</span><span class="n">cinn_x86_device</span><span class="p">)</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">runtime</span><span class="o">.</span><span class="n">cinn_pod_value_t</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]]</span>
+<span class="n">matmul</span> <span class="o">=</span> <span class="n">jit</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s2">&quot;matmul&quot;</span><span class="p">)</span>
+<span class="n">matmul</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[[ 0.20805684 -2.564396    0.734971   ... -6.17445    -4.023818
+   5.22364   ]
+ [ 3.4880047  -0.2661617   1.7321587  ...  1.3556725   0.46721712
+   1.4649411 ]
+ [ 0.9291652   2.8222187  -2.6322293  ... -3.4036188   0.30136183
+  -1.4505364 ]
+ ...
+ [-2.8878996  -3.1311612   0.27523142 ... -1.8145417  -1.2416092
+  -3.6517022 ]
+ [ 2.4187803  -3.4975255   3.7851086  ...  2.1840713  -5.1889195
+  -1.4386691 ]
+ [-0.4903983   1.5858265   1.3257875  ...  3.2400572   1.2034146
+   1.2009368 ]]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.244 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-tutorials-jit-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/99d679e7901e5b36c273754fc83755ef/jit.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">jit.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/8f2c270feb6a550313c5c38b03529af1/jit.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">jit.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Tutorials</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Tutorials</a></li>
+      <li>Next: <a href="schedule_primitives.html" title="next chapter">Schedule Primitives in CINN</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tutorials/jit.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

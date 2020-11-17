@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build from source code &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials/index.html" />
+    <link rel="prev" title="Welcome to CINN’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="build-from-source-code">
+<h1>Build from source code<a class="headerlink" href="#build-from-source-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>gcc-8</p></li>
+<li><p>g++-8</p></li>
+<li><p>isl 0.22</p></li>
+</ul>
+<div class="section" id="install-isl">
+<h3>Install isl<a class="headerlink" href="#install-isl" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/Meinersbur/isl.git
+git reset --hard isl-0.22
+<span class="nb">cd</span> isl
+./configure --with-clang<span class="o">=</span>system
+make -j
+make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="compile">
+<h3>compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> CINN
+cp cmake/config.cmake &lt;build_dir&gt;/
+</pre></div>
+</div>
+<p>Modify the <code class="docutils literal notranslate"><span class="pre">config.cmake</span></code>, change the <code class="docutils literal notranslate"><span class="pre">ISL_HOME</span></code> to the path isl installed.</p>
+</div>
+<div class="section" id="install-llvm-and-mlir">
+<h3>Install LLVM and MLIR<a class="headerlink" href="#install-llvm-and-mlir" title="Permalink to this headline">¶</a></h3>
+<p>To use the latest version of MLIR, the latest llvm-project should be compiled and installed.</p>
+<p>The git commit is <code class="docutils literal notranslate"><span class="pre">f9dc2b7079350d0fed3bb3775f496b90483c9e42</span></code></p>
+<p><em>download llvm source code</em></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/llvm/llvm-project.git
+</pre></div>
+</div>
+<p>The git of the llvm-project is huge and git cloning in China is quite slow, use a http proxy if necessary.</p>
+<p><em>compile and install to local directory</em></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> llvm-project
+mkdir build
+
+cmake -G Ninja ../llvm <span class="se">\</span>
+  -DLLVM_ENABLE_PROJECTS<span class="o">=</span>mlir <span class="se">\</span>
+  -DLLVM_BUILD_EXAMPLES<span class="o">=</span>OFF <span class="se">\</span>
+  -DLLVM_TARGETS_TO_BUILD<span class="o">=</span><span class="s2">&quot;X86&quot;</span> <span class="se">\</span>
+  -DCMAKE_BUILD_TYPE<span class="o">=</span>Release <span class="se">\</span>
+  -DLLVM_ENABLE_ASSERTIONS<span class="o">=</span>ON <span class="se">\</span>
+  -DLLVM_ENABLE_ZLIB<span class="o">=</span>OFF <span class="se">\</span>
+  -DLLVM_ENABLE_RTTI<span class="o">=</span>ON <span class="se">\</span>
+  -DCMAKE_INSTALL_PREFIX<span class="o">=</span><span class="nv">$PWD</span>/../install/llvmorg-9e42
+  
+ninja install -j8
+</pre></div>
+</div>
+<p><em>add binary executables to environment variables</em></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PWD</span><span class="s2">/../install/llvmorg-9e42/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p><em>check the llvm version</em></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>llvm-config --version
+
+<span class="c1"># should get 12.0.0git</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to CINN’s documentation!</a></li>
+      <li>Next: <a href="tutorials/index.html" title="next chapter">Tutorials</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/install.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
