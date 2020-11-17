@@ -1,0 +1,45 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_poly_domain.h:
+
+Program Listing for File domain.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_poly_domain.h>` (``/home/chunwei/project/cinn2/cinn/poly/domain.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <isl/cpp.h>
+   
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/poly/dim.h"
+   
+   namespace cinn {
+   namespace poly {
+   
+   struct Domain {
+     std::string id;
+     std::vector<Dim> dims;
+     std::vector<Dim> params;
+   
+     isl::ctx ctx;
+   
+     Domain(isl::ctx ctx, std::string id, std::vector<Dim> dims) : ctx(ctx), id(std::move(id)), dims(std::move(dims)) {
+       ExtractParams();
+     }
+   
+     std::string __str__() const;
+   
+     isl::set to_isl() const;
+   
+    private:
+     void ExtractParams();
+   };
+   
+   }  // namespace poly
+   }  // namespace cinn

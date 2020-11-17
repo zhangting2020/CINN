@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1ad70b1026fd08f11ce86f5fb77b70a1fe:
+
+Function cinn::hlir::op::StrategyForConv2d
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::StrategyForConv2d(const framework::NodeAttr&, const std::vector<ir::Tensor>&, const std::vector<Type>&, const std::vector<std::vector<int>>&, const Target&)

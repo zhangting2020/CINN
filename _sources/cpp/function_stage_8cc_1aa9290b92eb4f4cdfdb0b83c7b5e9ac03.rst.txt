@@ -1,0 +1,13 @@
+.. _exhale_function_stage_8cc_1aa9290b92eb4f4cdfdb0b83c7b5e9ac03:
+
+Function cinn::poly::ExtractExtraDepLinksFromStages
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::ExtractExtraDepLinksFromStages(const std::vector<Stage *>&)

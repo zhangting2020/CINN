@@ -1,0 +1,330 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir.h:
+
+File ir.h
+=========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir.h``)
+---------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``cinn/common/shared.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`)
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+- ``cinn/ir/function_base.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.h`)
+
+- ``cinn/ir/ir_base.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`)
+
+- ``cinn/utils/small_vector.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.h`)
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``variant``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_modular.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_context.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_definition.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_eliminate_broadcast_in_forloop.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_fold_cinn_call_arguments.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_unroll_loops.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+- :ref:`namespace_cinn__poly`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1__Module__`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1__Var__`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Add`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Alloc`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1And`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Block`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Broadcast`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Call`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Cast`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Div`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1EQ`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1For`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1ForBase`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1FracOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Free`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1GE`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1GT`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IfThenElse`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LE`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Let`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LLVMForLoopMeta`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Load`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LoadStoreAddrMnger`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LT`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Max`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Min`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Minus`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Mod`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Mul`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1NE`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Not`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Or`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1PolyFor`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Power`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1PrimitiveNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Product`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Ramp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Reduce`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Select`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Store`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Sub`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Sum`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Var`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1VectorizeInfo`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a77068afce052b34324e21772c1f75777`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1afdc21f9d5b2616a187419954bffee1a4`
+

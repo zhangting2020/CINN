@@ -1,0 +1,38 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h:
+
+Program Listing for File compute_at_postprocess.h
+=================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h>` (``/home/chunwei/project/cinn2/cinn/lang/compute_at_postprocess.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <map>
+   #include <string>
+   #include <unordered_map>
+   #include <vector>
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/ir/tensor.h"
+   
+   namespace cinn {
+   namespace lang {
+   
+   void ProcessComputeAtInfo(Expr* expr, poly::StageMap stages);
+   
+   void UpdateComputeAtBufferShape(Expr* expr, poly::StageMap stages);
+   
+   namespace detail {
+   
+   void ReplaceParamWithConsumerAxis(const poly::ComputeAtInfo& info,
+                                     const std::vector<Var>& axis,
+                                     Expr* consumer_forloop_root);
+   
+   }  // namespace detail
+   
+   }  // namespace lang
+   }  // namespace cinn

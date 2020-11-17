@@ -1,0 +1,76 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc:
+
+File ir_replace.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/ir_replace.cc``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/optim/ir_copy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.h`)
+
+- ``cinn/optim/ir_replace.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``set``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_ir__replace_8cc_1ab4e705fb5cd1eddca5c9f28dfd49df3f`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_ir__replace_8cc_1a7ae9d8e6a4e960e5028700e79d792e12`
+
+- :ref:`exhale_variable_ir__replace_8cc_1a0779e3aacf34e07dc86409e6134b34c1`
+
+- :ref:`exhale_variable_ir__replace_8cc_1a90d10065cd43ac129bcbf3842849f442`
+
+- :ref:`exhale_variable_ir__replace_8cc_1a10151bb858905d7ed8fd4afa9af18517`
+

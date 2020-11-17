@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File tensor_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-tensor-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-ir-tensor-test-cc"></span><h1>Program Listing for File tensor_test.cc<a class="headerlink" href="#program-listing-for-file-tensor-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc.html#file-home-chunwei-project-cinn2-cinn-ir-tensor-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/ir/tensor_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/tensor.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_c.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/execution_engine.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/test_helper.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/builtin.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/compute.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/lower.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/packed_func.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/placeholder.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">ir</span> <span class="p">{</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">;</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">inlined</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="c1">// C is inlined</span>
+  <span class="n">Tensor</span> <span class="n">C</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="n">Tensor</span> <span class="n">D</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">C</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;D&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">D</span><span class="p">});</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Lower</span><span class="p">(</span><span class="s">&quot;func_C&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;output: </span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">func</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">Trim</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="n">Trim</span><span class="p">(</span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function func_C (_A, _B, _D)</span>
+<span class="s">{</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 20)</span>
+<span class="s">    {</span>
+<span class="s">      D[i, j] = (1 + ((2 * A[i, j]) + (2 * B[i, j])))</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">IsDependOnStatement</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">N</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">X</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">N</span><span class="p">});</span>
+  <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">({</span><span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="p">});</span>
+
+  <span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">IsDependOnStatement</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">));</span>
+  <span class="n">ASSERT_FALSE</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">IsDependOnStatement</span><span class="p">(</span><span class="s">&quot;XXX&quot;</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Reshape</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">ResetNameId</span><span class="p">();</span>
+  <span class="n">Expr</span> <span class="nf">M</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">N</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">A</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">A1</span> <span class="o">=</span> <span class="n">A</span><span class="o">-&gt;</span><span class="n">Reshape</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">100</span><span class="p">)},</span> <span class="n">stages</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B</span>  <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span><span class="n">A1</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span><span class="p">;</span> <span class="p">});</span>
+
+  <span class="n">stages</span><span class="o">-&gt;</span><span class="n">InsertLazily</span><span class="p">(</span><span class="n">B</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">});</span>
+
+  <span class="n">ir</span><span class="o">::</span><span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;some_modue&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+
+  <span class="n">backends</span><span class="o">::</span><span class="n">CodeGenC</span> <span class="n">codegenc</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">codegenc</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">codegenc</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;source:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">source</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target_source</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">#include &lt;cinn_runtime.h&gt;</span>
+<span class="s">#include &lt;stdio.h&gt;</span>
+
+<span class="s">void fn(void* _args, int32_t num_args)</span>
+<span class="s">{</span>
+<span class="s">  const cinn_buffer_t* _A = cinn_pod_value_to_buffer_p(&amp;(((cinn_pod_value_t*)(_args))[0]));</span>
+<span class="s">  cinn_buffer_t* _tensor = cinn_pod_value_to_buffer_p(&amp;(((cinn_pod_value_t*)(_args))[1]));</span>
+<span class="s">  cinn_buffer_malloc((void*)(0), _tensor);</span>
+<span class="s">  const float* A_reshape = ((const float*)(_A-&gt;memory));</span>
+<span class="s">  float* tensor = ((float*)(_tensor-&gt;memory));</span>
+<span class="s">  for (int32_t i = 0; i &lt; 10; i += 1) {</span>
+<span class="s">    for (int32_t j = 0; j &lt; 10; j += 1) {</span>
+<span class="s">      for (int32_t k = 0; k &lt; 100; k += 1) {</span>
+<span class="s">        tensor[((1000 * i) + ((100 * j) + k))] = (2 * A_reshape[((1000 * i) + ((100 * j) + k))]);</span>
+<span class="s">      };</span>
+<span class="s">    };</span>
+<span class="s">  };</span>
+<span class="s">  cinn_buffer_free((void*)(0), _tensor);</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">Trim</span><span class="p">(</span><span class="n">target_source</span><span class="p">),</span> <span class="n">Trim</span><span class="p">(</span><span class="n">source</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">ReshapeCopied</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">ResetNameId</span><span class="p">();</span>
+  <span class="n">Expr</span> <span class="nf">M</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">N</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">A</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">A1</span> <span class="o">=</span> <span class="n">A</span><span class="o">-&gt;</span><span class="n">ReshapeCopied</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">100</span><span class="p">)},</span> <span class="n">stages</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B</span>  <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span><span class="n">A1</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span><span class="p">;</span> <span class="p">});</span>
+
+  <span class="n">stages</span><span class="o">-&gt;</span><span class="n">InsertLazily</span><span class="p">(</span><span class="n">B</span><span class="p">);</span>
+
+  <span class="n">ir</span><span class="o">::</span><span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;some_modue&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">},</span> <span class="p">{},</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">builder</span><span class="p">);</span>
+
+  <span class="n">backends</span><span class="o">::</span><span class="n">CodeGenC</span> <span class="n">codegenc</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">codegenc</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">codegenc</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;source:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">source</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target_source</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">#include &lt;cinn_runtime.h&gt;</span>
+<span class="s">#include &lt;stdio.h&gt;</span>
+
+<span class="s">void fn(void* _args, int32_t num_args)</span>
+<span class="s">{</span>
+<span class="s">  const cinn_buffer_t* _A = cinn_pod_value_to_buffer_p(&amp;(((cinn_pod_value_t*)(_args))[0]));</span>
+<span class="s">  cinn_buffer_t* _tensor = cinn_pod_value_to_buffer_p(&amp;(((cinn_pod_value_t*)(_args))[1]));</span>
+<span class="s">  cinn_buffer_malloc((void*)(0), _tensor);</span>
+<span class="s">  const float* A = ((const float*)(_A-&gt;memory));</span>
+<span class="s">  float* A_copied = ((float*)(_A_copied_reshape-&gt;memory));</span>
+<span class="s">  const float* A_copied_reshape = ((const float*)(_A_copied_reshape-&gt;memory));</span>
+<span class="s">  float* tensor = ((float*)(_tensor-&gt;memory));</span>
+<span class="s">  for (int32_t i = 0; i &lt; 100; i += 1) {</span>
+<span class="s">    for (int32_t j = 0; j &lt; 100; j += 1) {</span>
+<span class="s">      A_copied[((100 * i) + j)] = A[((100 * i) + j)];</span>
+<span class="s">    };</span>
+<span class="s">  };</span>
+<span class="s">  for (int32_t i = 0; i &lt; 10; i += 1) {</span>
+<span class="s">    for (int32_t j = 0; j &lt; 10; j += 1) {</span>
+<span class="s">      for (int32_t k = 0; k &lt; 100; k += 1) {</span>
+<span class="s">        tensor[((1000 * i) + ((100 * j) + k))] = (2 * A_copied_reshape[((1000 * i) + ((100 * j) + k))]);</span>
+<span class="s">      };</span>
+<span class="s">    };</span>
+<span class="s">  };</span>
+<span class="s">  cinn_buffer_free((void*)(0), _tensor);</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">Trim</span><span class="p">(</span><span class="n">target_source</span><span class="p">),</span> <span class="n">Trim</span><span class="p">(</span><span class="n">source</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">reduce</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">)});</span>
+  <span class="n">Var</span> <span class="nf">reduce_axis</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="s">&quot;ii&quot;</span><span class="p">);</span>
+  <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="n">A</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span>
+        <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">axis</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">reduce_axis</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">,</span> <span class="p">{</span><span class="n">reduce_axis</span><span class="p">});</span> <span class="p">},</span>
+        <span class="s">&quot;C&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">C</span><span class="o">-&gt;</span><span class="n">has_expression</span><span class="p">());</span>
+    <span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">C</span><span class="o">-&gt;</span><span class="n">is_reduce_sum</span><span class="p">());</span>
+    <span class="n">ASSERT_FALSE</span><span class="p">(</span><span class="n">C</span><span class="o">-&gt;</span><span class="n">is_reduce_mul</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="n">A</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span>
+        <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">axis</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">ReduceMul</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">reduce_axis</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">,</span> <span class="p">{</span><span class="n">reduce_axis</span><span class="p">});</span> <span class="p">},</span>
+        <span class="s">&quot;C&quot;</span><span class="p">);</span>
+    <span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">C</span><span class="o">-&gt;</span><span class="n">has_expression</span><span class="p">());</span>
+    <span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">C</span><span class="o">-&gt;</span><span class="n">is_reduce_mul</span><span class="p">());</span>
+    <span class="n">ASSERT_FALSE</span><span class="p">(</span><span class="n">C</span><span class="o">-&gt;</span><span class="n">is_reduce_sum</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace ir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

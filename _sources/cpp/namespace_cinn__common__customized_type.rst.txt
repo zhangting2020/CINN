@@ -1,0 +1,26 @@
+
+.. _namespace_cinn__common__customized_type:
+
+Namespace cinn::common::customized_type
+=======================================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_type_8h_1afacff20729652a6ead029be26ada8bd8`
+
+- :ref:`exhale_variable_type_8h_1a3e454ae5cc66ff15d97f12f9e34f4fea`
+
+- :ref:`exhale_variable_type_8h_1a6470b5e680acc8d14afa87c1015f98fa`
+
+- :ref:`exhale_variable_type_8h_1a65fee4e25819a820d90427643214abe5`

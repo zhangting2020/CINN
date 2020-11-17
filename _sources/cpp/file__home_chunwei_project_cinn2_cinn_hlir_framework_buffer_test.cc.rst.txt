@@ -1,0 +1,59 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer_test.cc:
+
+File buffer_test.cc
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/buffer_test.cc``)
+-------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h`)
+
+- ``gtest/gtest.h``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_hlir_2framework_2buffer__test_8cc_1ad5f6fe1452fa3e77b032b8a94fdbb3f1`
+

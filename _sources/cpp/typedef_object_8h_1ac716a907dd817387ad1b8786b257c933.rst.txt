@@ -1,0 +1,13 @@
+.. _exhale_typedef_object_8h_1ac716a907dd817387ad1b8786b257c933:
+
+Typedef cinn::common::shared_object
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::common::shared_object

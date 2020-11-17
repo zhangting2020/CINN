@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespacecinn_1_1ir_1a3973777cb3e46e08d5dcc8da17e299ff:
+
+Typedef cinn::ir::dim3_t
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::ir::dim3_t

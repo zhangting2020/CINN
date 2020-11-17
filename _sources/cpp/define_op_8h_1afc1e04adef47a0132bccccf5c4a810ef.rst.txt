@@ -1,0 +1,13 @@
+.. _exhale_define_op_8h_1afc1e04adef47a0132bccccf5c4a810ef:
+
+Define CINN_REGISTER_OP
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_REGISTER_OP

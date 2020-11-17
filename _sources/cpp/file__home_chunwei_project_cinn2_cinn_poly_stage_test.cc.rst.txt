@@ -1,0 +1,121 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc:
+
+File stage_test.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_poly>` (``/home/chunwei/project/cinn2/cinn/poly``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/poly/stage_test.cc``)
+--------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/simple_jit.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``gtest/gtest.h``
+
+- ``set``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__poly`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_stage__test_8cc_1aba0d327589c275d42991d41cd0413931`
+
+- :ref:`exhale_function_stage__test_8cc_1a19e6433499e08541628b0053e584be98`
+
+- :ref:`exhale_function_stage__test_8cc_1a3d58f110c0bb2cdf4bdaee398bfced5a`
+
+- :ref:`exhale_function_stage__test_8cc_1a343c05d136fbb9346b5d7e1b35d16bcf`
+
+- :ref:`exhale_function_stage__test_8cc_1a741a589d60793f20c819ac859488a444`
+
+- :ref:`exhale_function_stage__test_8cc_1a9d2fdad318b77813a823694ed56a78c7`
+
+- :ref:`exhale_function_stage__test_8cc_1adc5362ee47a7d5751b562184365440e3`
+
+- :ref:`exhale_function_stage__test_8cc_1abdaa99382292b8fa9869dae6f64ad731`
+
+- :ref:`exhale_function_stage__test_8cc_1aedf73e0ff203bf99955508c43d748c86`
+
+- :ref:`exhale_function_stage__test_8cc_1a9745d169895c751a23fd19c7d85f88fb`
+
+- :ref:`exhale_function_stage__test_8cc_1a2cbe756f39ca364a822ae047d25ee72b`
+
+- :ref:`exhale_function_stage__test_8cc_1aff6cd40c2c011ef6f65d7dc41df053fe`
+
+- :ref:`exhale_function_stage__test_8cc_1af3415b8e8984594d65aa35d9faa1f47b`
+
+- :ref:`exhale_function_stage__test_8cc_1a0448c33dd65afeedfbec2d58a55ef02b`
+
+- :ref:`exhale_function_stage__test_8cc_1a6097f17499761e41f823678f2ac0d35f`
+
+- :ref:`exhale_function_stage__test_8cc_1ac939da306aad9fe5ab359e90cce3cdec`
+
+- :ref:`exhale_function_stage__test_8cc_1a11c513331753ce56abda0cc0a13962d4`
+
+- :ref:`exhale_function_stage__test_8cc_1aadb83a1418de42a5dcee5696bec22c65`
+
+- :ref:`exhale_function_stage__test_8cc_1a55f05aaa25a3622efe8a136098e8947f`
+
+- :ref:`exhale_function_stage__test_8cc_1afd278fef447d09a277fc6280eab54951`
+
+- :ref:`exhale_function_stage__test_8cc_1a23af8c621d52d7b834408be9c50bcd59`
+
+- :ref:`exhale_function_stage__test_8cc_1a920cd40af804c269957225c1174a39eb`
+
+- :ref:`exhale_function_stage__test_8cc_1a76914e1af1e93a3c449e0edd47a810da`
+
+- :ref:`exhale_function_stage__test_8cc_1ac4e2583391474b4ac24b7e65d3af5299`
+
+- :ref:`exhale_function_stage__test_8cc_1a686ac0fcffa7c323827937689056430e`
+

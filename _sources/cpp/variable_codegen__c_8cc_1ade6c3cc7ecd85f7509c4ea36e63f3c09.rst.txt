@@ -1,0 +1,13 @@
+.. _exhale_variable_codegen__c_8cc_1ade6c3cc7ecd85f7509c4ea36e63f3c09:
+
+Variable cinn::backends::kCKeywordRestrict
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::backends::kCKeywordRestrict

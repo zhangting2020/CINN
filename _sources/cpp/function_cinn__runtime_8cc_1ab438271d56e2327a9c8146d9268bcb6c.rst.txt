@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8cc_1ab438271d56e2327a9c8146d9268bcb6c:
+
+Function cinn_buffer_copy(void \*, struct cinn_buffer_t \*, struct cinn_buffer_t \*)
+====================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_buffer_copy(void *, struct cinn_buffer_t *, struct cinn_buffer_t *)

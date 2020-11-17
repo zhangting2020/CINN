@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8h_1a258fc5f7a5b3f22a9057c51b30100c77:
+
+Function cinn::common::make_const()
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::make_const()

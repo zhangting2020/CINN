@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1ad8f624a1dae75901ab0dddd16ab5241f:
+
+Function cinn::common::IndiceToAbsOffset(const std::vector<Expr>&, const std::vector<Expr>&)
+============================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::IndiceToAbsOffset(const std::vector<Expr>&, const std::vector<Expr>&)

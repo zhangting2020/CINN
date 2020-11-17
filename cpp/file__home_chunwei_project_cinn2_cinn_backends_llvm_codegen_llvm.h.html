@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File codegen_llvm.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-codegen-llvm-h">
+<span id="file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-h"></span><h1>File codegen_llvm.h<a class="headerlink" href="#file-codegen-llvm-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_backends_llvm.html#dir-home-chunwei-project-cinn2-cinn-backends-llvm"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-h" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm/codegen_llvm.h</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#included-by" id="id3">Included By</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id4">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id5">Classes</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id6">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-h">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm/codegen_llvm.h</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-h" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h.html">Program Listing for File codegen_llvm.h</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/llvm/ir_builder_mixin.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_ir_builder_mixin.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-ir-builder-mixin-h"><span class="std std-ref">File ir_builder_mixin.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/llvm/llvm_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-util-h"><span class="std std-ref">File llvm_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/intrinsic_ops.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h.html#file-home-chunwei-project-cinn2-cinn-ir-intrinsic-ops-h"><span class="std std-ref">File intrinsic_ops.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_visitor.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-visitor-h"><span class="std std-ref">File ir_visitor.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/lowered_func.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h.html#file-home-chunwei-project-cinn2-cinn-ir-lowered-func-h"><span class="std std-ref">File lowered_func.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/module.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_module.h.html#file-home-chunwei-project-cinn2-cinn-ir-module-h"><span class="std std-ref">File module.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llvm/IR/Constants.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llvm/IR/Function.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llvm/IR/IRBuilder.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llvm/IR/MDBuilder.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llvm/IR/Module.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-framework-memory-cc"><span class="std std-ref">File memory.cc</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdexcept</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_string.cc.html#file-home-chunwei-project-cinn2-cinn-utils-string-cc"><span class="std std-ref">File string.cc</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unordered_map</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unordered_set</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">utility</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc.html#file-home-chunwei-project-cinn2-cinn-utils-small-vector-cc"><span class="std std-ref">File small_vector.cc</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="included-by">
+<h2>Included By<a class="headerlink" href="#included-by" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.h.html#file-home-chunwei-project-cinn2-cinn-backends-codegen-cuda-host-h"><span class="std std-ref">File codegen_cuda_host.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_compiler.h.html#file-home-chunwei-project-cinn2-cinn-backends-compiler-h"><span class="std std-ref">File compiler.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h.html#file-home-chunwei-project-cinn2-cinn-backends-extern-func-emitter-builtin-h"><span class="std std-ref">File extern_func_emitter_builtin.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h.html#file-home-chunwei-project-cinn2-cinn-backends-extern-func-jit-register-h"><span class="std std-ref">File extern_func_jit_register.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-cc"><span class="std std-ref">File codegen_llvm.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm_test.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-test-cc"><span class="std std-ref">File codegen_llvm_test.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-x86-h"><span class="std std-ref">File codegen_x86.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-execution-engine-cc"><span class="std std-ref">File execution_engine.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine_test.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-execution-engine-test-cc"><span class="std std-ref">File execution_engine_test.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-simple-jit-cc"><span class="std std-ref">File simple_jit.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-simple-jit-h"><span class="std std-ref">File simple_jit.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.h.html#file-home-chunwei-project-cinn2-cinn-common-cuda-test-helper-h"><span class="std std-ref">File cuda_test_helper.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_test_helper.h.html#file-home-chunwei-project-cinn2-cinn-common-test-helper-h"><span class="std std-ref">File test_helper.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc.html#file-home-chunwei-project-cinn2-cinn-poly-stage-test-cc"><span class="std std-ref">File stage_test.cc</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__backends.html#namespace-cinn-backends"><span class="std std-ref">Namespace cinn::backends</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__backends__detail.html#namespace-cinn-backends-detail"><span class="std std-ref">Namespace cinn::backends::detail</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="structcinn_1_1backends_1_1SymbolTableGuard.html#exhale-struct-structcinn-1-1backends-1-1symboltableguard"><span class="std std-ref">Struct SymbolTableGuard</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1backends_1_1CodeGenLLVM.html#exhale-class-classcinn-1-1backends-1-1codegenllvm"><span class="std std-ref">Class CodeGenLLVM</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1backends_1_1LLVMIRVisitor.html#exhale-class-classcinn-1-1backends-1-1llvmirvisitor"><span class="std std-ref">Class LLVMIRVisitor</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1backends_1_1SymbolTable.html#exhale-class-classcinn-1-1backends-1-1symboltable"><span class="std std-ref">Class SymbolTable</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_codegen__llvm_8h_1a9150d47ac0e5e7d4a02ee2b3a84b9d86.html#exhale-define-codegen-llvm-8h-1a9150d47ac0e5e7d4a02ee2b3a84b9d86"><span class="std std-ref">Define __</span></a></p></li>
+<li><p><a class="reference internal" href="define_codegen__llvm_8h_1a9150d47ac0e5e7d4a02ee2b3a84b9d86.html#exhale-define-codegen-llvm-8h-1a9150d47ac0e5e7d4a02ee2b3a84b9d86"><span class="std std-ref">Define __</span></a></p></li>
+<li><p><a class="reference internal" href="define_codegen__llvm_8h_1a7ac54924c8d0da33823cf8d0b9b46203.html#exhale-define-codegen-llvm-8h-1a7ac54924c8d0da33823cf8d0b9b46203"><span class="std std-ref">Define __m</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

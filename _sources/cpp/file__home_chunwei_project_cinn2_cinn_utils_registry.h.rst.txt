@@ -1,0 +1,71 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_utils_registry.h:
+
+File registry.h
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_utils>` (``/home/chunwei/project/cinn2/cinn/utils``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/utils/registry.h``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_utils_registry.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``glog/raw_logging.h``
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classFunctionRegEntryBase`
+
+- :ref:`exhale_class_classRegistry`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_utils_2registry_8h_1aff84d06c33f82f55a62681caed5df48c`
+
+- :ref:`exhale_define_utils_2registry_8h_1a5fd0e6b78b4e1717a9357f7bc724617e`
+
+- :ref:`exhale_define_utils_2registry_8h_1a6c9ee6428f186367255873a00d67ff95`
+

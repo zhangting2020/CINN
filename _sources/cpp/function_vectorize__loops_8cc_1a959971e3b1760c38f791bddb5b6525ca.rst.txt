@@ -1,0 +1,13 @@
+.. _exhale_function_vectorize__loops_8cc_1a959971e3b1760c38f791bddb5b6525ca:
+
+Function cinn::optim::Widen
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::Widen(Expr, int)

@@ -1,0 +1,13 @@
+.. _exhale_function_pe__elementwise__test_8cc_1ae3e930641904881f4be7dffdb5a1f890:
+
+Function cinn::hlir::pe::TEST(elementwise_pe, acos)
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::TEST(elementwise_pe, acos)

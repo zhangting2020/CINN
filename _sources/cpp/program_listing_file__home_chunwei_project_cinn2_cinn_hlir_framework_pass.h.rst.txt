@@ -1,0 +1,70 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h:
+
+Program Listing for File pass.h
+===============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/pass.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   #include "cinn/hlir/framework/graph.h"
+   #include "cinn/utils/registry.h"
+   
+   #define CINN_REGISTER_PASS(name) \
+     CINN_REGISTRY_REGISTER(::cinn::hlir::framework::PassFunctionRegister, PassFunctionRegister, name)
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   class PassFunctionRegister;
+   typedef std::function<void(Graph* g)> PassFunction;
+   
+   const PassFunctionRegister* FindPassDep(const std::string& attr_name);
+   
+   class PassFunctionRegister : public FunctionRegEntryBase<PassFunctionRegister, PassFunction> {
+    public:
+     bool change_structure{false};
+     std::vector<std::string> op_attr_dependency{};
+     std::vector<std::string> graph_attr_dependency{};
+     std::vector<std::string> graph_attr_targets{};
+   
+     PassFunctionRegister& set_change_structure(bool in) {
+       change_structure = in;
+       return *this;
+     }
+   
+     PassFunctionRegister& provide_graph_attr(const std::string& attr_name) {
+       graph_attr_targets.push_back(attr_name);
+       return *this;
+     }
+   
+     PassFunctionRegister& depend_op_attr(const std::string& attr_name) {
+       op_attr_dependency.push_back(attr_name);
+       return *this;
+     }
+   
+     PassFunctionRegister& depend_graph_attr(const std::string& attr_name) {
+       graph_attr_dependency.push_back(attr_name);
+       return *this;
+     }
+   };
+   
+   const PassFunctionRegister* FindPassDep(const std::string& attr_name);
+   
+   void ApplyPasses(Graph* g, const std::vector<std::string>& passes);
+   
+   // Apply a single pass on a graph.
+   inline void ApplyPass(Graph* g, const std::string& pass) { return ApplyPasses(g, {pass}); }
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

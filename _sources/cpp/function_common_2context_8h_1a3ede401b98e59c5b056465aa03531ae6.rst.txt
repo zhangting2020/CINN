@@ -1,0 +1,13 @@
+.. _exhale_function_common_2context_8h_1a3ede401b98e59c5b056465aa03531ae6:
+
+Function cinn::common::UniqName
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_context.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::UniqName(const std::string&)

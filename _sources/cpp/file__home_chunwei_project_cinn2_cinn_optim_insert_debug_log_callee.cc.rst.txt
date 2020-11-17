@@ -1,0 +1,87 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc:
+
+File insert_debug_log_callee.cc
+===============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/insert_debug_log_callee.cc``)
+----------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/optim/insert_debug_log_callee.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.h`)
+
+- ``cinn/runtime/intrinsic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``sstream``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_insert__debug__log__callee_8cc_1a656f3da1ca7120ec215e28407d5fd129`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_insert__debug__log__callee_8cc_1ad83b6c348300731b874e72e12b528ced`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_insert__debug__log__callee_8cc_1a6940d4848b77d87cd5c89c94bfe147c1`
+
+- :ref:`exhale_variable_insert__debug__log__callee_8cc_1a98d8cd6800caac9e86f15c42ee85e9c2`
+
+- :ref:`exhale_variable_insert__debug__log__callee_8cc_1a4aa17afa5af76f6212cf23e11a96a074`
+

@@ -1,0 +1,73 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.h:
+
+File memory.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/memory.h``)
+-------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``glog/logging.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``unordered_map``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1MemoryInterface`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1MemoryManager`
+

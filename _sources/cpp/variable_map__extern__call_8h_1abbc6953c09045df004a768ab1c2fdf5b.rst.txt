@@ -1,0 +1,13 @@
+.. _exhale_variable_map__extern__call_8h_1abbc6953c09045df004a768ab1c2fdf5b:
+
+Variable cinn::optim::kExternInt64Calls
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::optim::kExternInt64Calls

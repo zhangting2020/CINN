@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a427d87814fc08c1f11904fc116e05f27:
+
+Function cinn::ir::BufferGetTensorName
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::BufferGetTensorName(const _Buffer_ *)

@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__c__test_8cc_1a315b1da7b3a7fcb573ad38528a827ee5:
+
+Function cinn::backends::TEST(CodeGenC, call_extern)
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(CodeGenC, call_extern)

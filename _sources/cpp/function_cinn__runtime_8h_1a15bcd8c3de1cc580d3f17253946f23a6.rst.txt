@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8h_1a15bcd8c3de1cc580d3f17253946f23a6:
+
+Function cinn_print_debug_args(cinn_pod_value_t \*, int)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_print_debug_args(cinn_pod_value_t *, int)

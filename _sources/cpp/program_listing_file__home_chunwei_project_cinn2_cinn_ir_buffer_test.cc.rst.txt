@@ -1,0 +1,84 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc:
+
+Program Listing for File buffer_test.cc
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc>` (``/home/chunwei/project/cinn2/cinn/ir/buffer_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/ir/buffer.h"
+   
+   #include <gtest/gtest.h>
+   
+   #include <vector>
+   
+   #include "cinn/backends/codegen_c.h"
+   #include "cinn/cinn.h"
+   #include "cinn/common/common.h"
+   #include "cinn/ir/module.h"
+   #include "cinn/ir/tensor.h"
+   #include "cinn/lang/buffer.h"
+   #include "cinn/lang/compute.h"
+   #include "cinn/lang/lower.h"
+   #include "cinn/lang/placeholder.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   TEST(Buffer, basic) {
+     Var ptr("buff", Float(32));
+     std::vector<Expr> shape({Expr(100), Expr(20)});
+     Var i("i"), j("j");
+     std::vector<Expr> strides({Expr(0), Expr(0)});
+     auto buffer = _Buffer_::Make(ptr, ptr->type(), shape, strides, Expr(0), "buf", "", 0, 0);
+   
+     // Check shared
+     ASSERT_EQ(ref_count(buffer.get()).val(), 1);
+   
+     ASSERT_EQ(buffer->type(), type_of<cinn_buffer_t*>());
+     ASSERT_EQ(buffer->dtype, ptr->type());
+   
+     {
+       auto buffer1 = buffer;
+       ASSERT_EQ(ref_count(buffer.get()).val(), 2);
+       ASSERT_EQ(ref_count(buffer1.get()).val(), 2);
+     }
+   
+     ASSERT_EQ(ref_count(buffer.get()).val(), 1);
+   }
+   
+   TEST(Buffer, bind_to_multiple_tensors) {
+     Expr M(100);
+     Expr N(20);
+     Tensor A = lang::Compute(
+         {M, N}, [=](Var i, Var j) { return Expr(0.f); }, "A");
+     Tensor B = lang::Compute(
+         {M, N}, [=](Var i, Var j) { return Expr(1.f); }, "B");
+   
+     auto stages = CreateStages({A, B});
+   
+     stages[B]->ShareBufferWith(stages[A]);
+   
+     auto funcs = lang::Lower("func1", stages, {A, B});
+   
+     Target target;
+     target.arch = Target::Arch ::X86;
+     target.bits = Target::Bit ::k32;
+     target.os   = Target::OS ::Linux;
+   
+     ir::Module::Builder builder("module1", target);
+     builder.AddFunction(funcs);
+     builder.AddBuffer(A->buffer);
+   
+     backends::CodeGenC codegen(target);
+     codegen.SetInlineBuiltinCodes(false);
+     auto out = codegen.Compile(builder.Build(), backends::CodeGenC::OutputKind::CImpl);
+     std::cout << "codegen C:" << std::endl << out << std::endl;
+   }
+   
+   }  // namespace ir
+   }  // namespace cinn

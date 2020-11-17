@@ -1,0 +1,76 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h:
+
+File ir_simplify.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/ir_simplify.h``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_dim.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_optim.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+

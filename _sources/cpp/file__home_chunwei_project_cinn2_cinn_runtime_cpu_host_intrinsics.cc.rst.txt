@@ -1,0 +1,135 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc:
+
+File host_intrinsics.cc
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime_cpu>` (``/home/chunwei/project/cinn2/cinn/runtime/cpu``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cpu/host_intrinsics.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_jit_register.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`)
+
+- ``cinn/backends/function_prototype.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`)
+
+- ``cinn/runtime/cpu/host_intrinsics.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`)
+
+- ``cinn/runtime/cpu/mkl_math.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h`)
+
+- ``glog/logging.h``
+
+- ``math.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h`)
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a98598708d4f6a3ce644152af91dbcc4c`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1ab2a572c594e76595c5e88d0530e508de`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a9e71d90c991ef5077b09c2e37f7a6060`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1aaebd1e6390277f27d797c41436c94f17`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a11725e719b6398de89f17ac86f803598`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a454e3139d009d3d10191ce2e8d316570`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1ad29f64c82506300073334e59b7e27426`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a5d81131d638aa7ac8100e0ae3469f8de`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a612b7c913aa823842f6f50851c090a60`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a579a2e22449f004fde85c5768480bca4`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1adf49670f9e07ab0d84753ae5a26c9bbf`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1acf067e5cd30c83bb5d340477a9d20ee0`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1ad44c4fd215c7f87cce4a22fc514dd16f`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1af084836f237a42bb5488eb00331ff544`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1ac63a7bad7454ce2e9a501927f5ba5495`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a7feca39bc4516c05f87b9f6a2c3ba94d`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a787783077a409f69ef0ec3d3ec47a169`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a18dd7986245c45fd18e587c504437e2e`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a3b567bcf9631a7b1ab20d636a348b9fc`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a4d60396b2f5ced4e13b202b8a93be61a`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1ab8c76d33cf739086c8902caf0556153a`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1af8ef5beef4ce2d88694135e30dcc30d5`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1abba9259c4afb41ec2aaa9e597e128384`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a74d4f66d15710ec35a0114874556f2b4`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a5e45312928a53dec95c9e54767fda0d7`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a3de59c45688fc49a2fc0cb11f337868c`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a42148c4c575ca353ca920aafa9a6b520`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a63dfde3f8a12a9c49bdaee0fe325906f`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a4d0d4da44d1ff43f37ca6703502e0c0a`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1a4536c5579e472e8806a7ccfc2c06ea09`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1af2760080b3a084ecb1bb541d876de3de`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1ab7dd0fe56a24f35ee13844b5848a6016`
+
+- :ref:`exhale_function_host__intrinsics_8cc_1aae08157ce499752d5cc8c575aa3755c0`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_host__intrinsics_8cc_1a74b481e1fb93a1bb7cfcf1e365a833f2`
+
+- :ref:`exhale_define_host__intrinsics_8cc_1a6d694884a2511f8c50ca42b93e2fc64c`
+
+- :ref:`exhale_define_host__intrinsics_8cc_1a2b8e4404bd1a14097f0b023b3026c59e`
+
+- :ref:`exhale_define_host__intrinsics_8cc_1afb99195cfcf4135f3e0dc4f5261cced5`
+
+- :ref:`exhale_define_host__intrinsics_8cc_1a1c2a0ed6e52e37abfa81ddcb7c73bdd8`
+
+- :ref:`exhale_define_host__intrinsics_8cc_1ab535dad7d16ef2cbae95c96fe17fc82c`
+

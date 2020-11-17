@@ -1,0 +1,13 @@
+.. _exhale_function_pybind_2ir_8cc_1a43f7de1c1182b4beb9ecf40611c52e0a:
+
+Function cinn::pybind::BindIr(py::module \*)
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindIr(py::module *)

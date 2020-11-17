@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1ab4eb5ae5e80ae542f61786181684d0b6:
+
+Variable cinn::runtime::intrisic::pod_value_to_double
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::pod_value_to_double

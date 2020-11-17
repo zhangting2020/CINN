@@ -1,0 +1,133 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h:
+
+File extern_func_jit_register.h
+===============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/extern_func_jit_register.h``)
+-------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_emitter.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`)
+
+- ``cinn/backends/extern_func_emitter_builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h`)
+
+- ``cinn/backends/extern_func_protos.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h`)
+
+- ``cinn/backends/function_prototype.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`)
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/ir_builder_mixin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_ir_builder_mixin.h`)
+
+- ``cinn/backends/llvm/llvm_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`)
+
+- ``cinn/backends/llvm/runtime_symbol_registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`)
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_cuda_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_intrisics.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_use_extern_funcs.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1RegisterExternFunction`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_extern__func__jit__register_8h_1ad407cabb0ecf16091bfebc033ae7d317`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_extern__func__jit__register_8h_1a68a1cbbfe52b8c51dd1bb1d39c1a152e`
+
+- :ref:`exhale_define_extern__func__jit__register_8h_1aad61f26cd4d1555d0c62a33affc51843`
+
+- :ref:`exhale_define_extern__func__jit__register_8h_1a1b528e82c4762d6f6c8ed20f6d8d9e42`
+
+- :ref:`exhale_define_extern__func__jit__register_8h_1a3b9ac843400757f71068a89baaf17cbd`
+
+- :ref:`exhale_define_extern__func__jit__register_8h_1a71e1174a2e3e1b7560206a584cc61d51`
+
+- :ref:`exhale_define_extern__func__jit__register_8h_1a736540fe2369f5a06fb275eae3a3172f`
+

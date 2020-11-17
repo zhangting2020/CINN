@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a29e19b3306e8dd832c4a1c859fa4a10e:
+
+Function cinn::hlir::pe::Abs
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Abs(const Tensor&, const std::string&)

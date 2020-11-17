@@ -1,0 +1,104 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h:
+
+File pass.h
+===========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/pass.h``)
+-----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/graph.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`)
+
+- ``cinn/utils/registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_registry.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_print_graph_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1PassFunctionRegister`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_pass_8h_1a282797b046dedfa2212f8a9d3ce17cac`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_pass_8h_1a701cfd77f75cb8f06c389d516e0a151d`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_pass_8h_1a126928dffab7bb7d276b64ff1c8a1459`
+

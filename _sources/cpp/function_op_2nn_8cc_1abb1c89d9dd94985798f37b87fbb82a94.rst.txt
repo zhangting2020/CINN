@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1abb1c89d9dd94985798f37b87fbb82a94:
+
+Function cinn::hlir::op::InferShapeForDropoutInfer
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForDropoutInfer(const std::vector<std::vector<int>>&, const framework::NodeAttr&)

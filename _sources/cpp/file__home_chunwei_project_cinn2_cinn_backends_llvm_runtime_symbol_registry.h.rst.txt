@@ -1,0 +1,89 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h:
+
+File runtime_symbol_registry.h
+==============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/runtime_symbol_registry.h``)
+-----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``any``
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``glog/logging.h``
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``mutex``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``string_view``
+
+- ``variant``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1RuntimeSymbolRegistry`
+

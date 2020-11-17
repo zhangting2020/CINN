@@ -1,0 +1,46 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_utils_dot_lang.cc:
+
+File dot_lang.cc
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_utils>` (``/home/chunwei/project/cinn2/cinn/utils``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/utils/dot_lang.cc``)
+-------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_utils_dot_lang.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/utils/dot_lang.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_dot_lang.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__utils`
+

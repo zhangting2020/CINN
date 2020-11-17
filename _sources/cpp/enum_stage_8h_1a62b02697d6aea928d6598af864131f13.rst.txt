@@ -1,0 +1,13 @@
+.. _exhale_enum_stage_8h_1a62b02697d6aea928d6598af864131f13:
+
+Enum ScopeKind
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::poly::ScopeKind

@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8h_1a43cefc22f2a93fbf69490afdcceade6f:
+
+Function cinn::poly::isl_set_dim_names(isl::map \*__isl_keep, isl_dim_type, const std::vector<std::string>&)
+============================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_set_dim_names(isl::map *__isl_keep, isl_dim_type, const std::vector<std::string>&)

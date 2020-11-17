@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a34081b96a62bf1bb5fb8050b6486f3f2:
+
+Variable cinn::runtime::intrisic::buffer_p_to_cinn_pod_value_repr
+=================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_p_to_cinn_pod_value_repr

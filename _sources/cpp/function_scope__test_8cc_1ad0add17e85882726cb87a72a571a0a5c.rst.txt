@@ -1,0 +1,13 @@
+.. _exhale_function_scope__test_8cc_1ad0add17e85882726cb87a72a571a0a5c:
+
+Function cinn::hlir::framework::TEST(Scope, basic)
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::TEST(Scope, basic)

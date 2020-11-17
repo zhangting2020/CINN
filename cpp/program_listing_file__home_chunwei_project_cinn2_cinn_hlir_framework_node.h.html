@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File node.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-node-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-hlir-framework-node-h"></span><h1>Program Listing for File node.h<a class="headerlink" href="#program-listing-for-file-node-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h.html#file-home-chunwei-project-cinn2-cinn-hlir-framework-node-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/framework/node.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;tuple&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;variant&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/graph_utils.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/shared.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/op.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">hlir</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">framework</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">Node</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">NodeData</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="n">NodePtr</span>  <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">AttrType</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">variant</span><span class="o">&lt;</span><span class="kt">bool</span><span class="p">,</span>
+                              <span class="kt">float</span><span class="p">,</span>
+                              <span class="kt">int</span><span class="p">,</span>
+                              <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span>
+                              <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">,</span>
+                              <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">,</span>
+                              <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">,</span>
+                              <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">NodeAttr</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">attr_t</span> <span class="o">=</span> <span class="n">AttrType</span><span class="p">;</span>
+
+  <span class="k">const</span> <span class="n">Operator</span> <span class="o">*</span><span class="n">op</span><span class="p">{</span><span class="k">nullptr</span><span class="p">};</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">node_name</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attr_store</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">os</span><span class="p">,</span> <span class="k">const</span> <span class="n">NodeAttr</span> <span class="o">&amp;</span><span class="n">node_attr</span><span class="p">);</span>
+
+<span class="k">class</span> <span class="nc">Node</span> <span class="o">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphNode</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">Node</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">Node</span><span class="p">(</span><span class="k">const</span> <span class="n">Operator</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">op</span>        <span class="o">=</span> <span class="n">op</span><span class="p">;</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">node_name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">id_</span>             <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">type_info</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">__type_info__</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span> <span class="o">*</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span> <span class="o">*&gt;</span> <span class="n">LinkTo</span><span class="p">(</span><span class="n">NodeData</span> <span class="o">*</span><span class="n">other</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">id_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">NodeAttr</span> <span class="n">attrs</span><span class="p">;</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">inlinks_in_order</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">outlinks_in_order</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kr">inline</span> <span class="k">const</span> <span class="n">Operator</span> <span class="o">*</span><span class="nf">op</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">op</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">is_variable</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">op</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="kt">uint32_t</span> <span class="nf">num_outputs</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">is_variable</span><span class="p">()</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">op</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">num_outputs</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="kt">uint32_t</span> <span class="nf">num_inputs</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">is_variable</span><span class="p">()</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">op</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">num_inputs</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="n">class</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+  <span class="k">static</span> <span class="n">NodePtr</span> <span class="n">Create</span><span class="p">(</span><span class="n">Args</span> <span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">char</span> <span class="o">*</span><span class="n">__type_info__</span> <span class="o">=</span> <span class="s">&quot;hlir_framework_node&quot;</span><span class="p">;</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id_</span><span class="p">;</span>
+  <span class="k">mutable</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span><span class="o">&gt;&gt;</span> <span class="n">outlinks_in_order_</span><span class="p">{};</span>
+  <span class="k">mutable</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span><span class="o">&gt;&gt;</span> <span class="n">inlinks_in_order_</span><span class="p">{};</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">NodeData</span> <span class="o">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphNode</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">attr_t</span> <span class="o">=</span> <span class="n">AttrType</span><span class="p">;</span>
+
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">NodeData</span><span class="p">(</span><span class="n">NodePtr</span> <span class="n">node</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">index</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">source_node</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">node</span><span class="p">)),</span> <span class="n">output_index</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="n">version</span><span class="p">(</span><span class="n">version</span><span class="p">),</span> <span class="n">id_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="p">{}</span>
+
+  <span class="n">NodeData</span><span class="p">()</span> <span class="o">:</span> <span class="n">source_node</span><span class="p">(),</span> <span class="n">output_index</span><span class="p">(),</span> <span class="n">version</span><span class="p">(),</span> <span class="n">id_</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span> <span class="o">*</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span> <span class="o">*&gt;</span> <span class="n">LinkTo</span><span class="p">(</span><span class="n">Node</span> <span class="o">*</span><span class="n">other</span><span class="p">);</span>
+  <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">NodeData</span><span class="o">&gt;</span> <span class="n">Create</span><span class="p">(</span>
+      <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">op_name</span><span class="p">,</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">node_name</span><span class="p">,</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NodeData</span><span class="o">&gt;</span> <span class="n">inputs</span><span class="p">,</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span>                                <span class="o">=</span> <span class="k">nullptr</span><span class="p">,</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">attr_t</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">res</span>                           <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">NodeData</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">id_</span>                           <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">source_node</span>                   <span class="o">=</span> <span class="n">Node</span><span class="o">::</span><span class="n">Create</span><span class="p">();</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">source_node</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">op</span>         <span class="o">=</span> <span class="n">Operator</span><span class="o">::</span><span class="n">Get</span><span class="p">(</span><span class="n">op_name</span><span class="p">);</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">source_node</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">node_name</span>  <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">node_name</span><span class="p">);</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">source_node</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">.</span><span class="n">attr_store</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">type_info</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">__type_info__</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">id_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">NodePtr</span> <span class="n">source_node</span><span class="p">;</span>
+
+  <span class="kt">uint32_t</span> <span class="n">output_index</span><span class="p">;</span>
+
+  <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>
+
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">char</span> <span class="o">*</span><span class="n">__type_info__</span> <span class="o">=</span> <span class="s">&quot;hlir_framework_nodedata&quot;</span><span class="p">;</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="p">}</span>  <span class="c1">// namespace framework</span>
+<span class="p">}</span>  <span class="c1">// namespace hlir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

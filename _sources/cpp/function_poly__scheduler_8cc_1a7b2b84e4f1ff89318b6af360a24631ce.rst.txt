@@ -1,0 +1,13 @@
+.. _exhale_function_poly__scheduler_8cc_1a7b2b84e4f1ff89318b6af360a24631ce:
+
+Function cinn::poly::detail::NaivePartitionGraph
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::detail::NaivePartitionGraph(common::Graph *)

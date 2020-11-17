@@ -1,0 +1,42 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_outputs.h:
+
+Program Listing for File outputs.h
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_outputs.h>` (``/home/chunwei/project/cinn2/cinn/backends/outputs.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <string>
+   
+   namespace cinn {
+   namespace backends {
+   
+   struct Outputs {
+     std::string object_name;
+   
+     std::string bitcode_name;
+   
+     std::string c_header_name;
+   
+     std::string c_source_name;
+   
+     std::string cuda_source_name;
+   
+     Outputs object(const std::string& name) const;
+   
+     Outputs bitcode(const std::string& name) const;
+   
+     Outputs c_header(const std::string& name) const;
+   
+     Outputs c_source(const std::string& name) const;
+   
+     Outputs cuda_source(const std::string& name) const;
+   };
+   
+   }  // namespace backends
+   }  // namespace cinn

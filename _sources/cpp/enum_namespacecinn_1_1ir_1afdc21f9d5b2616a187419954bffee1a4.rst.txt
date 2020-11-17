@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacecinn_1_1ir_1afdc21f9d5b2616a187419954bffee1a4:
+
+Enum ForType
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::ir::ForType

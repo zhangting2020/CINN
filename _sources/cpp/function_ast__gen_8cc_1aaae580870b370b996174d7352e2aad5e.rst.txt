@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen_8cc_1aaae580870b370b996174d7352e2aad5e:
+
+Function cinn::poly::EatFor
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::EatFor(const isl::ast_node&, ir::Expr *)

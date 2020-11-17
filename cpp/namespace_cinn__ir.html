@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Namespace cinn::ir &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="namespace-cinn-ir">
+<span id="id1"></span><h1>Namespace cinn::ir<a class="headerlink" href="#namespace-cinn-ir" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#detailed-description" id="id2">Detailed Description</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id4">Classes</a></p></li>
+<li><p><a class="reference internal" href="#enums" id="id5">Enums</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id6">Functions</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id7">Typedefs</a></p></li>
+</ul>
+</div>
+<div class="section" id="detailed-description">
+<h2>Detailed Description<a class="headerlink" href="#detailed-description" title="Permalink to this headline">¶</a></h2>
+<p>This file defines some intrinsic IR nodes, this is similar to the MLIR operations, we try to expose some underlying opaque operations to IR system to helpe more intuitive codegen.</p>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn__ir__%40187.html#namespace-cinn-ir-187"><span class="std std-ref">Namespace cinn::ir::&#64;187</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__ir__detail.html#namespace-cinn-ir-detail"><span class="std std-ref">Namespace cinn::ir::detail</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__ir__intrinsics.html#namespace-cinn-ir-intrinsics"><span class="std std-ref">Namespace cinn::ir::intrinsics</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1__LoweredFunc__.html#exhale-struct-structcinn-1-1ir-1-1-loweredfunc"><span class="std std-ref">Struct _LoweredFunc_</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1__Module__.html#exhale-struct-structcinn-1-1ir-1-1-module"><span class="std std-ref">Struct _Module_</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1__Var__.html#exhale-struct-structcinn-1-1ir-1-1-var"><span class="std std-ref">Struct _Var_</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Add.html#exhale-struct-structcinn-1-1ir-1-1add"><span class="std std-ref">Struct Add</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Alloc.html#exhale-struct-structcinn-1-1ir-1-1alloc"><span class="std std-ref">Struct Alloc</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1And.html#exhale-struct-structcinn-1-1ir-1-1and"><span class="std std-ref">Struct And</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Argument.html#exhale-struct-structcinn-1-1ir-1-1argument"><span class="std std-ref">Struct Argument</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1BinaryOpNode.html#exhale-struct-structcinn-1-1ir-1-1binaryopnode"><span class="std std-ref">Template Struct BinaryOpNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Block.html#exhale-struct-structcinn-1-1ir-1-1block"><span class="std std-ref">Struct Block</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Broadcast.html#exhale-struct-structcinn-1-1ir-1-1broadcast"><span class="std std-ref">Struct Broadcast</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1BufferShareOp.html#exhale-struct-structcinn-1-1ir-1-1buffershareop"><span class="std std-ref">Struct BufferShareOp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Call.html#exhale-struct-structcinn-1-1ir-1-1call"><span class="std std-ref">Struct Call</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1CallOp.html#exhale-struct-structcinn-1-1ir-1-1callop"><span class="std std-ref">Struct CallOp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Cast.html#exhale-struct-structcinn-1-1ir-1-1cast"><span class="std std-ref">Struct Cast</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1ComputeOp.html#exhale-struct-structcinn-1-1ir-1-1computeop"><span class="std std-ref">Struct ComputeOp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1CudaAxisInfo.html#exhale-struct-structcinn-1-1ir-1-1cudaaxisinfo"><span class="std std-ref">Struct CudaAxisInfo</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Div.html#exhale-struct-structcinn-1-1ir-1-1div"><span class="std std-ref">Struct Div</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1EQ.html#exhale-struct-structcinn-1-1ir-1-1eq"><span class="std std-ref">Struct EQ</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Expr.html#exhale-struct-structcinn-1-1ir-1-1expr"><span class="std std-ref">Struct Expr</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1ExprNode.html#exhale-struct-structcinn-1-1ir-1-1exprnode"><span class="std std-ref">Template Struct ExprNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1FloatImm.html#exhale-struct-structcinn-1-1ir-1-1floatimm"><span class="std std-ref">Struct FloatImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1For.html#exhale-struct-structcinn-1-1ir-1-1for"><span class="std std-ref">Struct For</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1ForBase.html#exhale-struct-structcinn-1-1ir-1-1forbase"><span class="std std-ref">Struct ForBase</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1FracOp.html#exhale-struct-structcinn-1-1ir-1-1fracop"><span class="std std-ref">Struct FracOp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Free.html#exhale-struct-structcinn-1-1ir-1-1free"><span class="std std-ref">Struct Free</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1GE.html#exhale-struct-structcinn-1-1ir-1-1ge"><span class="std std-ref">Struct GE</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1GT.html#exhale-struct-structcinn-1-1ir-1-1gt"><span class="std std-ref">Struct GT</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IfThenElse.html#exhale-struct-structcinn-1-1ir-1-1ifthenelse"><span class="std std-ref">Struct IfThenElse</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IntImm.html#exhale-struct-structcinn-1-1ir-1-1intimm"><span class="std std-ref">Struct IntImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IrPrinter.html#exhale-struct-structcinn-1-1ir-1-1irprinter"><span class="std std-ref">Struct IrPrinter</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IrVerifyVisitor.html#exhale-struct-structcinn-1-1ir-1-1irverifyvisitor"><span class="std std-ref">Struct IrVerifyVisitor</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IRVisitor.html#exhale-struct-structcinn-1-1ir-1-1irvisitor"><span class="std std-ref">Struct IRVisitor</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IRVisitorBase.html#exhale-struct-structcinn-1-1ir-1-1irvisitorbase"><span class="std std-ref">Template Struct IRVisitorBase</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1LE.html#exhale-struct-structcinn-1-1ir-1-1le"><span class="std std-ref">Struct LE</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Let.html#exhale-struct-structcinn-1-1ir-1-1let"><span class="std std-ref">Struct Let</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1LLVMForLoopMeta.html#exhale-struct-structcinn-1-1ir-1-1llvmforloopmeta"><span class="std std-ref">Struct LLVMForLoopMeta</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Load.html#exhale-struct-structcinn-1-1ir-1-1load"><span class="std std-ref">Struct Load</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1LoadStoreAddrMnger.html#exhale-struct-structcinn-1-1ir-1-1loadstoreaddrmnger"><span class="std std-ref">Struct LoadStoreAddrMnger</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1LT.html#exhale-struct-structcinn-1-1ir-1-1lt"><span class="std std-ref">Struct LT</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Max.html#exhale-struct-structcinn-1-1ir-1-1max"><span class="std std-ref">Struct Max</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Min.html#exhale-struct-structcinn-1-1ir-1-1min"><span class="std std-ref">Struct Min</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Minus.html#exhale-struct-structcinn-1-1ir-1-1minus"><span class="std std-ref">Struct Minus</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Mod.html#exhale-struct-structcinn-1-1ir-1-1mod"><span class="std std-ref">Struct Mod</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Module_1_1Builder.html#exhale-struct-structcinn-1-1ir-1-1module-1-1builder"><span class="std std-ref">Struct Module::Builder</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Mul.html#exhale-struct-structcinn-1-1ir-1-1mul"><span class="std std-ref">Struct Mul</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1NE.html#exhale-struct-structcinn-1-1ir-1-1ne"><span class="std std-ref">Struct NE</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Not.html#exhale-struct-structcinn-1-1ir-1-1not"><span class="std std-ref">Struct Not</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Or.html#exhale-struct-structcinn-1-1ir-1-1or"><span class="std std-ref">Struct Or</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1PlaceholderOp.html#exhale-struct-structcinn-1-1ir-1-1placeholderop"><span class="std std-ref">Struct PlaceholderOp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1PolyFor.html#exhale-struct-structcinn-1-1ir-1-1polyfor"><span class="std std-ref">Struct PolyFor</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Power.html#exhale-struct-structcinn-1-1ir-1-1power"><span class="std std-ref">Struct Power</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1PrecedingViewOp.html#exhale-struct-structcinn-1-1ir-1-1precedingviewop"><span class="std std-ref">Struct PrecedingViewOp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1PrimitiveNode.html#exhale-struct-structcinn-1-1ir-1-1primitivenode"><span class="std std-ref">Struct PrimitiveNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Product.html#exhale-struct-structcinn-1-1ir-1-1product"><span class="std std-ref">Struct Product</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Ramp.html#exhale-struct-structcinn-1-1ir-1-1ramp"><span class="std std-ref">Struct Ramp</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Reduce.html#exhale-struct-structcinn-1-1ir-1-1reduce"><span class="std std-ref">Struct Reduce</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Registry_1_1Manager.html#exhale-struct-structcinn-1-1ir-1-1registry-1-1manager"><span class="std std-ref">Struct Registry::Manager</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Select.html#exhale-struct-structcinn-1-1ir-1-1select"><span class="std std-ref">Struct Select</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Specialization.html#exhale-struct-structcinn-1-1ir-1-1specialization"><span class="std std-ref">Struct Specialization</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Store.html#exhale-struct-structcinn-1-1ir-1-1store"><span class="std std-ref">Struct Store</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1StringImm.html#exhale-struct-structcinn-1-1ir-1-1stringimm"><span class="std std-ref">Struct StringImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Sub.html#exhale-struct-structcinn-1-1ir-1-1sub"><span class="std std-ref">Struct Sub</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Sum.html#exhale-struct-structcinn-1-1ir-1-1sum"><span class="std std-ref">Struct Sum</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1UIntImm.html#exhale-struct-structcinn-1-1ir-1-1uintimm"><span class="std std-ref">Struct UIntImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1UnaryOpNode.html#exhale-struct-structcinn-1-1ir-1-1unaryopnode"><span class="std std-ref">Template Struct UnaryOpNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Var.html#exhale-struct-structcinn-1-1ir-1-1var"><span class="std std-ref">Struct Var</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1VectorizeInfo.html#exhale-struct-structcinn-1-1ir-1-1vectorizeinfo"><span class="std std-ref">Struct VectorizeInfo</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1__Buffer__.html#exhale-class-classcinn-1-1ir-1-1-buffer"><span class="std std-ref">Class _Buffer_</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1__Operation__.html#exhale-class-classcinn-1-1ir-1-1-operation"><span class="std std-ref">Class _Operation_</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1__Tensor__.html#exhale-class-classcinn-1-1ir-1-1-tensor"><span class="std std-ref">Class _Tensor_</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1Buffer.html#exhale-class-classcinn-1-1ir-1-1buffer"><span class="std std-ref">Class Buffer</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1CINNContext.html#exhale-class-classcinn-1-1ir-1-1cinncontext"><span class="std std-ref">Class CINNContext</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1Definition.html#exhale-class-classcinn-1-1ir-1-1definition"><span class="std std-ref">Class Definition</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1FunctionBase.html#exhale-class-classcinn-1-1ir-1-1functionbase"><span class="std std-ref">Class FunctionBase</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1FunctionRef.html#exhale-class-classcinn-1-1ir-1-1functionref"><span class="std std-ref">Class FunctionRef</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1IntrinsicOp.html#exhale-class-classcinn-1-1ir-1-1intrinsicop"><span class="std std-ref">Class IntrinsicOp</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1IRMutator.html#exhale-class-classcinn-1-1ir-1-1irmutator"><span class="std std-ref">Template Class IRMutator</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1IrNode.html#exhale-class-classcinn-1-1ir-1-1irnode"><span class="std std-ref">Class IrNode</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1IrNodeRef.html#exhale-class-classcinn-1-1ir-1-1irnoderef"><span class="std std-ref">Class IrNodeRef</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1LoweredFunc.html#exhale-class-classcinn-1-1ir-1-1loweredfunc"><span class="std std-ref">Class LoweredFunc</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1Module.html#exhale-class-classcinn-1-1ir-1-1module"><span class="std std-ref">Class Module</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1Operation.html#exhale-class-classcinn-1-1ir-1-1operation"><span class="std std-ref">Class Operation</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1Registry.html#exhale-class-classcinn-1-1ir-1-1registry"><span class="std std-ref">Class Registry</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1Tensor.html#exhale-class-classcinn-1-1ir-1-1tensor"><span class="std std-ref">Class Tensor</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1ab34e366aeab67f67f3588a2e2de60d67.html#exhale-enum-namespacecinn-1-1ir-1ab34e366aeab67f67f3588a2e2de60d67"><span class="std std-ref">Enum AccessMask</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1a77068afce052b34324e21772c1f75777.html#exhale-enum-namespacecinn-1-1ir-1a77068afce052b34324e21772c1f75777"><span class="std std-ref">Enum CallType</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1a341195f76b87f9299035c4fdea04fa7b.html#exhale-enum-namespacecinn-1-1ir-1a341195f76b87f9299035c4fdea04fa7b"><span class="std std-ref">Enum DeviceAPI</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1afdc21f9d5b2616a187419954bffee1a4.html#exhale-enum-namespacecinn-1-1ir-1afdc21f9d5b2616a187419954bffee1a4"><span class="std std-ref">Enum ForType</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1a8666efc358bd814ecd72b82edd6b4a53.html#exhale-enum-namespacecinn-1-1ir-1a8666efc358bd814ecd72b82edd6b4a53"><span class="std std-ref">Enum IntrinsicKind</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1a1e4c1b8aec1fb20151a0a83a9c9e42f9.html#exhale-enum-namespacecinn-1-1ir-1a1e4c1b8aec1fb20151a0a83a9c9e42f9"><span class="std std-ref">Enum IrNodeTy</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1acb578243f2e77ffeb79ca3305192c80a.html#exhale-enum-namespacecinn-1-1ir-1acb578243f2e77ffeb79ca3305192c80a"><span class="std std-ref">Enum MemoryType</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a3125b28cb2700e4fbfc9ca852586ede5.html#exhale-function-namespacecinn-1-1ir-1a3125b28cb2700e4fbfc9ca852586ede5"><span class="std std-ref">Function cinn::ir::BinaryNodeVerify</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a427d87814fc08c1f11904fc116e05f27.html#exhale-function-namespacecinn-1-1ir-1a427d87814fc08c1f11904fc116e05f27"><span class="std std-ref">Function cinn::ir::BufferGetTensorName</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1add74fe441ebb43c5032df05d82f0d66a.html#exhale-function-namespacecinn-1-1ir-1add74fe441ebb43c5032df05d82f0d66a"><span class="std std-ref">Function cinn::ir::CollectIRNodes</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aba7a789d94b2df1fffd245335bd32dba.html#exhale-function-namespacecinn-1-1ir-1aba7a789d94b2df1fffd245335bd32dba"><span class="std std-ref">Function cinn::ir::CollectLoadTensors</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a8085d0ad5c8cc1b86a97d21cd17eae50.html#exhale-function-namespacecinn-1-1ir-1a8085d0ad5c8cc1b86a97d21cd17eae50"><span class="std std-ref">Function cinn::ir::CollectReferencedTensors</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae7ecc915c74eea7fccb05c27e2d0cd87.html#exhale-function-namespacecinn-1-1ir-1ae7ecc915c74eea7fccb05c27e2d0cd87"><span class="std std-ref">Function cinn::ir::CollectStoreTensors</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aa84f303f3f3a85bf70411d5b89a11cd9.html#exhale-function-namespacecinn-1-1ir-1aa84f303f3f3a85bf70411d5b89a11cd9"><span class="std std-ref">Function cinn::ir::CollectTensorMap</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a707dd50172be25173c39bfb8f97a4bab.html#exhale-function-namespacecinn-1-1ir-1a707dd50172be25173c39bfb8f97a4bab"><span class="std std-ref">Function cinn::ir::CreateStage</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a5268ec579840fb0fb7e4848b1d8abf55.html#exhale-function-namespacecinn-1-1ir-1a5268ec579840fb0fb7e4848b1d8abf55"><span class="std std-ref">Function cinn::ir::GenReduceInitTensorNameOf</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ad6541b25fa3abaf0ef34bb2d5f27f191.html#exhale-function-namespacecinn-1-1ir-1ad6541b25fa3abaf0ef34bb2d5f27f191"><span class="std std-ref">Function cinn::ir::IrVerify</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a9039c33dcc1b0f9fd8441d17bb428ab8.html#exhale-function-namespacecinn-1-1ir-1a9039c33dcc1b0f9fd8441d17bb428ab8"><span class="std std-ref">Function cinn::ir::kIrNodeTyReprs</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a331670f6a589236530e0874ab9a4da48.html#exhale-function-namespacecinn-1-1ir-1a331670f6a589236530e0874ab9a4da48"><span class="std std-ref">Function cinn::ir::MultiOperandVerify</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a675f9d3c5f020daf0598f5c7cdd40a8e.html#exhale-function-namespacecinn-1-1ir-1a675f9d3c5f020daf0598f5c7cdd40a8e"><span class="std std-ref">Function cinn::ir::NODETY_UNARY_OP_FOR_EACH</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a48d6d98f98839cbebc0179bc9d263410.html#exhale-function-namespacecinn-1-1ir-1a48d6d98f98839cbebc0179bc9d263410"><span class="std std-ref">Function cinn::ir::operator &amp;(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a48d6d98f98839cbebc0179bc9d263410.html#exhale-function-namespacecinn-1-1ir-1a48d6d98f98839cbebc0179bc9d263410"><span class="std std-ref">Function cinn::ir::operator &amp;(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1af4846433b1898e59f4dc02db8a50e849.html#exhale-function-namespacecinn-1-1ir-1af4846433b1898e59f4dc02db8a50e849"><span class="std std-ref">Function cinn::ir::operator &amp;&amp;</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a25b6ad3d52fd8ff26d0cde8739a4b778.html#exhale-function-namespacecinn-1-1ir-1a25b6ad3d52fd8ff26d0cde8739a4b778"><span class="std std-ref">Function cinn::ir::operator!</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a36fd31830e17929888d78765f022050d.html#exhale-function-namespacecinn-1-1ir-1a36fd31830e17929888d78765f022050d"><span class="std std-ref">Function cinn::ir::operator!=</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a47ee00bdf36d37382e528804af6d1790.html#exhale-function-namespacecinn-1-1ir-1a47ee00bdf36d37382e528804af6d1790"><span class="std std-ref">Template Function cinn::ir::operator%(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a72b856267564a2968fb5dda37ad12e11.html#exhale-function-namespacecinn-1-1ir-1a72b856267564a2968fb5dda37ad12e11"><span class="std std-ref">Template Function cinn::ir::operator%(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a844471b6958238869d8a1dacab9d18a3.html#exhale-function-namespacecinn-1-1ir-1a844471b6958238869d8a1dacab9d18a3"><span class="std std-ref">Function cinn::ir::operator%(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a83528be273d687b612263dff6a3fe1b4.html#exhale-function-namespacecinn-1-1ir-1a83528be273d687b612263dff6a3fe1b4"><span class="std std-ref">Template Function cinn::ir::operator*(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aee4786a299cfefcbea21dd38fa98cebf.html#exhale-function-namespacecinn-1-1ir-1aee4786a299cfefcbea21dd38fa98cebf"><span class="std std-ref">Template Function cinn::ir::operator*(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a255ea26decb32493b55e26d784a008b1.html#exhale-function-namespacecinn-1-1ir-1a255ea26decb32493b55e26d784a008b1"><span class="std std-ref">Function cinn::ir::operator*(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a4fcbe20458a98ffd15f547ed0c85a60f.html#exhale-function-namespacecinn-1-1ir-1a4fcbe20458a98ffd15f547ed0c85a60f"><span class="std std-ref">Template Function cinn::ir::operator+(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ad2ae034725adbd4be6ea4c954fe07d89.html#exhale-function-namespacecinn-1-1ir-1ad2ae034725adbd4be6ea4c954fe07d89"><span class="std std-ref">Template Function cinn::ir::operator+(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a63a62fbec47152fb2ec6710f168189f8.html#exhale-function-namespacecinn-1-1ir-1a63a62fbec47152fb2ec6710f168189f8"><span class="std std-ref">Function cinn::ir::operator+(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a0bee5581b55d8be5132285934e00c6db.html#exhale-function-namespacecinn-1-1ir-1a0bee5581b55d8be5132285934e00c6db"><span class="std std-ref">Template Function cinn::ir::operator-(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a543892b6157914a9c329ffb43266e71f.html#exhale-function-namespacecinn-1-1ir-1a543892b6157914a9c329ffb43266e71f"><span class="std std-ref">Template Function cinn::ir::operator-(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1acdb088cf30502f63c50e5c661a1ba8dd.html#exhale-function-namespacecinn-1-1ir-1acdb088cf30502f63c50e5c661a1ba8dd"><span class="std std-ref">Function cinn::ir::operator-(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1acd8ebf9fcf03c698ec382630acaf3b64.html#exhale-function-namespacecinn-1-1ir-1acd8ebf9fcf03c698ec382630acaf3b64"><span class="std std-ref">Function cinn::ir::operator-(Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ac982c879db883ca3384cc93f3d5b367f.html#exhale-function-namespacecinn-1-1ir-1ac982c879db883ca3384cc93f3d5b367f"><span class="std std-ref">Template Function cinn::ir::operator/(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a44087a68a3ba09789c5bb4f7b19f46ff.html#exhale-function-namespacecinn-1-1ir-1a44087a68a3ba09789c5bb4f7b19f46ff"><span class="std std-ref">Template Function cinn::ir::operator/(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae3bf9ec9dfcd80a3fd26cb61065962e1.html#exhale-function-namespacecinn-1-1ir-1ae3bf9ec9dfcd80a3fd26cb61065962e1"><span class="std std-ref">Function cinn::ir::operator/(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a079d91b363e7557b48f93afbd331e66d.html#exhale-function-namespacecinn-1-1ir-1a079d91b363e7557b48f93afbd331e66d"><span class="std std-ref">Template Function cinn::ir::operator&lt;(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a1d01336dc6248d44552d3a9f2dd72c6c.html#exhale-function-namespacecinn-1-1ir-1a1d01336dc6248d44552d3a9f2dd72c6c"><span class="std std-ref">Template Function cinn::ir::operator&lt;(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1af3f08b54944d1578d9a90eb8f890f3cd.html#exhale-function-namespacecinn-1-1ir-1af3f08b54944d1578d9a90eb8f890f3cd"><span class="std std-ref">Function cinn::ir::operator&lt;(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ab8b6b5b5a076409c527f8064f1d1452d.html#exhale-function-namespacecinn-1-1ir-1ab8b6b5b5a076409c527f8064f1d1452d"><span class="std std-ref">Function cinn::ir::operator&lt;(const ir::Buffer&amp;, const ir::Buffer&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1afa9420bb9f24ae0c761ef877213f75b7.html#exhale-function-namespacecinn-1-1ir-1afa9420bb9f24ae0c761ef877213f75b7"><span class="std std-ref">Function cinn::ir::operator&lt;(const Tensor&amp;, const Tensor&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aa7e0e7c2eb86500453cf595e08beb05b.html#exhale-function-namespacecinn-1-1ir-1aa7e0e7c2eb86500453cf595e08beb05b"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a07b72ab140e128c1931891b24dd0a6f8.html#exhale-function-namespacecinn-1-1ir-1a07b72ab140e128c1931891b24dd0a6f8"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, const std::vector&lt;Expr&gt;&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a5a0904b0b3791238f86d8103b23e2b2c.html#exhale-function-namespacecinn-1-1ir-1a5a0904b0b3791238f86d8103b23e2b2c"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, const ir::Module&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a45ba8e848a8bdee15aa74c3252451a26.html#exhale-function-namespacecinn-1-1ir-1a45ba8e848a8bdee15aa74c3252451a26"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, const CudaAxisInfo&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a5aee0dde69c3de745e33d290e1667fa7.html#exhale-function-namespacecinn-1-1ir-1a5aee0dde69c3de745e33d290e1667fa7"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, IrNodeTy)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1af8bb91aa424338a5f18b93385e1e80bb.html#exhale-function-namespacecinn-1-1ir-1af8bb91aa424338a5f18b93385e1e80bb"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, DeviceAPI)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae01e2608e11de478d9cd4d6a12b7abd6.html#exhale-function-namespacecinn-1-1ir-1ae01e2608e11de478d9cd4d6a12b7abd6"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, MemoryType)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a246286a48f5c56d7daa9e5d90232658a.html#exhale-function-namespacecinn-1-1ir-1a246286a48f5c56d7daa9e5d90232658a"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a55a8d860c30ce9c9b6f886c152dcf906.html#exhale-function-namespacecinn-1-1ir-1a55a8d860c30ce9c9b6f886c152dcf906"><span class="std std-ref">Template Function cinn::ir::operator&lt;=(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a4be55b043a9aca60824b66d48ff7a050.html#exhale-function-namespacecinn-1-1ir-1a4be55b043a9aca60824b66d48ff7a050"><span class="std std-ref">Template Function cinn::ir::operator&lt;=(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aec122436e04f4045fbfae492d8ffbc55.html#exhale-function-namespacecinn-1-1ir-1aec122436e04f4045fbfae492d8ffbc55"><span class="std std-ref">Function cinn::ir::operator&lt;=(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a9e1d4b76f3117b9dc35885baa316526c.html#exhale-function-namespacecinn-1-1ir-1a9e1d4b76f3117b9dc35885baa316526c"><span class="std std-ref">Template Function cinn::ir::operator==(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ad974d5e40f583d12286045746c9d3785.html#exhale-function-namespacecinn-1-1ir-1ad974d5e40f583d12286045746c9d3785"><span class="std std-ref">Template Function cinn::ir::operator==(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1af1287b31bdf0b3172daa19a8197560ce.html#exhale-function-namespacecinn-1-1ir-1af1287b31bdf0b3172daa19a8197560ce"><span class="std std-ref">Function cinn::ir::operator==(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a5e29d92c28529ca6a5de3299557fd6b0.html#exhale-function-namespacecinn-1-1ir-1a5e29d92c28529ca6a5de3299557fd6b0"><span class="std std-ref">Template Function cinn::ir::operator&gt;(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aa1536eaff9551e05dd3ea16f503abbed.html#exhale-function-namespacecinn-1-1ir-1aa1536eaff9551e05dd3ea16f503abbed"><span class="std std-ref">Template Function cinn::ir::operator&gt;(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a23a61c019269a1e5d18c8bdbda9b0002.html#exhale-function-namespacecinn-1-1ir-1a23a61c019269a1e5d18c8bdbda9b0002"><span class="std std-ref">Function cinn::ir::operator&gt;(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1abca46a74c3702df980cae1a8d9a93c85.html#exhale-function-namespacecinn-1-1ir-1abca46a74c3702df980cae1a8d9a93c85"><span class="std std-ref">Template Function cinn::ir::operator&gt;=(Expr, POD)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae27af44036d41fa5f8ab2e1857c952c6.html#exhale-function-namespacecinn-1-1ir-1ae27af44036d41fa5f8ab2e1857c952c6"><span class="std std-ref">Template Function cinn::ir::operator&gt;=(POD, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1abd265b7cb55a9063626ac00d689069f7.html#exhale-function-namespacecinn-1-1ir-1abd265b7cb55a9063626ac00d689069f7"><span class="std std-ref">Function cinn::ir::operator&gt;=(Expr, Expr)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aed10292c919140debb49f08713a73f73.html#exhale-function-namespacecinn-1-1ir-1aed10292c919140debb49f08713a73f73"><span class="std std-ref">Function cinn::ir::operator&gt;&gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1accf987c7ed787a3a5be1b11f53adc81b.html#exhale-function-namespacecinn-1-1ir-1accf987c7ed787a3a5be1b11f53adc81b"><span class="std std-ref">Function cinn::ir::operator^</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aa04f0cc3f2eb85b416a2fdda67f4e92a.html#exhale-function-namespacecinn-1-1ir-1aa04f0cc3f2eb85b416a2fdda67f4e92a"><span class="std std-ref">Function cinn::ir::operator|</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a75d0b2fb6e4f00675c71212a3d0954cd.html#exhale-function-namespacecinn-1-1ir-1a75d0b2fb6e4f00675c71212a3d0954cd"><span class="std std-ref">Function cinn::ir::operator||</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a67144caf0eb5ac51dd232226cebadee6.html#exhale-function-namespacecinn-1-1ir-1a67144caf0eb5ac51dd232226cebadee6"><span class="std std-ref">Function cinn::ir::operator~</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aef69799ac5ae6964dfa5bd7c2bf2bd2d.html#exhale-function-namespacecinn-1-1ir-1aef69799ac5ae6964dfa5bd7c2bf2bd2d"><span class="std std-ref">Function cinn::ir::TensorGetBufferName</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a0add3f5973a4e08053f1944d4d2b14a6.html#exhale-function-namespacecinn-1-1ir-1a0add3f5973a4e08053f1944d4d2b14a6"><span class="std std-ref">Function cinn::ir::TEST(ir_operators, test)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aa97bba6a650749e1985a890d12348e62.html#exhale-function-namespacecinn-1-1ir-1aa97bba6a650749e1985a890d12348e62"><span class="std std-ref">Function cinn::ir::TEST(Expr, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae94b5ccd0fee0816dcb63e998535dc95.html#exhale-function-namespacecinn-1-1ir-1ae94b5ccd0fee0816dcb63e998535dc95"><span class="std std-ref">Function cinn::ir::TEST(IrVerify, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1af223e35bcfb885f567d02aabc609e536.html#exhale-function-namespacecinn-1-1ir-1af223e35bcfb885f567d02aabc609e536"><span class="std std-ref">Function cinn::ir::TEST(Buffer, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a9deec1be1a51e29b967921bea758e732.html#exhale-function-namespacecinn-1-1ir-1a9deec1be1a51e29b967921bea758e732"><span class="std std-ref">Function cinn::ir::TEST(Buffer, bind_to_multiple_tensors)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1afd566f1104e02d3847692a25c0aca74c.html#exhale-function-namespacecinn-1-1ir-1afd566f1104e02d3847692a25c0aca74c"><span class="std std-ref">Function cinn::ir::TEST(Tensor, inlined)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1acfc12b38c3cf76b70886b1d93d2b10b6.html#exhale-function-namespacecinn-1-1ir-1acfc12b38c3cf76b70886b1d93d2b10b6"><span class="std std-ref">Function cinn::ir::TEST(CollectIRNodes, basic0)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aba834297f0daec5d0a2a15c99c900510.html#exhale-function-namespacecinn-1-1ir-1aba834297f0daec5d0a2a15c99c900510"><span class="std std-ref">Function cinn::ir::TEST(Tensor, IsDependOnStatement)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a8fd8350cf62699d17cfb8e80b2188372.html#exhale-function-namespacecinn-1-1ir-1a8fd8350cf62699d17cfb8e80b2188372"><span class="std std-ref">Function cinn::ir::TEST(CollectIRNodes, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a5917ac7f2ae2c8b99746cb5d5a67cf27.html#exhale-function-namespacecinn-1-1ir-1a5917ac7f2ae2c8b99746cb5d5a67cf27"><span class="std std-ref">Function cinn::ir::TEST(Tensor, Reshape)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae316771736c968f521f0fedef7bea3b2.html#exhale-function-namespacecinn-1-1ir-1ae316771736c968f521f0fedef7bea3b2"><span class="std std-ref">Function cinn::ir::TEST(IntrinsicOp, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aa8cb42310d2eebca284c54d10191f0d9.html#exhale-function-namespacecinn-1-1ir-1aa8cb42310d2eebca284c54d10191f0d9"><span class="std std-ref">Function cinn::ir::TEST(Tensor, ReshapeCopied)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1aaaea2b4c5ddad4548597a1105e231b6e.html#exhale-function-namespacecinn-1-1ir-1aaaea2b4c5ddad4548597a1105e231b6e"><span class="std std-ref">Function cinn::ir::TEST(Tensor, reduce)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a4ce55322defceea3c083b1a68a17c2d4.html#exhale-function-namespacecinn-1-1ir-1a4ce55322defceea3c083b1a68a17c2d4"><span class="std std-ref">Function cinn::ir::Zero</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="typedef_namespacecinn_1_1ir_1a3973777cb3e46e08d5dcc8da17e299ff.html#exhale-typedef-namespacecinn-1-1ir-1a3973777cb3e46e08d5dcc8da17e299ff"><span class="std std-ref">Typedef cinn::ir::dim3_t</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/namespace_cinn__ir.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

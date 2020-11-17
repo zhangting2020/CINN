@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8h_1ae56a99226c7fae453a99391b1ad01d7c:
+
+Function cinn::poly::isl_set_dim_name_if_null(isl_set \*__isl_take, std::function<std::string(isl_dim_type, int)>)
+==================================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_set_dim_name_if_null(isl_set *__isl_take, std::function<std::string(isl_dim_type, int)>)

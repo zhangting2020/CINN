@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a5aee0dde69c3de745e33d290e1667fa7:
+
+Function cinn::ir::operator<<(std::ostream&, IrNodeTy)
+======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<<(std::ostream&, IrNodeTy)

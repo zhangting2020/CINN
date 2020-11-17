@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1a807d0087e039d5be9080a5bbd1e3cd37:
+
+Function cinn::utils::Startswith
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Startswith(const std::string&, const std::string&)

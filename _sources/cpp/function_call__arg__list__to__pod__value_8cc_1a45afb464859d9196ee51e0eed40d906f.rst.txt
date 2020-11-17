@@ -1,0 +1,13 @@
+.. _exhale_function_call__arg__list__to__pod__value_8cc_1a45afb464859d9196ee51e0eed40d906f:
+
+Function cinn::optim::CallArgListToPodValue
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::CallArgListToPodValue(Expr *)

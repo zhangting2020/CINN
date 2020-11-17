@@ -1,0 +1,13 @@
+.. _exhale_function_test02__helper_8h_1af120ab2fd2a753d4d872c5518afad763:
+
+Function cinn::tests::CreateMatmulVectorizeModule
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::CreateMatmulVectorizeModule(Target, int, int, int)

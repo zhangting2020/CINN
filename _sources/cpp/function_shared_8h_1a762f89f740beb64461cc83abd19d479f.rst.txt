@@ -1,0 +1,13 @@
+.. _exhale_function_shared_8h_1a762f89f740beb64461cc83abd19d479f:
+
+Template Function cinn::common::Destroy
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Destroy(const T *)

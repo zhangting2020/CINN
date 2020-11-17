@@ -1,0 +1,26 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h:
+
+Program Listing for File remove_nested_block.h
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h>` (``/home/chunwei/project/cinn2/cinn/optim/remove_nested_block.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #pragma once
+   #include <vector>
+   
+   #include "cinn/common/common.h"
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void RemoveNestedBlock(Expr* e);
+   
+   }  // namespace optim
+   }  // namespace cinn

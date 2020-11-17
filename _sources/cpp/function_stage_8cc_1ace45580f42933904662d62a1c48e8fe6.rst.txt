@@ -1,0 +1,13 @@
+.. _exhale_function_stage_8cc_1ace45580f42933904662d62a1c48e8fe6:
+
+Function cinn::poly::CreateStages
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::CreateStages(const std::vector<ir::Tensor>&)

@@ -1,0 +1,62 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction.h:
+
+Program Listing for File instruction.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/instruction.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/common/test_helper.h"
+   #include "cinn/hlir/framework/scope.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   class Instruction {
+    public:
+     using infershape_t = std::function<void(Scope*, const std::vector<std::string>&)>;
+   
+     Instruction(const Target& target,
+                 Scope* scope,
+                 const std::vector<std::string>& in_args,
+                 const std::vector<std::string>& out_args)
+         : target_(target), scope_(scope), in_args_(in_args), out_args_(out_args) {}
+   
+     void SetLoweredFunc(lower_func_ptr_t fn) { fn_ = fn; }
+   
+     void Run() {
+       CHECK(fn_) << "The LoweredFunc address should be set first by calling SetLoweredFunc method";
+       auto& pod_args = PreparePodArgs();
+       fn_(pod_args.data(), pod_args.size());
+     }
+     std::vector<std::string> GetInArgs() { return in_args_; }
+     std::vector<std::string> GetOutArgs() { return out_args_; }
+   
+    protected:
+     std::vector<cinn_pod_value_t>& PreparePodArgs();
+   
+    private:
+     Scope* scope_{};
+     std::vector<std::string> in_args_;
+     std::vector<std::string> out_args_;
+   
+     std::vector<cinn_pod_value_t> args_cached_;
+   
+     Target target_;
+   
+     lower_func_ptr_t fn_{};
+   };
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

@@ -1,0 +1,64 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h:
+
+Program Listing for File scope.h
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/scope.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <memory>
+   #include <string>
+   #include <unordered_map>
+   #include <variant>
+   #include <vector>
+   
+   #include "cinn/common/macros.h"
+   #include "cinn/hlir/framework/tensor.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   using Variable = std::variant<Tensor>;
+   
+   struct _Tensor_;
+   
+   class Scope {
+    public:
+     static std::shared_ptr<Scope> Create() { return std::make_shared<Scope>(); }
+   
+     template <typename T>
+     Variable* Var(const std::string& name);
+   
+     Variable* FindVar(const std::string& name) const;
+   
+     Tensor GetTensor(const std::string& name) const;
+   
+     std::vector<std::string_view> var_names() const;
+   
+     Scope() = default;
+   
+    private:
+     std::unordered_map<std::string, std::unique_ptr<Variable>> data_;
+   
+     CINN_DISALLOW_COPY_AND_ASSIGN(Scope);
+   };
+   
+   template <typename T>
+   Variable* Scope::Var(const std::string& name) {
+     VLOG(4) << "Scope insert Var [" << name << "]";
+     Variable* x = FindVar(name);
+     if (x) return x;
+     auto* data = new Variable(T());
+     data_[name].reset(data);
+     return data;
+   }
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

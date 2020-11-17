@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1a23d36229ed9dc623653e1f8e0fafce82:
+
+Function cinn::utils::TEST(string, Startswith)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::TEST(string, Startswith)

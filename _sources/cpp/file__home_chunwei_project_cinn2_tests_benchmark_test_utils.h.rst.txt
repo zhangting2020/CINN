@@ -1,0 +1,77 @@
+
+.. _file__home_chunwei_project_cinn2_tests_benchmark_test_utils.h:
+
+File test_utils.h
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests_benchmark>` (``/home/chunwei/project/cinn2/tests/benchmark``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/benchmark/test_utils.h``)
+-------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_benchmark_test_utils.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``cinn/runtime/cinn_runtime.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.h`
+
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h`
+
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_utils.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__tests`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1OpBenchmarkTester`
+

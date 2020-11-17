@@ -1,0 +1,68 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_arithmatic.h:
+
+Program Listing for File arithmatic.h
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_arithmatic.h>` (``/home/chunwei/project/cinn2/cinn/common/arithmatic.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #pragma once
+   
+   #include <ginac/ginac.h>
+   
+   #include <limits>
+   #include <map>
+   #include <set>
+   #include <string>
+   #include <tuple>
+   
+   #include "cinn/ir/ir.h"
+   
+   #ifdef As
+   #undef As
+   #endif
+   
+   namespace cinn {
+   namespace common {
+   
+   namespace ginac = GiNaC;
+   
+   bool IsPureMath(Expr expr);
+   
+   bool MathContainsSymbol(Expr expr, Var symbol);
+   
+   std::tuple<Expr, bool /*positive*/> Solve(Expr lhs, Expr rhs, Var symbol);
+   
+   bool MathIsZero(Expr expr);
+   
+   int gcd(int a, int b);
+   
+   struct ExprToGinacConerter {
+     ginac::ex operator()(Expr expr);
+   
+     Expr GinacToExpr(const GiNaC::ex& ex);
+   
+     bool HasSymbol(const std::string& name) const { return repr_to_ginac_.count(name); }
+     const ginac::symbol& GetSymbol(const std::string& name) const { return repr_to_ginac_.at(name); }
+   
+    private:
+     std::string Repr(const Expr& expr);
+     ginac::symbol CreateGinacSymbol(const std::string& repr);
+     ginac::symbol CreateGinacSymbol(const ir::Expr& var);
+   
+     ginac::ex BuildHelper(ir::Expr expr);
+   
+     void RecordExpr(const ir::Expr& expr);
+   
+    private:
+     std::map<std::string, ir::Expr> repr_to_expr_;
+     std::map<std::string, ginac::symbol> repr_to_ginac_;
+   };
+   
+   }  // namespace common
+   }  // namespace cinn

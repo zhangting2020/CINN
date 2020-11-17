@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File mkl_math_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-mkl-math-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-runtime-cpu-mkl-math-test-cc"></span><h1>Program Listing for File mkl_math_test.cc<a class="headerlink" href="#program-listing-for-file-mkl-math-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-mkl-math-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cpu/mkl_math_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/compiler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/extern_func_jit_register.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/execution_engine.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/simple_jit.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/target.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/test_helper.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/cpu/host_intrinsics.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/cpu/use_extern_funcs.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">runtime</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">cpu</span> <span class="p">{</span>
+
+<span class="n">cinn_buffer_t</span> <span class="o">*</span><span class="n">CreateBuffer</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">shape</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">random</span> <span class="o">=</span> <span class="nb">true</span><span class="p">,</span> <span class="kt">int</span> <span class="n">set_value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">random</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">shape</span><span class="p">).</span><span class="n">set_random</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">set_value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">shape</span><span class="p">).</span><span class="n">set_val</span><span class="p">(</span><span class="n">set_value</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">shape</span><span class="p">).</span><span class="n">set_zero</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">TestCallElementwise</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fn_name</span><span class="p">,</span>
+                         <span class="kt">float</span> <span class="p">(</span><span class="o">*</span><span class="n">fn_runtime</span><span class="p">)(</span><span class="kt">float</span><span class="p">),</span>
+                         <span class="kt">bool</span> <span class="n">is_elementwise</span><span class="p">,</span>
+                         <span class="kt">int</span> <span class="n">set_value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">N</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">x</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">out</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">lower_args</span><span class="p">({</span><span class="n">x</span><span class="p">});</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">is_elementwise</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">CallExtern</span><span class="p">(</span><span class="n">fn_name</span><span class="p">,</span> <span class="p">{</span><span class="n">x</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)});</span> <span class="p">},</span> <span class="n">fn_name</span> <span class="o">+</span> <span class="s">&quot;_out&quot;</span><span class="p">);</span>
+    <span class="n">lower_args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">comp_out</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">CallExtern</span><span class="p">(</span><span class="n">fn_name</span><span class="p">,</span> <span class="p">{</span><span class="n">x</span><span class="p">});</span> <span class="p">},</span> <span class="n">fn_name</span> <span class="o">+</span> <span class="s">&quot;_out&quot;</span><span class="p">);</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">comp_out</span><span class="o">-&gt;</span><span class="n">TupleGet</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">out</span><span class="o">-&gt;</span><span class="n">WithBuffer</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="n">lower_args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+    <span class="n">lower_args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">comp_out</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">(</span><span class="n">lower_args</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">=</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">;</span>
+  <span class="n">ir</span><span class="o">::</span><span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module0&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="n">lower_args</span><span class="p">);</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;func:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">func</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">jit</span>    <span class="o">=</span> <span class="n">backends</span><span class="o">::</span><span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Create</span><span class="p">({});</span>
+  <span class="k">auto</span> <span class="n">module</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Link</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Lookup</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">fn_</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="kt">int32_t</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+  <span class="n">cinn_buffer_t</span> <span class="o">*</span><span class="n">A_buf</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">set_value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">A_buf</span> <span class="o">=</span> <span class="n">CreateBuffer</span><span class="p">({</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">},</span> <span class="nb">false</span><span class="p">,</span> <span class="n">set_value</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">A_buf</span> <span class="o">=</span> <span class="n">CreateBuffer</span><span class="p">({</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">B_buf</span> <span class="o">=</span> <span class="n">CreateBuffer</span><span class="p">({</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">},</span> <span class="nb">false</span><span class="p">);</span>
+
+  <span class="n">cinn_pod_value_t</span> <span class="nf">a_arg</span><span class="p">(</span><span class="n">A_buf</span><span class="p">),</span> <span class="n">b_arg</span><span class="p">(</span><span class="n">B_buf</span><span class="p">);</span>
+  <span class="n">cinn_pod_value_t</span> <span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">a_arg</span><span class="p">,</span> <span class="n">b_arg</span><span class="p">};</span>
+  <span class="n">fn_</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="o">*</span><span class="n">ad</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">A_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">bd</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">B_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A_buf</span><span class="o">-&gt;</span><span class="n">num_elements</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ASSERT_NEAR</span><span class="p">(</span><span class="n">bd</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fn_runtime</span><span class="p">(</span><span class="n">ad</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="mf">1e-5</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">#define TEST_MKL_MATH_FP32(test_name__, is_elementwise)                                                   \</span>
+<span class="cp">  TEST(mkl_math, test_name__) {                                                                           \</span>
+<span class="cp">    TestCallElementwise(&quot;cinn_cpu_&quot; #test_name__ &quot;_fp32&quot;, cinn_cpu_##test_name__##_fp32, is_elementwise); \</span>
+<span class="cp">  }</span>
+<span class="cp">#define TEST_MKL_MATH_FP32_SET(test_name__, is_elementwise, value)                                               \</span>
+<span class="cp">  TEST(mkl_math, test_name__) {                                                                                  \</span>
+<span class="cp">    TestCallElementwise(&quot;cinn_cpu_&quot; #test_name__ &quot;_fp32&quot;, cinn_cpu_##test_name__##_fp32, is_elementwise, value); \</span>
+<span class="cp">  }</span>
+
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">erf</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">sqrt</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">log2</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">log10</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">floor</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">ceil</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">round</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">trunc</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">cosh</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">tan</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">sin</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">sinh</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">acos</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32_SET</span><span class="p">(</span><span class="n">acosh</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">asin</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">asinh</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">atan</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">atanh</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">isnan</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">tanh</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">isfinite</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+<span class="n">TEST_MKL_MATH_FP32</span><span class="p">(</span><span class="n">isinf</span><span class="p">,</span> <span class="nb">true</span><span class="p">)</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">mkl_math</span><span class="p">,</span> <span class="n">tanh_v_fp32</span><span class="p">)</span> <span class="p">{</span> <span class="n">TestCallElementwise</span><span class="p">(</span><span class="s">&quot;cinn_mkl_tanh_v_fp32&quot;</span><span class="p">,</span> <span class="n">cinn_cpu_tanh_fp32</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">cinn_cpu_mkl_gemm_fp32</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">N</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">K</span><span class="p">(</span><span class="mi">40</span><span class="p">);</span>
+
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">call</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)},</span>
+      <span class="p">[</span><span class="o">=</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">CallExtern</span><span class="p">(</span><span class="s">&quot;cinn_cpu_mkl_gemm_fp32&quot;</span><span class="p">,</span>
+                                <span class="p">{</span>
+                                    <span class="n">common</span><span class="o">::</span><span class="n">make_one</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(),</span>   <span class="c1">// alpha</span>
+                                    <span class="n">M</span><span class="p">,</span>                           <span class="c1">// M</span>
+                                    <span class="n">N</span><span class="p">,</span>                           <span class="c1">// N</span>
+                                    <span class="n">K</span><span class="p">,</span>                           <span class="c1">// K</span>
+                                    <span class="n">common</span><span class="o">::</span><span class="n">make_bool</span><span class="p">(</span><span class="nb">false</span><span class="p">),</span>    <span class="c1">// ta</span>
+                                    <span class="n">common</span><span class="o">::</span><span class="n">make_bool</span><span class="p">(</span><span class="nb">false</span><span class="p">),</span>    <span class="c1">// tb</span>
+                                    <span class="n">M</span><span class="p">,</span>                           <span class="c1">// lda</span>
+                                    <span class="n">K</span><span class="p">,</span>                           <span class="c1">// ldb</span>
+                                    <span class="n">M</span><span class="p">,</span>                           <span class="c1">// ldc</span>
+                                    <span class="n">common</span><span class="o">::</span><span class="n">make_zero</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(),</span>  <span class="c1">// beta</span>
+                                    <span class="n">A</span><span class="p">.</span><span class="n">tensor</span><span class="p">(),</span>                  <span class="c1">// A</span>
+                                    <span class="n">B</span><span class="p">.</span><span class="n">tensor</span><span class="p">(),</span>                  <span class="c1">// B</span>
+                                <span class="p">});</span>
+      <span class="p">},</span>
+      <span class="s">&quot;extern_call&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">call</span><span class="o">-&gt;</span><span class="n">TupleGet</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">out</span><span class="o">-&gt;</span><span class="n">WithBuffer</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">call</span><span class="p">,</span> <span class="n">out</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">=</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">;</span>
+  <span class="n">ir</span><span class="o">::</span><span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module0&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">call</span><span class="p">});</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;func:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">func</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">jit</span>    <span class="o">=</span> <span class="n">backends</span><span class="o">::</span><span class="n">SimpleJIT</span><span class="o">::</span><span class="n">Create</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">module</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Link</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="cm">/*optimize=*/</span><span class="nb">true</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">fn</span>     <span class="o">=</span> <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Lookup</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">fn_ptr</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="kt">int32_t</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+  <span class="c1">// test with real data</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">A_buf</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_random</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">B_buf</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_random</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">C_buf</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_zero</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">args</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">ArgsBuilder</span><span class="p">().</span><span class="n">Add</span><span class="p">(</span><span class="n">A_buf</span><span class="p">).</span><span class="n">Add</span><span class="p">(</span><span class="n">B_buf</span><span class="p">).</span><span class="n">Add</span><span class="p">(</span><span class="n">C_buf</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">fn_ptr</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">args</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+  <span class="n">cinn_buffer_free</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="n">A_buf</span><span class="p">);</span>
+  <span class="n">cinn_buffer_free</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="n">B_buf</span><span class="p">);</span>
+  <span class="n">cinn_buffer_free</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="n">C_buf</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace cpu</span>
+<span class="p">}</span>  <span class="c1">// namespace runtime</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+
+<span class="n">CINN_USE_REGISTER</span><span class="p">(</span><span class="n">mkl_math</span><span class="p">)</span>
+<span class="n">CINN_USE_REGISTER</span><span class="p">(</span><span class="n">cinn_cpu_mkl_gemm_fp32</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

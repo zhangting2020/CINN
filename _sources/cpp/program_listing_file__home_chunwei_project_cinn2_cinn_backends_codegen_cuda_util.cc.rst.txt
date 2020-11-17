@@ -1,0 +1,32 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.cc:
+
+Program Listing for File codegen_cuda_util.cc
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.cc>` (``/home/chunwei/project/cinn2/cinn/backends/codegen_cuda_util.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/backends/codegen_cuda_util.h"
+   
+   #include "cinn/backends/cuda_util.h"
+   #include "cinn/ir/ir_mutator.h"
+   
+   namespace cinn {
+   namespace backends {
+   
+   std::tuple<ir::Module, ir::Module> SplitCudaAndHostModule(ir::Module module) {
+     detail::CollectHostFunctionVisitor visitor(module->name);
+     Expr expr(module);
+     return visitor(&expr);
+   }
+   
+   bool detail::CollectHostFunctionVisitor::IsCudaFunction(const ir::_LoweredFunc_* func) {
+     return func->device_api == ir::DeviceAPI::GPU;
+   }
+   
+   }  // namespace backends
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1ad1442ebe0aa8ab67e368270ec9625e0b:
+
+Function cinn::common::detail::IsDivisible()
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::IsDivisible()

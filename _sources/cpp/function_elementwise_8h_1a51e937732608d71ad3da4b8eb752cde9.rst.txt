@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8h_1a51e937732608d71ad3da4b8eb752cde9:
+
+Function cinn::hlir::pe::Cast
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Cast(const ir::Tensor&, const std::string&)

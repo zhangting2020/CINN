@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__cuda__dev__test_8cc_1abfeae8f1c3a8635652e21dd28353bf0e:
+
+Function cinn::backends::TEST(CodeGenCUDA, jit_dynamic_shape0)
+==============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(CodeGenCUDA, jit_dynamic_shape0)

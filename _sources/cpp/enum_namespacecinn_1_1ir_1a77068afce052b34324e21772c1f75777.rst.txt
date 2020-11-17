@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacecinn_1_1ir_1a77068afce052b34324e21772c1f75777:
+
+Enum CallType
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::ir::CallType

@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a88263e4a93a24871e0ef18e57a3e0063:
+
+Variable cinn::runtime::intrisic::buffer_get_data_const_handle
+==============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_get_data_const_handle

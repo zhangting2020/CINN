@@ -1,0 +1,39 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_axis.h:
+
+Program Listing for File axis.h
+===============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_axis.h>` (``/home/chunwei/project/cinn2/cinn/common/axis.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <functional>
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   namespace cinn {
+   namespace ir {
+   
+   struct Var;
+   struct Expr;
+   
+   }  // namespace ir
+   }  // namespace cinn
+   
+   namespace cinn {
+   namespace common {
+   
+   const std::string& axis_name(int level);
+   
+   std::vector<ir::Var> GenDefaultAxis(int naxis);
+   std::vector<ir::Expr> GenDefaultAxisAsExpr(int naxis);
+   
+   bool IsAxisNameReserved(const std::string& x);
+   
+   }  // namespace common
+   }  // namespace cinn

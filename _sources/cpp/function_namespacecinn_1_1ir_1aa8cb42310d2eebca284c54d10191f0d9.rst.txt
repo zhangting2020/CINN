@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1aa8cb42310d2eebca284c54d10191f0d9:
+
+Function cinn::ir::TEST(Tensor, ReshapeCopied)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(Tensor, ReshapeCopied)

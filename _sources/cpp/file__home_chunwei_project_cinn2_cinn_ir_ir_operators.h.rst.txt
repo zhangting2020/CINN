@@ -1,0 +1,201 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h:
+
+File ir_operators.h
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_operators.h``)
+-------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_unroll_loops.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_graph_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_optim.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a48d6d98f98839cbebc0179bc9d263410`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af4846433b1898e59f4dc02db8a50e849`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a25b6ad3d52fd8ff26d0cde8739a4b778`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a47ee00bdf36d37382e528804af6d1790`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a72b856267564a2968fb5dda37ad12e11`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a844471b6958238869d8a1dacab9d18a3`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a83528be273d687b612263dff6a3fe1b4`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aee4786a299cfefcbea21dd38fa98cebf`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a255ea26decb32493b55e26d784a008b1`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a4fcbe20458a98ffd15f547ed0c85a60f`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ad2ae034725adbd4be6ea4c954fe07d89`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a63a62fbec47152fb2ec6710f168189f8`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1acd8ebf9fcf03c698ec382630acaf3b64`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a0bee5581b55d8be5132285934e00c6db`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a543892b6157914a9c329ffb43266e71f`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1acdb088cf30502f63c50e5c661a1ba8dd`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ac982c879db883ca3384cc93f3d5b367f`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a44087a68a3ba09789c5bb4f7b19f46ff`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae3bf9ec9dfcd80a3fd26cb61065962e1`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a079d91b363e7557b48f93afbd331e66d`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a1d01336dc6248d44552d3a9f2dd72c6c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af3f08b54944d1578d9a90eb8f890f3cd`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a55a8d860c30ce9c9b6f886c152dcf906`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a4be55b043a9aca60824b66d48ff7a050`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aec122436e04f4045fbfae492d8ffbc55`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a9e1d4b76f3117b9dc35885baa316526c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ad974d5e40f583d12286045746c9d3785`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5e29d92c28529ca6a5de3299557fd6b0`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa1536eaff9551e05dd3ea16f503abbed`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a23a61c019269a1e5d18c8bdbda9b0002`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1abca46a74c3702df980cae1a8d9a93c85`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae27af44036d41fa5f8ab2e1857c952c6`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1abd265b7cb55a9063626ac00d689069f7`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a75d0b2fb6e4f00675c71212a3d0954cd`
+

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1aba7a789d94b2df1fffd245335bd32dba:
+
+Function cinn::ir::CollectLoadTensors
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::CollectLoadTensors(Expr, std::function<bool(const Expr *)>&&)

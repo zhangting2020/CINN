@@ -1,0 +1,13 @@
+.. _exhale_define_pybind_2ir_8cc_1a9492f139b6b5120e668941dcd44a9a53:
+
+Define DEFINE_UNARY_NODE
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DEFINE_UNARY_NODE

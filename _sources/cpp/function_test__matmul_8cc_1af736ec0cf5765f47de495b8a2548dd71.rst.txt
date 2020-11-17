@@ -1,0 +1,13 @@
+.. _exhale_function_test__matmul_8cc_1af736ec0cf5765f47de495b8a2548dd71:
+
+Function cinn::tests::TEST(test_matmul, vectorize)
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::TEST(test_matmul, vectorize)

@@ -1,0 +1,13 @@
+.. _exhale_define_insert__debug__log__callee_8cc_1ad83b6c348300731b874e72e12b528ced:
+
+Define _BINARY_OP
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: _BINARY_OP

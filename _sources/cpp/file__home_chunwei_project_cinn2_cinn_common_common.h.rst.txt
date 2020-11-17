@@ -1,0 +1,147 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_common.h:
+
+File common.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/common.h``)
+-----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_common.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/axis.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_axis.h`)
+
+- ``cinn/common/cinn_value.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`)
+
+- ``cinn/common/context.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_context.h`)
+
+- ``cinn/common/graph_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`)
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``cinn/common/shared.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_parser.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1a9393d8f62ac65c4c9b123ced678acfca`
+
+- :ref:`exhale_function_namespacecinn_1abea55acc93bb8fbdccba81fe4a7c73b1`
+

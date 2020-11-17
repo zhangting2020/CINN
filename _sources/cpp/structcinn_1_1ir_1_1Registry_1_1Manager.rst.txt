@@ -1,0 +1,22 @@
+.. _exhale_struct_structcinn_1_1ir_1_1Registry_1_1Manager:
+
+Struct Registry::Manager
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.cc`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classcinn_1_1ir_1_1Registry`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::Registry::Manager
+   :members:
+   :protected-members:
+   :undoc-members:

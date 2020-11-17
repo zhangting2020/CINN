@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1ab6449132661daac7fd293be23efe9b24:
+
+Function cinn::hlir::pe::Multiply(const Expr&, const Expr&)
+===========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Multiply(const Expr&, const Expr&)

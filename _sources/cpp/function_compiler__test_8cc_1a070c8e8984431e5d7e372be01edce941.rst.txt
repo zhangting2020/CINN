@@ -1,0 +1,13 @@
+.. _exhale_function_compiler__test_8cc_1a070c8e8984431e5d7e372be01edce941:
+
+Function cinn::backends::TEST(Compiler, x86)
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(Compiler, x86)

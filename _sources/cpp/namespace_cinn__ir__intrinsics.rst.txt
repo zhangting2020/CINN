@@ -1,0 +1,30 @@
+
+.. _namespace_cinn__ir__intrinsics:
+
+Namespace cinn::ir::intrinsics
+==============================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1ArgsConstruct`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferCreate`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferGetDataConstHandle`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferGetDataHandle`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1GetAddr`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1PodValueToX`

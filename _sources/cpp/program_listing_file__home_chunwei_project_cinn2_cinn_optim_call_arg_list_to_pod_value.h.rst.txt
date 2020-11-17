@@ -1,0 +1,23 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.h:
+
+Program Listing for File call_arg_list_to_pod_value.h
+=====================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.h>` (``/home/chunwei/project/cinn2/cinn/optim/call_arg_list_to_pod_value.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void CallArgListToPodValue(Expr* e);
+   
+   }  // namespace optim
+   }  // namespace cinn

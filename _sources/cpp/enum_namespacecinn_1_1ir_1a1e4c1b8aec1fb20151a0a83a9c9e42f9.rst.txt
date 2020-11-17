@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacecinn_1_1ir_1a1e4c1b8aec1fb20151a0a83a9c9e42f9:
+
+Enum IrNodeTy
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::ir::IrNodeTy

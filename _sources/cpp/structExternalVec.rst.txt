@@ -1,0 +1,16 @@
+.. _exhale_struct_structExternalVec:
+
+Template Struct ExternalVec
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: ExternalVec
+   :members:
+   :protected-members:
+   :undoc-members:

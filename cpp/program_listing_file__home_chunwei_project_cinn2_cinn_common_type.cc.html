@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File type.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-type-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-common-type-cc"></span><h1>Program Listing for File type.cc<a class="headerlink" href="#program-listing-for-file-type-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_type.cc.html#file-home-chunwei-project-cinn2-cinn-common-type-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common/type.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/common/type.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">common</span> <span class="p">{</span>
+
+<span class="k">struct</span> <span class="n">Type</span><span class="o">::</span><span class="n">Storage</span> <span class="p">{</span>
+  <span class="n">Storage</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">Storage</span><span class="p">(</span><span class="n">type_t</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">w</span><span class="p">)</span> <span class="o">:</span> <span class="n">type_</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">bits_</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">lanes_</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="n">type_t</span> <span class="n">type_</span><span class="p">{</span><span class="n">type_t</span><span class="o">::</span><span class="n">Unk</span><span class="p">};</span>
+  <span class="n">cpp_type_t</span> <span class="n">cpp_type_</span><span class="p">{</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">None</span><span class="p">};</span>
+
+  <span class="kt">int</span> <span class="n">bits_</span><span class="p">{};</span>
+
+  <span class="kt">int</span> <span class="n">lanes_</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">customized_type_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">Type</span><span class="o">::~</span><span class="n">Type</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">os</span><span class="p">,</span> <span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">is_cpp_const</span><span class="p">())</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;const &quot;</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">type</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Int</span><span class="p">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;bool&quot;</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;int&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">bits</span><span class="p">();</span>
+      <span class="p">}</span>
+
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">UInt</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;uint&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">bits</span><span class="p">();</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Float</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;float&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">bits</span><span class="p">();</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Void</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;void&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Customized</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">customized_type</span><span class="p">();</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">String</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;string&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Unk</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;unk&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&lt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&gt;&quot;</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">is_cpp_handle</span><span class="p">())</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;*&quot;</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">is_cpp_handle2</span><span class="p">())</span> <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;**&quot;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="n">os</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">os</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Void</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Void&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">UInt</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;UInt&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Int</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Int&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Float</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Float&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Unk</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Unk&quot;</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="nl">Customized</span><span class="p">:</span>
+      <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Customized&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">os</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">set_cpp_handle</span><span class="p">(</span><span class="kt">bool</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// unset the other handle-related bits.</span>
+  <span class="n">set_cpp_handle2</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">));</span>
+  <span class="c1">// unset the other handle-related bits.</span>
+  <span class="n">v</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Handle</span><span class="p">);</span>
+  <span class="n">v</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">HandleHandle</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">|=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Handle</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">v</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Handle</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">set_cpp_handle2</span><span class="p">(</span><span class="kt">bool</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">));</span>
+
+  <span class="c1">// unset the other handle-related bits.</span>
+  <span class="n">v</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Handle</span><span class="p">);</span>
+  <span class="n">v</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">HandleHandle</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">|=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">HandleHandle</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">v</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">HandleHandle</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">VectorOf</span><span class="p">(</span><span class="kt">int</span> <span class="n">w</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CheckTypeValid</span><span class="p">();</span>
+  <span class="k">return</span> <span class="nf">Type</span><span class="p">(</span><span class="n">type</span><span class="p">(),</span> <span class="n">w</span><span class="p">,</span> <span class="n">bits</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">Type</span><span class="o">::</span><span class="n">Type</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">storage_</span><span class="p">)</span> <span class="n">storage_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">Storage</span><span class="p">(</span><span class="o">*</span><span class="n">other</span><span class="p">.</span><span class="n">storage_</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">ElementOf</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CheckTypeValid</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">type</span>             <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">storage_</span><span class="o">-&gt;</span><span class="n">lanes_</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Type</span><span class="o">::</span><span class="n">CheckTypeValid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="n">CHECK_NE</span><span class="p">(</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">type_</span><span class="p">,</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Unk</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">PointerOf</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CheckTypeValid</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">x</span><span class="p">.</span><span class="n">is_cpp_handle2</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not support three level of PointerOf&quot;</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">is_cpp_handle</span><span class="p">())</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">set_cpp_handle2</span><span class="p">();</span>
+  <span class="k">else</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">set_cpp_handle</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">ConstOf</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CheckTypeValid</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">x</span><span class="p">.</span><span class="n">set_cpp_const</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">IgnoreConst</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CheckTypeValid</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">x</span><span class="p">.</span><span class="n">set_cpp_const</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">with_bits</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">is_primitive</span><span class="p">());</span>
+  <span class="n">Type</span> <span class="n">type</span>               <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">bits_</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">with_type</span><span class="p">(</span><span class="n">Type</span><span class="o">::</span><span class="n">type_t</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">Type</span> <span class="n">type</span>               <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">type_</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">with_lanes</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">valid</span><span class="p">());</span>
+  <span class="n">Type</span> <span class="n">type</span>                <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">lanes_</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="n">Type</span><span class="o">::</span><span class="n">with_cpp_const</span><span class="p">(</span><span class="kt">bool</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">set_cpp_const</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">set_cpp_const</span><span class="p">(</span><span class="kt">bool</span> <span class="n">is_const</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">uint8_t</span> <span class="o">&amp;</span><span class="n">data</span> <span class="o">=</span> <span class="o">*</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">is_const</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span> <span class="o">|=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Const</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">data</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Const</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">Type</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">set_customized_type</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">GetStorage</span><span class="p">().</span><span class="n">type_</span>            <span class="o">=</span> <span class="n">type_t</span> <span class="o">::</span><span class="n">Customized</span><span class="p">;</span>
+  <span class="n">GetStorage</span><span class="p">().</span><span class="n">customized_type_</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">valid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">is_unk</span><span class="p">())</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">is_customized</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">!</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">customized_type_</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">is_primitive</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">bits</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span><span class="o">::</span><span class="n">Type</span><span class="p">(</span><span class="n">Type</span><span class="o">::</span><span class="n">type_t</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">w</span><span class="p">)</span> <span class="o">:</span> <span class="n">storage_</span><span class="p">(</span><span class="k">new</span> <span class="n">Storage</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span> <span class="p">{}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_primitive</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">is_unk</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Customized</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_customized</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">is_unk</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Customized</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_unk</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Unk</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_bool</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">UInt</span> <span class="o">&amp;&amp;</span> <span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_void</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Void</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_vector</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lanes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_scalar</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_float</span><span class="p">(</span><span class="kt">int</span> <span class="n">bits</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Float</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bits</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">bits</span> <span class="o">==</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">bits</span><span class="p">());</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_uint</span><span class="p">(</span><span class="kt">int</span> <span class="n">bits</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">UInt</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bits</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">bits</span> <span class="o">==</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">bits</span><span class="p">());</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_int</span><span class="p">(</span><span class="kt">int</span> <span class="n">bits</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">Int</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bits</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">bits</span> <span class="o">==</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">bits</span><span class="p">());</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_index_type</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">is_int</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">32</span> <span class="o">||</span> <span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">64</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_cpp_handle</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">)</span> <span class="o">&amp;</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Handle</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_cpp_handle2</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">)</span> <span class="o">&amp;</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">HandleHandle</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_cpp_const</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Const</span><span class="p">)</span> <span class="o">&amp;</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">customized_type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetStorage</span><span class="p">().</span><span class="n">customized_type_</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_customized_type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">customized_type_</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span> <span class="p">}</span>
+<span class="n">Type</span><span class="o">::</span><span class="n">type_t</span> <span class="n">Type</span><span class="o">::</span><span class="n">type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetStorage</span><span class="p">().</span><span class="n">type_</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">int</span> <span class="n">Type</span><span class="o">::</span><span class="n">bits</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetStorage</span><span class="p">().</span><span class="n">bits_</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">int</span> <span class="n">Type</span><span class="o">::</span><span class="n">lanes</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetStorage</span><span class="p">().</span><span class="n">lanes_</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">Type</span><span class="o">::</span><span class="n">cpp_type_t</span> <span class="n">Type</span><span class="o">::</span><span class="n">cpp_type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">type</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">bits</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&amp;&amp;</span>
+         <span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">GetStorage</span><span class="p">().</span><span class="n">cpp_type_</span> <span class="o">&amp;&amp;</span> <span class="n">customized_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">customized_type</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kt">bool</span> <span class="n">Type</span><span class="o">::</span><span class="n">is_string</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_t</span><span class="o">::</span><span class="n">String</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">Type</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">storage_</span><span class="p">)</span> <span class="n">storage_</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">Storage</span><span class="p">(</span><span class="o">*</span><span class="n">other</span><span class="p">.</span><span class="n">storage_</span><span class="p">));</span>
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Type</span><span class="o">::</span><span class="n">Storage</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">GetStorage</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">storage_</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span><span class="o">::</span><span class="n">Storage</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">GetStorage</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">storage_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">Type</span><span class="o">::</span><span class="n">Type</span><span class="p">()</span> <span class="o">:</span> <span class="n">storage_</span><span class="p">(</span><span class="k">new</span> <span class="n">Storage</span><span class="p">)</span> <span class="p">{}</span>
+<span class="n">Type</span><span class="o">::</span><span class="n">Type</span><span class="p">(</span><span class="n">Type</span> <span class="o">&amp;&amp;</span><span class="n">other</span><span class="p">)</span> <span class="o">:</span> <span class="n">storage_</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">storage_</span><span class="p">))</span> <span class="p">{}</span>
+
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">F16</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">F32</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">F64</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">I8</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">I16</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">I32</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">I64</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">UI8</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">UInt</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">UI16</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">UInt</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">UI32</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">UInt</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">UI64</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">UInt</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">I1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">UI1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">UInt</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace common</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_common_type.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

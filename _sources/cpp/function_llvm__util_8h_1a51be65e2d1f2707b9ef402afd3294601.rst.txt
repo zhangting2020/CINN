@@ -1,0 +1,13 @@
+.. _exhale_function_llvm__util_8h_1a51be65e2d1f2707b9ef402afd3294601:
+
+Function cinn::backends::AsStringRef
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::AsStringRef(std::string_view)

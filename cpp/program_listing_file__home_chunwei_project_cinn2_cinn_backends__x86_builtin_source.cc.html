@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File _x86_builtin_source.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-x86-builtin-source-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-x86-builtin-source-cc"></span><h1>Program Listing for File _x86_builtin_source.cc<a class="headerlink" href="#program-listing-for-file-x86-builtin-source-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc.html#file-home-chunwei-project-cinn2-cinn-backends-x86-builtin-source-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/_x86_builtin_source.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;immintrin.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#ifndef _CINN_X86_BUILTIN_SOURCE_</span>
+<span class="cp">#define _CINN_X86_BUILTIN_SOURCE_</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">Num</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">StackVec</span> <span class="p">{</span>
+  <span class="k">typedef</span> <span class="n">T</span> <span class="n">value_type</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">StackVec</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">Num</span><span class="o">&gt;</span> <span class="n">self_type</span><span class="p">;</span>
+
+  <span class="n">self_type</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">StackVec</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!=</span> <span class="o">&amp;</span><span class="n">src</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">memcpy</span><span class="p">(</span><span class="n">data_</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">StackVec</span><span class="p">()</span> <span class="p">{</span> <span class="n">memset</span><span class="p">(</span><span class="n">data_</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">());</span> <span class="p">}</span>
+
+  <span class="k">explicit</span> <span class="n">StackVec</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">externl</span><span class="p">)</span> <span class="o">:</span> <span class="n">external_data_</span><span class="p">(</span><span class="n">externl</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">self_type</span> <span class="n">Broadcast</span><span class="p">(</span><span class="k">const</span> <span class="n">value_type</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self_type</span> <span class="n">res</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">res</span><span class="p">.</span><span class="n">data_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="n">self_type</span> <span class="n">Ramp</span><span class="p">(</span><span class="k">const</span> <span class="n">value_type</span><span class="o">&amp;</span> <span class="n">base</span><span class="p">,</span> <span class="k">const</span> <span class="n">value_type</span><span class="o">&amp;</span> <span class="n">stride</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self_type</span> <span class="n">res</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">res</span><span class="p">.</span><span class="n">data_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="n">stride</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="n">self_type</span> <span class="n">Load</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">base</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self_type</span> <span class="n">res</span><span class="p">;</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">res</span><span class="p">.</span><span class="n">data_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="k">const</span> <span class="n">value_type</span><span class="o">*</span><span class="p">)</span><span class="n">base</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="n">self_type</span> <span class="n">Load</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">base</span><span class="p">,</span> <span class="k">const</span> <span class="n">StackVec</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="p">,</span> <span class="n">Num</span><span class="o">&gt;&amp;</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self_type</span> <span class="n">res</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">Num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">res</span><span class="p">.</span><span class="n">data_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="k">const</span> <span class="n">value_type</span><span class="o">*</span><span class="p">)</span><span class="n">base</span><span class="p">)[</span><span class="n">offset</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Store</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">base</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">offset</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">mempcpy</span><span class="p">((</span><span class="n">value_type</span><span class="o">*</span><span class="p">)</span><span class="n">base</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num_bytes</span><span class="p">());</span>  <span class="c1">// NOLINT</span>
+  <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="n">value_type</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="p">}</span>
+  <span class="kr">inline</span> <span class="n">value_type</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">data_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="p">}</span>
+
+  <span class="c1">// binary operator between two vectors</span>
+  <span class="c1">// @{</span>
+<span class="cp">#define __(op__)                                                           \</span>
+<span class="cp">  friend self_type operator op__(const self_type&amp; a, const self_type&amp; b) { \</span>
+<span class="cp">    self_type res;                                                         \</span>
+<span class="cp">    for (size_t i = 0; i &lt; Num; i++) {                                     \</span>
+<span class="cp">      res.data_[i] = a[i] op__ b[i];                                       \</span>
+<span class="cp">    }                                                                      \</span>
+<span class="cp">    return res;                                                            \</span>
+<span class="cp">  }</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">+</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">-</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">/</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">%</span><span class="p">)</span>
+  <span class="c1">// @}</span>
+<span class="cp">#undef __</span>
+
+  <span class="c1">// binary operator between a vector and a scalar</span>
+  <span class="c1">// @{</span>
+<span class="cp">#define __(op__)                                                            \</span>
+<span class="cp">  friend self_type operator op__(const self_type&amp; a, const value_type&amp; b) { \</span>
+<span class="cp">    self_type res;                                                          \</span>
+<span class="cp">    for (size_t i = 0; i &lt; Num; i++) {                                      \</span>
+<span class="cp">      res.data_[i] = a[i] op__ b;                                           \</span>
+<span class="cp">    }                                                                       \</span>
+<span class="cp">    return res;                                                             \</span>
+<span class="cp">  }</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">+</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">-</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">/</span><span class="p">)</span>
+  <span class="n">__</span><span class="p">(</span><span class="o">%</span><span class="p">)</span>
+<span class="cp">#undef __</span>
+  <span class="c1">// @}</span>
+
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">num_bytes</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">data_</span><span class="p">);</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">T</span> <span class="n">data_</span><span class="p">[</span><span class="n">Num</span><span class="p">];</span>
+  <span class="n">T</span><span class="o">*</span> <span class="n">external_data_</span><span class="p">{</span><span class="k">nullptr</span><span class="p">};</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">Num</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">ExternalVec</span> <span class="p">{</span>
+  <span class="k">typedef</span> <span class="n">T</span> <span class="n">value_type</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">ExternalVec</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">Num</span><span class="o">&gt;</span> <span class="n">self_type</span><span class="p">;</span>
+
+  <span class="k">explicit</span> <span class="nf">ExternalVec</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="o">:</span> <span class="n">data_</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="n">self_type</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">self_type</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">data_</span> <span class="o">!=</span> <span class="n">src</span><span class="p">.</span><span class="n">data_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">memcpy</span><span class="p">(</span><span class="n">data_</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">data_</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="n">self_type</span> <span class="n">Load</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">base</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self_type</span> <span class="n">res</span><span class="p">((</span><span class="n">T</span><span class="o">*</span><span class="p">)</span><span class="n">base</span> <span class="o">+</span> <span class="n">offset</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">size_t</span> <span class="n">num_bytes</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">value_type</span><span class="p">)</span> <span class="o">*</span> <span class="n">Num</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">T</span><span class="o">*</span> <span class="n">data_</span><span class="p">{</span><span class="k">nullptr</span><span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// AVX256 load</span>
+<span class="kr">inline</span> <span class="n">__m256</span> <span class="nf">cinn_avx256_load</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m256d</span> <span class="nf">cinn_avx256_load</span><span class="p">(</span><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span> <span class="p">}</span>
+<span class="c1">// AVX512 load</span>
+<span class="kr">inline</span> <span class="n">__m512</span> <span class="nf">cinn_avx512_load</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512d</span> <span class="nf">cinn_avx512_load</span><span class="p">(</span><span class="k">const</span> <span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="c1">// FP32x8 * FP32x8</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_add_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_sub</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_sub_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_mul_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_div</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_div_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// FP32x4 * float</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_add_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_sub</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_sub_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_mul_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_div</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_div_ps</span><span class="p">(</span><span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// float * FP32x4</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_add_ps</span><span class="p">(</span><span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_sub</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_sub_ps</span><span class="p">(</span><span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_mul_ps</span><span class="p">(</span><span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_div</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_div_ps</span><span class="p">(</span><span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// 4 x float64</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_add_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_sub</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_sub_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_mul_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_div</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_div_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// FP32x4 * FP64</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_add_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_sub</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_sub_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_mul_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_div</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_div_pd</span><span class="p">(</span><span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// float * FP32x4</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_add_pd</span><span class="p">(</span><span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_sub</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_sub_pd</span><span class="p">(</span><span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_mul_pd</span><span class="p">(</span><span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_div</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm256_div_pd</span><span class="p">(</span><span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm256_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_add_ps</span><span class="p">(</span><span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_sub</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_sub_ps</span><span class="p">(</span><span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_mul</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_mul_ps</span><span class="p">(</span><span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_div</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_div_ps</span><span class="p">(</span><span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_ps</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// FP32x4 * FP64</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_add_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_sub</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_sub_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_mul</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_mul_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_div</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_div_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// float * FP32x4</span>
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_add_pd</span><span class="p">(</span><span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_sub</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_sub_pd</span><span class="p">(</span><span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_mul</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_mul_pd</span><span class="p">(</span><span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_div</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="kt">float</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_div_pd</span><span class="p">(</span><span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_add_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_sub</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_sub_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_mul</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_mul_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_div</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">_mm512_div_pd</span><span class="p">(</span><span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_mm512_load_pd</span><span class="p">(</span><span class="n">b</span><span class="p">)));</span>
+<span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="kr">inline</span> <span class="n">__m512</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">);</span>
+
+<span class="kr">inline</span> <span class="n">__m256</span> <span class="nf">cinn_avx256_add_float</span><span class="p">(</span><span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_add_ps</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m256d</span> <span class="nf">cinn_avx256_add_double</span><span class="p">(</span><span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_add_pd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512</span> <span class="nf">cinn_avx512_add_float</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_add_ps</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512d</span> <span class="nf">cinn_avx512_add_double</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_add_pd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="n">__m256</span> <span class="nf">cinn_avx256_set1</span><span class="p">(</span><span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_set1_ps</span><span class="p">(</span><span class="n">value</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m256d</span> <span class="nf">cinn_avx256_set1</span><span class="p">(</span><span class="kt">double</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_set1_pd</span><span class="p">(</span><span class="n">value</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512</span> <span class="nf">cinn_avx512_set1</span><span class="p">(</span><span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_set1_ps</span><span class="p">(</span><span class="n">value</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512d</span> <span class="nf">cinn_avx512_set1</span><span class="p">(</span><span class="kt">double</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_set1_pd</span><span class="p">(</span><span class="n">value</span><span class="p">);</span> <span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_store</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">_mm512_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx512_store</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">_mm512_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_store</span><span class="p">(</span><span class="kt">float</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">_mm256_store_ps</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">cinn_avx256_store</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">_mm256_store_pd</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="n">__m256</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_add_ps</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m256d</span> <span class="nf">cinn_avx256_add</span><span class="p">(</span><span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_add_pd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_add_ps</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512d</span> <span class="nf">cinn_avx512_add</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_add_pd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="kr">inline</span> <span class="n">__m256</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_mul_ps</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m256d</span> <span class="nf">cinn_avx256_mul</span><span class="p">(</span><span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m256d</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm256_mul_pd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512</span> <span class="nf">cinn_avx512_mul</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_mul_ps</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="kr">inline</span> <span class="n">__m512d</span> <span class="nf">cinn_avx512_mul</span><span class="p">(</span><span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">__m512d</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_mm512_mul_pd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+<span class="c1">// @}</span>
+
+
+<span class="cp">#endif  </span><span class="c1">// _CINN_X86_BUILTIN_SOURCE_</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

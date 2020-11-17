@@ -1,0 +1,13 @@
+.. _exhale_function_pe__broadcast__test_8cc_1ac153a795a0ae9ca9a957b45bf07a735b:
+
+Function cinn::hlir::pe::Multiply(float, float)
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Multiply(float, float)

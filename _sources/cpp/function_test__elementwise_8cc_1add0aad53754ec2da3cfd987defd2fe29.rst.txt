@@ -1,0 +1,13 @@
+.. _exhale_function_test__elementwise_8cc_1add0aad53754ec2da3cfd987defd2fe29:
+
+Function cinn::tests::TEST(test_elementwise_add, default_fp32)
+==============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::TEST(test_elementwise_add, default_fp32)

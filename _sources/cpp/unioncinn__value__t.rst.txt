@@ -1,0 +1,13 @@
+.. _exhale_union_unioncinn__value__t:
+
+Union cinn_value_t
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Union Documentation
+-------------------
+
+
+.. doxygenunion:: cinn_value_t

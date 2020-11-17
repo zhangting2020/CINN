@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File ir_copy.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-ir-copy-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-optim-ir-copy-cc"></span><h1>Program Listing for File ir_copy.cc<a class="headerlink" href="#program-listing-for-file-ir-copy-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc.html#file-home-chunwei-project-cinn2-cinn-optim-ir-copy-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/optim/ir_copy.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/ir_copy.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;z3.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_mutator.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/module.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">optim</span> <span class="p">{</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">ir</span><span class="p">;</span>  <span class="c1">// NOLINT</span>
+
+<span class="k">struct</span> <span class="nl">IRCopyVisitor</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRVisitorBase</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="c1">// Use maps to unify all the copied tensors and buffers.</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">*&gt;</span> <span class="n">tensor_map</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">*&gt;</span> <span class="n">buffer_map</span><span class="p">;</span>
+
+  <span class="n">Expr</span> <span class="nf">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">IRVisitorBase</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+
+ <span class="k">protected</span><span class="o">:</span>
+  <span class="c1">// The methods of ir nodes follows the order defined in node.h</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">IntImm</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">IntImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">));</span> <span class="p">}</span>
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">UIntImm</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">UIntImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">));</span> <span class="p">}</span>
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">FloatImm</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">FloatImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">));</span> <span class="p">}</span>
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">StringImm</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">StringImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">));</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Cast</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">());</span>
+    <span class="k">return</span> <span class="n">Cast</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">v</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Select</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">condition</span>   <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">true_value</span>  <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">false_value</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Select</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">true_value</span><span class="p">,</span> <span class="n">false_value</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">IfThenElse</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">condition</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">true_case</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">);</span>
+    <span class="n">Expr</span> <span class="n">false_case</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_case</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="n">false_case</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_case</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">IfThenElse</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">true_case</span><span class="p">,</span> <span class="n">false_case</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Block</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">stmts</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">s</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">stmts</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Block</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">stmts</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Call</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">read_args</span>  <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">write_args</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Call</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">read_args</span><span class="p">,</span> <span class="n">write_args</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">call_type</span><span class="p">,</span> <span class="n">FunctionRef</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">_Var_</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">n</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">_Var_</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">name</span>           <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">is_reduce_axis</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">is_reduce_axis</span><span class="p">;</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">set_type</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">());</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">is_reduce_axis</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">lower_bound</span><span class="p">);</span>
+      <span class="k">auto</span> <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">upper_bound</span><span class="p">);</span>
+      <span class="n">n</span><span class="o">-&gt;</span><span class="n">lower_bound</span>   <span class="o">=</span> <span class="n">lower_bound</span><span class="p">;</span>
+      <span class="n">n</span><span class="o">-&gt;</span><span class="n">upper_bound</span>   <span class="o">=</span> <span class="n">upper_bound</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Load</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">tensor</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">indices</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">idx</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">indices</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">idx</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Load</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">indices</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Store</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">tensor</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">value</span>  <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">indices</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">idx</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="n">indices</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">idx</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="n">Store</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">indices</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Alloc</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">extents</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">extents</span><span class="p">);</span>
+    <span class="n">Expr</span> <span class="n">condition</span><span class="p">;</span>
+    <span class="n">Expr</span> <span class="n">body</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="n">condition</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="n">body</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">Alloc</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">extents</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span> <span class="n">body</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Free</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Free</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">_Buffer_</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">buffer_map</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">buffer_map</span><span class="p">[</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">shape</span>         <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">strides</span>       <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">strides</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">name</span>          <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">scope</span>         <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">scope</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">data_alignment</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">data_alignment</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">elem_offset</span>   <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">elem_offset</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">offset_factor</span>  <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">offset_factor</span><span class="p">;</span>
+    <span class="n">Target</span> <span class="n">target</span>      <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">new_node</span>            <span class="o">=</span> <span class="n">_Buffer_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">shape</span><span class="p">);</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">strides</span>        <span class="o">=</span> <span class="n">strides</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">dtype</span>          <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">dtype</span><span class="p">;</span>  <span class="c1">// copy data element&#39;s type.</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">name</span>           <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">scope</span>          <span class="o">=</span> <span class="n">scope</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">data_alignment</span> <span class="o">=</span> <span class="n">data_alignment</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">elem_offset</span>    <span class="o">=</span> <span class="n">elem_offset</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">offset_factor</span>  <span class="o">=</span> <span class="n">offset_factor</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">target</span>         <span class="o">=</span> <span class="n">target</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">memory_type</span>    <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">memory_type</span><span class="p">;</span>
+    <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">set_type</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">());</span>
+    <span class="n">op</span><span class="o">-&gt;</span><span class="n">CopyMeta</span><span class="p">(</span><span class="n">new_node</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">&gt;</span><span class="p">());</span>
+
+    <span class="n">buffer_map</span><span class="p">[</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">self</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="nf">Expr</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">new_node</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">_Tensor_</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tensor_map</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">tensor_map</span><span class="p">[</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">shape</span>       <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">domain</span>      <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">domain</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">buffer_expr</span> <span class="o">=</span> <span class="n">Expr</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">);</span>
+    <span class="c1">// TODO(Superjomn) copy the operation.</span>
+    <span class="k">auto</span> <span class="n">operaion</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">operation</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">name</span>     <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">tensor</span>   <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">_Tensor_</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">buffer_expr</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">buffer</span>    <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buffer_expr</span><span class="p">);</span>
+      <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">.</span><span class="n">as_buffer_ref</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">domain</span>      <span class="o">=</span> <span class="n">domain</span><span class="p">;</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span>       <span class="o">=</span> <span class="n">shape</span><span class="p">;</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">reduce_axis</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">reduce_axis</span><span class="p">;</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">operation</span>   <span class="o">=</span> <span class="n">operaion</span><span class="p">;</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span>        <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">set_type</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">());</span>
+
+    <span class="n">tensor_map</span><span class="p">[</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">tensor</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">For</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">extent</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">extent</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">min</span>    <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">min</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">body</span>   <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">for_type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">device_api</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">vectorize_info</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">init</span>      <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">condition</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">inc</span>       <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">inc</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">body</span>      <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">expr</span> <span class="o">=</span>
+        <span class="n">PolyFor</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">iterator</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span> <span class="n">inc</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">for_type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">device_api</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">vectorize_info</span><span class="p">());</span>
+    <span class="k">return</span> <span class="n">expr</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Module_</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">buffers</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">functions</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">submodules</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">expr</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">buffers</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">buffers</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">expr</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">expr</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">functions</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">functions</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">expr</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">expr</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">submodules</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">submodules</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">expr</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">res</span>        <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Module_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">);</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">buffers</span>    <span class="o">=</span> <span class="n">buffers</span><span class="p">;</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">functions</span>  <span class="o">=</span> <span class="n">functions</span><span class="p">;</span>
+    <span class="n">res</span><span class="o">-&gt;</span><span class="n">submodules</span> <span class="o">=</span> <span class="n">submodules</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nf">Expr</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">_LoweredFunc_</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">_LoweredFunc_</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="n">func</span><span class="o">-&gt;</span><span class="n">name</span>      <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="n">func</span><span class="o">-&gt;</span><span class="n">args</span>      <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">;</span>
+    <span class="n">func</span><span class="o">-&gt;</span><span class="n">body</span>      <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+    <span class="n">func</span><span class="o">-&gt;</span><span class="n">temp_bufs</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">temp_bufs</span><span class="p">;</span>
+
+    <span class="n">func</span><span class="o">-&gt;</span><span class="n">device_api</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">device_api</span><span class="p">;</span>
+
+    <span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">alloc_output_buffer_exprs</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">dealloc_output_buffer_exprs</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">buffer_data_cast_exprs</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">argument_prepare_exprs</span><span class="p">;</span>
+
+<span class="cp">#define COPY_ADD_FIELD(field__)      \</span>
+<span class="cp">  for (auto&amp; expr : op-&gt;field__) {   \</span>
+<span class="cp">    field__.push_back(Visit(&amp;expr)); \</span>
+<span class="cp">  }                                  \</span>
+<span class="cp">  func-&gt;field__ = std::move(field__);</span>
+
+    <span class="n">COPY_ADD_FIELD</span><span class="p">(</span><span class="n">alloc_output_buffer_exprs</span><span class="p">);</span>
+    <span class="n">COPY_ADD_FIELD</span><span class="p">(</span><span class="n">dealloc_output_buffer_exprs</span><span class="p">);</span>
+    <span class="n">COPY_ADD_FIELD</span><span class="p">(</span><span class="n">buffer_data_cast_exprs</span><span class="p">);</span>
+    <span class="n">COPY_ADD_FIELD</span><span class="p">(</span><span class="n">argument_prepare_exprs</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">func</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Let</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">value</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">symbol</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">body</span>  <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Let</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">body</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Reduce</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">init</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">body</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;</span> <span class="n">reduce_axis</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">reduce_axis</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">reduce_axis</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="k">return</span> <span class="n">Reduce</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">reduce_type</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">reduce_axis</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Ramp</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">base</span>   <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">stride</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">lanes</span>   <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">Ramp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Broadcast</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">value</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">lanes</span>  <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">valid</span><span class="p">());</span>
+
+    <span class="k">auto</span><span class="o">*</span> <span class="n">n</span>  <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Broadcast</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">lanes</span> <span class="o">=</span> <span class="n">lanes</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nf">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">FracOp</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+
+    <span class="k">auto</span><span class="o">*</span> <span class="n">n</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">FracOp</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">()</span>  <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">()</span>  <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nf">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Power</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+
+    <span class="k">auto</span><span class="o">*</span> <span class="n">n</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Power</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">()</span>  <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">()</span>  <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nf">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Product</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">operands</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">operands</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">operands</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">operands</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Sum</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">operands</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">operands</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">operands</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">operands</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">PrimitiveNode</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&gt;</span> <span class="n">arguments</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">args</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">arguments</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">arguments</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="n">args</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">n</span>       <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">PrimitiveNode</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">name</span>      <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">attrs</span>     <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">;</span>  <span class="c1">// attrs are PODs</span>
+    <span class="n">n</span><span class="o">-&gt;</span><span class="n">arguments</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nf">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+  <span class="p">}</span>
+
+<span class="cp">#define __(x__) Expr Visit(const ir::intrinsics::x__* op);</span>
+  <span class="n">INTRINSIC_KIND_FOR_EACH</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
+<span class="cp">#undef __</span>
+
+  <span class="n">Expr</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">())</span> <span class="p">{</span>
+<span class="cp">#define __(x__)                   \</span>
+<span class="cp">  case ir::IntrinsicKind::k##x__: \</span>
+<span class="cp">    return Visit(llvm::dyn_cast&lt;ir::intrinsics::x__&gt;(op));</span>
+      <span class="n">INTRINSIC_KIND_FOR_EACH</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
+<span class="cp">#undef __</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="cp">#define OP_BINARY_HANDLE(op__)               \</span>
+<span class="cp">  Expr Visit(const ir::op__* op) override {  \</span>
+<span class="cp">    auto a = IRVisitorBase::Visit(&amp;op-&gt;a()); \</span>
+<span class="cp">    auto b = IRVisitorBase::Visit(&amp;op-&gt;b()); \</span>
+<span class="cp">    return op__::Make(a, b);                 \</span>
+<span class="cp">  }</span>
+  <span class="n">NODETY_BINARY_OP_FOR_EACH</span><span class="p">(</span><span class="n">OP_BINARY_HANDLE</span><span class="p">)</span>
+<span class="cp">#undef OP_BINARY_HANDLE</span>
+
+<span class="cp">#define OP_UNARY_HANDLE(op__)                \</span>
+<span class="cp">  Expr Visit(const op__* op) override {      \</span>
+<span class="cp">    auto v = IRVisitorBase::Visit(&amp;op-&gt;v()); \</span>
+<span class="cp">    return op__::Make(v);                    \</span>
+<span class="cp">  }</span>
+  <span class="n">NODETY_UNARY_OP_FOR_EACH</span><span class="p">(</span><span class="n">OP_UNARY_HANDLE</span><span class="p">)</span>
+<span class="cp">#undef OP_UNARY_HANDLE</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">vs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">copied</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">e</span> <span class="p">:</span> <span class="n">vs</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">copied</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">e</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">copied</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Expr</span> <span class="n">IRCopyVisitor</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferGetDataHandle</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferGetDataHandle</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="n">Expr</span> <span class="n">IRCopyVisitor</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferGetDataConstHandle</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferGetDataConstHandle</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="n">Expr</span> <span class="n">IRCopyVisitor</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">PodValueToX</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">intrinsics</span><span class="o">::</span><span class="n">PodValueToX</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">pod_value_ptr</span><span class="p">),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">GetOutputType</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="n">Expr</span> <span class="n">IRCopyVisitor</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferCreate</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferCreate</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="n">Expr</span> <span class="n">IRCopyVisitor</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">GetAddr</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">intrinsics</span><span class="o">::</span><span class="n">GetAddr</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">));</span> <span class="p">}</span>
+<span class="n">Expr</span> <span class="n">IRCopyVisitor</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">ArgsConstruct</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">SmallVector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="p">,</span> <span class="mi">7</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">arg</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">arg</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">intrinsics</span><span class="o">::</span><span class="n">ArgsConstruct</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">var</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Expr</span> <span class="n">IRCopy</span><span class="p">(</span><span class="n">Expr</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">IRCopyVisitor</span> <span class="n">visitor</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">copied</span> <span class="o">=</span> <span class="n">visitor</span><span class="p">.</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">copied</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace optim</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

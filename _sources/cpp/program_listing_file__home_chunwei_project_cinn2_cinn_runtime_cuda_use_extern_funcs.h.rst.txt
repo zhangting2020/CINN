@@ -1,0 +1,19 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cuda_use_extern_funcs.h:
+
+Program Listing for File use_extern_funcs.h
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_runtime_cuda_use_extern_funcs.h>` (``/home/chunwei/project/cinn2/cinn/runtime/cuda/use_extern_funcs.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include "cinn/backends/extern_func_jit_register.h"
+   
+   #ifdef CINN_WITH_CUDA
+   CINN_USE_REGISTER(cinn_call_cuda_kernel)
+   CINN_USE_REGISTER(cuda_intrinsics)
+   #endif

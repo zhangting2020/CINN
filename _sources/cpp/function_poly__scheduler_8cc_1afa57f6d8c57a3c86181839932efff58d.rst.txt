@@ -1,0 +1,13 @@
+.. _exhale_function_poly__scheduler_8cc_1afa57f6d8c57a3c86181839932efff58d:
+
+Function cinn::poly::detail::IsLinkTo
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::detail::IsLinkTo(const common::GraphNode *, const common::GraphNode *)

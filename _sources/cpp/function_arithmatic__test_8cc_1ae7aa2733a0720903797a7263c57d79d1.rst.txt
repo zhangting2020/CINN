@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic__test_8cc_1ae7aa2733a0720903797a7263c57d79d1:
+
+Function cinn::common::TEST(GiNaC, diff)
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(GiNaC, diff)

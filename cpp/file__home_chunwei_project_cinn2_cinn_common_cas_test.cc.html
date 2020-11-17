@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File cas_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-cas-test-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-common-cas-test-cc"></span><h1>File cas_test.cc<a class="headerlink" href="#file-cas-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_common.html#dir-home-chunwei-project-cinn2-cinn-common"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-common-cas-test-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common/cas_test.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id5">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-common-cas-test-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common/cas_test.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-common-cas-test-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_common_cas_test.cc.html">Program Listing for File cas_test.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/cinn.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_cinn.h.html#file-home-chunwei-project-cinn2-cinn-cinn-h"><span class="std std-ref">File cinn.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/cas.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cas.h.html#file-home-chunwei-project-cinn2-cinn-common-cas-h"><span class="std std-ref">File cas.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/common.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_common.h.html#file-home-chunwei-project-cinn2-cinn-common-common-h"><span class="std std-ref">File common.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/ir_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_ir_util.h.html#file-home-chunwei-project-cinn2-cinn-common-ir-util-h"><span class="std std-ref">File ir_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_operators.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-operators-h"><span class="std std-ref">File ir_operators.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_printer.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-printer-h"><span class="std std-ref">File ir_printer.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/utils/string.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_string.h.html#file-home-chunwei-project-cinn2-cinn-utils-string-h"><span class="std std-ref">File string.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__common.html#namespace-cinn-common"><span class="std std-ref">Namespace cinn::common</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_cas__test_8cc_1ad5848e55ad72c2448d40c993929bafcf.html#exhale-function-cas-test-8cc-1ad5848e55ad72c2448d40c993929bafcf"><span class="std std-ref">Function cinn::common::TEST(CAS, Mod)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1abb9cdb16627521342931cfff526046f0.html#exhale-function-cas-test-8cc-1abb9cdb16627521342931cfff526046f0"><span class="std std-ref">Function cinn::common::TEST(CAS, SimplifyPower_0)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1aa60f16231916a30bb52fcbd30bf820d4.html#exhale-function-cas-test-8cc-1aa60f16231916a30bb52fcbd30bf820d4"><span class="std std-ref">Function cinn::common::TEST(CAS, SimplifySum)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1a3d5cc684fe659bfd7cb53a1f9ece0ef5.html#exhale-function-cas-test-8cc-1a3d5cc684fe659bfd7cb53a1f9ece0ef5"><span class="std std-ref">Function cinn::common::TEST(CAS, SimplifyProduct)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1aa36ade188ea6ab80d9412689bf3cb3eb.html#exhale-function-cas-test-8cc-1aa36ade188ea6ab80d9412689bf3cb3eb"><span class="std std-ref">Function cinn::common::TEST(CAS, IntConnerCase)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1a35bb85ad35368e4dd3972efc8dc7b06d.html#exhale-function-cas-test-8cc-1a35bb85ad35368e4dd3972efc8dc7b06d"><span class="std std-ref">Function cinn::common::TEST(CAS, number_cal)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1a76d44499fa83feb33dfcc6f56b120279.html#exhale-function-cas-test-8cc-1a76d44499fa83feb33dfcc6f56b120279"><span class="std std-ref">Function cinn::common::TEST(CAS, SimplifyMod)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1ac8b300164ee1b6ade5fdc43fb4bdc255.html#exhale-function-cas-test-8cc-1ac8b300164ee1b6ade5fdc43fb4bdc255"><span class="std std-ref">Function cinn::common::TEST(SolveInequality, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1a96babfb9aee475e6fba85c35c922fd12.html#exhale-function-cas-test-8cc-1a96babfb9aee475e6fba85c35c922fd12"><span class="std std-ref">Function cinn::common::TEST(CAS, SimplifyPower)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1a09a61bd062b6c24c7524df98fff86229.html#exhale-function-cas-test-8cc-1a09a61bd062b6c24c7524df98fff86229"><span class="std std-ref">Function cinn::common::TEST(CAS, ConvertCinnToCAS)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1a29f86856a9d0b7df370cbb3c79d572b2.html#exhale-function-cas-test-8cc-1a29f86856a9d0b7df370cbb3c79d572b2"><span class="std std-ref">Function cinn::common::TEST(CAS, cmp)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cas__test_8cc_1afec2d18fb726a1e1f410fe104b963e3b.html#exhale-function-cas-test-8cc-1afec2d18fb726a1e1f410fe104b963e3b"><span class="std std-ref">Function cinn::common::TEST(CAS, FracOp)</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_cas__test_8cc_1a051284fc837429c4cd955045fc015e27.html#exhale-define-cas-test-8cc-1a051284fc837429c4cd955045fc015e27"><span class="std std-ref">Define OUTPUT_EQUAL</span></a></p></li>
+<li><p><a class="reference internal" href="define_cas__test_8cc_1aeedba2affe381e43f1ca69c93bb5bdcf.html#exhale-define-cas-test-8cc-1aeedba2affe381e43f1ca69c93bb5bdcf"><span class="std std-ref">Define TEST_SOLVE</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_common_cas_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

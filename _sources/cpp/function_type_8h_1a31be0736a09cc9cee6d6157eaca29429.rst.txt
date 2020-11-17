@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1a31be0736a09cc9cee6d6157eaca29429:
+
+Function cinn::common::Float
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Float(int, int)

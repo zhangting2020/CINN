@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1af717ea524f5edbd2e589606e76d89a32:
+
+Function cinn::hlir::pe::Identity
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Identity(const Tensor&, const std::string&)

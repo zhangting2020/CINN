@@ -1,0 +1,32 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h:
+
+Program Listing for File collect_ir_nodes.h
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h>` (``/home/chunwei/project/cinn2/cinn/ir/collect_ir_nodes.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   std::set<Expr> CollectIRNodes(Expr x, std::function<bool(const Expr*)>&& teller);
+   
+   std::set<Expr> CollectLoadTensors(Expr x, std::function<bool(const Expr*)>&& teller);
+   
+   std::set<Expr> CollectStoreTensors(Expr x, std::function<bool(const Expr*)>&& teller);
+   
+   std::set<Expr> CollectReferencedTensors(Expr x, const std::function<bool(const Expr*)>& teller);
+   
+   std::map<std::string, Expr> CollectTensorMap(
+       Expr x, std::function<bool(const Expr*)>&& extra_teller = [](const Expr* x) { return true; });
+   
+   }  // namespace ir
+   }  // namespace cinn

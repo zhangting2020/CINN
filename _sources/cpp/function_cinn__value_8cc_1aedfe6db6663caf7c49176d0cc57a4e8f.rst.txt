@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__value_8cc_1aedfe6db6663caf7c49176d0cc57a4e8f:
+
+Function cinn::common::CINNValue::TypeCode< ir::Expr >
+======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::CINNValue::TypeCode< ir::Expr >()

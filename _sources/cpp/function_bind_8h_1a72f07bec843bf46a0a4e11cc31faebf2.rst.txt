@@ -1,0 +1,13 @@
+.. _exhale_function_bind_8h_1a72f07bec843bf46a0a4e11cc31faebf2:
+
+Function cinn::pybind::BindRuntime(pybind11::module \*)
+=======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindRuntime(pybind11::module *)

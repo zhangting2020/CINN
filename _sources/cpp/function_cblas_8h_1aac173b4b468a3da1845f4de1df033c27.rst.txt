@@ -1,0 +1,13 @@
+.. _exhale_function_cblas_8h_1aac173b4b468a3da1845f4de1df033c27:
+
+Function cinn_cpu_mkl_gemm_fp32(float, int, int, int, bool, bool, int, int, int, float, cinn_buffer_t \*, cinn_buffer_t \*, cinn_buffer_t \*)
+=============================================================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_mkl_gemm_fp32(float, int, int, int, bool, bool, int, int, int, float, cinn_buffer_t *, cinn_buffer_t *, cinn_buffer_t *)

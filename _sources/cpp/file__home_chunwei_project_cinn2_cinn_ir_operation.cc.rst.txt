@@ -1,0 +1,50 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_operation.cc:
+
+File operation.cc
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/operation.cc``)
+-----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_operation.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/operation.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+

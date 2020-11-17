@@ -1,0 +1,65 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_registry.h:
+
+File registry.h
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/registry.h``)
+---------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_registry.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/lang/packed_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``string_view``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Registry`
+

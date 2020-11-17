@@ -1,0 +1,75 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_axis.cc:
+
+File axis.cc
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/axis.cc``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_axis.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``axis.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_axis.h`)
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/poly/dim.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_dim.h`)
+
+- ``cinn/poly/domain.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_domain.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``glog/logging.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_axis_8cc_1a8bf63dc2aacb3b49d3963cd652b163e4`
+
+- :ref:`exhale_function_axis_8cc_1a64da6b464a895af91fd04fbc606c66f1`
+
+- :ref:`exhale_function_axis_8cc_1ac50cbab96ce535b96ba6153fd0924ae8`
+
+- :ref:`exhale_function_axis_8cc_1a90b6e6ac298673da1a4d437e88af18f0`
+
+- :ref:`exhale_function_axis_8cc_1a51327528c219b724935615cdb02e7284`
+
+- :ref:`exhale_function_axis_8cc_1a1729e4bfdd452ea85d119cd62a7bd8a3`
+

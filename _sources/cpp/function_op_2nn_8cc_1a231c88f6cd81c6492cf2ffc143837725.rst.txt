@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1a231c88f6cd81c6492cf2ffc143837725:
+
+Function cinn::hlir::op::InferShapeForSigmoid
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForSigmoid(const std::vector<framework::shape_t>&, const framework::NodeAttr&)

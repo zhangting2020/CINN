@@ -1,0 +1,53 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_shared_test.cc:
+
+Program Listing for File shared_test.cc
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_shared_test.cc>` (``/home/chunwei/project/cinn2/cinn/common/shared_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/common/shared.h"
+   
+   #include <glog/logging.h>
+   #include <gtest/gtest.h>
+   
+   #include "cinn/common/object.h"
+   
+   namespace cinn {
+   namespace common {
+   
+   struct A : public Object {
+     const char *type_info() const override { return "A"; }
+   
+     Shared<A> other;
+   };
+   
+   class B : public Object {};
+   
+   TEST(Shared, test) {
+     Shared<A> a_ref(make_shared<A>());
+     ASSERT_EQ(ref_count(a_ref.get()).val(), 1);
+   
+     {  // local copy
+       Shared<A> b = a_ref;
+       EXPECT_EQ(ref_count(a_ref.get()).val(), 2);
+       ASSERT_EQ(ref_count(b.get()).val(), 2);
+     }
+   
+     ASSERT_EQ(ref_count(a_ref.get()).val(), 1);
+   }
+   
+   TEST(Shared, cycle_share) {
+     {
+       Shared<A> a_ref(make_shared<A>());
+       a_ref->other = a_ref;
+       ASSERT_EQ(a_ref->__ref_count__.val(), 2);
+     }
+   }
+   
+   }  // namespace common
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_define_ir__copy_8cc_1a6d0cbbd9758e6fa87180e7d0f394e967:
+
+Define OP_UNARY_HANDLE
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: OP_UNARY_HANDLE

@@ -1,0 +1,34 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor_test.cc:
+
+Program Listing for File tensor_test.cc
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor_test.cc>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/tensor_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/hlir/framework/tensor.h"
+   
+   #include <gtest/gtest.h>
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   TEST(Tensor, basic) {
+     _Tensor_ tensor;
+     tensor.Resize(Shape{{3, 2}});
+   
+     auto* data = tensor.mutable_data<float>(common::DefaultHostTarget());
+   
+     for (int i = 0; i < tensor.shape().numel(); i++) {
+       data[i] = i;
+     }
+   }
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

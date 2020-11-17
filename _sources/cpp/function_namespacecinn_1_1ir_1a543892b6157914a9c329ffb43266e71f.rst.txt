@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a543892b6157914a9c329ffb43266e71f:
+
+Template Function cinn::ir::operator-(POD, Expr)
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator-(POD, Expr)

@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1a876b5219120613a621228c62f8bbacd4:
+
+Define NODETY_PRIMITIVE_TYPE_FOR_EACH
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: NODETY_PRIMITIVE_TYPE_FOR_EACH

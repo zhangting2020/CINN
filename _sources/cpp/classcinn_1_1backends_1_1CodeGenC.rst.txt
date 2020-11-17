@@ -1,0 +1,32 @@
+.. _exhale_class_classcinn_1_1backends_1_1CodeGenC:
+
+Class CodeGenC
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IrPrinter`` (:ref:`exhale_struct_structcinn_1_1ir_1_1IrPrinter`)
+
+
+Derived Types
+*************
+
+- ``public cinn::backends::CodeGenCUDA_Dev`` (:ref:`exhale_class_classcinn_1_1backends_1_1CodeGenCUDA__Dev`)
+- ``public cinn::backends::CodeGenCX86`` (:ref:`exhale_class_classcinn_1_1backends_1_1CodeGenCX86`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::CodeGenC
+   :members:
+   :protected-members:
+   :undoc-members:

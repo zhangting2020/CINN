@@ -1,0 +1,13 @@
+.. _exhale_function_compute_8cc_1abaf1ca0e208e0f402058850e294f7f33:
+
+Function cinn::lang::CallExtern
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::CallExtern(const std::string&, const std::vector<Expr>&)

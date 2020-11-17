@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1aabfd031ab215e9e2c7f12097a53676f8:
+
+Function cinn::hlir::pe::Substract(const Tensor&, const Expr&, const std::string&)
+==================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Substract(const Tensor&, const Expr&, const std::string&)

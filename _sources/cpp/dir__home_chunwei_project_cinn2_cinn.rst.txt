@@ -1,0 +1,17 @@
+.. _dir__home_chunwei_project_cinn2_cinn:
+
+
+Directory cinn
+==============
+
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn``
+
+Subdirectories
+--------------
+
+- :ref:`dir__home_chunwei_project_cinn2_cinn_frontend`
+- :ref:`dir__home_chunwei_project_cinn2_cinn_lang`
+
+
+

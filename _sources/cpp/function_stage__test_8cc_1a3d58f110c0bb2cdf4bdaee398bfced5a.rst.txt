@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1a3d58f110c0bb2cdf4bdaee398bfced5a:
+
+Function cinn::poly::TEST(ComputeAt, level0)
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(ComputeAt, level0)

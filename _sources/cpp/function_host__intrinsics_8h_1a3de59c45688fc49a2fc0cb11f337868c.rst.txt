@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8h_1a3de59c45688fc49a2fc0cb11f337868c:
+
+Function cinn_cpu_round_fp32(float)
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_round_fp32(float)

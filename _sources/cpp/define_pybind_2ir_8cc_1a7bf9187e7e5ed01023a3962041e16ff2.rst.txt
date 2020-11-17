@@ -1,0 +1,13 @@
+.. _exhale_define_pybind_2ir_8cc_1a7bf9187e7e5ed01023a3962041e16ff2:
+
+Define DEFINE_BINARY_NODE
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DEFINE_BINARY_NODE

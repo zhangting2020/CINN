@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1a21ee6b11291a5c0a854be8d53f821645:
+
+Function cinn::common::GetForloopStackToStore
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::GetForloopStackToStore(Expr *, const std::string&)

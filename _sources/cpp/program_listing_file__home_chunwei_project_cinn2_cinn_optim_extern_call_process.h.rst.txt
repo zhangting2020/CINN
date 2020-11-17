@@ -1,0 +1,25 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.h:
+
+Program Listing for File extern_call_process.h
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.h>` (``/home/chunwei/project/cinn2/cinn/optim/extern_call_process.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void ExternCallMultiOutputShallowStore(Expr* e);
+   
+   void ExternCallRemoveTupleGetStatements(Expr* e);
+   
+   }  // namespace optim
+   }  // namespace cinn

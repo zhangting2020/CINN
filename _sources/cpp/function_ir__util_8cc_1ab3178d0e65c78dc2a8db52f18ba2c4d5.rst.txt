@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1ab3178d0e65c78dc2a8db52f18ba2c4d5:
+
+Function cinn::common::CastIfNeeded
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::CastIfNeeded(Expr, Type)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1a0d0b5715dd487467f72f668a0fde5ce1:
+
+Template Function cinn::utils::Map
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Map(const InT&, std::function<OutValT(const typename InT::value_type&)>)

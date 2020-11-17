@@ -1,0 +1,76 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h:
+
+File extern_func_protos.h
+=========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/extern_func_protos.h``)
+-------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/function_prototype.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+- :ref:`namespace_cinn__backends__detail`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExternFunctionProtoRegistry`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_extern__func__protos_8h_1aa099ebf0d9ba70aa1dece4740ffec1b9`
+

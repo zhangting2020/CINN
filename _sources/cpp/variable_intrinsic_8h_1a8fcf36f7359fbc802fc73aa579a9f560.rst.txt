@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a8fcf36f7359fbc802fc73aa579a9f560:
+
+Variable cinn::runtime::intrisic::buffer_load_float64
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_load_float64

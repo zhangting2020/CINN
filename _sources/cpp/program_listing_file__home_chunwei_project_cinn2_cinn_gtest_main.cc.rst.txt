@@ -1,0 +1,21 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_gtest_main.cc:
+
+Program Listing for File gtest_main.cc
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_gtest_main.cc>` (``/home/chunwei/project/cinn2/cinn/gtest_main.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include <gflags/gflags.h>
+   #include <gtest/gtest.h>
+   
+   int main(int argc, char **argv) {
+     testing::InitGoogleTest(&argc, argv);
+     google::ParseCommandLineFlags(&argc, &argv, false);
+   
+     return RUN_ALL_TESTS();
+   }

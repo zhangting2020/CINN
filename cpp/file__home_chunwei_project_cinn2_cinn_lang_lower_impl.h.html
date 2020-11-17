@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File lower_impl.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-lower-impl-h">
+<span id="file-home-chunwei-project-cinn2-cinn-lang-lower-impl-h"></span><h1>File lower_impl.h<a class="headerlink" href="#file-lower-impl-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_lang.html#dir-home-chunwei-project-cinn2-cinn-lang"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/lang</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-lang-lower-impl-h" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/lang/lower_impl.h</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#included-by" id="id3">Included By</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id4">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id5">Classes</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id6">Functions</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-lang-lower-impl-h">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/lang/lower_impl.h</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-lang-lower-impl-h" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_lang_lower_impl.h.html">Program Listing for File lower_impl.h</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/graph_utils.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/buffer.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_printer.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/buffer_assign.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/compute_inline_expand.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/fold_cinn_call_arguments.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/optimize.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/remove_nested_block.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/replace_call_with_expr.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/tensor_write_tell.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/transform_gpu_forloop.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/transform_polyfor_to_for.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/poly/ast_gen.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iostream</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stack</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unordered_map</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unordered_set</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">utility</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="included-by">
+<h2>Included By<a class="headerlink" href="#included-by" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_lower.cc.html#file-home-chunwei-project-cinn2-cinn-lang-lower-cc"><span class="std std-ref">File lower.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_lower_impl.cc.html#file-home-chunwei-project-cinn2-cinn-lang-lower-impl-cc"><span class="std std-ref">File lower_impl.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_lower_impl_test.cc.html#file-home-chunwei-project-cinn2-cinn-lang-lower-impl-test-cc"><span class="std std-ref">File lower_impl_test.cc</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__lang.html#namespace-cinn-lang"><span class="std std-ref">Namespace cinn::lang</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__lang__detail.html#namespace-cinn-lang-detail"><span class="std std-ref">Namespace cinn::lang::detail</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__poly.html#namespace-cinn-poly"><span class="std std-ref">Namespace cinn::poly</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="structcinn_1_1lang_1_1detail_1_1CompuGraphNode.html#exhale-struct-structcinn-1-1lang-1-1detail-1-1compugraphnode"><span class="std std-ref">Struct CompuGraphNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1lang_1_1detail_1_1MarkUnrollMutator.html#exhale-struct-structcinn-1-1lang-1-1detail-1-1markunrollmutator"><span class="std std-ref">Struct MarkUnrollMutator</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1lang_1_1detail_1_1MarkVectorizeMutator.html#exhale-struct-structcinn-1-1lang-1-1detail-1-1markvectorizemutator"><span class="std std-ref">Struct MarkVectorizeMutator</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1lang_1_1detail_1_1LowerImpl.html#exhale-class-classcinn-1-1lang-1-1detail-1-1lowerimpl"><span class="std std-ref">Class LowerImpl</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_lower__impl_8h_1ac84afa6ac30b53fec2f44144aa17898a.html#exhale-function-lower-impl-8h-1ac84afa6ac30b53fec2f44144aa17898a"><span class="std std-ref">Function cinn::lang::detail::CheckNoIslCallRemains(const Expr *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_lower__impl_8h_1a064f17521cc93bc46a66e3fc51da0738.html#exhale-function-lower-impl-8h-1a064f17521cc93bc46a66e3fc51da0738"><span class="std std-ref">Function cinn::lang::detail::LowerGroup(const poly::ScheduleGroup&amp;, const std::map&lt;std::string, Expr&gt;&amp;, std::map&lt;std::string, Tensor&gt; *, StageMap, ir::CudaAxisInfo *)</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_lang_lower_impl.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

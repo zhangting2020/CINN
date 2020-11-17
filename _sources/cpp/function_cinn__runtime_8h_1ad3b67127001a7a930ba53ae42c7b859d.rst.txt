@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8h_1ad3b67127001a7a930ba53ae42c7b859d:
+
+Function handle_to_cinn_pod_value()
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: handle_to_cinn_pod_value()

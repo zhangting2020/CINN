@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1a712ab7a407dc5c2fe6f1487da9e542ca:
+
+Template Function cinn::hlir::pe::Broadcast
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Broadcast(const FuncOp&, const Tensor&, const Tensor&, const std::string&, const Expr&)

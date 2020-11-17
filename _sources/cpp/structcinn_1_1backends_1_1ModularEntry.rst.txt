@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1backends_1_1ModularEntry:
+
+Struct ModularEntry
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_modular.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::backends::ModularEntry
+   :members:
+   :protected-members:
+   :undoc-members:

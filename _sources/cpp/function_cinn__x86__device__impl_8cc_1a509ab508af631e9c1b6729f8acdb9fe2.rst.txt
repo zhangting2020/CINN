@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__x86__device__impl_8cc_1a509ab508af631e9c1b6729f8acdb9fe2:
+
+Function cinn_x86_copy_to_host
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_x86_copy_to_host()

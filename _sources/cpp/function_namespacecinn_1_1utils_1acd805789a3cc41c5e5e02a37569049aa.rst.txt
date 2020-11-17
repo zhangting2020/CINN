@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1acd805789a3cc41c5e5e02a37569049aa:
+
+Function cinn::utils::Endswith
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Endswith(const std::string&, const std::string&)

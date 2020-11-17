@@ -1,0 +1,81 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_op_desc.h:
+
+File op_desc.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_frontend_paddle_pb>` (``/home/chunwei/project/cinn2/cinn/frontend/paddle/pb``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/frontend/paddle/pb/op_desc.h``)
+------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_op_desc.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/frontend/paddle/cpp/op_desc.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_op_desc.h`)
+
+- ``cinn/frontend/paddle/framework.pb.h``
+
+- ``variant``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_compatible_pb.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_parser.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_op_desc.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__frontend__paddle__pb`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1frontend_1_1paddle_1_1pb_1_1OpDesc`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_pb_2op__desc_8h_1a6204647e39a542b0d2adb32794b96af4`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_pb_2op__desc_8h_1a9d8bb73fa2cadb918876793bff3bc7ad`
+
+- :ref:`exhale_typedef_pb_2op__desc_8h_1a35452211ddfb8a79900e3b2faea11164`
+

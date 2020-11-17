@@ -1,0 +1,13 @@
+.. _exhale_define_macros_8h_1a35bc737f7fff79aebac2c717304485f7:
+
+Define CINN_NOT_IMPLEMENTED
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_NOT_IMPLEMENTED

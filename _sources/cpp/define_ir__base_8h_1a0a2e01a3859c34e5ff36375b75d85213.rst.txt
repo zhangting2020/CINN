@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1a0a2e01a3859c34e5ff36375b75d85213:
+
+Define __
+=========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __

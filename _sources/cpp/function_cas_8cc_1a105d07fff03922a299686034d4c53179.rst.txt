@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1a105d07fff03922a299686034d4c53179:
+
+Function cinn::common::detail::EvaluatePower
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::EvaluatePower(Expr)

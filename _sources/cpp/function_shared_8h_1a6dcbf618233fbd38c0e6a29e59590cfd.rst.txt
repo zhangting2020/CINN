@@ -1,0 +1,13 @@
+.. _exhale_function_shared_8h_1a6dcbf618233fbd38c0e6a29e59590cfd:
+
+Template Function cinn::common::ref_count
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::ref_count(const T *)

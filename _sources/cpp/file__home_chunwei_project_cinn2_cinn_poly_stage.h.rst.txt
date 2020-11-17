@@ -1,0 +1,159 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_poly_stage.h:
+
+File stage.h
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_poly>` (``/home/chunwei/project/cinn2/cinn/poly``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/poly/stage.h``)
+--------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_poly_stage.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/poly/domain.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_domain.h`)
+
+- ``cinn/poly/map.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.h`)
+
+- ``glog/logging.h``
+
+- ``isl/cpp.h``
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``tuple``
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_graph.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_poly.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__poly`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1ComputeAtInfo`
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1ComputeAtRelation`
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1ReadCacheRelation`
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1StageForloopInfo`
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1TensorScheduleMeta`
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1WriteCacheRelation`
+
+- :ref:`exhale_class_classcinn_1_1poly_1_1__StageMap__`
+
+- :ref:`exhale_class_classcinn_1_1poly_1_1Stage`
+
+- :ref:`exhale_class_classcinn_1_1poly_1_1StageMap`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_stage_8h_1a62b02697d6aea928d6598af864131f13`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_stage_8h_1a69e6cc499b489d58a62fff78a5ff5ffb`
+
+- :ref:`exhale_function_stage_8h_1a662d65908db3d54a91e880b22da1d006`
+

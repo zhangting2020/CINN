@@ -1,0 +1,58 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc:
+
+File replace_call_with_expr_test.cc
+===================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/replace_call_with_expr_test.cc``)
+--------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/lang/placeholder.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`)
+
+- ``cinn/optim/replace_call_with_expr.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.h`)
+
+- ``cinn/poly/ast_gen.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+

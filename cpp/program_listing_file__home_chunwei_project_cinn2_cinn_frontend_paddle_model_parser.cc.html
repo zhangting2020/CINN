@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File model_parser.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-model-parser-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-frontend-paddle-model-parser-cc"></span><h1>Program Listing for File model_parser.cc<a class="headerlink" href="#program-listing-for-file-model-parser-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_parser.cc.html#file-home-chunwei-project-cinn2-cinn-frontend-paddle-model-parser-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/frontend/paddle/model_parser.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/paddle/model_parser.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_cuda_dev.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_cuda_host.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_cuda_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/cuda_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/paddle/compatible_pb.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">frontend</span><span class="o">::</span><span class="n">paddle</span> <span class="p">{</span>
+
+<span class="kt">int</span> <span class="n">SizeOfType</span><span class="p">(</span><span class="n">framework_proto</span><span class="o">::</span><span class="n">VarType</span><span class="o">::</span><span class="n">Type</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">Type</span> <span class="o">=</span> <span class="n">framework_proto</span><span class="o">::</span><span class="n">VarType</span><span class="o">::</span><span class="n">Type</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">type</span><span class="p">))</span> <span class="p">{</span>
+<span class="cp">#define DO(desc, type)            \</span>
+<span class="cp">  case Type::VarType_Type_##desc: \</span>
+<span class="cp">    return sizeof(type);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">BOOL</span><span class="p">,</span> <span class="kt">bool</span><span class="p">);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">FP16</span><span class="p">,</span> <span class="kt">float</span><span class="p">);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">FP32</span><span class="p">,</span> <span class="kt">float</span><span class="p">);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">INT8</span><span class="p">,</span> <span class="kt">int8_t</span><span class="p">);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">INT16</span><span class="p">,</span> <span class="kt">int16_t</span><span class="p">);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">INT32</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+    <span class="n">DO</span><span class="p">(</span><span class="n">INT64</span><span class="p">,</span> <span class="kt">int64_t</span><span class="p">);</span>
+<span class="cp">#undef DO</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;unknown data type &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">type</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">TensorFromStream</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">is</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">_Tensor_</span> <span class="o">*</span><span class="n">tensor</span><span class="p">,</span> <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">Type</span> <span class="o">=</span> <span class="n">framework_proto</span><span class="o">::</span><span class="n">VarType</span><span class="o">::</span><span class="n">Type</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">;</span>
+  <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">version</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">version</span><span class="p">));</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">0U</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Only version 0 is supported&quot;</span><span class="p">;</span>
+  <span class="c1">// read tensor desc</span>
+  <span class="n">framework_proto</span><span class="o">::</span><span class="n">VarType</span><span class="o">::</span><span class="n">TensorDesc</span> <span class="n">desc</span><span class="p">;</span>
+  <span class="p">{</span>
+    <span class="c1">// int32_t size</span>
+    <span class="c1">// proto buffer</span>
+    <span class="kt">int32_t</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">size</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">size</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">[]</span><span class="o">&gt;</span> <span class="n">buf</span><span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">size</span><span class="p">]);</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">get</span><span class="p">()),</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">desc</span><span class="p">.</span><span class="n">ParseFromArray</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">size</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cannot parse tensor desc&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// read tensor</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span> <span class="n">dims_vec</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">desc</span><span class="p">.</span><span class="n">dims</span><span class="p">().</span><span class="n">begin</span><span class="p">(),</span> <span class="n">desc</span><span class="p">.</span><span class="n">dims</span><span class="p">().</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">dims_vec</span><span class="p">));</span>
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Shape</span> <span class="n">dims</span><span class="p">(</span><span class="n">dims_vec</span><span class="p">);</span>
+  <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">Resize</span><span class="p">(</span><span class="n">dims</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
+  <span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="n">SizeOfType</span><span class="p">(</span><span class="n">desc</span><span class="p">.</span><span class="n">data_type</span><span class="p">());</span>
+  <span class="c1">// alllocate memory</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">desc</span><span class="p">.</span><span class="n">data_type</span><span class="p">()))</span> <span class="p">{</span>
+<span class="cp">#define SET_TENSOR(desc, type, precision)     \</span>
+<span class="cp">  case Type::VarType_Type_##desc:             \</span>
+<span class="cp">    buf = tensor-&gt;mutable_data&lt;type&gt;(target); \</span>
+<span class="cp">    tensor-&gt;set_type(precision);              \</span>
+<span class="cp">    break</span>
+
+      <span class="n">SET_TENSOR</span><span class="p">(</span><span class="n">FP32</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+      <span class="n">SET_TENSOR</span><span class="p">(</span><span class="n">INT8</span><span class="p">,</span> <span class="kt">int8_t</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">8</span><span class="p">));</span>
+      <span class="n">SET_TENSOR</span><span class="p">(</span><span class="n">INT16</span><span class="p">,</span> <span class="kt">int16_t</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">16</span><span class="p">));</span>
+      <span class="n">SET_TENSOR</span><span class="p">(</span><span class="n">INT32</span><span class="p">,</span> <span class="kt">int32_t</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+      <span class="n">SET_TENSOR</span><span class="p">(</span><span class="n">INT64</span><span class="p">,</span> <span class="kt">int64_t</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">64</span><span class="p">));</span>
+<span class="cp">#undef SET_TENSOR</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;unknown type &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">desc</span><span class="p">.</span><span class="n">data_type</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="c1">// tensor-&gt;set_persistable(true);</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">size</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">NVGPU</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#ifdef CINN_WITH_CUDA</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">desc</span><span class="p">.</span><span class="n">data_type</span><span class="p">()</span> <span class="o">!=</span> <span class="n">Type</span><span class="o">::</span><span class="n">VarType_Type_FP32</span><span class="p">)</span> <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[CUDA] The type is not fp32!!&quot;</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">set_type</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">temp</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">());</span>
+    <span class="c1">// LOG(INFO) &lt;&lt;&quot;[CUDA] The tensor&#39;s size is &quot;&lt;&lt; tensor-&gt;shape().numel();</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">data</span><span class="p">()),</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">CUDA_CALL</span><span class="p">(</span><span class="n">cudaMemcpy</span><span class="p">(</span>
+        <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">temp</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span> <span class="n">cudaMemcpyHostToDevice</span><span class="p">));</span>
+<span class="cp">#else</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;To use CUDA backends, you need to set WITH_CUDA ON!&quot;</span><span class="p">;</span>
+<span class="cp">#endif</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">LoadLoDTensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">is</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Variable</span> <span class="o">*</span><span class="n">var</span><span class="p">,</span> <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">var</span><span class="p">);</span>
+  <span class="kt">uint32_t</span> <span class="n">version</span><span class="p">{};</span>
+  <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">version</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">version</span><span class="p">));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;model version &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">version</span><span class="p">;</span>
+
+  <span class="c1">// Load LoD information</span>
+  <span class="kt">uint64_t</span> <span class="n">lod_level</span><span class="p">{};</span>
+  <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lod_level</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">lod_level</span><span class="p">));</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">uint64_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lod_level</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint64_t</span> <span class="n">size</span><span class="p">;</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">size</span><span class="p">),</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">size</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span> <span class="n">tmp</span><span class="p">(</span><span class="n">size</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">uint64_t</span><span class="p">));</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="n">data</span><span class="p">()),</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">streamsize</span><span class="o">&gt;</span><span class="p">(</span><span class="n">size</span><span class="p">));</span>
+    <span class="c1">// lod[i] = tmp;</span>
+  <span class="p">}</span>
+
+  <span class="n">TensorFromStream</span><span class="p">(</span><span class="n">is</span><span class="p">,</span> <span class="n">tensor</span><span class="p">.</span><span class="k">operator</span><span class="o">-&gt;</span><span class="p">(),</span> <span class="n">target</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ReadBinaryFile</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filename</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">*</span><span class="n">contents</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">fin</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">fin</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cannot open file: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">filename</span><span class="p">;</span>
+  <span class="n">fin</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">size</span> <span class="o">=</span> <span class="n">fin</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+  <span class="n">contents</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+  <span class="n">contents</span><span class="o">-&gt;</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+  <span class="n">fin</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">beg</span><span class="p">);</span>
+  <span class="n">fin</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">contents</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span> <span class="n">contents</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">fin</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">framework_proto</span><span class="o">::</span><span class="n">ProgramDesc</span><span class="o">&gt;</span> <span class="n">LoadProgram</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">program_from_memory</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">framework_proto</span><span class="o">::</span><span class="n">ProgramDesc</span><span class="o">&gt;</span> <span class="n">main_program</span><span class="p">(</span><span class="k">new</span> <span class="n">framework_proto</span><span class="o">::</span><span class="n">ProgramDesc</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">program_from_memory</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">desc_str</span><span class="p">;</span>
+    <span class="n">ReadBinaryFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">desc_str</span><span class="p">);</span>
+    <span class="n">main_program</span><span class="o">-&gt;</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">desc_str</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">main_program</span><span class="o">-&gt;</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">main_program</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">LoadParams</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="c1">// Load directly to CPU, and latter transfer to other devices.</span>
+<span class="kt">void</span> <span class="n">LoadParam</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Variable</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">fin</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">fin</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;failed to open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">path</span><span class="p">;</span>
+  <span class="n">LoadLoDTensor</span><span class="p">(</span><span class="n">fin</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">IsPersistable</span><span class="p">(</span><span class="k">const</span> <span class="n">cpp</span><span class="o">::</span><span class="n">VarDesc</span> <span class="o">&amp;</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">Persistable</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">var</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cpp</span><span class="o">::</span><span class="n">VarDescAPI</span><span class="o">::</span><span class="n">Type</span><span class="o">::</span><span class="n">FEED_MINIBATCH</span> <span class="o">&amp;&amp;</span>
+      <span class="n">var</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cpp</span><span class="o">::</span><span class="n">VarDescAPI</span><span class="o">::</span><span class="n">Type</span><span class="o">::</span><span class="n">FETCH_LIST</span> <span class="o">&amp;&amp;</span> <span class="n">var</span><span class="p">.</span><span class="n">GetType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cpp</span><span class="o">::</span><span class="n">VarDescAPI</span><span class="o">::</span><span class="n">Type</span><span class="o">::</span><span class="n">RAW</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">LoadCombinedParamsPb</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">,</span>
+                          <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Scope</span> <span class="o">*</span><span class="n">scope</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">cpp</span><span class="o">::</span><span class="n">ProgramDesc</span> <span class="o">&amp;</span><span class="n">cpp_prog</span><span class="p">,</span>
+                          <span class="kt">bool</span> <span class="n">params_from_memory</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">scope</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">prog</span>             <span class="o">=</span> <span class="n">cpp_prog</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">main_block_desc</span> <span class="o">=</span> <span class="o">*</span><span class="n">prog</span><span class="p">.</span><span class="n">GetBlock</span><span class="o">&lt;</span><span class="n">cpp</span><span class="o">::</span><span class="n">BlockDesc</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="c1">// Get vars</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">paramlist</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">main_block_desc</span><span class="p">.</span><span class="n">VarsSize</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">&amp;</span><span class="n">var</span> <span class="o">=</span> <span class="o">*</span><span class="n">main_block_desc</span><span class="p">.</span><span class="n">GetVar</span><span class="o">&lt;</span><span class="n">cpp</span><span class="o">::</span><span class="n">VarDesc</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsPersistable</span><span class="p">(</span><span class="n">var</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="n">paramlist</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">Name</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">paramlist</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">paramlist</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+  <span class="c1">// Load vars</span>
+  <span class="k">auto</span> <span class="n">load_var_func</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">is</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">paramlist</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="o">*</span><span class="n">var</span> <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">paramlist</span><span class="p">[</span><span class="n">i</span><span class="p">]));</span>
+      <span class="c1">// Error checking</span>
+      <span class="n">CHECK</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">is</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;There is a problem with loading model parameters&quot;</span><span class="p">;</span>
+      <span class="n">LoadLoDTensor</span><span class="p">(</span><span class="n">is</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">is</span><span class="p">.</span><span class="n">peek</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">is</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;You are not allowed to load partial data via&quot;</span>
+                    <span class="o">&lt;&lt;</span> <span class="s">&quot; LoadCombinedParamsPb, use LoadParam instead.&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">params_from_memory</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">fin</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+    <span class="n">load_var_func</span><span class="p">(</span><span class="n">fin</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">fin</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">fin</span><span class="p">.</span><span class="n">is_open</span><span class="p">());</span>
+    <span class="n">load_var_func</span><span class="p">(</span><span class="n">fin</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">LoadModelPb</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">model_dir</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">model_file</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">param_file</span><span class="p">,</span>
+                 <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Scope</span> <span class="o">*</span><span class="n">scope</span><span class="p">,</span>
+                 <span class="n">cpp</span><span class="o">::</span><span class="n">ProgramDesc</span> <span class="o">*</span><span class="n">cpp_prog</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">combined</span><span class="p">,</span>
+                 <span class="kt">bool</span> <span class="n">model_from_memory</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">cpp_prog</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">scope</span><span class="p">);</span>
+  <span class="n">cpp_prog</span><span class="o">-&gt;</span><span class="n">ClearBlocks</span><span class="p">();</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;model_dir is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">model_dir</span><span class="p">;</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;model_file is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">model_file</span><span class="p">;</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;param_file is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">param_file</span><span class="p">;</span>
+  <span class="c1">// Load model</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Start load model program...&quot;</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">prog_path</span>       <span class="o">=</span> <span class="n">model_dir</span> <span class="o">+</span> <span class="s">&quot;/__model__&quot;</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">param_file_temp</span> <span class="o">=</span> <span class="n">param_file</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">combined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// prog_path = model_file;</span>
+    <span class="n">param_file_temp</span> <span class="o">=</span> <span class="n">model_dir</span> <span class="o">+</span> <span class="s">&quot;/params&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">framework_proto</span><span class="o">::</span><span class="n">ProgramDesc</span> <span class="n">pb_proto_prog</span> <span class="o">=</span> <span class="o">*</span><span class="n">LoadProgram</span><span class="p">(</span><span class="n">prog_path</span><span class="p">,</span> <span class="n">model_from_memory</span><span class="p">);</span>
+  <span class="n">pb</span><span class="o">::</span><span class="n">ProgramDesc</span> <span class="n">pb_prog</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pb_proto_prog</span><span class="p">);</span>
+  <span class="c1">// Transform to cpp::ProgramDesc</span>
+  <span class="n">TransformProgramDescAnyToCpp</span><span class="p">(</span><span class="n">pb_prog</span><span class="p">,</span> <span class="n">cpp_prog</span><span class="p">);</span>
+
+  <span class="c1">// Load Params</span>
+  <span class="c1">// NOTE: Only main block be used now.</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Start load model params...&quot;</span><span class="p">;</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="o">!</span><span class="n">combined</span> <span class="o">&amp;&amp;</span> <span class="n">model_from_memory</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;If you want use the model_from_memory,&quot;</span>
+                                           <span class="o">&lt;&lt;</span> <span class="s">&quot; you should load the combined model using cfg.set_model_buffer &quot;</span>
+                                              <span class="s">&quot;interface.&quot;</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">combined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LoadCombinedParamsPb</span><span class="p">(</span><span class="n">param_file_temp</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="o">*</span><span class="n">cpp_prog</span><span class="p">,</span> <span class="n">model_from_memory</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">main_block</span> <span class="o">=</span> <span class="n">pb_proto_prog</span><span class="p">.</span><span class="n">blocks</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">var</span> <span class="p">:</span> <span class="n">main_block</span><span class="p">.</span><span class="n">vars</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;feed&quot;</span> <span class="o">||</span> <span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;fetch&quot;</span> <span class="o">||</span> <span class="o">!</span><span class="n">var</span><span class="p">.</span><span class="n">persistable</span><span class="p">())</span> <span class="k">continue</span><span class="p">;</span>
+
+      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">file_path</span> <span class="o">=</span> <span class="n">model_dir</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">();</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;reading weight &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">();</span>
+
+      <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+      <span class="k">switch</span> <span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">type</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">framework_proto</span><span class="o">::</span><span class="nl">VarType_Type_LOD_TENSOR</span><span class="p">:</span>
+          <span class="n">LoadLoDTensor</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">name</span><span class="p">())),</span> <span class="n">target</span><span class="p">);</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+          <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;unknown weight type&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Load protobuf model in [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">model_dir</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] successfully&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace cinn::frontend::paddle</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_parser.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

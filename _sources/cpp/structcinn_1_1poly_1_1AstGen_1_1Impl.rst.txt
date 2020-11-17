@@ -1,0 +1,22 @@
+.. _exhale_struct_structcinn_1_1poly_1_1AstGen_1_1Impl:
+
+Struct AstGen::Impl
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classcinn_1_1poly_1_1AstGen`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::poly::AstGen::Impl
+   :members:
+   :protected-members:
+   :undoc-members:

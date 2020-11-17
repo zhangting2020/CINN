@@ -1,0 +1,96 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h:
+
+Program Listing for File extern_func_emitter.h
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h>` (``/home/chunwei/project/cinn2/cinn/backends/extern_func_emitter.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #pragma once
+   #include <memory>
+   #include <string>
+   #include <unordered_map>
+   #include <utility>
+   
+   #include "cinn/backends/extern_func_protos.h"
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace backends {
+   class ExternFuncID;
+   }  // namespace backends
+   }  // namespace cinn
+   
+   namespace std {
+   template <>
+   struct hash<cinn::backends::ExternFuncID> {
+     size_t operator()(const cinn::backends::ExternFuncID& x) const;
+   };
+   }  // namespace std
+   
+   namespace cinn {
+   namespace backends {
+   
+   static const char* backend_C         = "C";
+   static const char* backend_llvm_host = "llvm_host";
+   static const char* backend_llvm_x86  = "llvm_x86";
+   static const char* backend_nvgpu     = "nvgpu";
+   
+   class ExternFunctionEmitter {
+    public:
+     ExternFunctionEmitter() = default;
+   
+     virtual void BindCodeGen(void* codegen) = 0;
+     virtual const char* func_name() const = 0;
+     void Emit(const ir::Call* op, bool insert_global_if_missing = false) {
+       insert_global_if_missing_ = insert_global_if_missing;
+       func_proto().AssertMatch(op);
+       EmitImpl(op);
+     }
+   
+     const FunctionProto& func_proto() const;
+   
+     virtual bool RetValuePacked() const = 0;
+   
+     virtual const char* backend_kind() const = 0;
+   
+    protected:
+     virtual void EmitImpl(const ir::Call* op) = 0;
+   
+     bool insert_global_if_missing_ = false;
+   };
+   
+   struct ExternFuncID {
+     std::string name;
+     std::string backend_id;
+   
+     ExternFuncID(const char* name, const char* backend_id) : name(name), backend_id(backend_id) {}
+   
+     friend std::ostream& operator<<(std::ostream& os, const ExternFuncID& x);
+     friend bool operator==(const ExternFuncID& a, const ExternFuncID& b) {
+       return a.name == b.name && a.backend_id == b.backend_id;
+     }
+   };
+   
+   class ExternFunctionEmitterRegistry {
+    public:
+     static ExternFunctionEmitterRegistry& Global();
+   
+     void Register(const ExternFuncID& name, ExternFunctionEmitter* x);
+   
+     ExternFunctionEmitter* Lookup(const ExternFuncID& name) const;
+   
+    private:
+     std::unordered_map<ExternFuncID, std::unique_ptr<ExternFunctionEmitter>> data_;
+   
+     ExternFunctionEmitterRegistry();
+     CINN_DISALLOW_COPY_AND_ASSIGN(ExternFunctionEmitterRegistry);
+   };
+   
+   }  // namespace backends
+   }  // namespace cinn

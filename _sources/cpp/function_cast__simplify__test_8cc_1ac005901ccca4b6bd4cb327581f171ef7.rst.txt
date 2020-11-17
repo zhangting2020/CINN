@@ -1,0 +1,13 @@
+.. _exhale_function_cast__simplify__test_8cc_1ac005901ccca4b6bd4cb327581f171ef7:
+
+Function cinn::optim::TEST(CastSimplify, Imm_int)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(CastSimplify, Imm_int)

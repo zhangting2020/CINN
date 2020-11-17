@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1ae244e512c3a11c251d8d9d37df97856c:
+
+Template Function cinn::utils::Min
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Min(T&&, Ts&&...)

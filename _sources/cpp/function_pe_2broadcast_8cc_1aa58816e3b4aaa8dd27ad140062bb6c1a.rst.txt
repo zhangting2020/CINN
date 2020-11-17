@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1aa58816e3b4aaa8dd27ad140062bb6c1a:
+
+Function cinn::hlir::pe::BitwiseAnd(const Expr&, const Expr&)
+=============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::BitwiseAnd(const Expr&, const Expr&)

@@ -1,0 +1,59 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.cc:
+
+File pass.cc
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/pass.cc``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`)
+
+- ``cinn/hlir/pass/use_pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_pass_8cc_1afbdc9d43b52539075518a58275894811`
+
+- :ref:`exhale_function_pass_8cc_1a0167df012f532f1e351439cc491959b4`
+

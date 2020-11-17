@@ -1,0 +1,36 @@
+.. _dir__home_chunwei_project_cinn2_cinn_hlir_pe:
+
+
+Directory pe
+============
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir>` (``/home/chunwei/project/cinn2/cinn/hlir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/hlir/pe``
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_transform_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_schedule.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_schedule.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_vision.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_vision.h`
+
+

@@ -1,0 +1,77 @@
+
+.. _file__home_chunwei_project_cinn2_tests_test01_elementwise_add_case.cc:
+
+File test01_elementwise_add_case.cc
+===================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests>` (``/home/chunwei/project/cinn2/tests``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/test01_elementwise_add_case.cc``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_test01_elementwise_add_case.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/runtime/cinn_runtime.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`)
+
+- ``glog/logging.h``
+
+- ``gtest/gtest.h``
+
+- ``tests/test01_elementwise_add.cc``
+
+- ``tests/test01_elementwise_add.h``
+
+- ``tests/test01_elementwise_add_compute_at.cc``
+
+- ``tests/test01_elementwise_add_compute_at.h``
+
+- ``tests/test01_elementwise_add_compute_at_level1.cc``
+
+- ``tests/test01_elementwise_add_compute_at_level1.h``
+
+- ``tests/test01_elementwise_add_vectorize.cc``
+
+- ``tests/test01_elementwise_add_vectorize.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1aec73b64b4b3798d10af2ba7ecdf616f7`
+
+- :ref:`exhale_function_namespacecinn_1ad9fc031978d948d83767920b7aee3c7a`
+
+- :ref:`exhale_function_namespacecinn_1ae87018a9db209a63a30dadd556de28f1`
+

@@ -1,0 +1,13 @@
+.. _exhale_variable_ir__util_8cc_1ae7805ce200ef92e152ce978dfed97915:
+
+Variable var_map_
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: var_map_

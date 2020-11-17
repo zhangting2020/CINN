@@ -1,0 +1,57 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_utils_string_test.cc:
+
+File string_test.cc
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_utils>` (``/home/chunwei/project/cinn2/cinn/utils``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/utils/string_test.cc``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_utils_string_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__utils`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a23d36229ed9dc623653e1f8e0fafce82`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1aad97e7401a3f347ee0ac4cd3033f2120`
+

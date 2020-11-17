@@ -1,0 +1,13 @@
+.. _exhale_define_lang_8cc_1a93e172afcbdb963f73b361e8472f9654:
+
+Define MAKE_COMPUTE_FN
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_lang.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: MAKE_COMPUTE_FN

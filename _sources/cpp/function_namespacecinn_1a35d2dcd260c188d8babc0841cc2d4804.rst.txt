@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1a35d2dcd260c188d8babc0841cc2d4804:
+
+Function cinn::DECLARE_bool
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_context.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::DECLARE_bool(cinn_runtime_display_debug_info)

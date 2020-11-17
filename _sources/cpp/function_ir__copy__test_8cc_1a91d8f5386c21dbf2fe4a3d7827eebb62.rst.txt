@@ -1,0 +1,13 @@
+.. _exhale_function_ir__copy__test_8cc_1a91d8f5386c21dbf2fe4a3d7827eebb62:
+
+Function cinn::optim::TEST(IrCopy, basic)
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(IrCopy, basic)

@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struct NormalizeProducerDomainMutator &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Struct ResetProducerLoadIndiceInConsumerMutator" href="structcinn_1_1lang_1_1detail_1_1ResetProducerLoadIndiceInConsumerMutator.html" />
+    <link rel="prev" title="Struct MarkVectorizeMutator" href="structcinn_1_1lang_1_1detail_1_1MarkVectorizeMutator.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="struct-normalizeproducerdomainmutator">
+<span id="exhale-struct-structcinn-1-1lang-1-1detail-1-1normalizeproducerdomainmutator"></span><h1>Struct NormalizeProducerDomainMutator<a class="headerlink" href="#struct-normalizeproducerdomainmutator" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc.html#file-home-chunwei-project-cinn2-cinn-lang-compute-at-postprocess-cc"><span class="std std-ref">File compute_at_postprocess.cc</span></a></p></li>
+</ul>
+<div class="section" id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">ir::IRMutator&lt;&gt;</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="struct-documentation">
+<h2>Struct Documentation<a class="headerlink" href="#struct-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp struct">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutatorE">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutatorE"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutatorE"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator"></span><em class="property">struct </em><code class="sig-prename descclassname">cinn::lang::detail<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">NormalizeProducerDomainMutator</code> : <em class="property">public</em> ir::IRMutator&lt;&gt;<a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Process the producer related Store and Load indices. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator30NormalizeProducerDomainMutatorERKNSt6stringERKNSt6vectorI3VarEE">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator30NormalizeProducerDomainMutatorERKNSt6stringERKNSt6vectorI3VarEE"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator30NormalizeProducerDomainMutatorERKNSt6stringERKNSt6vectorI3VarEE"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::NormalizeProducerDomainMutator__ssCR.std::vector:Var:CR"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a6308f72503f57a149ea6f589887d3a07"></span><code class="sig-name descname">NormalizeProducerDomainMutator</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>producer_tuple</em>, <em class="property">const</em> std::vector&lt;Var&gt; &amp;<em>consumer_axis</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator30NormalizeProducerDomainMutatorERKNSt6stringERKNSt6vectorI3VarEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutatorclEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutatorclEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutatorclEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::call-operator__ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a5eb2d946e4cba96012f3f23e00cb317d"></span>void <code class="sig-name descname">operator()</code><span class="sig-paren">(</span>Expr *<em>forloop</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutatorclEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator21AddOffsetsToStoreExprEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator21AddOffsetsToStoreExprEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator21AddOffsetsToStoreExprEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::AddOffsetsToStoreExpr__ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1adec6aceb65368a6a5c1544f3452b93d9"></span>void <code class="sig-name descname">AddOffsetsToStoreExpr</code><span class="sig-paren">(</span>Expr *<em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator21AddOffsetsToStoreExprEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add offsets to store, e.g. offset is i-&gt;3, the original store expr is a[i,j] = b[i*2,j], the result expression will be a[i+3,j] = b[(i+3)*2,j] </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator28SetProducerAxisToZeroInStoreEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator28SetProducerAxisToZeroInStoreEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator28SetProducerAxisToZeroInStoreEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::SetProducerAxisToZeroInStore__ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a895a98c4aa502395fa8580b8332e2012"></span>void <code class="sig-name descname">SetProducerAxisToZeroInStore</code><span class="sig-paren">(</span>Expr *<em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator28SetProducerAxisToZeroInStoreEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator27AddOffsetToAxisInStoreValueEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator27AddOffsetToAxisInStoreValueEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator27AddOffsetToAxisInStoreValueEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::AddOffsetToAxisInStoreValue__ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a45e29eec99b72d6d0fa939b04240bee9"></span>void <code class="sig-name descname">AddOffsetToAxisInStoreValue</code><span class="sig-paren">(</span>Expr *<em>expr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator27AddOffsetToAxisInStoreValueEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir5StoreEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir5StoreEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir5StoreEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::Visit__ir::StoreCP.ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1adf06d75c0655b16b095bf3748fbcae56"></span>void <code class="sig-name descname">Visit</code><span class="sig-paren">(</span><em class="property">const</em> ir::Store *<em>op</em>, Expr *<em>expr</em><span class="sig-paren">)</span> <em class="property">override</em><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir5StoreEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir3ForEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir3ForEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir3ForEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::Visit__ir::ForCP.ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a65fb9ade78375fdd3ae80c92b974fdfb"></span>void <code class="sig-name descname">Visit</code><span class="sig-paren">(</span><em class="property">const</em> ir::For *<em>op</em>, Expr *<em>expr</em><span class="sig-paren">)</span> <em class="property">override</em><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir3ForEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir7PolyForEP4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir7PolyForEP4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir7PolyForEP4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::Visit__ir::PolyForCP.ExprP"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a8856726ffb9f073c734293f580a060cc"></span>void <code class="sig-name descname">Visit</code><span class="sig-paren">(</span><em class="property">const</em> ir::PolyFor *<em>op</em>, Expr *<em>expr</em><span class="sig-paren">)</span> <em class="property">override</em><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator5VisitEPKN2ir7PolyForEP4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator32UpdatePolyForConditionWithOffsetEP4Expr3Var4Expr">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator32UpdatePolyForConditionWithOffsetEP4Expr3Var4Expr"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator32UpdatePolyForConditionWithOffsetEP4Expr3Var4Expr"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::UpdatePolyForConditionWithOffset__ExprP.Var.Expr"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1ad044fc77e89dff1a3194f74f39fa5f24"></span>void <code class="sig-name descname">UpdatePolyForConditionWithOffset</code><span class="sig-paren">(</span>Expr *<em>cond</em>, Var <em>iter</em>, Expr <em>offset</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator32UpdatePolyForConditionWithOffsetEP4Expr3Var4Expr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="cpp var">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator7offsetsE">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator7offsetsE"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator7offsetsE"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::offsets__std::map:Var.Expr:"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a155ddc776813cd02eb75e58b2f1e7ea9"></span>std::map&lt;Var, Expr&gt; <code class="sig-name descname">offsets</code><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator7offsetsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator13consumer_axisE">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator13consumer_axisE"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator13consumer_axisE"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::consumer_axis__std::vector:Var:"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1afcbc1461aea007ba8fbb54d4fcc1c7df"></span>std::vector&lt;Var&gt; <code class="sig-name descname">consumer_axis</code><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator13consumer_axisE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator14producer_tupleE">
+<span id="_CPPv3N4cinn4lang6detail30NormalizeProducerDomainMutator14producer_tupleE"></span><span id="_CPPv2N4cinn4lang6detail30NormalizeProducerDomainMutator14producer_tupleE"></span><span id="cinn::lang::detail::NormalizeProducerDomainMutator::producer_tuple__ss"></span><span class="target" id="structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator_1a9b2553964e90083cc061b09ccf4581e2"></span>std::string <code class="sig-name descname">producer_tuple</code><a class="headerlink" href="#_CPPv4N4cinn4lang6detail30NormalizeProducerDomainMutator14producer_tupleE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ Symbols</a><ul>
+      <li>Previous: <a href="structcinn_1_1lang_1_1detail_1_1MarkVectorizeMutator.html" title="previous chapter">Struct MarkVectorizeMutator</a></li>
+      <li>Next: <a href="structcinn_1_1lang_1_1detail_1_1ResetProducerLoadIndiceInConsumerMutator.html" title="next chapter">Struct ResetProducerLoadIndiceInConsumerMutator</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

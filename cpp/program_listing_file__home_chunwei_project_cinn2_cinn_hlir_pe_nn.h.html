@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File nn.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-nn-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-hlir-pe-nn-h"></span><h1>Program Listing for File nn.h<a class="headerlink" href="#program-listing-for-file-nn-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-nn-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe/nn.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/builtin.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/compute.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/stage.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">hlir</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">pe</span> <span class="p">{</span>
+
+<span class="kt">void</span> <span class="n">CudaSplitSchedule</span><span class="p">(</span><span class="n">poly</span><span class="o">::</span><span class="n">Stage</span> <span class="o">*</span><span class="n">stage</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">output_shape</span><span class="p">);</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Relu</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span>
+                <span class="n">T</span> <span class="n">threshold</span>                    <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Relu_out&quot;</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">(</span>
+      <span class="n">A</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">indice</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">Relu</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">indice</span><span class="p">),</span> <span class="n">threshold</span><span class="p">);</span> <span class="p">},</span> <span class="n">output_name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Relu6</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span>
+                 <span class="n">T</span> <span class="n">threshold</span>                    <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Relu6_out&quot;</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">(</span>
+      <span class="n">A</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">indice</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">Relu6</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">indice</span><span class="p">),</span> <span class="n">threshold</span><span class="p">);</span> <span class="p">},</span> <span class="n">output_name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">LeakyRelu</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span>
+                     <span class="kt">double</span> <span class="n">alpha</span>                   <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                     <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_LeakyRelu_out&quot;</span><span class="p">));</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">PRelu</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">slope</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="kt">int</span> <span class="n">axis</span>                 <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_PRelu_out&quot;</span><span class="p">));</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Conv2d_NCHW</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">input</span><span class="p">,</span>
+                                    <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">weights</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">pad_h</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">pad_w</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">stride_h</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">stride_w</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">dilation_h</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">dilation_w</span><span class="p">,</span>
+                                    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Conv2d_NCHW_out&quot;</span><span class="p">));</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Conv2d_NHWC</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">input</span><span class="p">,</span>
+                                    <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">weights</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">pad_h</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">pad_w</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">stride_h</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">stride_w</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">dilation_h</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">dilation_w</span><span class="p">,</span>
+                                    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Conv2d_NHWC_out&quot;</span><span class="p">));</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Depthwise_Conv2d_NCHW</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">input</span><span class="p">,</span>
+                                              <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">weight</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">pad_h</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">pad_w</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">stride_h</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">stride_w</span><span class="p">,</span>
+                                              <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_depthwise_conv2d_nchw&quot;</span><span class="p">));</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Depthwise_Conv2d_NHWC</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">input</span><span class="p">,</span>
+                                              <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">weight</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">pad_h</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">pad_w</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">stride_h</span><span class="p">,</span>
+                                              <span class="kt">int</span> <span class="n">stride_w</span><span class="p">,</span>
+                                              <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_depthwise_conv2d_nhwc&quot;</span><span class="p">));</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">BatchNorm_NCHW</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">input</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">scale</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">bias</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">mean</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">variance</span><span class="p">,</span>
+                          <span class="kt">float</span> <span class="n">epsilon</span><span class="p">,</span>
+                          <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_BatchNorm_NCHW_out&quot;</span><span class="p">));</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Pad</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">,</span>
+               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">pad_before</span><span class="p">,</span>
+               <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">pad_after</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span><span class="p">(),</span>
+               <span class="n">Expr</span> <span class="n">pad_value</span>              <span class="o">=</span> <span class="n">Expr</span><span class="p">(),</span>
+               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span>     <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_pad_out&quot;</span><span class="p">),</span>
+               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">pad_mode</span> <span class="o">=</span> <span class="s">&quot;constant&quot;</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Softmax</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">axis</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span><span class="p">);</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Slice</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">starts</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">axes</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">output_shape</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Pool1d</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">kernel_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stride_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">padding_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">pool_type</span>   <span class="o">=</span> <span class="s">&quot;max&quot;</span><span class="p">,</span>
+                               <span class="kt">bool</span> <span class="n">ceil_mode</span>                 <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                               <span class="kt">bool</span> <span class="n">exclusive</span>                 <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">data_format</span> <span class="o">=</span> <span class="s">&quot;NCW&quot;</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Pool1d_out&quot;</span><span class="p">));</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Pool2d</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">kernel_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stride_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">padding_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">pool_type</span>   <span class="o">=</span> <span class="s">&quot;max&quot;</span><span class="p">,</span>
+                               <span class="kt">bool</span> <span class="n">ceil_mode</span>                 <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                               <span class="kt">bool</span> <span class="n">exclusive</span>                 <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">data_format</span> <span class="o">=</span> <span class="s">&quot;NCHW&quot;</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Pool2d_out&quot;</span><span class="p">));</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">Pool3d</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">kernel_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">stride_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">padding_size</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">pool_type</span>   <span class="o">=</span> <span class="s">&quot;max&quot;</span><span class="p">,</span>
+                               <span class="kt">bool</span> <span class="n">ceil_mode</span>                 <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                               <span class="kt">bool</span> <span class="n">exclusive</span>                 <span class="o">=</span> <span class="nb">true</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">data_format</span> <span class="o">=</span> <span class="s">&quot;NCDHW&quot;</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span> <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Pool3d_out&quot;</span><span class="p">));</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">DropoutInfer</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">,</span>
+                        <span class="kt">float</span> <span class="n">dropout_prob</span><span class="p">,</span>
+                        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">dropout_implementation</span> <span class="o">=</span> <span class="s">&quot;downgrade_in_infer&quot;</span><span class="p">,</span>
+                        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">output_name</span>            <span class="o">=</span> <span class="n">UniqName</span><span class="p">(</span><span class="s">&quot;T_Dropout_infer_out&quot;</span><span class="p">));</span>
+
+<span class="p">}</span>  <span class="c1">// namespace pe</span>
+<span class="p">}</span>  <span class="c1">// namespace hlir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

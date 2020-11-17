@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacecinn_1_1ir_1acb578243f2e77ffeb79ca3305192c80a:
+
+Enum MemoryType
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::ir::MemoryType

@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File test01_elementwise_add_main.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-test01-elementwise-add-main-cc">
+<span id="file-home-chunwei-project-cinn2-tests-test01-elementwise-add-main-cc"></span><h1>File test01_elementwise_add_main.cc<a class="headerlink" href="#file-test01-elementwise-add-main-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_tests.html#dir-home-chunwei-project-cinn2-tests"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-tests-test01-elementwise-add-main-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests/test01_elementwise_add_main.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-tests-test01-elementwise-add-main-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests/test01_elementwise_add_main.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-tests-test01-elementwise-add-main-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_tests_test01_elementwise_add_main.cc.html">Program Listing for File test01_elementwise_add_main.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/cinn.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_cinn.h.html#file-home-chunwei-project-cinn2-cinn-cinn-h"><span class="std std-ref">File cinn.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/ir_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_ir_util.h.html#file-home-chunwei-project-cinn2-cinn-common-ir-util-h"><span class="std std-ref">File ir_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/broadcast.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-h"><span class="std std-ref">File broadcast.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/optim/optimize.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_optim_optimize.h.html#file-home-chunwei-project-cinn2-cinn-optim-optimize-h"><span class="std std-ref">File optimize.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_namespacecinn_1a9561f6ec701d81a49e59502ccb6b2cf7.html#exhale-function-namespacecinn-1a9561f6ec701d81a49e59502ccb6b2cf7"><span class="std std-ref">Function cinn::BuildComputeAtExpr</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1a0d2fcaa628b1999a4e2ad42768c6e676.html#exhale-function-namespacecinn-1a0d2fcaa628b1999a4e2ad42768c6e676"><span class="std std-ref">Function cinn::TEST(test01_elementwise_add, vectorize)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1a020303393335588be7a38ef974adac03.html#exhale-function-namespacecinn-1a020303393335588be7a38ef974adac03"><span class="std std-ref">Function cinn::TEST(elementwise_add, compute_at)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1ae010c4cbe1edac2e28e05edd78a6e99f.html#exhale-function-namespacecinn-1ae010c4cbe1edac2e28e05edd78a6e99f"><span class="std std-ref">Function cinn::TEST(elementwise_add, compute_at1)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1a5d39f2589da7b8b393ce336215b5ad19.html#exhale-function-namespacecinn-1a5d39f2589da7b8b393ce336215b5ad19"><span class="std std-ref">Function cinn::TEST(test01_elementwise_add, basic)</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_tests_test01_elementwise_add_main.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

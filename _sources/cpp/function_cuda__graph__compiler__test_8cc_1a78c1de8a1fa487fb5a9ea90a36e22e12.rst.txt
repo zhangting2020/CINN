@@ -1,0 +1,13 @@
+.. _exhale_function_cuda__graph__compiler__test_8cc_1a78c1de8a1fa487fb5a9ea90a36e22e12:
+
+Function cinn::hlir::framework::GetTensor
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::GetTensor(const std::shared_ptr<Scope>&, const std::string&)

@@ -1,0 +1,13 @@
+.. _exhale_define_test02__matmul__case_8cc_1aaa03173a08d9bf16f37c175d24cf5f5b:
+
+Define TEST_FUNC1
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_case.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TEST_FUNC1

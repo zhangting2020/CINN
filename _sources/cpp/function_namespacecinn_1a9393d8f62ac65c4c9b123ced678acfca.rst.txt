@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1a9393d8f62ac65c4c9b123ced678acfca:
+
+Function cinn::CheckVarNameValid
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::CheckVarNameValid(const std::string_view)

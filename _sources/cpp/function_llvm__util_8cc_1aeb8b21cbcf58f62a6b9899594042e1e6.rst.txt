@@ -1,0 +1,13 @@
+.. _exhale_function_llvm__util_8cc_1aeb8b21cbcf58f62a6b9899594042e1e6:
+
+Function cinn::backends::llvm_type_of< float >
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::llvm_type_of< float >(llvm::Module *)

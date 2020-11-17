@@ -1,0 +1,13 @@
+.. _exhale_function_stage_8h_1a69e6cc499b489d58a62fff78a5ff5ffb:
+
+Function cinn::poly::DefaultIterator
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::DefaultIterator(int)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a45ba8e848a8bdee15aa74c3252451a26:
+
+Function cinn::ir::operator<<(std::ostream&, const CudaAxisInfo&)
+=================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<<(std::ostream&, const CudaAxisInfo&)

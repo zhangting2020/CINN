@@ -1,0 +1,13 @@
+.. _exhale_function_backends_2cuda__util_8cc_1ae85c8f32ec28722a26b3287b0be1528f:
+
+Function cinn::backends::cuda_thread_axis_name
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_cuda_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::cuda_thread_axis_name(int)

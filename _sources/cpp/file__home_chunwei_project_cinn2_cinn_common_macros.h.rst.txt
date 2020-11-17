@@ -1,0 +1,80 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_macros.h:
+
+File macros.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/macros.h``)
+-----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_macros.h.rst
+
+
+
+
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h`
+
+
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_macros_8h_1addbf1d01a8d8d66f8bcd4fecf174ac05`
+
+- :ref:`exhale_define_macros_8h_1a431b279ddd9c2372888c2512254fad0c`
+
+- :ref:`exhale_define_macros_8h_1abf12d95087740e7089f039830de807ef`
+
+- :ref:`exhale_define_macros_8h_1a35bc737f7fff79aebac2c717304485f7`
+
+- :ref:`exhale_define_macros_8h_1ade214de41ccd712fac1a65ff98b7314e`
+
+- :ref:`exhale_define_macros_8h_1a94c9fb24d962e3bc8a1bc896e4629128`
+
+- :ref:`exhale_define_macros_8h_1ae54f6d3409920c294b9aceba9a79283a`
+

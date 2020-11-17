@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1a545aed34f6499e30f2facca5e41ce3e3:
+
+Define NODETY_BINARY_OP_FOR_EACH
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: NODETY_BINARY_OP_FOR_EACH

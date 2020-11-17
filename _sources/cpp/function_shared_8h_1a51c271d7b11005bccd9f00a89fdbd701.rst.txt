@@ -1,0 +1,13 @@
+.. _exhale_function_shared_8h_1a51c271d7b11005bccd9f00a89fdbd701:
+
+Template Function cinn::common::make_shared
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::make_shared(Args&&...)

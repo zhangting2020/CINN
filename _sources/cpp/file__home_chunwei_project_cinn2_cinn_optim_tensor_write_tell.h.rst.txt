@@ -1,0 +1,69 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h:
+
+File tensor_write_tell.h
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/tensor_write_tell.h``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1TensorWriteTeller`
+

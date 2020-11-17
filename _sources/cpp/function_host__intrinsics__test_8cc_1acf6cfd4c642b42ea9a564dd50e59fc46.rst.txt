@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics__test_8cc_1acf6cfd4c642b42ea9a564dd50e59fc46:
+
+Function cinn::runtime::cpu::TEST(tanh, basic)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::cpu::TEST(tanh, basic)

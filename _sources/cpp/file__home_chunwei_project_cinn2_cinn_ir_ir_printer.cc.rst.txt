@@ -1,0 +1,78 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc:
+
+File ir_printer.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_printer.cc``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/ir/lowered_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/runtime/intrinsic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa7e0e7c2eb86500453cf595e08beb05b`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5a0904b0b3791238f86d8103b23e2b2c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a07b72ab140e128c1931891b24dd0a6f8`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_ir__printer_8cc_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+

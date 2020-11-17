@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File stage_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-stage-test-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-poly-stage-test-cc"></span><h1>File stage_test.cc<a class="headerlink" href="#file-stage-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_poly.html#dir-home-chunwei-project-cinn2-cinn-poly"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-poly-stage-test-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/stage_test.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-poly-stage-test-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/stage_test.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-poly-stage-test-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc.html">Program Listing for File stage_test.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/llvm/codegen_llvm.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-h"><span class="std std-ref">File codegen_llvm.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/llvm/simple_jit.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-simple-jit-h"><span class="std std-ref">File simple_jit.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/cinn.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_cinn.h.html#file-home-chunwei-project-cinn2-cinn-cinn-h"><span class="std std-ref">File cinn.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/ir_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_ir_util.h.html#file-home-chunwei-project-cinn2-cinn-common-ir-util-h"><span class="std std-ref">File ir_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/test_helper.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_test_helper.h.html#file-home-chunwei-project-cinn2-cinn-common-test-helper-h"><span class="std std-ref">File test_helper.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-h"><span class="std std-ref">File ir.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_operators.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-operators-h"><span class="std std-ref">File ir_operators.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_printer.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-printer-h"><span class="std std-ref">File ir_printer.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/poly/stage.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_stage.h.html#file-home-chunwei-project-cinn2-cinn-poly-stage-h"><span class="std std-ref">File stage.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__poly.html#namespace-cinn-poly"><span class="std std-ref">Namespace cinn::poly</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_stage__test_8cc_1aba0d327589c275d42991d41cd0413931.html#exhale-function-stage-test-8cc-1aba0d327589c275d42991d41cd0413931"><span class="std std-ref">Function cinn::poly::CreateCall</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a19e6433499e08541628b0053e584be98.html#exhale-function-stage-test-8cc-1a19e6433499e08541628b0053e584be98"><span class="std std-ref">Function cinn::poly::TEST(ComputeAt, Before)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a3d58f110c0bb2cdf4bdaee398bfced5a.html#exhale-function-stage-test-8cc-1a3d58f110c0bb2cdf4bdaee398bfced5a"><span class="std std-ref">Function cinn::poly::TEST(ComputeAt, level0)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a343c05d136fbb9346b5d7e1b35d16bcf.html#exhale-function-stage-test-8cc-1a343c05d136fbb9346b5d7e1b35d16bcf"><span class="std std-ref">Function cinn::poly::TEST(ComputeAt, level1)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a741a589d60793f20c819ac859488a444.html#exhale-function-stage-test-8cc-1a741a589d60793f20c819ac859488a444"><span class="std std-ref">Function cinn::poly::TEST(ComputeAt, simple)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a9d2fdad318b77813a823694ed56a78c7.html#exhale-function-stage-test-8cc-1a9d2fdad318b77813a823694ed56a78c7"><span class="std std-ref">Function cinn::poly::TEST(ComputeAt, Before1)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1adc5362ee47a7d5751b562184365440e3.html#exhale-function-stage-test-8cc-1adc5362ee47a7d5751b562184365440e3"><span class="std std-ref">Function cinn::poly::TEST(Fuse, jit_precision_test)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1abdaa99382292b8fa9869dae6f64ad731.html#exhale-function-stage-test-8cc-1abdaa99382292b8fa9869dae6f64ad731"><span class="std std-ref">Function cinn::poly::TEST(Fuse, jit_precision_test2)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1aedf73e0ff203bf99955508c43d748c86.html#exhale-function-stage-test-8cc-1aedf73e0ff203bf99955508c43d748c86"><span class="std std-ref">Function cinn::poly::TEST(Tile, jit_precision_test)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a9745d169895c751a23fd19c7d85f88fb.html#exhale-function-stage-test-8cc-1a9745d169895c751a23fd19c7d85f88fb"><span class="std std-ref">Function cinn::poly::TEST(Reorder, jit_precision_test)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a2cbe756f39ca364a822ae047d25ee72b.html#exhale-function-stage-test-8cc-1a2cbe756f39ca364a822ae047d25ee72b"><span class="std std-ref">Function cinn::poly::TEST(Unroll, jit_precision_test)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1aff6cd40c2c011ef6f65d7dc41df053fe.html#exhale-function-stage-test-8cc-1aff6cd40c2c011ef6f65d7dc41df053fe"><span class="std std-ref">Function cinn::poly::TEST(Unroll, jit_precision_test1)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1af3415b8e8984594d65aa35d9faa1f47b.html#exhale-function-stage-test-8cc-1af3415b8e8984594d65aa35d9faa1f47b"><span class="std std-ref">Function cinn::poly::TEST(Stage, split)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a0448c33dd65afeedfbec2d58a55ef02b.html#exhale-function-stage-test-8cc-1a0448c33dd65afeedfbec2d58a55ef02b"><span class="std std-ref">Function cinn::poly::TEST(ComputeInline, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a6097f17499761e41f823678f2ac0d35f.html#exhale-function-stage-test-8cc-1a6097f17499761e41f823678f2ac0d35f"><span class="std std-ref">Function cinn::poly::TEST(Stage, tile)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1ac939da306aad9fe5ab359e90cce3cdec.html#exhale-function-stage-test-8cc-1ac939da306aad9fe5ab359e90cce3cdec"><span class="std std-ref">Function cinn::poly::TEST(ComputeInline, complex_graph)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a11c513331753ce56abda0cc0a13962d4.html#exhale-function-stage-test-8cc-1a11c513331753ce56abda0cc0a13962d4"><span class="std std-ref">Function cinn::poly::TEST(Stage, reorder)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1aadb83a1418de42a5dcee5696bec22c65.html#exhale-function-stage-test-8cc-1aadb83a1418de42a5dcee5696bec22c65"><span class="std std-ref">Function cinn::poly::TEST(ShareBufferWith, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a55f05aaa25a3622efe8a136098e8947f.html#exhale-function-stage-test-8cc-1a55f05aaa25a3622efe8a136098e8947f"><span class="std std-ref">Function cinn::poly::TEST(Stage, split_reorder)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1afd278fef447d09a277fc6280eab54951.html#exhale-function-stage-test-8cc-1afd278fef447d09a277fc6280eab54951"><span class="std std-ref">Function cinn::poly::TEST(isl, test)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a23af8c621d52d7b834408be9c50bcd59.html#exhale-function-stage-test-8cc-1a23af8c621d52d7b834408be9c50bcd59"><span class="std std-ref">Function cinn::poly::TEST(ComputeAtRelation, basic)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a920cd40af804c269957225c1174a39eb.html#exhale-function-stage-test-8cc-1a920cd40af804c269957225c1174a39eb"><span class="std std-ref">Function cinn::poly::TEST(isl, test1)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a76914e1af1e93a3c449e0edd47a810da.html#exhale-function-stage-test-8cc-1a76914e1af1e93a3c449e0edd47a810da"><span class="std std-ref">Function cinn::poly::TEST(Stage, Fuse)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1ac4e2583391474b4ac24b7e65d3af5299.html#exhale-function-stage-test-8cc-1ac4e2583391474b4ac24b7e65d3af5299"><span class="std std-ref">Function cinn::poly::TEST(Stage, Fuse1)</span></a></p></li>
+<li><p><a class="reference internal" href="function_stage__test_8cc_1a686ac0fcffa7c323827937689056430e.html#exhale-function-stage-test-8cc-1a686ac0fcffa7c323827937689056430e"><span class="std std-ref">Function cinn::poly::TestElementwiseAddJitPrecession</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

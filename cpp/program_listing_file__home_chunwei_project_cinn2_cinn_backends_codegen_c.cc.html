@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File codegen_c.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-codegen-c-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-codegen-c-cc"></span><h1>Program Listing for File codegen_c.cc<a class="headerlink" href="#program-listing-for-file-codegen-c-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc.html#file-home-chunwei-project-cinn2-cinn-backends-codegen-c-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/codegen_c.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_c.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/extern_func_emitter.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_verify.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/lowered_func.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/remove_nested_block.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/intrinsic.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">backends</span> <span class="p">{</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">utils</span><span class="p">;</span>  <span class="c1">// NOLINT</span>
+
+<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">kCKeywordRestrict</span> <span class="o">=</span> <span class="s">&quot;__restrict__&quot;</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">,</span> <span class="k">const</span> <span class="n">Outputs</span> <span class="o">&amp;</span><span class="n">outputs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">ir</span><span class="o">::</span><span class="n">IrVerify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">module</span><span class="p">));</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">Compile</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CHeader</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">file</span><span class="p">(</span><span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;failed to open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">;</span>
+    <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="n">source</span><span class="p">;</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">WARNING</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Output C header to file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">outputs</span><span class="p">.</span><span class="n">c_source_name</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">Compile</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">file</span><span class="p">(</span><span class="n">outputs</span><span class="p">.</span><span class="n">c_source_name</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;failed to open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">c_source_name</span><span class="p">;</span>
+    <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="n">source</span><span class="p">;</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">WARNING</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Output C source to file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">c_source_name</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">CodeGenC</span><span class="o">::</span><span class="n">CodeGenC</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">)</span> <span class="o">:</span> <span class="n">ir</span><span class="o">::</span><span class="n">IrPrinter</span><span class="p">(</span><span class="n">ss_</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">,</span> <span class="n">OutputKind</span> <span class="n">output_kind</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">ss_</span><span class="p">.</span><span class="n">str</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">output_kind</span> <span class="o">==</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CHeader</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">GenerateHeaderFile</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">output_kind</span> <span class="o">==</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PrintIncludes</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">inline_builtin_codes_</span><span class="p">)</span> <span class="n">PrintBuiltinCodes</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span> <span class="n">buffers</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">buffer</span> <span class="p">:</span> <span class="n">module</span><span class="o">-&gt;</span><span class="n">buffers</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">buffers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">as_buffer_ref</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="n">PrintBufferCreation</span><span class="p">(</span><span class="n">buffers</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">func</span> <span class="p">:</span> <span class="n">module</span><span class="p">.</span><span class="n">functions</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">Compile</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not supported OutputKind&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">ss_</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">LoweredFunc</span> <span class="o">&amp;</span><span class="n">function</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">function</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">function</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">ss_</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_cpp_const</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;const &quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_int</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;int8_t&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_int</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;int32_t&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_int</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;int64_t&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_bool</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;bool&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_float</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;float&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_float</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;double&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_void</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;void&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_customized_type</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">type</span><span class="p">.</span><span class="n">customized_type</span><span class="p">().</span><span class="n">empty</span><span class="p">());</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="n">type</span><span class="p">.</span><span class="n">customized_type</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">ERROR</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">type</span><span class="p">;</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_cpp_handle</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;*&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_cpp_handle2</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">str</span> <span class="o">+=</span> <span class="s">&quot;**&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">str</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">IntImm</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">UIntImm</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">FloatImm</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">StringImm</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Add</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Sub</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Mul</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Div</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Mod</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">EQ</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">NE</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">LT</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">LE</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">GT</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">GE</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">And</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">PrintBinaryOp</span><span class="p">(</span><span class="s">&quot;&amp;&amp;&quot;</span><span class="p">,</span> <span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Or</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Min</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Max</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Minus</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Not</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(!&quot;</span><span class="p">;</span>
+  <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Cast</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">PrintCastExpr</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">());</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">For</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;for (&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">min</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;; &quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &lt; &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">extent</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;; &quot;</span><span class="p">;</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; += 1&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) &quot;</span><span class="p">;</span>
+
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;for (&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">iterator</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;; &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;; &quot;</span><span class="p">;</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">iterator</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; += &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">inc</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) &quot;</span><span class="p">;</span>
+
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Select</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) ? &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; : &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">IfThenElse</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;if (&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) {</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">())</span> <span class="n">IncIndent</span><span class="p">();</span>
+  <span class="n">DoIndent</span><span class="p">();</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">())</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">())</span> <span class="n">DecIndent</span><span class="p">();</span>
+
+  <span class="n">DoIndent</span><span class="p">();</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;}&quot;</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_case</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; else {</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">())</span> <span class="n">IncIndent</span><span class="p">();</span>
+    <span class="n">DoIndent</span><span class="p">();</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_case</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">false_case</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">())</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;&quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">())</span> <span class="n">DecIndent</span><span class="p">();</span>
+
+    <span class="n">DoIndent</span><span class="p">();</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;}&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Block</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">IncIndent</span><span class="p">();</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DoIndent</span><span class="p">();</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DoIndent</span><span class="p">();</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">DecIndent</span><span class="p">();</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">DoIndent</span><span class="p">();</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;}&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">buffer_malloc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PrintCall_buffer_malloc</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_values_to_array_repr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PrintCall_pod_values_to_array</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">is_intrinsic_call</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+    <span class="n">PrintCallArgs</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">is_cinn_call</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">// call CINN LoweredFunc</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+    <span class="n">PrintCallArgs</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">is_extern_call</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">emitter</span> <span class="o">=</span> <span class="n">ExternFunctionEmitterRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">Lookup</span><span class="p">(</span><span class="n">ExternFuncID</span><span class="p">{</span><span class="n">backend_C</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()});</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">emitter</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">emitter</span><span class="o">-&gt;</span><span class="n">BindCodeGen</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+      <span class="n">CHECK</span><span class="p">(</span><span class="n">emitter</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;No extern function emitter for call &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+      <span class="n">emitter</span><span class="o">-&gt;</span><span class="n">Emit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">||</span> <span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+      <span class="n">PrintCallArgs</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCallArgs</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCall_buffer_malloc</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">2UL</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">PrintCastExpr</span><span class="p">(</span><span class="s">&quot;void*&quot;</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCall_cinn_pod_value_to_</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&amp;(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCall_get_address</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">read_var</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">as_var</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">read_buf</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">as_buffer</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">read_var</span> <span class="o">||</span> <span class="n">read_buf</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Only Var or Buffer can get address&quot;</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">read_var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">read_var</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&amp;&quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">read_var</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">read_buf</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">read_buf</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&amp;&quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">read_buf</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCall_pod_values_to_array</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">output_var</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">as_var_ref</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">output_var</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">arg_names</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">arg</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">arg_var</span> <span class="o">=</span> <span class="n">arg</span><span class="p">.</span><span class="n">as_var</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">arg_var</span><span class="p">);</span>
+    <span class="n">arg_names</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">arg_var</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_pod_value_t &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">output_var</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[] = &quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;{ &quot;</span><span class="p">;</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">arg_names</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; }&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Module_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">CINN_NOT_IMPLEMENTED</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Load</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">dense_strided_ramp</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">StridedRampBase</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">dense_strided_ramp</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">// Loading a continuous Ramp address.</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">is_vector</span><span class="p">());</span>
+    <span class="n">PrintStackVecType</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">ElementOf</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;::&quot;</span>
+         <span class="o">&lt;&lt;</span> <span class="s">&quot;Load(&quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span><span class="p">;</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">dense_strided_ramp</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">is_vector</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// gather</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">is_vector</span><span class="p">());</span>
+    <span class="n">PrintStackVecType</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">ElementOf</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;::Load(&quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span><span class="p">;</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">());</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">is_addr_tensor</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Store</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">is_addr_tensor</span><span class="p">());</span>
+
+  <span class="k">auto</span> <span class="o">*</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Alloc</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">buffer_malloc</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(void*)(0), &quot;</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="o">*</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Free</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">buffer_free</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(void*)(0), &quot;</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="o">*</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Let</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">is_vec</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">valid</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">.</span><span class="n">defined</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Broadcast</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// broadcast&#39;s type is hard to print, so use c++11 auto instead.</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;auto&quot;</span><span class="p">;</span>
+    <span class="n">is_vec</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">symbol</span><span class="p">);</span>
+
+  <span class="c1">// native C array.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">is_vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span><span class="p">;</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Reduce</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Reduce IR is just for internal representation, should not be used for CodeGen.&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Ramp</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;StackVec&lt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">ElementOf</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&gt;::Ramp(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Broadcast</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;StackVec&lt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">ElementOf</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&gt;::Broadcast(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">FracOp</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Sum</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Product</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IrPrinter</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCastExpr</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;((&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;))&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintCastExpr</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">type</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintShape</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">shape</span><span class="p">,</span> <span class="kt">char</span> <span class="n">leftb</span><span class="p">,</span> <span class="kt">char</span> <span class="n">rightb</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">leftb</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">shape</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">shape</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">Print</span><span class="p">(</span><span class="n">shape</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">rightb</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_LoweredFunc_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">PrintFunctionDeclaration</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">DoIndent</span><span class="p">();</span>
+
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">alloc_output_buffer_exprs</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">dealloc_output_buffer_exprs</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+      <span class="o">&lt;&lt;</span> <span class="s">&quot;the count of allocation and deallocaton expressions is not match&quot;</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">new_body</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">alloca_temp_buffers</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">PrepareAllocTempBufferExprs</span><span class="p">();</span>
+<span class="cp">#define APPEND_TO_NEW_BODY(field__) new_body.insert(std::end(new_body), std::begin(op-&gt;field__), std::end(op-&gt;field__));</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">argument_prepare_exprs</span><span class="p">)</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">alloc_output_buffer_exprs</span><span class="p">)</span>
+  <span class="n">new_body</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">new_body</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">alloca_temp_buffers</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">alloca_temp_buffers</span><span class="p">));</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">buffer_data_cast_exprs</span><span class="p">)</span>
+  <span class="n">new_body</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">dealloc_output_buffer_exprs</span><span class="p">)</span>
+
+  <span class="n">Expr</span> <span class="n">func_body</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">new_body</span><span class="p">);</span>
+
+  <span class="n">optim</span><span class="o">::</span><span class="n">RemoveNestedBlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">func_body</span><span class="p">);</span>
+
+  <span class="n">Print</span><span class="p">(</span><span class="n">func_body</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintIncludes</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;#include &lt;cinn_runtime.h&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;#include &lt;stdio.h&gt;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintFileGuardOpen</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;#ifndef _%s_CINN_H_</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">Uppercase</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;#define _%s_CINN_H_</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">Uppercase</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintFileGuardClose</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">module_name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;#endif  // _%s_CINN_H_</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">Uppercase</span><span class="p">(</span><span class="n">module_name</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintBufferCreation</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">buffers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">buffer</span> <span class="p">:</span> <span class="n">buffers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Ignore the buffer in other devices.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">is_on_host</span><span class="p">())</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="n">DoIndent</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">expr</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferCreate</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintBufferDestroy</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">buffers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">buffer</span> <span class="p">:</span> <span class="n">buffers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DoIndent</span><span class="p">();</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">DestroyExpr</span><span class="p">());</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">GenerateHeaderFile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">PrintFileGuardOpen</span><span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="n">name</span><span class="p">());</span>
+  <span class="n">PrintIncludes</span><span class="p">();</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">func</span> <span class="p">:</span> <span class="n">module</span><span class="p">.</span><span class="n">functions</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">PrintFunctionDeclaration</span><span class="p">(</span><span class="n">func</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_LoweredFunc_</span><span class="o">&gt;</span><span class="p">());</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">PrintFileGuardClose</span><span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="n">name</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintFuncArg</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Argument</span> <span class="o">&amp;</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">is_buffer</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">is_input</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;const struct cinn_buffer_t *&quot;</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;struct cinn_buffer_t *&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">is_var</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">type</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">arg</span><span class="p">.</span><span class="n">name</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">arg</span><span class="p">.</span><span class="n">name</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintRuntimeType</span><span class="p">(</span><span class="k">const</span> <span class="n">cinn_type_t</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_int32_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_int32_t()&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_int64_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_int64_t()&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_float32_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_float32_t()&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_float64_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_float64_t()&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Unknown type is not supported to print&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintStackVecType</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lanes</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;StackedVec&lt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">lanes</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">PrimitiveNode</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span> <span class="n">CINN_NOT_IMPLEMENTED</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">IntrinsicOp</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">())</span> <span class="p">{</span>
+<span class="cp">#define __(x)                                     \</span>
+<span class="cp">  case ir::IntrinsicKind::k##x:                   \</span>
+<span class="cp">    Visit(llvm::dyn_cast&lt;ir::intrinsics::x&gt;(op)); \</span>
+<span class="cp">    break;</span>
+
+    <span class="n">INTRINSIC_KIND_FOR_EACH</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
+<span class="cp">#undef __</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferGetDataHandle</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">.</span><span class="n">as_buffer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;-&gt;&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;memory&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferGetDataConstHandle</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">.</span><span class="n">as_buffer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;-&gt;&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;memory&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">PodValueToX</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">to_type</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">GetOutputType</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">to_type</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_value_to_float</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">to_type</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_value_to_double</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">to_type</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_value_to_int32</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">to_type</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_value_to_int64</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">to_type</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_value_to_void_p</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">to_type</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">pod_value_to_buffer_p</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not supported type: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">to_type</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">pod_value_ptr</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">BufferCreate</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span> <span class="o">*</span><span class="n">buffer_arg</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">.</span><span class="n">as_buffer</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">buffer_arg</span><span class="p">);</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_buffer_t* &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">buffer_arg</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">buffer_create</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">PrintCastExpr</span><span class="p">(</span><span class="s">&quot;cinn_device_kind_t&quot;</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="n">buffer_arg</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">.</span><span class="n">runtime_arch</span><span class="p">()));</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/*target*/, &quot;</span><span class="p">;</span>
+  <span class="n">PrintRuntimeType</span><span class="p">(</span><span class="n">runtime</span><span class="o">::</span><span class="n">ToRuntimeType</span><span class="p">(</span><span class="n">buffer_arg</span><span class="o">-&gt;</span><span class="n">dtype</span><span class="p">.</span><span class="n">ElementOf</span><span class="p">()));</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">PrintShape</span><span class="p">(</span><span class="n">buffer_arg</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">buffer_arg</span><span class="o">-&gt;</span><span class="n">data_alignment</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">buffer_arg</span><span class="o">-&gt;</span><span class="n">data_alignment</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;/*align*/&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">GetAddr</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">.</span><span class="n">as_buffer</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&amp;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">.</span><span class="n">as_buffer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">.</span><span class="n">as_var</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&amp;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">.</span><span class="n">as_var</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&amp;(&quot;</span><span class="p">;</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">ArgsConstruct</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">args_construct_repr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">var</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">ReadWholeFile</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">path</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">file</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Failed to open file: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">path</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">ss</span><span class="p">;</span>
+  <span class="n">ss</span> <span class="o">&lt;&lt;</span> <span class="n">file</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">ss</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">PrintBuiltinCodes</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">FLAGS_cinn_x86_builtin_code_root</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The flag cinn_x86_builtin_code_root should be set first&quot;</span><span class="p">;</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">x86_code_file</span> <span class="o">=</span> <span class="s">&quot;_x86_builtin_source.cc&quot;</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">ReadWholeFile</span><span class="p">(</span><span class="n">FLAGS_cinn_x86_builtin_code_root</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">x86_code_file</span><span class="p">);</span>
+
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">source</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">namespace</span> <span class="n">detail</span> <span class="p">{</span>
+
+<span class="n">Expr</span> <span class="n">StridedRampBase</span><span class="p">(</span><span class="n">Expr</span> <span class="n">e</span><span class="p">,</span> <span class="kt">int</span> <span class="n">stride</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">ramp_n</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Ramp</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ramp_n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">iv</span> <span class="o">=</span> <span class="n">ramp_n</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">IntImm</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">iv</span> <span class="o">&amp;&amp;</span> <span class="n">iv</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">==</span> <span class="n">stride</span><span class="p">)</span> <span class="k">return</span> <span class="n">ramp_n</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">Expr</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace detail</span>
+
+<span class="p">}</span>  <span class="c1">// namespace backends</span>
+
+<span class="n">DEFINE_string</span><span class="p">(</span><span class="n">cinn_x86_builtin_code_root</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

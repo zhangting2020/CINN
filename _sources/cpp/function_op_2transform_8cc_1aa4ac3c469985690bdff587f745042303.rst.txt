@@ -1,0 +1,13 @@
+.. _exhale_function_op_2transform_8cc_1aa4ac3c469985690bdff587f745042303:
+
+Function cinn::hlir::op::InferDtypeForMatMul
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_transform.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferDtypeForMatMul(const std::vector<Type>&, const framework::NodeAttr&)

@@ -1,0 +1,13 @@
+.. _exhale_define_cinn__runtime_8h_1ad5f3c43a6ecbc9c846549ca545f90564:
+
+Define CINN_LOG
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_LOG

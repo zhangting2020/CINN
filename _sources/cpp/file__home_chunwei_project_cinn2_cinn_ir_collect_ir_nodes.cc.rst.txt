@@ -1,0 +1,83 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc:
+
+File collect_ir_nodes.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/collect_ir_nodes.cc``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/collect_ir_nodes.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1add74fe441ebb43c5032df05d82f0d66a`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aba7a789d94b2df1fffd245335bd32dba`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a8085d0ad5c8cc1b86a97d21cd17eae50`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae7ecc915c74eea7fccb05c27e2d0cd87`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa84f303f3f3a85bf70411d5b89a11cd9`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_collect__ir__nodes_8cc_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+
+- :ref:`exhale_define_collect__ir__nodes_8cc_1a7ac54924c8d0da33823cf8d0b9b46203`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_collect__ir__nodes_8cc_1a7d14f0aa7d2e3d573b672ead4834b1fe`
+
+- :ref:`exhale_variable_collect__ir__nodes_8cc_1a633af79f0bf4d2f6224b32203cecfda4`
+

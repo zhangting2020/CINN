@@ -1,0 +1,13 @@
+.. _exhale_typedef_bind__utils_8h_1a16d56cd4814d94e6006175d5aaa0b545:
+
+Typedef cinn::pybind::BinaryOp
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::pybind::BinaryOp

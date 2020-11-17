@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1ac4e2583391474b4ac24b7e65d3af5299:
+
+Function cinn::poly::TEST(Stage, Fuse1)
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(Stage, Fuse1)

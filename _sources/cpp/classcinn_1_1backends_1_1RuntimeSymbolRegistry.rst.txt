@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1backends_1_1RuntimeSymbolRegistry:
+
+Class RuntimeSymbolRegistry
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::RuntimeSymbolRegistry
+   :members:
+   :protected-members:
+   :undoc-members:

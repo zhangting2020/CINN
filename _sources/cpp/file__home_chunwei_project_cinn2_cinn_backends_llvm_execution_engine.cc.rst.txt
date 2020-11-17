@@ -1,0 +1,138 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc:
+
+File execution_engine.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/execution_engine.cc``)
+-----------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_cuda_host.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.h`)
+
+- ``cinn/backends/llvm/cinn_runtime_llvm_ir.h``
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/codegen_x86.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.h`)
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/backends/llvm/llvm_optimizer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.h`)
+
+- ``cinn/backends/llvm/llvm_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`)
+
+- ``cinn/backends/llvm/runtime_symbol_registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/runtime/intrinsic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`)
+
+- ``cmath``
+
+- ``llvm/ADT/Triple.h``
+
+- ``llvm/AsmParser/Parser.h``
+
+- ``llvm/Config/llvm-config.h``
+
+- ``llvm/ExecutionEngine/JITSymbol.h``
+
+- ``llvm/ExecutionEngine/Orc/Core.h``
+
+- ``llvm/ExecutionEngine/Orc/ExecutionUtils.h``
+
+- ``llvm/ExecutionEngine/Orc/JITTargetMachineBuilder.h``
+
+- ``llvm/ExecutionEngine/Orc/LLJIT.h``
+
+- ``llvm/ExecutionEngine/Orc/ThreadSafeModule.h``
+
+- ``llvm/IR/IRBuilder.h``
+
+- ``llvm/IR/LLVMContext.h``
+
+- ``llvm/IR/LegacyPassManager.h``
+
+- ``llvm/IR/PassManager.h``
+
+- ``llvm/IR/Verifier.h``
+
+- ``llvm/IRReader/IRReader.h``
+
+- ``llvm/InitializePasses.h``
+
+- ``llvm/PassRegistry.h``
+
+- ``llvm/Passes/PassBuilder.h``
+
+- ``llvm/Support/Error.h``
+
+- ``llvm/Support/Host.h``
+
+- ``llvm/Support/MemoryBuffer.h``
+
+- ``llvm/Support/SourceMgr.h``
+
+- ``llvm/Support/TargetRegistry.h``
+
+- ``llvm/Support/TargetSelect.h``
+
+- ``llvm/Support/raw_ostream.h``
+
+- ``llvm/Target/TargetMachine.h``
+
+- ``llvm/Transforms/InstCombine/InstCombine.h``
+
+- ``llvm/Transforms/Scalar.h``
+
+- ``llvm/Transforms/Scalar/GVN.h``
+
+- ``llvm/Transforms/Scalar/NewGVN.h``
+
+- ``llvm/Transforms/Scalar/Reassociate.h``
+
+- ``llvm/Transforms/Scalar/SimplifyCFG.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``mutex``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``string_view``
+
+- ``utility``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__backends`
+

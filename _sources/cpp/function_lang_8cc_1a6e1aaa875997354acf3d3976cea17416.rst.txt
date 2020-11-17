@@ -1,0 +1,13 @@
+.. _exhale_function_lang_8cc_1a6e1aaa875997354acf3d3976cea17416:
+
+Function cinn::pybind::BindLang(py::module \*)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_lang.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindLang(py::module *)

@@ -1,0 +1,13 @@
+.. _exhale_function_node_8cc_1aecc372c4a3d4144af91f83a935df9303:
+
+Function cinn::hlir::framework::edge_index_compare
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::edge_index_compare(const common::Shared<common::GraphEdge>&, const common::Shared<common::GraphEdge>&)

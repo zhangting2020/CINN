@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1pybind_1_1__Operation__Wrapper:
+
+Class _Operation_Wrapper
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``private cinn::ir::_Operation_`` (:ref:`exhale_class_classcinn_1_1ir_1_1__Operation__`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::pybind::_Operation_Wrapper
+   :members:
+   :protected-members:
+   :undoc-members:

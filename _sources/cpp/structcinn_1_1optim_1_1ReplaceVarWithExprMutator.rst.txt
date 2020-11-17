@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1optim_1_1ReplaceVarWithExprMutator:
+
+Struct ReplaceVarWithExprMutator
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.cc`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IRMutator<>`` (:ref:`exhale_class_classcinn_1_1ir_1_1IRMutator`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::optim::ReplaceVarWithExprMutator
+   :members:
+   :protected-members:
+   :undoc-members:

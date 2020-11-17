@@ -1,0 +1,55 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_verify_test.cc:
+
+File ir_verify_test.cc
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_verify_test.cc``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_verify_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_verify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae94b5ccd0fee0816dcb63e998535dc95`
+

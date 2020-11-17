@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1aba7bc95d628e69084a6310bd421ae4cf:
+
+Variable cinn::runtime::intrisic::pod_value_ty
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::pod_value_ty

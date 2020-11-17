@@ -1,0 +1,59 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.cc:
+
+File map_extern_call.cc
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/map_extern_call.cc``)
+--------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/optim/map_extern_call.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.h`)
+
+- ``cinn/runtime/cpu/host_intrinsics.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_map__extern__call_8cc_1adfab3e7c73997b6b875d28664eb409a5`
+

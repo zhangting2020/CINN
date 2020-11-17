@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a675f9d3c5f020daf0598f5c7cdd40a8e:
+
+Function cinn::ir::NODETY_UNARY_OP_FOR_EACH
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::NODETY_UNARY_OP_FOR_EACH(UNARY_OP_IMPL)

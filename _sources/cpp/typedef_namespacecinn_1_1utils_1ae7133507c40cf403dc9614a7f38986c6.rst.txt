@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespacecinn_1_1utils_1ae7133507c40cf403dc9614a7f38986c6:
+
+Typedef cinn::utils::Expected
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_error.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::utils::Expected

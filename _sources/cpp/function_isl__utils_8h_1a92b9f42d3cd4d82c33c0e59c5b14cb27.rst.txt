@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8h_1a92b9f42d3cd4d82c33c0e59c5b14cb27:
+
+Function cinn::poly::isl_remove_axis_by_name(isl_map \*__isl_take, isl_dim_type, const char \*)
+===============================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_remove_axis_by_name(isl_map *__isl_take, isl_dim_type, const char *)

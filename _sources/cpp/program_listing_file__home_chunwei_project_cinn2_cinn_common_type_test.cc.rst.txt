@@ -1,0 +1,29 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_type_test.cc:
+
+Program Listing for File type_test.cc
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_type_test.cc>` (``/home/chunwei/project/cinn2/cinn/common/type_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/common/type.h"
+   
+   #include <gtest/gtest.h>
+   
+   namespace cinn::common {
+   
+   TEST(Type, basic) {
+     LOG(INFO) << I32();
+   
+     auto i32 = I32();
+     LOG(INFO) << I32();
+   
+     LOG(INFO) << F32();
+     LOG(INFO) << type_of<float>();
+   }
+   
+   }  // namespace cinn::common

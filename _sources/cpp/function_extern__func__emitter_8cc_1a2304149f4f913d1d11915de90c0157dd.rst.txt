@@ -1,0 +1,13 @@
+.. _exhale_function_extern__func__emitter_8cc_1a2304149f4f913d1d11915de90c0157dd:
+
+Function cinn::backends::operator<<
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::operator<<(std::ostream&, const ExternFuncID&)

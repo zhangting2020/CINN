@@ -1,0 +1,31 @@
+.. _exhale_class_classcinn_1_1backends_1_1LLVMIRVisitor:
+
+Class LLVMIRVisitor
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IRVisitorBase< llvm::Value *>`` (:ref:`exhale_struct_structcinn_1_1ir_1_1IRVisitorBase`)
+
+
+Derived Type
+************
+
+- ``public cinn::backends::CodeGenLLVM`` (:ref:`exhale_class_classcinn_1_1backends_1_1CodeGenLLVM`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::LLVMIRVisitor
+   :members:
+   :protected-members:
+   :undoc-members:

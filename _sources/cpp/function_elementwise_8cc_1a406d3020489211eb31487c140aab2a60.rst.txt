@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a406d3020489211eb31487c140aab2a60:
+
+Function cinn::hlir::pe::Negative
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Negative(const Tensor&, const std::string&)

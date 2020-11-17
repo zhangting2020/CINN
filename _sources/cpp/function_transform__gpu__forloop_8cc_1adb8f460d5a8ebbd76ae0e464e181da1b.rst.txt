@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop_8cc_1adb8f460d5a8ebbd76ae0e464e181da1b:
+
+Function cinn::optim::CudaSyncThreadsDropIfThenElse
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::CudaSyncThreadsDropIfThenElse(Expr *)

@@ -1,0 +1,69 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction_test.cc:
+
+File instruction_test.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/instruction_test.cc``)
+------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/simple_jit.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`)
+
+- ``cinn/hlir/framework/instruction.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction.h`)
+
+- ``gtest/gtest.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_instruction__test_8cc_1a049d4ddb291160cab0b9dc7bd9ed1745`
+
+- :ref:`exhale_function_instruction__test_8cc_1aa84a0ff9b11582b0446bdb6da587345a`
+

@@ -1,0 +1,77 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc:
+
+File arithmatic_test.cc
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/arithmatic_test.cc``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/arithmatic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``ginac/ginac.h``
+
+- ``glog/logging.h``
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_arithmatic__test_8cc_1a833885c4b74ae6ff0a406dc9e51c2cbf`
+
+- :ref:`exhale_function_arithmatic__test_8cc_1a7622b4a98901baad38ef81c8765ffa15`
+
+- :ref:`exhale_function_arithmatic__test_8cc_1ab8af5c7e737b86e055c136c9886d9c62`
+
+- :ref:`exhale_function_arithmatic__test_8cc_1afe8e751e6c4d1e5ff4ac19a66630915a`
+
+- :ref:`exhale_function_arithmatic__test_8cc_1ae7aa2733a0720903797a7263c57d79d1`
+

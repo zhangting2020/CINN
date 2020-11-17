@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1ae821c519f472e24551abac6a623a3a54:
+
+Function cinn::hlir::pe::FloorDivide(const Expr&, const Tensor&, const std::string&)
+====================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::FloorDivide(const Expr&, const Tensor&, const std::string&)

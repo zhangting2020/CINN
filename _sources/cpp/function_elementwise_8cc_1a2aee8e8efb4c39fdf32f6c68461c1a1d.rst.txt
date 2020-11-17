@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a2aee8e8efb4c39fdf32f6c68461c1a1d:
+
+Function cinn::hlir::pe::Acos
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Acos(const Tensor&, const std::string&)

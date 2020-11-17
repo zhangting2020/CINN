@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1ir_1_1Argument:
+
+Struct Argument
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::Argument
+   :members:
+   :protected-members:
+   :undoc-members:

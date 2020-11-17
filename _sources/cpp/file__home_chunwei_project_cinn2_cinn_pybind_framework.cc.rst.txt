@@ -1,0 +1,66 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_framework.cc:
+
+File framework.cc
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/framework.cc``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_framework.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/cinn_value.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`)
+
+- ``cinn/frontend/interpreter.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/op_strategy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`)
+
+- ``cinn/hlir/framework/scope.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``pybind11/functional.h``
+
+- ``pybind11/numpy.h``
+
+- ``pybind11/operators.h``
+
+- ``pybind11/pybind11.h``
+
+- ``pybind11/stl.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+

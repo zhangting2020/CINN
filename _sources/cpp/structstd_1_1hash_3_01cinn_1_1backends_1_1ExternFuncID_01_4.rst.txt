@@ -1,0 +1,16 @@
+.. _exhale_struct_structstd_1_1hash_3_01cinn_1_1backends_1_1ExternFuncID_01_4:
+
+Template Struct hash< cinn::backends::ExternFuncID >
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: std::hash< cinn::backends::ExternFuncID >
+   :members:
+   :protected-members:
+   :undoc-members:

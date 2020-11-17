@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1ada245a715f64a95c4668fbb1be999dac:
+
+Function cinn::DECLARE_string
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::DECLARE_string(cinn_x86_builtin_code_root)

@@ -1,0 +1,164 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_cinn_value.h:
+
+Program Listing for File cinn_value.h
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_cinn_value.h>` (``/home/chunwei/project/cinn2/cinn/common/cinn_value.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <glog/logging.h>
+   
+   #include <any>
+   #include <vector>
+   
+   #include "cinn/common/common.h"
+   #include "cinn/common/macros.h"
+   #include "cinn/common/object.h"
+   #include "cinn/common/type.h"
+   #include "cinn/runtime/cinn_runtime.h"
+   
+   struct cinn_buffer_t;
+   
+   namespace cinn {
+   
+   namespace poly {
+   struct StageMap;
+   }  // namespace poly
+   
+   namespace ir {
+   
+   class Expr;
+   class Var;
+   
+   }  // namespace ir
+   
+   namespace common {
+   
+   template <typename T>
+   cinn_value_t ToValue(T v);
+   
+   class CINNValue;
+   class CINNValuePack;
+   
+   struct _CINNValuePack_ : public common::Object {
+     static CINNValuePack Make(const std::vector<CINNValue>& array);
+   
+     CINNValue& operator[](int offset);
+     const CINNValue& operator[](int offset) const;
+   
+     void AddValue(const CINNValue& value);
+   
+     void Clear();
+   
+     size_t size() const { return values_.size(); }
+   
+     bool empty() const { return values_.empty(); }
+   
+     CINN_DISALLOW_COPY_AND_ASSIGN(_CINNValuePack_);
+   
+     const char* type_info() const override;
+   
+    private:
+     _CINNValuePack_() = default;
+     std::vector<CINNValue> values_;
+     static constexpr char* __type_info__ = "CINNValuePack";
+   };
+   
+   struct CINNValuePack : public Shared<_CINNValuePack_> {
+     explicit CINNValuePack(_CINNValuePack_* ptr) : Shared<_CINNValuePack_>(ptr) {}
+     explicit CINNValuePack(const std::vector<CINNValue>& array) : Shared<_CINNValuePack_>(_CINNValuePack_::Make(array)) {}
+     CINNValue& operator[](int offset) { return (*operator->())[offset]; }
+     const CINNValue& operator[](int offset) const { return (*operator->())[offset]; }
+   
+     size_t size() const { return (*operator->()).size(); }
+   
+     bool empty() const { return (*operator->()).empty(); }
+   
+     CINNValue& back() {
+       CHECK_GT((*operator->()).size(), 0);
+       return (*operator->())[size() - 1];
+     }
+   
+     const CINNValue& back() const {
+       CHECK_GT((*operator->()).size(), 0);
+       return (*operator->())[size() - 1];
+     }
+   
+     _CINNValuePack_* operator->() { return get(); }
+     const _CINNValuePack_* operator->() const { return get(); }
+   };
+   
+   class CINNValue : public cinn_pod_value_t {
+    public:
+     static constexpr int kNull = -1;
+   
+     CINNValue() : cinn_pod_value_t(cinn_value_t(), kNull) {}
+     CINNValue(cinn_value_t value, int type_code) : cinn_pod_value_t(value, type_code) {}
+   
+     explicit CINNValue(int32_t value) : cinn_pod_value_t(value) { type_code_ = type_code<int32_t>(); }
+     explicit CINNValue(int64_t value) : cinn_pod_value_t(value) { type_code_ = type_code<int64_t>(); }
+     explicit CINNValue(float value) : cinn_pod_value_t(value) { type_code_ = type_code<float>(); }
+     explicit CINNValue(double value) : cinn_pod_value_t(value) { type_code_ = type_code<double>(); }
+     explicit CINNValue(char* value);
+     explicit CINNValue(cinn_buffer_t* value) : cinn_pod_value_t(value) {}
+     explicit CINNValue(void* value) : cinn_pod_value_t(value) {}
+     explicit CINNValue(const char* value) : cinn_pod_value_t(value) {}
+     explicit CINNValue(const ir::Var& value);
+     explicit CINNValue(const ir::Expr& value);
+     explicit CINNValue(const CINNValuePack& value);
+     explicit CINNValue(const poly::StageMap& value);
+   
+     bool defined() const { return type_code_ != kNull; }
+   
+     // @{
+     using cinn_pod_value_t::operator double;
+     using cinn_pod_value_t::operator float;
+     using cinn_pod_value_t::operator int32_t;
+     using cinn_pod_value_t::operator int64_t;
+     using cinn_pod_value_t::operator void*;
+     using cinn_pod_value_t::operator cinn_buffer_t*;
+     using cinn_pod_value_t::operator char*;
+     operator ir::Var() const;
+     operator ir::Expr() const;
+     operator CINNValuePack() const;
+     operator poly::StageMap() const;
+     // @}
+   
+     // @{
+     CINNValue& operator=(int32_t value);
+     CINNValue& operator=(int64_t value);
+     CINNValue& operator=(float value);
+     CINNValue& operator=(double value);
+     CINNValue& operator=(char* value);
+     CINNValue& operator=(const ir::Var& value);
+     CINNValue& operator=(const ir::Expr& value);
+     CINNValue& operator=(cinn_buffer_t* value);
+     CINNValue& operator=(void* value);
+     CINNValue& operator=(const CINNValuePack& value);
+     CINNValue& operator=(const char* value);
+     CINNValue& operator=(const poly::StageMap& value);
+     // @}
+   
+     template <typename T>
+     void Set(T v) {
+       if constexpr (std::is_same_v<std::decay_t<T>, CINNValue>) {
+         *this = v;
+       } else {
+         *this = CINNValue(v);
+       }
+     }
+   
+     template <typename T>
+     static int TypeCode();
+   
+    protected:
+     std::any shared_;
+   };
+   
+   }  // namespace common
+   }  // namespace cinn

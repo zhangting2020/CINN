@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__c__test_8cc_1af9f1e378bbf4953fb0175c90d0a4b7a5:
+
+Function cinn::backends::TEST(CodeGenC, module_with_transform)
+==============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(CodeGenC, module_with_transform)

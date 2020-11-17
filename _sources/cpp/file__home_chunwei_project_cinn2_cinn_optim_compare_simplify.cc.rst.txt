@@ -1,0 +1,66 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.cc:
+
+File compare_simplify.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/compare_simplify.cc``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/collect_ir_nodes.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/optim/compare_simplify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_compare__simplify_8cc_1aa01848f4eb1a13000f21ce4635d7b4e9`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_compare__simplify_8cc_1a48c02b2eb7eedbcb34ffef3eff9d305a`
+

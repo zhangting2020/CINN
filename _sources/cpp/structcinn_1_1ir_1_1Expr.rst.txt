@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1ir_1_1Expr:
+
+Struct Expr
+===========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IrNodeRef`` (:ref:`exhale_class_classcinn_1_1ir_1_1IrNodeRef`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::Expr
+   :members:
+   :protected-members:
+   :undoc-members:

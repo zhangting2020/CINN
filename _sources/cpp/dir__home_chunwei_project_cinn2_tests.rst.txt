@@ -1,0 +1,27 @@
+.. _dir__home_chunwei_project_cinn2_tests:
+
+
+Directory tests
+===============
+
+
+*Directory path:* ``/home/chunwei/project/cinn2/tests``
+
+Subdirectories
+--------------
+
+- :ref:`dir__home_chunwei_project_cinn2_tests_benchmark`
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_tests_test01_elementwise_add_case.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_test01_elementwise_add_main.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+- :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_case.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_case.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+

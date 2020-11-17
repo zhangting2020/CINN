@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File ir_util.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-ir-util-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-common-ir-util-cc"></span><h1>File ir_util.cc<a class="headerlink" href="#file-ir-util-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_common.html#dir-home-chunwei-project-cinn2-cinn-common"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-common-ir-util-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common/ir_util.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#variables" id="id5">Variables</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-common-ir-util-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common/ir_util.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-common-ir-util-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_common_ir_util.cc.html">Program Listing for File ir_util.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/cas.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cas.h.html#file-home-chunwei-project-cinn2-cinn-common-cas-h"><span class="std std-ref">File cas.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/ir_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_ir_util.h.html#file-home-chunwei-project-cinn2-cinn-common-ir-util-h"><span class="std std-ref">File ir_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_mutator.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-mutator-h"><span class="std std-ref">File ir_mutator.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_operators.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-operators-h"><span class="std std-ref">File ir_operators.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_printer.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-printer-h"><span class="std std-ref">File ir_printer.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unordered_set</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__common.html#namespace-cinn-common"><span class="std std-ref">Namespace cinn::common</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a634b4b4115285f570536abaef7b5a780.html#exhale-function-ir-util-8cc-1a634b4b4115285f570536abaef7b5a780"><span class="std std-ref">Function cinn::common::and_all</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1ae2249932c367af9adadb00599ef669d4.html#exhale-function-ir-util-8cc-1ae2249932c367af9adadb00599ef669d4"><span class="std std-ref">Function cinn::common::cast</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1ab3178d0e65c78dc2a8db52f18ba2c4d5.html#exhale-function-ir-util-8cc-1ab3178d0e65c78dc2a8db52f18ba2c4d5"><span class="std std-ref">Function cinn::common::CastIfNeeded</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a4b1f9d4572fbe875b04fd3f51f401e86.html#exhale-function-ir-util-8cc-1a4b1f9d4572fbe875b04fd3f51f401e86"><span class="std std-ref">Function cinn::common::CheckBufferUniqueInExpr</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1af73763fdd60ee373ba077855b6e04fbb.html#exhale-function-ir-util-8cc-1af73763fdd60ee373ba077855b6e04fbb"><span class="std std-ref">Function cinn::common::CheckTensorUniqueInExpr</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a42cefaaaa83e19834a78505bdb5f7b14.html#exhale-function-ir-util-8cc-1a42cefaaaa83e19834a78505bdb5f7b14"><span class="std std-ref">Function cinn::common::GatherItersToTensorProducer</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a21ee6b11291a5c0a854be8d53f821645.html#exhale-function-ir-util-8cc-1a21ee6b11291a5c0a854be8d53f821645"><span class="std std-ref">Function cinn::common::GetForloopStackToStore</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1ad8f624a1dae75901ab0dddd16ab5241f.html#exhale-function-ir-util-8cc-1ad8f624a1dae75901ab0dddd16ab5241f"><span class="std std-ref">Function cinn::common::IndiceToAbsOffset(const std::vector&lt;Expr&gt;&amp;, const std::vector&lt;Expr&gt;&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a4ec640e07ba2877e1dbe90ef6d37b853.html#exhale-function-ir-util-8cc-1a4ec640e07ba2877e1dbe90ef6d37b853"><span class="std std-ref">Function cinn::common::IndiceToAbsOffset(const std::vector&lt;int&gt;&amp;, const std::vector&lt;Expr&gt;&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1af85d5debb8db3e54c9a0354757293e3c.html#exhale-function-ir-util-8cc-1af85d5debb8db3e54c9a0354757293e3c"><span class="std std-ref">Function cinn::common::is_zero</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a704d275b4cc80ab982071243d9febe2d.html#exhale-function-ir-util-8cc-1a704d275b4cc80ab982071243d9febe2d"><span class="std std-ref">Function cinn::common::MathEqual</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a1207357f324626d59ae21cbde2d6b5e2.html#exhale-function-ir-util-8cc-1a1207357f324626d59ae21cbde2d6b5e2"><span class="std std-ref">Function cinn::common::max</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1adaf932499f93d93a6179eb3eaace909d.html#exhale-function-ir-util-8cc-1adaf932499f93d93a6179eb3eaace909d"><span class="std std-ref">Function cinn::common::min</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1a2ee947b138adfbac2b0c25d29c0854dc.html#exhale-function-ir-util-8cc-1a2ee947b138adfbac2b0c25d29c0854dc"><span class="std std-ref">Function cinn::common::or_all</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1ae7be10eac356598c6914e29c70c20a25.html#exhale-function-ir-util-8cc-1ae7be10eac356598c6914e29c70c20a25"><span class="std std-ref">Function cinn::common::PrecedingAxisToAbsOffset</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1af69d9913dee6589635fed8873fd0d624.html#exhale-function-ir-util-8cc-1af69d9913dee6589635fed8873fd0d624"><span class="std std-ref">Function cinn::common::select</span></a></p></li>
+<li><p><a class="reference internal" href="function_ir__util_8cc_1adb507edf8bfc22acc2bfb82a021775ec.html#exhale-function-ir-util-8cc-1adb507edf8bfc22acc2bfb82a021775ec"><span class="std std-ref">Function cinn::common::Substitute</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="variable_ir__util_8cc_1a1d966a9297c69a5dc12992779d36e0da.html#exhale-variable-ir-util-8cc-1a1d966a9297c69a5dc12992779d36e0da"><span class="std std-ref">Variable expr_</span></a></p></li>
+<li><p><a class="reference internal" href="variable_ir__util_8cc_1ae7805ce200ef92e152ce978dfed97915.html#exhale-variable-ir-util-8cc-1ae7805ce200ef92e152ce978dfed97915"><span class="std std-ref">Variable var_map_</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_common_ir_util.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

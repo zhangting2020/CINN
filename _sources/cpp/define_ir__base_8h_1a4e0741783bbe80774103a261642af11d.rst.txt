@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1a4e0741783bbe80774103a261642af11d:
+
+Define NODETY_UNARY_OP_FOR_EACH
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: NODETY_UNARY_OP_FOR_EACH

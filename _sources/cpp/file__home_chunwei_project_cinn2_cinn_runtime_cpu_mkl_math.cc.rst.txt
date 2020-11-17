@@ -1,0 +1,64 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc:
+
+File mkl_math.cc
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime_cpu>` (``/home/chunwei/project/cinn2/cinn/runtime/cpu``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cpu/mkl_math.cc``)
+-------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_jit_register.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`)
+
+- ``cinn/backends/function_prototype.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`)
+
+- ``cinn/runtime/cpu/host_intrinsics.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`)
+
+- ``cmath``
+
+- ``glog/logging.h``
+
+- ``mkl.h``
+
+- ``mkl_math.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h`)
+
+- ``mkl_vml_functions.h``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_mkl__math_8cc_1a29064579dcc8fbe4b493915a5902361f`
+
+- :ref:`exhale_function_mkl__math_8cc_1a3c97dedfce13e915d420b97d7fe0dbcb`
+
+- :ref:`exhale_function_mkl__math_8cc_1a4e0902c666ce856294099f2af66c2427`
+
+- :ref:`exhale_function_mkl__math_8cc_1a4b8886851e00577f3a4957e4f36981a6`
+

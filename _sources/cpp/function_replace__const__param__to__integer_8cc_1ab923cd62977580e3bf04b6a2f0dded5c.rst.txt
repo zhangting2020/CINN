@@ -1,0 +1,13 @@
+.. _exhale_function_replace__const__param__to__integer_8cc_1ab923cd62977580e3bf04b6a2f0dded5c:
+
+Function cinn::optim::ReplaceConstParamToInteger
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::ReplaceConstParamToInteger(Expr *)

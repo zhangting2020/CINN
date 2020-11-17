@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1a2a1768d662477c3900397b615d6daf1c:
+
+Function cinn::TEST(test03_conv, basic)
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(test03_conv, basic)

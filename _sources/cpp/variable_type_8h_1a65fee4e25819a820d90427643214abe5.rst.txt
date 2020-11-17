@@ -1,0 +1,13 @@
+.. _exhale_variable_type_8h_1a65fee4e25819a820d90427643214abe5:
+
+Variable cinn::common::customized_type::kpod_value_t
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::common::customized_type::kpod_value_t

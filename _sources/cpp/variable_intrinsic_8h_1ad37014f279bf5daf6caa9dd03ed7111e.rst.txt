@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1ad37014f279bf5daf6caa9dd03ed7111e:
+
+Variable cinn::runtime::intrisic::buffer_free
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_free

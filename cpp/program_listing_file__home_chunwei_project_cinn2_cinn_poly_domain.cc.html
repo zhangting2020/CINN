@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File domain.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-domain-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-poly-domain-cc"></span><h1>Program Listing for File domain.cc<a class="headerlink" href="#program-listing-for-file-domain-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_domain.cc.html#file-home-chunwei-project-cinn2-cinn-poly-domain-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/domain.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/domain.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;glog/logging.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;numeric&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_set&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/context.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_visitor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">poly</span> <span class="p">{</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">Domain</span><span class="o">::</span><span class="n">__str__</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">id</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;domain&#39;s id is empty&quot;</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">range_fields</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span>
+      <span class="n">dims</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">dims</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">range_fields</span><span class="p">),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Dim</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">range_repr</span><span class="p">();</span> <span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">range_repr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">range_fields</span><span class="p">,</span> <span class="s">&quot; and &quot;</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">dim_fields</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">dims</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">dims</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">dim_fields</span><span class="p">),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Dim</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">id</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">dims_repr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">dim_fields</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
+
+  <span class="c1">// parameters</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">param_reprs</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">params</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">params</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">param_reprs</span><span class="p">),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Dim</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">id</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">params_repr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">param_reprs</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span>
+      <span class="s">&quot;[%s]-&gt;{ %s[%s]: %s }&quot;</span><span class="p">,</span> <span class="n">params_repr</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">dims_repr</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">range_repr</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">Domain</span><span class="o">::</span><span class="n">to_isl</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;isl::set &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">__str__</span><span class="p">();</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">x</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">isl_ctx</span><span class="p">(),</span> <span class="n">__str__</span><span class="p">());</span>
+  <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Domain</span><span class="o">::</span><span class="n">ExtractParams</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">var_names</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">collect_param_fn</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">e</span><span class="p">.</span><span class="n">is_constant</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">vars</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span><span class="o">-&gt;</span><span class="n">is_var</span><span class="p">();</span> <span class="p">});</span>
+      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">var</span> <span class="p">:</span> <span class="n">vars</span><span class="p">)</span> <span class="n">var_names</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">dim</span> <span class="p">:</span> <span class="n">dims</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">collect_param_fn</span><span class="p">(</span><span class="n">dim</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">);</span>
+    <span class="n">collect_param_fn</span><span class="p">(</span><span class="n">dim</span><span class="p">.</span><span class="n">upper_bound</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">id</span> <span class="p">:</span> <span class="n">var_names</span><span class="p">)</span> <span class="n">params</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace poly</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_poly_domain.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

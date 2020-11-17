@@ -1,0 +1,13 @@
+.. _exhale_function_backends_2cuda__util_8cc_1af70d8d9dde3ecb7b2fad9a5dc1f30863:
+
+Function cinn::backends::cuda_block_axis_name
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_cuda_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::cuda_block_axis_name(int)

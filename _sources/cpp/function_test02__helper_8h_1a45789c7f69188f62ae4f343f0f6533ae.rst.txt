@@ -1,0 +1,13 @@
+.. _exhale_function_test02__helper_8h_1a45789c7f69188f62ae4f343f0f6533ae:
+
+Function cinn::tests::CreateSimpleJit
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::CreateSimpleJit(const cinn::ir::Module&)

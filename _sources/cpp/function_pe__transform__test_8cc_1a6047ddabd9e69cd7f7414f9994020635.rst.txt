@@ -1,0 +1,13 @@
+.. _exhale_function_pe__transform__test_8cc_1a6047ddabd9e69cd7f7414f9994020635:
+
+Function cinn::hlir::pe::TEST(MatmulPE, PE_Matmul_Test0)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_transform_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::TEST(MatmulPE, PE_Matmul_Test0)

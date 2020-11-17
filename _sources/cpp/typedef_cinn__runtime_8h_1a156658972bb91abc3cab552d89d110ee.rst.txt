@@ -1,0 +1,13 @@
+.. _exhale_typedef_cinn__runtime_8h_1a156658972bb91abc3cab552d89d110ee:
+
+Typedef cinn_type_t
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn_type_t

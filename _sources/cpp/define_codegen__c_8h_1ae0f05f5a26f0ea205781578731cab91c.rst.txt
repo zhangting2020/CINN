@@ -1,0 +1,13 @@
+.. _exhale_define_codegen__c_8h_1ae0f05f5a26f0ea205781578731cab91c:
+
+Define __DEFINE_VISIT
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __DEFINE_VISIT

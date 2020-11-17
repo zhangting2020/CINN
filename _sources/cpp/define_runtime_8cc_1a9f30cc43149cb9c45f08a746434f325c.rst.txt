@@ -1,0 +1,13 @@
+.. _exhale_define_runtime_8cc_1a9f30cc43149cb9c45f08a746434f325c:
+
+Define VOID_PTR_SUPPORT_TYPE
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_runtime.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: VOID_PTR_SUPPORT_TYPE

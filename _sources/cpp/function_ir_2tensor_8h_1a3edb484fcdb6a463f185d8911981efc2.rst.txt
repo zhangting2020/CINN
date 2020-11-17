@@ -1,0 +1,13 @@
+.. _exhale_function_ir_2tensor_8h_1a3edb484fcdb6a463f185d8911981efc2:
+
+Function cinn::ir::detail::LE
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::detail::LE(int, int)

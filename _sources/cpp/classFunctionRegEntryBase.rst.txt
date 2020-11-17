@@ -1,0 +1,16 @@
+.. _exhale_class_classFunctionRegEntryBase:
+
+Template Class FunctionRegEntryBase
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_registry.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: FunctionRegEntryBase
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_function_optimize_8cc_1a66fb20cdd57603a9544735c1d2d073d0:
+
+Function cinn::optim::Optimize(const ir::Module&)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::Optimize(const ir::Module&)

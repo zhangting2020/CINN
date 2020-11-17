@@ -1,0 +1,124 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h:
+
+File ir_visitor.h
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_visitor.h``)
+-----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/ir/collect_ir_nodes.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h`)
+
+- ``cinn/ir/intrinsic_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/lowered_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``set``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_modular.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_eliminate_broadcast_in_forloop.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_domain.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IRVisitor`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IRVisitorBase`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_ir__visitor_8h_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+
+- :ref:`exhale_define_ir__visitor_8h_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+
+- :ref:`exhale_define_ir__visitor_8h_1a7ac54924c8d0da33823cf8d0b9b46203`
+

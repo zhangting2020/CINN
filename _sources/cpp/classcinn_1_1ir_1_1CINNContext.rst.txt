@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1ir_1_1CINNContext:
+
+Class CINNContext
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_context.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::CINNContext
+   :members:
+   :protected-members:
+   :undoc-members:

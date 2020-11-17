@@ -1,0 +1,36 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.h:
+
+Program Listing for File cuda_util.h
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.h>` (``/home/chunwei/project/cinn2/cinn/runtime/cuda/cuda_util.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/runtime/cinn_runtime.h"
+   
+   namespace cinn {
+   namespace runtime {
+   namespace cuda {
+   
+   const int kCUDAMaxCards{10};
+   
+   void cinn_call_cuda_kernel(void* kernel_fn,
+                              cinn_pod_value_t* args,
+                              int num_args,
+                              int grid_x,
+                              int grid_y,
+                              int grid_z,
+                              int block_x,
+                              int block_y,
+                              int block_z,
+                              void* stream);
+   
+   }  // namespace cuda
+   }  // namespace runtime
+   }  // namespace cinn

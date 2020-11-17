@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic_8cc_1a949a57560d8c565819593f9e7873524c:
+
+Function cinn::common::Solve
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Solve(Expr, Expr, Var)

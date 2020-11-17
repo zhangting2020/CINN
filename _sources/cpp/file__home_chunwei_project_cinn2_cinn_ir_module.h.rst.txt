@@ -1,0 +1,109 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_module.h:
+
+File module.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/module.h``)
+-------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_module.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/outputs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_outputs.h`)
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/lowered_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`)
+
+- ``cinn/lang/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_buffer.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_module.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_lang.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Module_1_1Builder`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Module`
+

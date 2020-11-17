@@ -1,0 +1,13 @@
+.. _exhale_variable_extern__func__emitter_8h_1a492f1659a4427910da113ce6be47bc1c:
+
+Variable cinn::backends::backend_llvm_host
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::backends::backend_llvm_host

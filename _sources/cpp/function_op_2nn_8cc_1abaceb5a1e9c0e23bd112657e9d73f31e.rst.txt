@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1abaceb5a1e9c0e23bd112657e9d73f31e:
+
+Function cinn::hlir::op::InferShapeForConv2d
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForConv2d(const std::vector<shape_t>&, const framework::NodeAttr&)

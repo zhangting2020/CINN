@@ -1,0 +1,38 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_function_definition.h:
+
+Program Listing for File function_definition.h
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_function_definition.h>` (``/home/chunwei/project/cinn2/cinn/ir/function_definition.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <memory>
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   struct Specialization {
+     Expr condition;
+   };
+   
+   struct DefinitionContents;
+   struct FunctionContents;
+   
+   class Definition {
+    public:
+     explicit Definition(const std::shared_ptr<DefinitionContents>& contents) : contents_(contents) {}
+   
+    private:
+     std::shared_ptr<DefinitionContents> contents_;
+   };
+   
+   }  // namespace ir
+   }  // namespace cinn

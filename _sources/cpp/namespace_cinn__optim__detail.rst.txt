@@ -1,0 +1,29 @@
+
+.. _namespace_cinn__optim__detail:
+
+Namespace cinn::optim::detail
+=============================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1detail_1_1EliminateBroadcastInForloop`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_transform__polyfor__to__for_8h_1a0f02200bee19b60208f2ce3709567e85`
+
+- :ref:`exhale_function_vectorize__loops_8cc_1a91dbae202eda6e3805ec85cabfdd1ce2`

@@ -1,0 +1,53 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc:
+
+File intrinsic_ops_test.cc
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/intrinsic_ops_test.cc``)
+--------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/intrinsic_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae316771736c968f521f0fedef7bea3b2`
+

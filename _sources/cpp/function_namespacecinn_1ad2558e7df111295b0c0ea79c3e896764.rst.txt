@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1ad2558e7df111295b0c0ea79c3e896764:
+
+Function cinn::TEST(matmul, Split)
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(matmul, Split)

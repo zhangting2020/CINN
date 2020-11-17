@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic_8h_1ae84acf5e1c496bac12256b2976d75554:
+
+Function cinn::common::gcd
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::gcd(int, int)

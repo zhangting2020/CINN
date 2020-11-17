@@ -1,0 +1,13 @@
+.. _exhale_function_target_8h_1ac52806de0f61f576a3d905769600699a:
+
+Function cinn::common::DefaultNVGPUTarget
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::DefaultNVGPUTarget()

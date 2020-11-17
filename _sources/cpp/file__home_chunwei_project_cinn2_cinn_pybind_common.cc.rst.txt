@@ -1,0 +1,76 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_common.cc:
+
+File common.cc
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/common.cc``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_common.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/common/object.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`)
+
+- ``cinn/common/shared.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/pybind/bind.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`)
+
+- ``cinn/pybind/bind_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_common_8cc_1af853274774993d27ac5f2995d0f1a802`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_common_8cc_1a0a130a184b1942e4533dc104fed9093f`
+
+- :ref:`exhale_define_common_8cc_1a280f0f11e1fe4deb58836d4bc9f4828d`
+

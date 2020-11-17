@@ -1,0 +1,13 @@
+.. _exhale_function_pe__broadcast__test_8cc_1ae5844186333150c8e06a9d207e0d8139:
+
+Function cinn::hlir::pe::TestBroadcastPE1
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::TestBroadcastPE1(const std::string&, Tensor(*)(const Tensor&A, const Tensor&B, const std::string&output_name, const Expr&axis), float(*)(float, float), int)

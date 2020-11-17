@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a223b671ec7d3da6257fccc32e3f09f38:
+
+Variable cinn::runtime::intrisic::buffer_load
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_load

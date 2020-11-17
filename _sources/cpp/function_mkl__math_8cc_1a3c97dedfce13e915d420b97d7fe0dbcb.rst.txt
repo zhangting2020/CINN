@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math_8cc_1a3c97dedfce13e915d420b97d7fe0dbcb:
+
+Function cinn_mkl_tanh_v_fp32(cinn_buffer_t \*, cinn_buffer_t \*)
+=================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_mkl_tanh_v_fp32(cinn_buffer_t *, cinn_buffer_t *)

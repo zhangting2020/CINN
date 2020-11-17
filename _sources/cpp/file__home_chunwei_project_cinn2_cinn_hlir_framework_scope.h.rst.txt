@@ -1,0 +1,100 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h:
+
+File scope.h
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/scope.h``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``cinn/hlir/framework/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``unordered_map``
+
+- ``variant``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_parser.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_framework.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Scope`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_scope_8h_1a49dd9463c380b8e916ce5fac1ec992d1`
+

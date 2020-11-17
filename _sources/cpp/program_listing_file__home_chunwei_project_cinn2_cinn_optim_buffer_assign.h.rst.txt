@@ -1,0 +1,32 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.h:
+
+Program Listing for File buffer_assign.h
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.h>` (``/home/chunwei/project/cinn2/cinn/optim/buffer_assign.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <map>
+   #include <set>
+   #include <string>
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/poly/stage.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   std::map<std::string, ir::Tensor> InitialAssignBuffer(Expr* expr,
+                                                         poly::StageMap stages,
+                                                         const std::map<std::string, ir::Tensor>& all_tensor_map,
+                                                         const common::Graph* comp_graph,
+                                                         const std::set<std::string>& temp_tensor_names);
+   
+   }  // namespace optim
+   }  // namespace cinn

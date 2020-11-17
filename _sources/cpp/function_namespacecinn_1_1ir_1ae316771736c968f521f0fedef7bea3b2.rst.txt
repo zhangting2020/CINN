@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1ae316771736c968f521f0fedef7bea3b2:
+
+Function cinn::ir::TEST(IntrinsicOp, basic)
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(IntrinsicOp, basic)

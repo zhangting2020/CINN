@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1afa9420bb9f24ae0c761ef877213f75b7:
+
+Function cinn::ir::operator<(const Tensor&, const Tensor&)
+==========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<(const Tensor&, const Tensor&)

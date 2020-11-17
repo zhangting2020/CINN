@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8h_1a20ffa2e0185b7fef8f1112691df59f17:
+
+Function cinn::hlir::pe::ElementwiseSum
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::ElementwiseSum(const ir::Tensor&, const std::string&)

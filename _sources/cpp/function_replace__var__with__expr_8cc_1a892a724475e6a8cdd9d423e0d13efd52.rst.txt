@@ -1,0 +1,13 @@
+.. _exhale_function_replace__var__with__expr_8cc_1a892a724475e6a8cdd9d423e0d13efd52:
+
+Function cinn::optim::ReplaceVarWithExpr
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::ReplaceVarWithExpr(Expr *, const Var&, const Expr&)

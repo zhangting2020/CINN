@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1backends_1_1SymbolTableGuard:
+
+Struct SymbolTableGuard
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::backends::SymbolTableGuard
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,22 @@
+.. _exhale_struct_structcinn_1_1backends_1_1FunctionProto_1_1Builder:
+
+Struct FunctionProto::Builder
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_struct_structcinn_1_1backends_1_1FunctionProto`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::backends::FunctionProto::Builder
+   :members:
+   :protected-members:
+   :undoc-members:

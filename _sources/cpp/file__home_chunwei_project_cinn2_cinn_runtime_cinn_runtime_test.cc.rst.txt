@@ -1,0 +1,50 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime_test.cc:
+
+File cinn_runtime_test.cc
+=========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cinn_runtime_test.cc``)
+------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/runtime/cinn_runtime.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_cinn__runtime__test_8cc_1a1e055993feb6a70fbbaf6a15cee3a2e6`
+
+- :ref:`exhale_function_cinn__runtime__test_8cc_1a4d9e611171ba784a249577502152b786`
+
+- :ref:`exhale_function_cinn__runtime__test_8cc_1a1a516f0b50667db122d6cec5782232ec`
+

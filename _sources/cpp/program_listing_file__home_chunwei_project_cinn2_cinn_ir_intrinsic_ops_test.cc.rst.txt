@@ -1,0 +1,29 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc:
+
+Program Listing for File intrinsic_ops_test.cc
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc>` (``/home/chunwei/project/cinn2/cinn/ir/intrinsic_ops_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/ir/intrinsic_ops.h"
+   
+   #include <gtest/gtest.h>
+   
+   namespace cinn::ir {
+   
+   TEST(IntrinsicOp, basic) {
+     Expr buffer(1);
+     buffer->set_type(type_of<cinn_buffer_t*>());
+     auto op   = intrinsics::BufferGetDataHandle::Make(buffer);
+     auto* ptr = op.As<IntrinsicOp>();
+     ASSERT_TRUE(ptr);
+     auto* obj = llvm::dyn_cast<intrinsics::BufferGetDataHandle>(ptr);
+     ASSERT_TRUE(obj);
+   }
+   
+   }  // namespace cinn::ir

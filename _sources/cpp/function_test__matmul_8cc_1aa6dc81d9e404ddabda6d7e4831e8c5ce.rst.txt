@@ -1,0 +1,13 @@
+.. _exhale_function_test__matmul_8cc_1aa6dc81d9e404ddabda6d7e4831e8c5ce:
+
+Function cinn::tests::TEST(test_matmul, array_packing)
+======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::TEST(test_matmul, array_packing)

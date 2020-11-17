@@ -1,0 +1,55 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.cc:
+
+File extern_func_protos.cc
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/extern_func_protos.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_protos.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+- :ref:`namespace_cinn__backends__detail`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_extern__func__protos_8cc_1ac936cefb91dc6db368cb22fab39dfa47`
+

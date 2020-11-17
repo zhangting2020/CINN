@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1af4846433b1898e59f4dc02db8a50e849:
+
+Function cinn::ir::operator &&
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator &&(Expr, Expr)

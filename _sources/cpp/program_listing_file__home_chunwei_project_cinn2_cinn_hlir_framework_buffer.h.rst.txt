@@ -1,0 +1,69 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h:
+
+Program Listing for File buffer.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/buffer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <glog/logging.h>
+   
+   #include <memory>
+   #include <unordered_map>
+   
+   #include "cinn/common/macros.h"
+   #include "cinn/common/target.h"
+   #include "cinn/hlir/framework/memory.h"
+   #include "cinn/runtime/cinn_runtime.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   struct Buffer final {
+     Buffer() = default;
+     explicit Buffer(const common::Target& target) { SetTarget(target); }
+   
+     void Resize(uint32_t size);
+   
+     void ResizeLazy(uint32_t size);
+   
+     void Resize(uint32_t size, const common::Target& target);
+   
+     void ResizeLazy(uint32_t size, const common::Target& target);
+   
+     void SetTarget(const common::Target& target);
+   
+     const cinn_buffer_t* data() const { return &data_; }
+     cinn_buffer_t* data() { return &data_; }
+   
+     void Free() {
+       if (!data_.memory) return;
+       memory_mng_cache_->free(data_.memory);
+     }
+   
+    private:
+     inline void* Malloc(uint32_t size) CINN_RESULT_SHOULD_USE {
+       CHECK(memory_mng_cache_) << "Should set target first";
+       return memory_mng_cache_->malloc(size);
+     }
+   
+    private:
+     cinn_buffer_t data_;
+   
+     common::Target target_;
+   
+     uint32_t size_{};
+   
+     MemoryInterface* memory_mng_cache_{};
+   };
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

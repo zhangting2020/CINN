@@ -1,0 +1,69 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc:
+
+File compiler_test.cc
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/compiler_test.cc``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/hlir/pe/elementwise.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`)
+
+- ``cinn/hlir/pe/nn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`)
+
+- ``cinn/runtime/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h`)
+
+- ``gtest/gtest.h``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_compiler__test_8cc_1a1405943a1d020f3b35d25d757f1de3f1`
+
+- :ref:`exhale_function_compiler__test_8cc_1a070c8e8984431e5d7e372be01edce941`
+

@@ -1,0 +1,28 @@
+.. _dir__home_chunwei_project_cinn2_cinn_runtime_cpu:
+
+
+Directory cpu
+=============
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/runtime/cpu``
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`
+
+

@@ -1,0 +1,29 @@
+
+.. _namespace_cinn__backends__detail:
+
+Namespace cinn::backends::detail
+================================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1detail_1_1CollectHostFunctionVisitor`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_extern__func__protos_8cc_1ac936cefb91dc6db368cb22fab39dfa47`
+
+- :ref:`exhale_function_codegen__c_8cc_1accddd26ff044a82343f89ae7e530d0f8`

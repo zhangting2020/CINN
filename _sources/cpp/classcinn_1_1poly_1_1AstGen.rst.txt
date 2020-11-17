@@ -1,0 +1,26 @@
+.. _exhale_class_classcinn_1_1poly_1_1AstGen:
+
+Class AstGen
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_struct_structcinn_1_1poly_1_1AstGen_1_1Impl`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::poly::AstGen
+   :members:
+   :protected-members:
+   :undoc-members:

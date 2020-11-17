@@ -1,0 +1,13 @@
+.. _exhale_function_bind__utils_8h_1aae941a25db2546210a79d4102cce239b:
+
+Function cinn::pybind::ConvertToVar
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::ConvertToVar(const CINNValue&)

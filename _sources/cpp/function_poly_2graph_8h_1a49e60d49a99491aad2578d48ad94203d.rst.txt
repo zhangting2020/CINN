@@ -1,0 +1,13 @@
+.. _exhale_function_poly_2graph_8h_1a49e60d49a99491aad2578d48ad94203d:
+
+Function cinn::poly::detail::PartitionGraphByIterationDomain
+============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_graph.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::detail::PartitionGraphByIterationDomain(common::Graph *)

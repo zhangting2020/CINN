@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1backends_1_1ElementwiseTester:
+
+Class ElementwiseTester
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::ElementwiseTester
+   :members:
+   :protected-members:
+   :undoc-members:

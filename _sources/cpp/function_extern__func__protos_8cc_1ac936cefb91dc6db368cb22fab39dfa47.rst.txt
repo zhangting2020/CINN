@@ -1,0 +1,13 @@
+.. _exhale_function_extern__func__protos_8cc_1ac936cefb91dc6db368cb22fab39dfa47:
+
+Function cinn::backends::detail::CreateTanhVProto
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::detail::CreateTanhVProto()

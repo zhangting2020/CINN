@@ -1,0 +1,13 @@
+.. _exhale_function_cas__test_8cc_1aa36ade188ea6ab80d9412689bf3cb3eb:
+
+Function cinn::common::TEST(CAS, IntConnerCase)
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(CAS, IntConnerCase)

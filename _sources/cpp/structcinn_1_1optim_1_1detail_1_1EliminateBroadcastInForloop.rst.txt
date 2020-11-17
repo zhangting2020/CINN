@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1optim_1_1detail_1_1EliminateBroadcastInForloop:
+
+Struct EliminateBroadcastInForloop
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_eliminate_broadcast_in_forloop.cc`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IRMutator< Expr *>`` (:ref:`exhale_class_classcinn_1_1ir_1_1IRMutator`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::optim::detail::EliminateBroadcastInForloop
+   :members:
+   :protected-members:
+   :undoc-members:

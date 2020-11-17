@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1a48cdf2d41e5ac53bddba3055755f9671:
+
+Template Function cinn::utils::Join
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Join(const std::vector<T>&, const std::string&)

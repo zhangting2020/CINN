@@ -1,0 +1,13 @@
+.. _exhale_function_generate__runtime__llvm__ir_8py_1a4bba45f14df3acddc137e84bae1f10b6:
+
+Function generate_runtime_llvm_ir::get_clang_version
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_generate_runtime_llvm_ir.py`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: generate_runtime_llvm_ir::get_clang_version()

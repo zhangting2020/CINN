@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1tests_1_1MatmulTileTester:
+
+Class MatmulTileTester
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::tests::MatmulTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulTester`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::tests::MatmulTileTester
+   :members:
+   :protected-members:
+   :undoc-members:

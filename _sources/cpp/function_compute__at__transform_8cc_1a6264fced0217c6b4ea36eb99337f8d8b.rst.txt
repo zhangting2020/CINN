@@ -1,0 +1,13 @@
+.. _exhale_function_compute__at__transform_8cc_1a6264fced0217c6b4ea36eb99337f8d8b:
+
+Function cinn::poly::GenConsumerParamName
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::GenConsumerParamName(const char *, int)

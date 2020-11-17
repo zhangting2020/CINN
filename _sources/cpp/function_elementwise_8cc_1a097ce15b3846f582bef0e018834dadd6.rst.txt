@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a097ce15b3846f582bef0e018834dadd6:
+
+Function cinn::hlir::pe::BitwiseNot
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::BitwiseNot(const Tensor&, const std::string&)

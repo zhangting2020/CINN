@@ -1,0 +1,81 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc:
+
+File broadcast.cc
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_op>` (``/home/chunwei/project/cinn2/cinn/hlir/op``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/op/broadcast.cc``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/op_strategy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`)
+
+- ``cinn/hlir/pe/broadcast.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`)
+
+- ``cinn/hlir/pe/nn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``iostream``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__op`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_op_2broadcast_8cc_1ad979b093cc304f54b99d3e1bbd96367c`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1af06c590afbdea9ed434755cb219e7772`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1a8615cf30a044330af5d9c697d1f13dcd`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1afbc4360bc5bd366cabee5b9d85d4ed25`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1ac8d647ac8f13c45fc9f09d1aea22a189`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1a4443e2188ddb322e7ce1ea2f99ff412f`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1a586f94568bd8851478dfc78aa5fd783f`
+
+- :ref:`exhale_function_op_2broadcast_8cc_1a18c310c1ff646280029d704784f518bc`
+

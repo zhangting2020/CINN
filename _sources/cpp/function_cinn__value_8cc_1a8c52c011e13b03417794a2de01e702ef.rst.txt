@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__value_8cc_1a8c52c011e13b03417794a2de01e702ef:
+
+Function cinn::common::ToValue< float >
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::ToValue< float >()

@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1aba115dca87ec34b098bcd2e173aaef20:
+
+Function cinn::hlir::pe::Maximum(const Expr&, const Tensor&, const std::string&)
+================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Maximum(const Expr&, const Tensor&, const std::string&)

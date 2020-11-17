@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1hlir_1_1framework_1_1Shape:
+
+Struct Shape
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::hlir::framework::Shape
+   :members:
+   :protected-members:
+   :undoc-members:

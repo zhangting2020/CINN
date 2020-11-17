@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8h_1aae0953c507c5c0d7056873f1b76fb3cc:
+
+Function cinn::common::or_any
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::or_any(const std::vector<Expr>&)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a8fd8350cf62699d17cfb8e80b2188372:
+
+Function cinn::ir::TEST(CollectIRNodes, basic)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(CollectIRNodes, basic)

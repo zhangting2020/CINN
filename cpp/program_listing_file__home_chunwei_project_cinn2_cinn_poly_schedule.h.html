@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File schedule.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-schedule-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-poly-schedule-h"></span><h1>Program Listing for File schedule.h<a class="headerlink" href="#program-listing-for-file-schedule-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_schedule.h.html#file-home-chunwei-project-cinn2-cinn-poly-schedule-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/schedule.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/tensor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/graph.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/isl_utils.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/map.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/stage.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">poly</span> <span class="p">{</span>
+
+<span class="k">struct</span> <span class="n">TimeDim</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">time</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">dim</span><span class="p">;</span>
+
+  <span class="n">TimeDim</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">TimeDim</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">dim</span><span class="p">,</span> <span class="kt">int</span> <span class="n">time</span><span class="p">)</span> <span class="o">:</span> <span class="n">dim</span><span class="p">(</span><span class="n">dim</span><span class="p">),</span> <span class="n">time</span><span class="p">(</span><span class="n">time</span><span class="p">)</span> <span class="p">{</span> <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">dim</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">ScheduleGraphNode</span><span class="p">;</span>
+<span class="k">struct</span> <span class="nl">ScheduleGraph</span> <span class="p">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">Graph</span> <span class="p">{};</span>
+
+<span class="k">struct</span> <span class="n">TimeSchedule</span> <span class="p">{</span>
+  <span class="n">TimeSchedule</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dims</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="nf">ResizeTimeSpace</span><span class="p">(</span><span class="kt">int</span> <span class="n">size</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="nf">OrderAfter</span><span class="p">(</span><span class="k">const</span> <span class="n">TimeSchedule</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">);</span>
+
+  <span class="kt">size_t</span> <span class="nf">space_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">to_isl</span><span class="p">(</span><span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">__str__</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">final_axis_names</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">domain_dims</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">duplicate_id</span><span class="p">{};</span>
+
+  <span class="k">constexpr</span> <span class="k">static</span> <span class="kt">int</span> <span class="n">kMaxDims</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="kt">int</span> <span class="n">root_time_</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">TimeDim</span><span class="o">&gt;</span> <span class="n">time_dims_</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">ScheduleGroup</span><span class="p">;</span>
+<span class="k">struct</span> <span class="n">Schedule</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ScheduleGroup</span><span class="o">&gt;</span> <span class="n">groups</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">schedule</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">SchedulerBase</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">WrapIteratorNames</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">names</span><span class="p">);</span>
+
+  <span class="n">SchedulerBase</span> <span class="o">&amp;</span><span class="n">After</span><span class="p">(</span><span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">);</span>
+  <span class="n">SchedulerBase</span> <span class="o">&amp;</span><span class="n">Before</span><span class="p">(</span><span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">schedule_map</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">detailed_dimension_names</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">detailed_dimension_names_</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">protected</span><span class="o">:</span>
+  <span class="kt">void</span> <span class="n">AddStage</span><span class="p">(</span><span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="nf">FinishStageAdd</span><span class="p">();</span>
+
+  <span class="kt">bool</span> <span class="nf">finalized</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">registration_finalized_</span><span class="p">;</span> <span class="p">}</span>
+  <span class="kt">int</span> <span class="nf">space_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">space_size_</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">protected</span><span class="o">:</span>
+  <span class="kt">int</span> <span class="n">space_size_</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+  <span class="k">mutable</span> <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx_</span><span class="p">{</span><span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">isl_ctx</span><span class="p">()};</span>
+  <span class="k">mutable</span> <span class="n">ScheduleGraph</span> <span class="n">schedule_graph_</span><span class="p">;</span>
+  <span class="c1">// Record the longest dimensions(of some stage) to be the final detailed dimension names. It might be used for ISL AST</span>
+  <span class="c1">// to set iterator names and generate readable code.</span>
+  <span class="k">mutable</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">detailed_dimension_names_</span><span class="p">;</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="kt">bool</span> <span class="n">registration_finalized_</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+<span class="p">};</span>
+
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">ScheduleKind</span> <span class="p">{</span>
+  <span class="n">Naive</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">Poly</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">// std::unique_ptr&lt;Schedule&gt; CreateSchedule(const ir::Tensor &amp;tensor, ScheduleKind schedule_kind = ScheduleKind::Poly);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Schedule</span><span class="o">&gt;</span> <span class="n">CreateSchedule</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Stage</span> <span class="o">*&gt;</span> <span class="o">&amp;</span><span class="n">stages</span><span class="p">,</span>
+                                         <span class="n">ScheduleKind</span> <span class="n">schedule_kind</span> <span class="o">=</span> <span class="n">ScheduleKind</span><span class="o">::</span><span class="n">Poly</span><span class="p">,</span>
+                                         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">extra_links</span> <span class="o">=</span> <span class="p">{});</span>
+
+<span class="c1">// std::vector&lt;Stage *&gt; GatherStagesInTensors(const std::vector&lt;ir::Tensor&gt; &amp;xs, bool with_placeholder = false);</span>
+
+<span class="k">struct</span> <span class="nl">ScheduleGraphEdge</span> <span class="p">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span> <span class="p">{</span>
+  <span class="n">ScheduleGraphEdge</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">GraphNode</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphNode</span> <span class="o">*</span><span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphEdge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">int</span> <span class="n">level</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">ScheduleGraphNode</span> <span class="p">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">GraphNode</span> <span class="p">{</span>
+  <span class="n">TimeSchedule</span> <span class="n">time_schedule</span><span class="p">;</span>
+  <span class="n">Stage</span> <span class="o">*</span><span class="n">stage</span><span class="p">{};</span>
+
+  <span class="c1">// std::string id() const override { return std::to_string(reinterpret_cast&lt;size_t&gt;(this)); }</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">time_schedule</span><span class="p">.</span><span class="n">id</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="k">explicit</span> <span class="n">ScheduleGraphNode</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dims</span><span class="p">,</span> <span class="k">const</span> <span class="n">Stage</span> <span class="o">*</span><span class="n">stage</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">time_schedule</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">dims</span><span class="p">),</span> <span class="n">stage</span><span class="p">(</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="n">Stage</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">stage</span><span class="p">))</span> <span class="p">{}</span>
+
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">type_info</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">__type_info__</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">__type_info__</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">ScheduleGroup</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;&gt;</span> <span class="n">nodes</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">dimension_names</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">CollectScheduleMapFromGroup</span><span class="p">(</span><span class="k">const</span> <span class="n">ScheduleGroup</span> <span class="o">&amp;</span><span class="n">group</span><span class="p">);</span>
+
+<span class="p">}</span>  <span class="c1">// namespace poly</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_poly_schedule.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

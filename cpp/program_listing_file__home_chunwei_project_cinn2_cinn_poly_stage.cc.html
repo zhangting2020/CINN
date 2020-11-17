@@ -1,0 +1,807 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File stage.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-stage-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-poly-stage-cc"></span><h1>Program Listing for File stage.cc<a class="headerlink" href="#program-listing-for-file-stage-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_stage.cc.html#file-home-chunwei-project-cinn2-cinn-poly-stage-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/stage.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/stage.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_set&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/axis.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/collect_ir_nodes.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_mutator.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_visitor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/operation.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/tensor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/compute.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/ir_replace.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/compute_at_transform.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/isl_utils.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/functional.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">poly</span> <span class="p">{</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">NamesToIterators</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">names</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">name</span> <span class="p">:</span> <span class="n">names</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">InitTransform</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span> <span class="o">=</span> <span class="n">isl_set_get_tuple_name</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+
+  <span class="k">auto</span> <span class="n">dims</span>      <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">domain_</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">dims_repr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">repr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;{ %s[%s] -&gt; %s[%s] }&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">dims_repr</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">dims_repr</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="n">transform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">ctx</span><span class="p">(),</span> <span class="n">repr</span><span class="p">);</span>
+
+  <span class="c1">// set dimension names</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dims</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">transform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_set_dim_name</span><span class="p">(</span><span class="n">transform_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_in</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">c_str</span><span class="p">()));</span>
+    <span class="n">transform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_set_dim_name</span><span class="p">(</span><span class="n">transform_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">c_str</span><span class="p">()));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Stage</span><span class="o">::</span><span class="n">Stage</span><span class="p">(</span><span class="k">const</span> <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="o">&amp;</span><span class="n">domain</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">expr</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span> <span class="o">*</span><span class="n">tensor</span><span class="p">)</span> <span class="o">:</span> <span class="n">domain_</span><span class="p">(</span><span class="n">domain</span><span class="p">),</span> <span class="n">expr_</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tensor_</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">domain_</span><span class="p">.</span><span class="n">is_null</span><span class="p">());</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">domain_</span><span class="p">.</span><span class="n">is_empty</span><span class="p">());</span>
+  <span class="n">InitTransform</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Split</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">dim_names</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transform_</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">axis_name</span> <span class="o">=</span> <span class="n">dim_names</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nf">Split</span><span class="p">(</span><span class="n">axis_name</span><span class="p">,</span> <span class="n">factor</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Split</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">isl_set_find_dim_by_name</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">,</span> <span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="n">CHECK_GE</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;iterator &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">level</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; not in &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">domain_</span><span class="p">;</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">offset</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">dim_names</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transform_</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">);</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">domain_</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;schedule: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">transform_</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">from_iters</span> <span class="o">=</span> <span class="n">NamesToIterators</span><span class="p">(</span><span class="n">dim_names</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">to_iters</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Condition</span><span class="o">&gt;</span> <span class="n">conds</span><span class="p">;</span>
+  <span class="n">Iterator</span> <span class="nf">inner_iter</span><span class="p">(</span><span class="n">InnerName</span><span class="p">(</span><span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">));</span>
+  <span class="n">Iterator</span> <span class="nf">outer_iter</span><span class="p">(</span><span class="n">OuterName</span><span class="p">(</span><span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">));</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">dim</span> <span class="p">:</span> <span class="n">dim_names</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dim</span> <span class="o">==</span> <span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">to_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">outer_iter</span><span class="p">);</span>
+      <span class="n">to_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">inner_iter</span><span class="p">);</span>
+
+      <span class="n">conds</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;%s=floor(%s/%d)&quot;</span><span class="p">,</span> <span class="n">outer_iter</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">factor</span><span class="p">));</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;outer cond: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">conds</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+      <span class="n">conds</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;%s=%s %s %d&quot;</span><span class="p">,</span> <span class="n">inner_iter</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="s">&quot;%&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="p">));</span>
+
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;inner cond: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">conds</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">to_iters</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">dim</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">Map</span> <span class="n">transform</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">ctx</span><span class="p">(),</span> <span class="n">id</span><span class="p">(),</span> <span class="n">from_iters</span><span class="p">,</span> <span class="n">to_iters</span><span class="p">,</span> <span class="n">conds</span><span class="p">,</span> <span class="n">id</span><span class="p">());</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;transform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">transform</span><span class="p">.</span><span class="n">__str__</span><span class="p">();</span>
+  <span class="n">transform_</span>      <span class="o">=</span> <span class="n">transform_</span><span class="p">.</span><span class="n">apply_range</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">to_isl</span><span class="p">());</span>
+  <span class="k">auto</span> <span class="n">range_dims</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">to_iters</span><span class="p">,</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="p">.</span><span class="n">id</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">isl_set_dim_names</span><span class="p">(</span><span class="o">&amp;</span><span class="n">transform_</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="n">range_dims</span><span class="p">);</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;transform &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">transform</span><span class="p">.</span><span class="n">to_isl</span><span class="p">();</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;schedule after transform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">transform_</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;iterators: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outer_iter</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">inner_iter</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">outer_iter</span><span class="p">,</span> <span class="n">inner_iter</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Reorder</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">order</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">in_names</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transform_</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">);</span>
+  <span class="c1">// assert all the iterators in the isl::set.</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">in_name_set</span><span class="p">(</span><span class="n">in_names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">in_names</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">order_set</span><span class="p">(</span><span class="n">order</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">order</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">range_iters</span><span class="p">,</span> <span class="n">domain_iters</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">o</span> <span class="p">:</span> <span class="n">order</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">in_name_set</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Iterator &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">o</span><span class="p">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; not int the exsting axis&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">int</span> <span class="n">order_offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">iter_name</span> <span class="p">:</span> <span class="n">in_names</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Iterator</span> <span class="n">iter</span><span class="p">(</span><span class="n">iter_name</span><span class="p">);</span>
+
+    <span class="n">domain_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">iter</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">order_set</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">iter</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">range_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="n">order_offset</span><span class="o">++</span><span class="p">]);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">range_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">iter</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">range_iters</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">in_names</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+  <span class="n">Map</span> <span class="nf">transform</span><span class="p">(</span><span class="n">domain</span><span class="p">().</span><span class="n">ctx</span><span class="p">(),</span> <span class="n">id</span><span class="p">(),</span> <span class="n">domain_iters</span><span class="p">,</span> <span class="n">range_iters</span><span class="p">,</span> <span class="p">{},</span> <span class="n">id</span><span class="p">());</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;reorder transform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">transform</span><span class="p">.</span><span class="n">__str__</span><span class="p">();</span>
+  <span class="n">transform_</span> <span class="o">=</span> <span class="n">transform_</span><span class="p">.</span><span class="n">apply_range</span><span class="p">(</span><span class="n">transform</span><span class="p">.</span><span class="n">to_isl</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="o">&gt;</span>  <span class="c1">//</span>
+<span class="n">Stage</span><span class="o">::</span><span class="n">Tile</span><span class="p">(</span><span class="kt">int</span> <span class="n">level0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level0</span><span class="p">);</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level1</span><span class="p">);</span>
+  <span class="n">Iterator</span> <span class="nf">i0</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">axis_name</span><span class="p">(</span><span class="n">level0</span><span class="p">));</span>
+  <span class="n">Iterator</span> <span class="nf">i1</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">axis_name</span><span class="p">(</span><span class="n">level1</span><span class="p">));</span>
+  <span class="k">return</span> <span class="nf">Tile</span><span class="p">(</span><span class="n">i0</span><span class="p">,</span> <span class="n">i1</span><span class="p">,</span> <span class="n">factor0</span><span class="p">,</span> <span class="n">factor1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Tile</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">level0</span><span class="p">,</span>
+                                                               <span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">level1</span><span class="p">,</span>
+                                                               <span class="kt">int</span> <span class="n">factor0</span><span class="p">,</span>
+                                                               <span class="kt">int</span> <span class="n">factor1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">level0_outer</span><span class="p">,</span> <span class="n">level0_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">Split</span><span class="p">(</span><span class="n">level0</span><span class="p">,</span> <span class="n">factor0</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">level1_outer</span><span class="p">,</span> <span class="n">level1_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">Split</span><span class="p">(</span><span class="n">level1</span><span class="p">,</span> <span class="n">factor1</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">level0_outer</span><span class="p">,</span> <span class="n">level0_inner</span><span class="p">,</span> <span class="n">level1_outer</span><span class="p">,</span> <span class="n">level1_inner</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ComputeAtSchedule</span><span class="p">(</span><span class="n">Stage</span> <span class="o">*</span><span class="n">other</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="n">ComputeAtKind</span> <span class="n">kind</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// TODO(Superjomn) Check there are data dependency between `self` and `other`, or the `ComputeAt` is meaningless.</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">());</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor</span><span class="p">());</span>
+
+  <span class="n">ComputeAtRelation</span> <span class="n">relation</span><span class="p">;</span>
+  <span class="n">relation</span><span class="p">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">other</span><span class="p">;</span>
+  <span class="n">relation</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span><span class="p">;</span>
+
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">relation</span><span class="p">.</span><span class="n">IsCompatible</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+  <span class="n">compute_ats_</span><span class="p">[</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">()]</span> <span class="o">=</span> <span class="n">relation</span><span class="p">;</span>
+
+  <span class="c1">// Consider the order if provide.</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">kind</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nl">kComputeAtBefore</span><span class="p">:</span>
+      <span class="n">other</span><span class="o">-&gt;</span><span class="n">CtrlDepend</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">(</span><span class="n">tensor</span><span class="p">()));</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">kComputeAtAfter</span><span class="p">:</span>
+      <span class="n">CtrlDepend</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">()));</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nl">kComputeAtAuto</span><span class="p">:</span>
+      <span class="c1">// Do nothing.</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Lock all the axis.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">isl_map_dim</span><span class="p">(</span><span class="n">transform_</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LockAxis</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">Stage</span> <span class="o">*</span><span class="n">other</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ComputeAtKind</span> <span class="n">kind</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">cached_tensor_name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">access</span><span class="p">;</span>
+  <span class="n">isl_map</span> <span class="o">*</span><span class="n">access_raw</span><span class="p">{};</span>
+  <span class="c1">// For cache_read schedule, it will replace the producer tensor with cache in consumer, so replace the tuple name to</span>
+  <span class="c1">// cache&#39;s in access.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">cached_tensor_name</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+    <span class="n">access_raw</span> <span class="o">=</span> <span class="n">GatherAccesses</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">access_raw</span> <span class="o">=</span> <span class="n">GatherAccesses</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">cached_tensor_name</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">access_raw</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">ERROR</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;ComputeAt: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; has no access to &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, skipped it&quot;</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cached_tensor_name</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">access_raw</span> <span class="o">=</span> <span class="n">isl_map_set_tuple_name</span><span class="p">(</span><span class="n">access_raw</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">access</span>     <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">access_raw</span><span class="p">);</span>
+  <span class="n">access_raw</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+  <span class="n">ComputeAtTransform</span> <span class="nf">transform</span><span class="p">(</span><span class="n">domain_</span><span class="p">,</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">domain</span><span class="p">(),</span> <span class="n">access</span><span class="p">,</span> <span class="n">transform_</span><span class="p">,</span> <span class="n">other</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">(),</span> <span class="n">level</span><span class="p">);</span>
+  <span class="n">transform</span><span class="p">();</span>
+
+  <span class="n">domain_</span>    <span class="o">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">adjusted_pdomain</span><span class="p">();</span>
+  <span class="n">transform_</span> <span class="o">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">adjusted_ptransform</span><span class="p">();</span>
+
+  <span class="c1">// set name of the dimensions if not exists, or it will go wrong in the following process.</span>
+  <span class="n">domain_</span>    <span class="o">=</span> <span class="n">isl_set_dim_name_if_null</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span>
+                                     <span class="p">[](</span><span class="n">isl_dim_type</span> <span class="n">dim_type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;pp&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="p">});</span>
+  <span class="n">transform_</span> <span class="o">=</span> <span class="n">isl_set_dim_name_if_null</span><span class="p">(</span><span class="n">transform_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="p">[](</span><span class="n">isl_dim_type</span> <span class="n">dim_type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">dim_type</span> <span class="o">==</span> <span class="n">isl_dim_in</span> <span class="o">?</span> <span class="s">&quot;pi&quot;</span> <span class="o">:</span> <span class="s">&quot;po&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">indice_mins</span> <span class="o">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetAccessesPrecedingIndicesMinAssumingParamsZero</span><span class="p">();</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">offsets</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">indice_mins</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">indice_mins</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">offsets</span><span class="p">),</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">-</span><span class="n">x</span><span class="p">;</span> <span class="p">});</span>
+
+  <span class="n">other</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_at_infos</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span>                  <span class="c1">// consumer_tensor_name,</span>
+                                            <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span>                         <span class="c1">// producer_tensor_name</span>
+                                            <span class="n">transform</span><span class="p">.</span><span class="n">GetProducerAdjustedShape</span><span class="p">(),</span>  <span class="c1">// adjusted_producer_shape,</span>
+                                            <span class="n">indice_mins</span><span class="p">,</span>                           <span class="c1">// preceding_offset_for_producer_load</span>
+                                            <span class="n">level</span><span class="p">);</span>
+
+  <span class="n">ComputeAtSchedule</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">kind</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Skew</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">j</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="n">Iterator</span> <span class="n">i_new</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">id</span> <span class="o">+</span> <span class="s">&quot;_skew&quot;</span><span class="p">);</span>
+  <span class="n">Iterator</span> <span class="nf">j_new</span><span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">id</span> <span class="o">+</span> <span class="s">&quot;_skew&quot;</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">i_new</span><span class="p">,</span> <span class="n">j_new</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Iterator</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Fuse</span><span class="p">(</span><span class="kt">int</span> <span class="n">level0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level0</span><span class="p">);</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level1</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">());</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level0</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level1</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+  <span class="n">Iterator</span> <span class="nf">iter0</span><span class="p">(</span><span class="n">dims</span><span class="p">[</span><span class="n">level0</span><span class="p">]);</span>
+  <span class="n">Iterator</span> <span class="nf">iter1</span><span class="p">(</span><span class="n">dims</span><span class="p">[</span><span class="n">level1</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="nf">Fuse</span><span class="p">(</span><span class="n">iter0</span><span class="p">,</span> <span class="n">iter1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Iterator</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Fuse</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">level0</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">level1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Fuse</span><span class="p">(</span><span class="n">Iterator</span><span class="p">(</span><span class="n">level0</span><span class="p">),</span> <span class="n">Iterator</span><span class="p">(</span><span class="n">level1</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Fuse use a polyhedral transform.</span>
+<span class="cm"> */</span>
+<span class="n">Iterator</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Fuse</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">level0</span><span class="p">,</span> <span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">level1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">offset0</span> <span class="o">=</span> <span class="n">isl_set_find_dim_by_name</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">,</span> <span class="n">level0</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="kt">int</span> <span class="n">offset1</span> <span class="o">=</span> <span class="n">isl_set_find_dim_by_name</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">,</span> <span class="n">level1</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">offset1</span><span class="p">,</span> <span class="n">offset0</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;level [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">level0</span><span class="p">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] and level [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">level1</span><span class="p">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] should be adjancent&quot;</span><span class="p">;</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">offset0</span><span class="p">);</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">offset1</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">new_iter_name</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;%s_%s_fused&quot;</span><span class="p">,</span> <span class="n">level0</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">level1</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+
+  <span class="c1">// Aff { s[i,j,k] -&gt; [j] } and get the j&#39;s max value</span>
+  <span class="c1">// to apply something like { S[i,j] -&gt; S[k]: k = i+j }</span>
+  <span class="k">auto</span> <span class="n">from_dim_names</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transform_</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">from_iters</span>     <span class="o">=</span> <span class="n">NamesToIterators</span><span class="p">(</span><span class="n">from_dim_names</span><span class="p">);</span>
+
+  <span class="n">Aff</span> <span class="nf">aff</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">ctx</span><span class="p">(),</span> <span class="n">id</span><span class="p">(),</span> <span class="n">from_iters</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">({</span><span class="n">Iterator</span><span class="p">(</span><span class="n">level1</span><span class="p">.</span><span class="n">id</span><span class="p">)}),</span> <span class="p">{});</span>
+
+  <span class="kt">int</span> <span class="n">level1_max_val</span> <span class="o">=</span> <span class="n">transformed_domain</span><span class="p">().</span><span class="n">max_val</span><span class="p">(</span><span class="n">aff</span><span class="p">.</span><span class="n">to_isl</span><span class="p">()).</span><span class="n">get_num_si</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// Map { s[i,j,k] -&gt; s[n,k] : n = i * max_val + j }</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">to_iters</span><span class="p">;</span>
+  <span class="p">{</span>
+    <span class="n">Iterator</span> <span class="n">new_iter</span><span class="p">(</span><span class="n">new_iter_name</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">iter</span> <span class="p">:</span> <span class="n">from_iters</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">iter</span> <span class="o">==</span> <span class="n">level0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">iter</span> <span class="o">==</span> <span class="n">level1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">to_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">new_iter</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">to_iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">iter</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Condition</span><span class="o">&gt;</span> <span class="n">conds</span><span class="p">;</span>
+  <span class="n">conds</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span>
+      <span class="s">&quot;%s = %s * %d + %s&quot;</span><span class="p">,</span> <span class="n">new_iter_name</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">level0</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">level1_max_val</span><span class="p">,</span> <span class="n">level1</span><span class="p">.</span><span class="n">id</span><span class="p">.</span><span class="n">c_str</span><span class="p">()));</span>
+
+  <span class="n">Map</span> <span class="nf">trans</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">ctx</span><span class="p">(),</span> <span class="n">id</span><span class="p">(),</span> <span class="n">from_iters</span><span class="p">,</span> <span class="n">to_iters</span><span class="p">,</span> <span class="n">conds</span><span class="p">,</span> <span class="n">id</span><span class="p">());</span>
+
+  <span class="n">transform_</span> <span class="o">=</span> <span class="n">transform_</span><span class="p">.</span><span class="n">apply_range</span><span class="p">(</span><span class="n">trans</span><span class="p">.</span><span class="n">to_isl</span><span class="p">());</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">iter_names</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">iter</span> <span class="p">:</span> <span class="n">to_iters</span><span class="p">)</span> <span class="n">iter_names</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">iter</span><span class="p">.</span><span class="n">id</span><span class="p">);</span>
+
+    <span class="n">isl_set_dim_names</span><span class="p">(</span><span class="o">&amp;</span><span class="n">transform_</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="n">iter_names</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">Iterator</span><span class="p">(</span><span class="n">new_iter_name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">input_statements</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">expr_</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="k">return</span> <span class="p">{};</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;stage &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">id</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; expr: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">expr_</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">load_exprs</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="n">expr_</span><span class="p">,</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">();</span> <span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">statements</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">expr</span> <span class="p">:</span> <span class="n">load_exprs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">load_node</span> <span class="o">=</span> <span class="n">expr</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">load_node</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">load_node</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">tensor_name</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tensor_name</span> <span class="o">!=</span> <span class="n">id</span><span class="p">())</span> <span class="n">statements</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tensor_name</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">statements</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">statements</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">InnerName</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;_inner&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">OuterName</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;_outer&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">InnerName</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">iterator</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">InnerName</span><span class="p">(</span><span class="n">iterator</span><span class="p">.</span><span class="n">id</span><span class="p">);</span> <span class="p">}</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">OuterName</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">iterator</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">OuterName</span><span class="p">(</span><span class="n">iterator</span><span class="p">.</span><span class="n">id</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">Stage</span><span class="o">::</span><span class="n">id</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">isl_set_get_tuple_name</span><span class="p">(</span><span class="n">domain_</span><span class="p">.</span><span class="n">get</span><span class="p">());</span> <span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Split</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">Split</span><span class="p">(</span><span class="n">Iterator</span><span class="p">(</span><span class="n">level</span><span class="p">),</span> <span class="n">factor</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">Shared</span><span class="o">&lt;</span><span class="n">Stage</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="k">const</span> <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="o">&amp;</span><span class="n">domain</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">expr</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span> <span class="o">*</span><span class="n">tensor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">Stage</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">tensor</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ComputeAtRelation</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">compute_ats</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ComputeAtRelation</span><span class="o">&gt;</span> <span class="n">xs</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">item</span> <span class="p">:</span> <span class="n">compute_ats_</span><span class="p">)</span> <span class="n">xs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">xs</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ComputeAtRelation</span><span class="o">::</span><span class="n">IsCompatible</span><span class="p">(</span><span class="n">Stage</span> <span class="o">*</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_GE</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">domain</span><span class="p">().</span><span class="n">is_null</span><span class="p">());</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">domain</span><span class="p">().</span><span class="n">is_null</span><span class="p">());</span>
+
+  <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">transformed_domain</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">));</span>
+  <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">transformed_domain</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">));</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">selected_dims</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">selected_dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">auto</span> <span class="n">stage_partial_set</span> <span class="o">=</span> <span class="n">SetGetDims</span><span class="p">(</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">transformed_domain</span><span class="p">(),</span> <span class="n">selected_dims</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">self_partial_set</span>  <span class="o">=</span> <span class="n">SetGetDims</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">transformed_domain</span><span class="p">(),</span> <span class="n">selected_dims</span><span class="p">);</span>
+
+  <span class="n">stage_partial_set</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_set_tuple_name</span><span class="p">(</span><span class="n">stage_partial_set</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="s">&quot;&quot;</span><span class="p">));</span>
+  <span class="n">self_partial_set</span>  <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_set_tuple_name</span><span class="p">(</span><span class="n">self_partial_set</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="s">&quot;&quot;</span><span class="p">));</span>
+
+  <span class="c1">// remove parameters, we don&#39;t consider them yet</span>
+  <span class="k">auto</span> <span class="n">remove_params</span> <span class="o">=</span> <span class="p">[](</span><span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="o">&amp;</span><span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">nparams</span> <span class="o">=</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">set</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_param</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">nparams</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">set</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_remove_dims</span><span class="p">(</span><span class="n">set</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">nparams</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="n">remove_params</span><span class="p">(</span><span class="n">stage_partial_set</span><span class="p">);</span>
+  <span class="n">remove_params</span><span class="p">(</span><span class="n">self_partial_set</span><span class="p">);</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;stage0.partial_set &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">stage_partial_set</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;stage1.partial_set &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">self_partial_set</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nf">isl_set_is_equal</span><span class="p">(</span><span class="n">stage_partial_set</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">self_partial_set</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Vectorize</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">n_out_dims</span><span class="p">());</span>
+  <span class="n">CHECK_GT</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">dim_name</span> <span class="o">=</span> <span class="n">ith_dim_name</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+  <span class="n">vectorize_info_</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">level</span> <span class="cm">/*inner*/</span><span class="p">,</span> <span class="n">factor</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Vectorize</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">axis</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">());</span>
+  <span class="k">auto</span> <span class="n">it</span>   <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">dims</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">dims</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">axis</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">dims</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;No dimension called &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">axis</span><span class="p">;</span>
+  <span class="n">Vectorize</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">distance</span><span class="p">(</span><span class="n">dims</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">it</span><span class="p">),</span> <span class="n">factor</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Vectorize</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">axis</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Vectorize</span><span class="p">(</span><span class="n">axis</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">factor</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Unroll</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+  <span class="n">unroll_info_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ith_dim_name</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">dims</span> <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">());</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">dims</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="k">return</span> <span class="n">dims</span><span class="p">[</span><span class="n">level</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="n">Iterator</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ith_iterator</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Iterator</span><span class="p">(</span><span class="n">ith_dim_name</span><span class="p">(</span><span class="n">level</span><span class="p">));</span> <span class="p">}</span>
+
+<span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">Stage</span><span class="o">::</span><span class="n">transformed_domain</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">domain_</span><span class="p">.</span><span class="n">is_null</span><span class="p">());</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">transform_</span><span class="p">.</span><span class="n">is_null</span><span class="p">());</span>
+  <span class="k">return</span> <span class="n">domain_</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transform_</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">ExtractExtraDepLinksFromStages</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Stage</span> <span class="o">*&gt;</span> <span class="o">&amp;</span><span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">extra_links</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">stage</span> <span class="p">:</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">tensor</span> <span class="p">:</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">ctrl_depends</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;get extra stage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; -&gt; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">();</span>
+      <span class="n">extra_links</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">extra_links</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Unroll</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">dim_names</span> <span class="o">=</span> <span class="n">axis_names</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">it</span>        <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">dim_names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">dim_names</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">level</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">l</span>          <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">distance</span><span class="p">(</span><span class="n">dim_names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">it</span><span class="p">);</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+  <span class="n">Unroll</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Unroll</span><span class="p">(</span><span class="k">const</span> <span class="n">Iterator</span> <span class="o">&amp;</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">dim_names</span> <span class="o">=</span> <span class="n">axis_names</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">it</span>        <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">dim_names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">dim_names</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">level</span><span class="p">.</span><span class="n">id</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">l</span>          <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">distance</span><span class="p">(</span><span class="n">dim_names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">it</span><span class="p">);</span>
+  <span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+  <span class="n">Unroll</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">Stage</span><span class="o">::</span><span class="n">axis_names</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">transformed_domain</span><span class="p">());</span> <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">Bind</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">axis</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">n_out_dims</span><span class="p">());</span>
+  <span class="n">LockAxis</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">axis</span> <span class="o">==</span> <span class="s">&quot;threadIdx.x&quot;</span> <span class="o">||</span> <span class="n">axis</span> <span class="o">==</span> <span class="s">&quot;threadIdx.y&quot;</span> <span class="o">||</span> <span class="n">axis</span> <span class="o">==</span> <span class="s">&quot;threadIdx.z&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">axis</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">-</span> <span class="sc">&#39;x&#39;</span><span class="p">;</span>
+    <span class="n">AddForloopInfo</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">StageForloopInfo</span><span class="p">{</span><span class="n">ir</span><span class="o">::</span><span class="n">ForType</span><span class="o">::</span><span class="n">GPUThread</span><span class="p">,</span> <span class="n">DeviceAPI</span><span class="o">::</span><span class="n">GPU</span><span class="p">,</span> <span class="n">offset</span><span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">axis</span> <span class="o">==</span> <span class="s">&quot;blockIdx.x&quot;</span> <span class="o">||</span> <span class="n">axis</span> <span class="o">==</span> <span class="s">&quot;blockIdx.y&quot;</span> <span class="o">||</span> <span class="n">axis</span> <span class="o">==</span> <span class="s">&quot;blockIdx.z&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">uint8_t</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">axis</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">-</span> <span class="sc">&#39;x&#39;</span><span class="p">;</span>
+    <span class="n">AddForloopInfo</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">StageForloopInfo</span><span class="p">{</span><span class="n">ir</span><span class="o">::</span><span class="n">ForType</span><span class="o">::</span><span class="n">GPUBlock</span><span class="p">,</span> <span class="n">DeviceAPI</span><span class="o">::</span><span class="n">GPU</span><span class="p">,</span> <span class="n">offset</span><span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Iterator</span> <span class="n">Stage</span><span class="o">::</span><span class="n">axis</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">names</span> <span class="o">=</span> <span class="n">axis_names</span><span class="p">();</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">names</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="k">return</span> <span class="nf">Iterator</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="p">}</span>
+<span class="n">Iterator</span> <span class="n">Stage</span><span class="o">::</span><span class="n">axis</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">names</span> <span class="o">=</span> <span class="n">axis_names</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">it</span>    <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">names</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">names</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">i</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">names</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="k">return</span> <span class="nf">Iterator</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Stage</span><span class="o">::</span><span class="n">has_expression</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">has_expression</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * To create a read cache:</span>
+<span class="cm"> * 1. create a cache write stage for cache assign.</span>
+<span class="cm"> * 2. add extra deps between cache and tensor to keep SSA order</span>
+<span class="cm"> * 3. register the readers of the cache to the \p tensor, replace latter in Lower</span>
+<span class="cm"> */</span>
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Stage</span><span class="o">::</span><span class="n">CacheRead</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">memory_type</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">readers</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">my_tensor</span>         <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cache_name</span> <span class="o">=</span> <span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">NewName</span><span class="p">(</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;_read_cache&quot;</span><span class="p">);</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cache_name &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cache_name</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">cache_tensor</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">(</span>
+      <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dims</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">my_tensor</span><span class="p">(</span><span class="n">dims</span><span class="p">);</span> <span class="p">},</span> <span class="n">cache_name</span><span class="p">);</span>
+  <span class="n">cache_tensor</span><span class="o">-&gt;</span><span class="n">WithBuffer</span><span class="p">(</span><span class="n">memory_type</span><span class="p">);</span>
+
+  <span class="n">stages</span><span class="o">-&gt;</span><span class="n">Insert</span><span class="p">(</span><span class="n">cache_tensor</span><span class="p">,</span> <span class="n">CreateStage</span><span class="p">(</span><span class="n">cache_tensor</span><span class="p">).</span><span class="n">get</span><span class="p">());</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">reader</span> <span class="p">:</span> <span class="n">readers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">reader</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">CtrlDepend</span><span class="p">(</span><span class="n">cache_tensor</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">reader_names</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span>
+      <span class="n">readers</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">readers</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">reader_names</span><span class="p">),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span> <span class="p">});</span>
+
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">meta</span><span class="p">.</span><span class="n">read_cache_relation</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Duplicate read cache found, just one is allowed&quot;</span><span class="p">;</span>
+  <span class="n">meta</span><span class="p">.</span><span class="n">read_cache_relation</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">ReadCacheRelation</span><span class="p">{</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">reader_names</span><span class="p">});</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">memory_type</span> <span class="o">==</span> <span class="s">&quot;shared&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">cache_tensor</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">SetScope</span><span class="p">(</span><span class="n">ScopeKind</span><span class="o">::</span><span class="n">kShared</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">memory_type</span> <span class="o">==</span> <span class="s">&quot;local&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">cache_tensor</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">SetScope</span><span class="p">(</span><span class="n">ScopeKind</span><span class="o">::</span><span class="n">kLocal</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">cache_tensor</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Replace the tensor&#39;s name to cache_name, and create a cache_stage to copy content from cache to original tensor.</span>
+<span class="cm"> */</span>
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Stage</span><span class="o">::</span><span class="n">CacheWrite</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">memory_type</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This tensor is already binded to a buffer, cannot cache write&quot;</span><span class="p">;</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_inline</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cannot create a write cache on an inlined tensor&quot;</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">my_tensor</span>         <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cache_name</span> <span class="o">=</span> <span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">NewName</span><span class="p">(</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;_cache_write_out&quot;</span><span class="p">);</span>
+  <span class="c1">// make my_tensor a cache</span>
+  <span class="n">my_tensor</span><span class="o">-&gt;</span><span class="n">WithBuffer</span><span class="p">(</span><span class="n">memory_type</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">write_stage</span> <span class="o">=</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">(</span>
+      <span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dims</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">my_tensor</span><span class="p">(</span><span class="n">dims</span><span class="p">);</span> <span class="p">},</span> <span class="n">cache_name</span><span class="p">);</span>
+  <span class="n">stages</span><span class="o">-&gt;</span><span class="n">Insert</span><span class="p">(</span><span class="n">write_stage</span><span class="p">,</span> <span class="n">CreateStage</span><span class="p">(</span><span class="n">write_stage</span><span class="p">).</span><span class="n">get</span><span class="p">());</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">write_stage</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">CtrlDepend</span><span class="p">(</span><span class="n">my_tensor</span><span class="p">);</span>
+
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">meta</span><span class="p">.</span><span class="n">write_cache_relation</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Duplicate write cache found, just one is allowed&quot;</span><span class="p">;</span>
+  <span class="n">meta</span><span class="p">.</span><span class="n">write_cache_relation</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">WriteCacheRelation</span><span class="p">{</span><span class="n">cache_name</span><span class="p">});</span>
+
+  <span class="k">return</span> <span class="n">write_stage</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ComputeInline</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="n">meta</span><span class="p">.</span><span class="n">compute_inline</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">ShareBufferWith</span><span class="p">(</span><span class="n">Stage</span> <span class="o">*</span><span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_inline</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_inline</span><span class="p">);</span>
+
+  <span class="n">meta</span><span class="p">.</span><span class="n">tensors_to_share_buffer_with</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">other</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">());</span>
+  <span class="n">other</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">tensors_to_share_buffer_with</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">isl_map</span> <span class="o">*</span><span class="n">__isl_give</span> <span class="n">GatherAccesses</span><span class="p">(</span><span class="n">Stage</span> <span class="o">*</span><span class="n">stage</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">tensor_name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">tensor_</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">loads</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">(),</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">tensor_name</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">vars</span> <span class="o">=</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">axis_with_reduce</span><span class="p">();</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">in_tuple_name</span>  <span class="o">=</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">tensor_</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">out_tuple_name</span> <span class="o">=</span> <span class="n">tensor_name</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">in_dim_names</span><span class="p">,</span> <span class="n">out_loads</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">vars</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">vars</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">in_dim_names</span><span class="p">),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Var</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span>
+      <span class="n">loads</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">loads</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">out_loads</span><span class="p">),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Expr</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="p">});</span>
+
+  <span class="n">isl_map</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">load</span> <span class="p">:</span> <span class="n">out_loads</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">repr</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span>
+        <span class="s">&quot;{ %s[%s] -&gt; %s }&quot;</span><span class="p">,</span> <span class="n">in_tuple_name</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">in_dim_names</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">).</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">load</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="n">isl_map</span> <span class="o">*</span><span class="n">access</span> <span class="o">=</span> <span class="n">isl_map_read_from_str</span><span class="p">(</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">domain</span><span class="p">().</span><span class="n">ctx</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">repr</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">res</span> <span class="o">=</span> <span class="n">isl_map_union</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">access</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">res</span> <span class="o">=</span> <span class="n">access</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">AddForloopInfo</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">,</span> <span class="k">const</span> <span class="n">StageForloopInfo</span> <span class="o">&amp;</span><span class="n">info</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">num_levels</span> <span class="o">=</span> <span class="n">isl_map_dim</span><span class="p">(</span><span class="n">transform_</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">);</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">num_levels</span><span class="p">);</span>
+  <span class="n">forloop_infos_</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">LockAxis</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">n_out_dims</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;axis level out of range&quot;</span><span class="p">;</span>
+  <span class="n">locked_axis_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">UnlockAxis</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">n_out_dims</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;axis level out of range&quot;</span><span class="p">;</span>
+  <span class="n">locked_axis_</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Stage</span><span class="o">::</span><span class="n">is_axis_locked</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">level</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">n_out_dims</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;axis level out of range&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">locked_axis_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">AssertAxisIsNotLocked</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">is_axis_locked</span><span class="p">(</span><span class="n">level</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">level</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;-th axis is locked, cannot perform schedule&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">Stage</span><span class="o">::</span><span class="n">GetTransformedLevel</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">compute_ats</span><span class="p">().</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// The ComputeAt schedule will insert some consumer axis in the preceding of this, so the raw before ComputeAt</span>
+    <span class="c1">// should add the numbers of axis inserted.</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">compute_ats</span><span class="p">().</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="o">&amp;</span><span class="n">compute_at</span> <span class="o">=</span> <span class="n">compute_ats</span><span class="p">().</span><span class="n">front</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">compute_at</span><span class="p">.</span><span class="n">level</span> <span class="o">+</span> <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// or just return the original.</span>
+  <span class="k">return</span> <span class="n">level</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Stage</span><span class="o">::</span><span class="n">CtrlDepend</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">ctrl_depends_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">Stage</span><span class="o">::</span><span class="n">ctrl_depends</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ctrl_depends_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">Stage</span><span class="o">::</span><span class="n">LookupCtrlDepend</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">tensor_name</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find_if</span><span class="p">(</span>
+      <span class="n">ctrl_depends_</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">ctrl_depends_</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">tensor_name</span><span class="p">;</span> <span class="p">});</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">==</span> <span class="n">ctrl_depends_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">();</span>
+  <span class="k">return</span> <span class="o">*</span><span class="n">it</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="k">operator</span><span class="p">[](</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">data_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;StageMap has no stage for tensor [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">data_</span><span class="p">[</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">].</span><span class="n">get</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="k">operator</span><span class="p">[](</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">tensor</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">data_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">data_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">).</span><span class="n">get</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="k">operator</span><span class="p">[](</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span> <span class="o">*</span><span class="n">tensor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">data_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;StageMap has no stage for tensor [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">data_</span><span class="p">[</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">].</span><span class="n">get</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">const</span> <span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="k">operator</span><span class="p">[](</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span> <span class="o">*</span><span class="n">tensor</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">data_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;StageMap has no stage for tensor [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">data_</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">).</span><span class="n">get</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="n">Insert</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">,</span> <span class="n">Stage</span> <span class="o">*</span><span class="n">stage</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">stage</span><span class="p">);</span>
+  <span class="n">data_</span><span class="p">[</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">].</span><span class="n">Reset</span><span class="p">(</span><span class="n">stage</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">stage</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="n">InsertLazily</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">data_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">key</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="k">return</span> <span class="k">operator</span><span class="p">[](</span><span class="n">key</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nf">Insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">CreateStage</span><span class="p">(</span><span class="n">key</span><span class="p">).</span><span class="n">get</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">StageMap</span> <span class="n">CreateStages</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">tensors</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">StageMap</span> <span class="n">stages</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">all_tensors</span><span class="p">(</span><span class="n">tensors</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">tensors</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">tensor</span> <span class="p">:</span> <span class="n">tensors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">used_tensors</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">(),</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">();</span> <span class="p">});</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">Expr</span> <span class="o">&amp;</span><span class="nl">x</span> <span class="p">:</span> <span class="n">used_tensors</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">all_tensors</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">as_tensor_ref</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">t</span> <span class="p">:</span> <span class="n">all_tensors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">stages</span><span class="o">-&gt;</span><span class="n">Insert</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">CreateStage</span><span class="p">(</span><span class="n">t</span><span class="p">).</span><span class="n">get</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">stages</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Stage</span> <span class="o">*</span><span class="n">_StageMap_</span><span class="o">::</span><span class="n">Lookup</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">data_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">==</span> <span class="n">data_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace poly</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_poly_stage.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8cc_1a8e95f0bd3602a28086cbd9e373b02b51:
+
+Function cinn_buffer_new
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_buffer_new(cinn_device_kind_t, cinn_type_t, const std::vector<int>&, int)

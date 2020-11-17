@@ -1,0 +1,13 @@
+.. _exhale_variable_extern__func__emitter_8h_1ae3b55a12d39f4afefecc81f917020c70:
+
+Variable cinn::backends::backend_nvgpu
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::backends::backend_nvgpu

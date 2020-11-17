@@ -1,0 +1,13 @@
+.. _exhale_variable_compute__inline__expand_8cc_1a5b3e7f78c756eaa3f07c088643853ee2:
+
+Variable tensor_name
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: tensor_name

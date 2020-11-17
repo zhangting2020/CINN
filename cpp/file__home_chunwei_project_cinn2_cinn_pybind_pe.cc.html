@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File pe.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-pe-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-pybind-pe-cc"></span><h1>File pe.cc<a class="headerlink" href="#file-pe-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_pybind.html#dir-home-chunwei-project-cinn2-cinn-pybind"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/pybind</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-pybind-pe-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/pybind/pe.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id5">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-pybind-pe-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/pybind/pe.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-pybind-pe-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_pybind_pe.cc.html">Program Listing for File pe.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/target.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_target.h.html#file-home-chunwei-project-cinn2-cinn-common-target-h"><span class="std std-ref">File target.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/elementwise.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-elementwise-h"><span class="std std-ref">File elementwise.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/reduction.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-reduction-h"><span class="std std-ref">File reduction.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/transform.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-transform-h"><span class="std std-ref">File transform.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/pybind/bind.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_bind.h.html#file-home-chunwei-project-cinn2-cinn-pybind-bind-h"><span class="std std-ref">File bind.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/pybind/bind_utils.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h.html#file-home-chunwei-project-cinn2-cinn-pybind-bind-utils-h"><span class="std std-ref">File bind_utils.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/utils/string.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_string.h.html#file-home-chunwei-project-cinn2-cinn-utils-string-h"><span class="std std-ref">File string.h</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__pybind.html#namespace-cinn-pybind"><span class="std std-ref">Namespace cinn::pybind</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_pe_8cc_1ad53d21fcbe9095e5921c333f340c0f00.html#exhale-function-pe-8cc-1ad53d21fcbe9095e5921c333f340c0f00"><span class="std std-ref">Function cinn::pybind::BindPE(py::module *)</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_pe_8cc_1a49a6a2e08b95a69841afd78bd63b11d0.html#exhale-define-pe-8cc-1a49a6a2e08b95a69841afd78bd63b11d0"><span class="std std-ref">Define BIND_REDUCE</span></a></p></li>
+<li><p><a class="reference internal" href="define_pe_8cc_1a1cdf0905d2977b767f88b6183b75a238.html#exhale-define-pe-8cc-1a1cdf0905d2977b767f88b6183b75a238"><span class="std std-ref">Define BIND_REDUCE1</span></a></p></li>
+<li><p><a class="reference internal" href="define_pe_8cc_1ae69d98d700eed07d8ba7d80c22d72ba7.html#exhale-define-pe-8cc-1ae69d98d700eed07d8ba7d80c22d72ba7"><span class="std std-ref">Define BIND_UNARY</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_pybind_pe.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

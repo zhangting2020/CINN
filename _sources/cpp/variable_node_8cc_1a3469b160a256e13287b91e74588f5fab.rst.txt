@@ -1,0 +1,13 @@
+.. _exhale_variable_node_8cc_1a3469b160a256e13287b91e74588f5fab:
+
+Variable out
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: out

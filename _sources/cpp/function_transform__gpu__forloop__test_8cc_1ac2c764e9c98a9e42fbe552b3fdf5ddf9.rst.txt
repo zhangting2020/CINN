@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop__test_8cc_1ac2c764e9c98a9e42fbe552b3fdf5ddf9:
+
+Function cinn::optim::TEST(TransformGpuForloops, multiple_thread_axis)
+======================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(TransformGpuForloops, multiple_thread_axis)

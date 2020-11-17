@@ -1,0 +1,13 @@
+.. _exhale_function_op_2broadcast_8cc_1a586f94568bd8851478dfc78aa5fd783f:
+
+Function cinn::hlir::op::StrategyForScale
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::StrategyForScale(const framework::NodeAttr&, const std::vector<ir::Tensor>&, const std::vector<Type>&, const std::vector<std::vector<int>>&, const Target&)

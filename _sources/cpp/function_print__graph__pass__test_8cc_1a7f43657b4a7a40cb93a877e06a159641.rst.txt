@@ -1,0 +1,13 @@
+.. _exhale_function_print__graph__pass__test_8cc_1a7f43657b4a7a40cb93a877e06a159641:
+
+Function cinn::hlir::framework::CINN_REGISTER_PASS
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_print_graph_pass_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::CINN_REGISTER_PASS(PrintGraph)

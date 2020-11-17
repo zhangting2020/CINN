@@ -1,0 +1,27 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.cc:
+
+Program Listing for File intrinsic_types.cc
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.cc>` (``/home/chunwei/project/cinn2/cinn/runtime/intrinsic_types.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/runtime/intrinsic_types.h"
+   
+   namespace cinn {
+   namespace runtime {
+   
+   Type BufferType::cinn_type() {
+     Type type;
+     type.set_customized_type(c_type_repr);
+     return type;
+   }
+   
+   char BufferType::c_type_repr[] = "cinn_buffer_t";
+   
+   }  // namespace runtime
+   }  // namespace cinn

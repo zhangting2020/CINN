@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8cc_1aae08157ce499752d5cc8c575aa3755c0:
+
+Function CINN_REGISTER_HELPER(host_intrinsics)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: CINN_REGISTER_HELPER(host_intrinsics)

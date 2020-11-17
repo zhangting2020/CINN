@@ -1,0 +1,13 @@
+.. _exhale_function_cblas_8cc_1af434a0f8d72ad20b26da97aa38c36e8d:
+
+Function CINN_REGISTER_HELPER(cinn_cpu_mkl_gemm_fp32)
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: CINN_REGISTER_HELPER(cinn_cpu_mkl_gemm_fp32)

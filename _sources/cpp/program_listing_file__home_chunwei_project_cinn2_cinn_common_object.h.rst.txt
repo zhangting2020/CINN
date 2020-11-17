@@ -1,0 +1,66 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_object.h:
+
+Program Listing for File object.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_object.h>` (``/home/chunwei/project/cinn2/cinn/common/object.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <cstring>
+   
+   #include "cinn/common/shared.h"
+   
+   namespace cinn {
+   namespace common {
+   
+   template <typename T>
+   class Shared;
+   struct Object {
+     virtual const char* type_info() const = 0;
+   
+     template <typename T>
+     T* as() {
+       return static_cast<T*>(this);
+     }
+   
+     template <typename T>
+     const T* as() const {
+       return static_cast<const T*>(this);
+     }
+   
+     template <typename T>
+     T* safe_as() {
+       if (std::strcmp(type_info(), T::__type_info__) == 0) {
+         return static_cast<T*>(this);
+       }
+       return nullptr;
+     }
+     template <typename T>
+     const T* safe_as() const {
+       if (std::strcmp(type_info(), T::__type_info__) == 0) {
+         return static_cast<const T*>(this);
+       }
+       return nullptr;
+     }
+   
+     template <typename T>
+     bool is_type() const {
+       if (std::strcmp(type_info(), T::__type_info__) == 0) {
+         return true;
+       }
+       return false;
+     }
+   
+     mutable RefCount __ref_count__;
+   };
+   
+   using object_ptr    = Object*;
+   using shared_object = Shared<Object>;
+   
+   }  // namespace common
+   }  // namespace cinn

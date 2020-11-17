@@ -1,0 +1,13 @@
+.. _exhale_function_cuda__intrisics_8cc_1aef67003e755c195ec93e805565194a56:
+
+Function CINN_REGISTER_HELPER(cuda_intrinsics)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_intrisics.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: CINN_REGISTER_HELPER(cuda_intrinsics)

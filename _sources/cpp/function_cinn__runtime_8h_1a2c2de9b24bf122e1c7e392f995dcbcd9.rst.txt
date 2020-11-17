@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8h_1a2c2de9b24bf122e1c7e392f995dcbcd9:
+
+Function cinn_device_release(void \*, const struct cinn_device_interface_t \*)
+==============================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_device_release(void *, const struct cinn_device_interface_t *)

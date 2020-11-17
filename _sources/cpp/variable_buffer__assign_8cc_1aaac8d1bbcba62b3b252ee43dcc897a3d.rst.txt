@@ -1,0 +1,13 @@
+.. _exhale_variable_buffer__assign_8cc_1aaac8d1bbcba62b3b252ee43dcc897a3d:
+
+Variable __type_info__
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: __type_info__

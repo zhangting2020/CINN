@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1a4f21c914dea126f69af5e6338189a560:
+
+Function cinn::hlir::pe::Multiply(const Tensor&, const Expr&, const std::string&)
+=================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Multiply(const Tensor&, const Expr&, const std::string&)

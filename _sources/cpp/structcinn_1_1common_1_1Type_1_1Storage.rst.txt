@@ -1,0 +1,22 @@
+.. _exhale_struct_structcinn_1_1common_1_1Type_1_1Storage:
+
+Struct Type::Storage
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.cc`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_struct_structcinn_1_1common_1_1Type`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::Type::Storage
+   :members:
+   :protected-members:
+   :undoc-members:

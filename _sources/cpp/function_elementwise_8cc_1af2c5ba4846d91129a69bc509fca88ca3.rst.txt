@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1af2c5ba4846d91129a69bc509fca88ca3:
+
+Function cinn::hlir::pe::Exp
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Exp(const Tensor&, const std::string&)

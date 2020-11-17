@@ -1,0 +1,33 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_utils_timer.h:
+
+Program Listing for File timer.h
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_utils_timer.h>` (``/home/chunwei/project/cinn2/cinn/utils/timer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <algorithm>
+   #include <chrono>  //NOLINT
+   #include <vector>
+   
+   namespace cinn {
+   namespace utils {
+   
+   class Timer {
+    public:
+     Timer() = default;
+   
+     void Start();
+     float Stop();
+   
+    private:
+     std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> start_, end_;
+   };
+   
+   }  // namespace utils
+   }  // namespace cinn

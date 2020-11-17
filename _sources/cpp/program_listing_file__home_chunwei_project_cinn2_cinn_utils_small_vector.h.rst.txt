@@ -1,0 +1,21 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_utils_small_vector.h:
+
+Program Listing for File small_vector.h
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_utils_small_vector.h>` (``/home/chunwei/project/cinn2/cinn/utils/small_vector.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include "llvm/ADT/SmallVector.h"
+   
+   namespace cinn::utils {
+   
+   template <typename Type, unsigned Num>
+   using SmallVector = llvm::SmallVector<Type, Num>;
+   
+   }  // namespace cinn::utils

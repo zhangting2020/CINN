@@ -1,0 +1,131 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc:
+
+File cinn_runtime.cc
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cinn_runtime.cc``)
+-------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/runtime/cinn_runtime.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`)
+
+- ``cinn/runtime/cinn_x86_device_impl.cc`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`)
+
+- ``cmath``
+
+- ``stdarg.h``
+
+- ``stdio.h``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a1834b170e87edc0b9c90e6110e076f06`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1abea716ca447095875369f8b8ff920cac`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1ab438271d56e2327a9c8146d9268bcb6c`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a56441486517fa7526740d68703a91e01`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1ad7fcb08a5930587025f6455a19b33303`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a2ac2a6c2ed31b2a9a24e81a6d1fcce6c`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a1110225df0bad0878e4cdafe5c0f5e6a`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1ade10c3ce36c0e9cb217628c74d12e4ad`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a09952b3d3be54deb5cc6873ac1ccbc51`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a8e95f0bd3602a28086cbd9e373b02b51`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a5a057a5c58d85366923676178913475e`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a2c2de9b24bf122e1c7e392f995dcbcd9`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a37791fedfaa366416de6c1249d0a1034`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a91209371c882c46b0e5569c0136a8c96`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a95342f50889a55ab7d42f96e3048b31f`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a2eaa47771d505ab75afa86844234bd36`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a51e34b9fe75c1957bfeab874c89988d3`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1ae2a058387c87668445f9c910759d9e75`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a05942afc82bc0040ecb79681d5adfeb2`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a681ae3eb9f5d2ebfead965175219e48b`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a6cf7da05c930237067e471a641ce7a96`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a69b0334c5c144699f74f2b157a111d02`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a873e1a2b777e58bfff062d4b6a28553a`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a15bcd8c3de1cc580d3f17253946f23a6`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a4a05c0ded83cbd18456c792ee7d37750`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a793b1df73f702767f79a2bc91ae7e862`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1aa781c15bd1b405f67524fbdc6973f133`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a348bd560fef82fa2de1e942898dd1218`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a3a923e023792442811a00d810f5dccf7`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a2e9b5561835240b98843366d418faf50`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1ad0827dedd8e5396d5264c27cbb1e958a`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a1c263ee2b8c315c4ada6f42088cbc887`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a9c9eebf87f071052eafe3cb76f9d340d`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a7050d1e29db1ec90166756f1fd0f44ed`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1af2d5b7ea83193f691071c9b5981e070e`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1ad3b67127001a7a930ba53ae42c7b859d`
+
+- :ref:`exhale_function_cinn__runtime_8cc_1a5af2147e3b85c187a33af687b1846fa4`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_cinn__runtime_8cc_1aab15765831ba3b8e936d2b2c46d75cb2`
+

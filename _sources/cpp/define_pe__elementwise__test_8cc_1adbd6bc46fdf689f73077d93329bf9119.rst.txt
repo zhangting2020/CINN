@@ -1,0 +1,13 @@
+.. _exhale_define_pe__elementwise__test_8cc_1adbd6bc46fdf689f73077d93329bf9119:
+
+Define TEST_ELEMENTWISE_PE_FP32
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TEST_ELEMENTWISE_PE_FP32

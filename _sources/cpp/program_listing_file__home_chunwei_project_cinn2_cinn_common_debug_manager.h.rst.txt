@@ -1,0 +1,42 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_debug_manager.h:
+
+Program Listing for File debug_manager.h
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_debug_manager.h>` (``/home/chunwei/project/cinn2/cinn/common/debug_manager.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <any>
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   namespace cinn {
+   namespace common {
+   
+   class DebugManager {
+    public:
+     void Append(const std::string& key, int32_t value);
+     void Append(const std::string& key, bool value);
+     void Append(const std::string& key, const std::string& value);
+     void Clear();
+   
+    protected:
+     void Append(const std::string& key, std::any value);
+   
+     template <typename T>
+     inline std::string AppendTypeSuffix(const std::string& key) {
+       return key;
+     }
+   
+    private:
+     std::any data_;
+   };
+   
+   }  // namespace common
+   }  // namespace cinn

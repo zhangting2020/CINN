@@ -1,0 +1,55 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_bind.cc:
+
+File bind.cc
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/bind.cc``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_bind.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_jit_register.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`)
+
+- ``cinn/pybind/bind.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`)
+
+- ``cinn/runtime/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_bind_8cc_1a5382ed093743735f81c643c2fead7b23`
+

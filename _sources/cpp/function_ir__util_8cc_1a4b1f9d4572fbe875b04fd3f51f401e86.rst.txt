@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1a4b1f9d4572fbe875b04fd3f51f401e86:
+
+Function cinn::common::CheckBufferUniqueInExpr
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::CheckBufferUniqueInExpr(Expr)

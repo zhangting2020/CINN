@@ -1,0 +1,13 @@
+.. _exhale_variable_compute__at__transform_8h_1a522fe34e25e31d27e43d3a7cf39f3654:
+
+Variable cinn::poly::kConsumerParamPrefix
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::poly::kConsumerParamPrefix

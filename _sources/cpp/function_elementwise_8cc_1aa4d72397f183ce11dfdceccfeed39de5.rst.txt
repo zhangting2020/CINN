@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1aa4d72397f183ce11dfdceccfeed39de5:
+
+Function cinn::hlir::pe::Cosh
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Cosh(const Tensor&, const std::string&)

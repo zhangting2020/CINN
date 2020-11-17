@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8h_1acf067e5cd30c83bb5d340477a9d20ee0:
+
+Function cinn_cpu_ceil_fp32(float)
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_ceil_fp32(float)

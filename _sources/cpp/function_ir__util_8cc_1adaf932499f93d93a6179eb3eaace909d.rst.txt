@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1adaf932499f93d93a6179eb3eaace909d:
+
+Function cinn::common::min
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::min(Expr, Expr)

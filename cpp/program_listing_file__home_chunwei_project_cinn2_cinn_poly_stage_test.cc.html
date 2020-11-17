@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File stage_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-stage-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-poly-stage-test-cc"></span><h1>Program Listing for File stage_test.cc<a class="headerlink" href="#program-listing-for-file-stage-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc.html#file-home-chunwei-project-cinn2-cinn-poly-stage-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/stage_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/stage.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/codegen_llvm.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/simple_jit.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/test_helper.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">poly</span> <span class="p">{</span>
+
+<span class="c1">// Create a call.</span>
+<span class="n">Expr</span> <span class="n">CreateCall</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">expr</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="p">{},</span> <span class="n">ir</span><span class="o">::</span><span class="n">CallType</span><span class="o">::</span><span class="n">CINN</span><span class="p">,</span> <span class="n">ir</span><span class="o">::</span><span class="n">FunctionRef</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">expr</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">split</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j]: 0&lt;=i,j&lt;=100 }&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">ele</span>            <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">outer</span><span class="p">,</span> <span class="n">inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="n">Iterator</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">),</span> <span class="mi">4</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">()),</span>
+            <span class="s">&quot;{ S[i, j] -&gt; S[i_outer, i_inner, j&#39; = j] : (-i + i_inner) mod 4 = 0 and -3 + i &lt;= 4i_outer &lt;= i and 0 &lt;= &quot;</span>
+            <span class="s">&quot;i_inner &lt;= 3 }&quot;</span><span class="p">);</span>
+
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">outer</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;i_outer&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">inner</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;i_inner&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">tile</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j,k]: 0&lt;=i,j,k&lt;=100 }&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">ele</span> <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="p">[</span><span class="n">outer0</span><span class="p">,</span> <span class="n">inner0</span><span class="p">,</span> <span class="n">outer1</span><span class="p">,</span> <span class="n">inner1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="n">Iterator</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">),</span> <span class="n">Iterator</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">),</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">outer0</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;i_outer&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">outer1</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;j_outer&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">inner0</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;i_inner&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">outer1</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&quot;j_outer&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span>
+      <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">()),</span>
+      <span class="s">&quot;{ S[i, j, k] -&gt; S[i_outer, i_inner, j_outer, j_inner, k&#39; = k] : (-i + i_inner) mod 4 = 0 and (-j + j_inner) mod &quot;</span>
+      <span class="s">&quot;6 = 0 and -3 + i &lt;= 4i_outer &lt;= i and 0 &lt;= i_inner &lt;= 3 and -5 + j &lt;= 6j_outer &lt;= j and 0 &lt;= j_inner &lt;= 5 }&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">reorder</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j,k]: 0&lt;=i,j,k&lt;=100 }&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">ele</span> <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+  <span class="n">Iterator</span> <span class="nf">i</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">),</span> <span class="n">j</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">),</span> <span class="n">k</span><span class="p">(</span><span class="s">&quot;k&quot;</span><span class="p">);</span>
+  <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">}});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">split_reorder</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j,k]: 0&lt;=i,j,k&lt;=100 }&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">ele</span>            <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">outer</span><span class="p">,</span> <span class="n">inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="n">Iterator</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">),</span> <span class="mi">4</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+
+  <span class="n">Iterator</span> <span class="nf">i</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">),</span> <span class="n">j</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">),</span> <span class="n">k</span><span class="p">(</span><span class="s">&quot;k&quot;</span><span class="p">);</span>
+  <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">outer</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">inner</span><span class="p">,</span> <span class="n">j</span><span class="p">}});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeAtRelation</span><span class="p">,</span> <span class="n">basic</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain0</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j,k]: 0&lt;=i,j,k&lt;=100 }&quot;</span><span class="p">);</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain1</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ D[a,b,c,d]: 0&lt;=a,b,c,d&lt;=100 }&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stage0</span> <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain0</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">stage1</span> <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain0</span><span class="p">);</span>
+
+  <span class="n">ComputeAtRelation</span> <span class="n">relation</span><span class="p">;</span>
+  <span class="n">relation</span><span class="p">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">stage1</span><span class="p">;</span>
+  <span class="n">relation</span><span class="p">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">ASSERT_TRUE</span><span class="p">(</span><span class="n">relation</span><span class="p">.</span><span class="n">IsCompatible</span><span class="p">(</span><span class="n">stage0</span><span class="p">.</span><span class="n">get</span><span class="p">()));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">Fuse</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j,k]: 0&lt;=i,j,k&lt;=100 }&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">ele</span>            <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">outer</span><span class="p">,</span> <span class="n">inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="n">Iterator</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">),</span> <span class="mi">4</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;split: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+  <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Fuse</span><span class="p">(</span><span class="n">outer</span><span class="p">,</span> <span class="n">inner</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fused: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Stage</span><span class="p">,</span> <span class="n">Fuse1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;{ S[i,j,k]: 0&lt;=i,j,k&lt;=100 }&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">ele</span> <span class="o">=</span> <span class="n">Stage</span><span class="o">::</span><span class="n">New</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+  <span class="n">Iterator</span> <span class="nf">i</span><span class="p">(</span><span class="s">&quot;i&quot;</span><span class="p">);</span>
+  <span class="n">Iterator</span> <span class="nf">j</span><span class="p">(</span><span class="s">&quot;j&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">n</span> <span class="o">=</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">Fuse</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fused: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ele</span><span class="o">-&gt;</span><span class="n">transform</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeAt</span><span class="p">,</span> <span class="n">Before</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">A_cache</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;cache&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">)},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A_cache</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">A_cache</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">A_cache</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A_cache</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _B, _cache, _C)</span>
+<span class="s">{</span>
+<span class="s">  for (po0, 10)</span>
+<span class="s">  {</span>
+<span class="s">    for (po1, 10)</span>
+<span class="s">    {</span>
+<span class="s">      if (((((po0 &gt;= 0) and (po0 &lt;= 9)) and (po1 &gt;= 0)) and (po1 &lt;= 9))) {</span>
+<span class="s">        cache[0, 0] = A[po0, po1]</span>
+<span class="s">      }</span>
+<span class="s">      C[po0, po1] = (cache[0, 0] + B[po0, po1])</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeAt</span><span class="p">,</span> <span class="n">level0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">25</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">bs</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">bs</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">A_cache</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">bs</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">k</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;cache&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">bs</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">)},</span>
+      <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">k</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">select</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">A_cache</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">A_cache</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mf">0.f</span><span class="p">));</span>
+      <span class="p">},</span>
+      <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">A_cache</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">],</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">A_cache</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _cache, _C)</span>
+<span class="s">{</span>
+<span class="s">  for (po0, 10)</span>
+<span class="s">  {</span>
+<span class="s">    if (((po0 &gt;= 0) and (po0 &lt;= 9))) {</span>
+<span class="s">      for (j, 11)</span>
+<span class="s">      {</span>
+<span class="s">        for (k, 10)</span>
+<span class="s">        {</span>
+<span class="s">          cache[0, j, k] = A[po0, j, k]</span>
+<span class="s">        }</span>
+<span class="s">      }</span>
+<span class="s">    }</span>
+<span class="s">    for (i, 10)</span>
+<span class="s">    {</span>
+<span class="s">      for (j, 10)</span>
+<span class="s">      {</span>
+<span class="s">        C[po0, i, j] = select((i &lt; 9), (cache[0, i, j] + cache[0, (1 + i), j]), 0)</span>
+<span class="s">      }</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">));</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+  <span class="n">CodeGenC</span> <span class="nf">codegen</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">codegen</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;C code:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">codegen</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">jit</span> <span class="o">=</span> <span class="n">backends</span><span class="o">::</span><span class="n">SimpleJIT</span><span class="o">::</span><span class="n">Create</span><span class="p">();</span>
+  <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Link</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="nb">false</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Lookup</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">fn_handler</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">lower_func_ptr_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_fn_handler</span><span class="p">);</span>
+
+  <span class="c1">// create buffer and args</span>
+  <span class="k">auto</span> <span class="n">A_buf</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_random</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="c1">// auto B_buf     = common::BufferBuilder(Float(32), {10, M.as_int32(), N.as_int32()}).set_random().Build();</span>
+  <span class="k">auto</span> <span class="n">C_buf</span>     <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">}).</span><span class="n">set_zero</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">Cache_buf</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">}).</span><span class="n">set_zero</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">arg_pack</span>  <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">ArgsBuilder</span><span class="p">().</span><span class="n">Add</span><span class="p">(</span><span class="n">A_buf</span><span class="p">).</span><span class="n">Add</span><span class="p">(</span><span class="n">Cache_buf</span><span class="p">).</span><span class="n">Add</span><span class="p">(</span><span class="n">C_buf</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">fn_handler</span><span class="p">(</span><span class="n">arg_pack</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">arg_pack</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">C_data</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">C_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">A_data</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">A_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">float</span> <span class="n">val</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">9</span> <span class="o">?</span> <span class="n">A_data</span><span class="p">[</span><span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()</span> <span class="o">*</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">())</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span>
+                                <span class="n">A_data</span><span class="p">[</span><span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()</span> <span class="o">*</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">())</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span>
+                          <span class="o">:</span> <span class="mf">0.f</span><span class="p">;</span>
+        <span class="n">ASSERT_NEAR</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">C_data</span><span class="p">[</span><span class="n">k</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">j</span><span class="p">],</span> <span class="mf">1e-5</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeAt</span><span class="p">,</span> <span class="n">level1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">ResetNameId</span><span class="p">();</span>
+
+  <span class="n">Expr</span> <span class="nf">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">A_cache</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;cache&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">)},</span>
+      <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">select</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">,</span> <span class="n">A_cache</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">A_cache</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">A_cache</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mf">0.f</span><span class="p">));</span>
+      <span class="p">},</span>
+      <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">A_cache</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A_cache</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _B, _cache, _C)</span>
+<span class="s">{</span>
+<span class="s">  for (po0, 10)</span>
+<span class="s">  {</span>
+<span class="s">    for (po1, 10)</span>
+<span class="s">    {</span>
+<span class="s">      if (((((po0 &gt;= 0) and (po0 &lt;= 9)) and (po1 &gt;= 0)) and (po1 &lt;= 9))) {</span>
+<span class="s">        for (i, (1 + int32((1 + (po0 - cinn_max(0, (po0 - 1)))))))</span>
+<span class="s">        {</span>
+<span class="s">          cache[i, 0] = A[(i + cinn_max(0, (po0 - 1))), po1]</span>
+<span class="s">        }</span>
+<span class="s">      }</span>
+<span class="s">      C[po0, po1] = select((po0 &lt; 10), (cache[-1, 0] + (cache[0, 0] + (cache[1, 0] + B[po0, po1]))), 0)</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+  <span class="n">CodeGenC</span> <span class="nf">codegen</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">codegen</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;source:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">codegen</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">backends</span><span class="o">::</span><span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+
+  <span class="c1">// ASSERT_EQ(utils::Trim(target), utils::GetStreamCnt(fn));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeAt</span><span class="p">,</span> <span class="n">simple</span><span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/*</span>
+<span class="cm">  {</span>
+<span class="cm">    Expr n(64);</span>
+<span class="cm">    auto A = Placeholder&lt;float&gt;(&quot;A&quot;, {n, n});</span>
+
+<span class="cm">    auto A1 = Compute(</span>
+<span class="cm">        {n, n}, [&amp;](Expr i, Expr j) { return A(i, j); }, &quot;A1&quot;);</span>
+<span class="cm">    auto B = Compute(</span>
+<span class="cm">        {n / 2, n / 2}, [&amp;](Expr i, Expr j) { return A1(i, j); }, &quot;B&quot;);</span>
+
+<span class="cm">    B-&gt;stage()-&gt;Split(0, 16);</span>
+
+<span class="cm">    auto fn = Lower(&quot;fn&quot;, {A, A1, B});</span>
+<span class="cm">    LOG(INFO) &lt;&lt; &quot;fn:\n&quot; &lt;&lt; fn;</span>
+<span class="cm">  }</span>
+<span class="cm">   */</span>
+
+  <span class="p">{</span>
+    <span class="n">Expr</span> <span class="n">n</span><span class="p">(</span><span class="mi">64</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">});</span>
+
+    <span class="k">auto</span> <span class="n">A1</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;A1&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">A1</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">A1</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;B&quot;</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">B</span><span class="p">});</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">A1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">B</span><span class="p">});</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _A1, _B)</span>
+<span class="s">{</span>
+<span class="s">  for (po0, 2)</span>
+<span class="s">  {</span>
+<span class="s">    for (po1, 16)</span>
+<span class="s">    {</span>
+<span class="s">      if (((((po1 &gt;= 0) and (((16 * po0) + po1) &gt;= 0)) and (po1 &lt;= 15)) and (((16 * po0) + po1) &lt;= 31))) {</span>
+<span class="s">        for (i, 3)</span>
+<span class="s">        {</span>
+<span class="s">          for (j, 32)</span>
+<span class="s">          {</span>
+<span class="s">            A1[i, j] = A[(i + ((16 * po0) + po1)), j]</span>
+<span class="s">          }</span>
+<span class="s">        }</span>
+<span class="s">      }</span>
+<span class="s">      for (i, 32)</span>
+<span class="s">      {</span>
+<span class="s">        B[((16 * po0) + po1), i] = (A1[0, i] + (A1[1, i] + A1[2, i]))</span>
+<span class="s">      }</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">));</span>
+
+    <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+    <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+    <span class="n">CodeGenC</span> <span class="nf">codegen</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+    <span class="n">codegen</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;source:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">codegen</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">backends</span><span class="o">::</span><span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeAt</span><span class="p">,</span> <span class="n">Before1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">create_module</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">]</span> <span class="p">{</span>
+    <span class="c1">// cached compute way</span>
+    <span class="k">auto</span> <span class="n">cache_prepare</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">({</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">}</span> <span class="cm">/*domain*/</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;cache&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">N</span><span class="p">}</span> <span class="cm">/*shape*/</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">transformed_compute</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="mf">1.f</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;transformed&quot;</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="p">{</span>  <span class="c1">// C_init Before C</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_module</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">});</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">cache_prepare</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">transformed_compute</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Stage</span><span class="o">::</span><span class="n">kComputeAtBefore</span><span class="p">);</span>
+
+    <span class="c1">// codegen and compare</span>
+    <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">});</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _cache, _transformed)</span>
+<span class="s">{</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      transformed[i, j] = 1</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      cache[i] = A[i, j]</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">);</span>
+
+    <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">)),</span> <span class="n">target</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="p">{</span>  <span class="c1">// C_init After C</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_module</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">});</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">cache_prepare</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeAt</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">transformed_compute</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Stage</span><span class="o">::</span><span class="n">kComputeAtAfter</span><span class="p">);</span>
+
+    <span class="c1">// codegen and compare</span>
+    <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">cache_prepare</span><span class="p">,</span> <span class="n">transformed_compute</span><span class="p">});</span>
+
+    <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _cache, _transformed)</span>
+<span class="s">{</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      transformed[i, j] = 1</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      cache[i] = A[i, j]</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">);</span>
+
+    <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">)),</span> <span class="n">target</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">TestElementwiseAddJitPrecession</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span><span class="p">,</span> <span class="n">StageMap</span><span class="p">)</span><span class="o">&gt;&amp;&amp;</span> <span class="n">scheduler</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">30</span><span class="p">);</span>
+  <span class="n">Expr</span> <span class="nf">N</span><span class="p">(</span><span class="mi">40</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="n">scheduler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">C</span><span class="p">,</span> <span class="n">stages</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">module_builder</span><span class="p">(</span><span class="s">&quot;some_module&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">module_builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">jit</span> <span class="o">=</span> <span class="n">backends</span><span class="o">::</span><span class="n">SimpleJIT</span><span class="o">::</span><span class="n">Create</span><span class="p">();</span>
+  <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Link</span><span class="p">(</span><span class="n">module_builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Lookup</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">fn_handler</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">lower_func_ptr_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_fn_handler</span><span class="p">);</span>
+
+  <span class="c1">// create buffer and args</span>
+  <span class="k">auto</span> <span class="n">A_buf</span>    <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_random</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">B_buf</span>    <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_random</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">C_buf</span>    <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">BufferBuilder</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">N</span><span class="p">.</span><span class="n">as_int32</span><span class="p">()}).</span><span class="n">set_zero</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">arg_pack</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">ArgsBuilder</span><span class="p">().</span><span class="n">Add</span><span class="p">(</span><span class="n">A_buf</span><span class="p">).</span><span class="n">Add</span><span class="p">(</span><span class="n">B_buf</span><span class="p">).</span><span class="n">Add</span><span class="p">(</span><span class="n">C_buf</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">fn_handler</span><span class="p">(</span><span class="n">arg_pack</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">arg_pack</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">A_data</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">A_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">B_data</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">B_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">C_data</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">C_buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A_buf</span><span class="o">-&gt;</span><span class="n">num_elements</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">C_data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">ASSERT_NEAR</span><span class="p">(</span><span class="n">A_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">B_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">C_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">1e-5</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">cinn_buffer_free</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="n">A_buf</span><span class="p">);</span>
+  <span class="n">cinn_buffer_free</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="n">B_buf</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// use an elementwise_add to test fuse precision</span>
+<span class="n">TEST</span><span class="p">(</span><span class="n">Fuse</span><span class="p">,</span> <span class="n">jit_precision_test</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">TestElementwiseAddJitPrecession</span><span class="p">([](</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span> <span class="n">stages</span><span class="p">[(</span><span class="o">*</span><span class="n">C</span><span class="p">)]</span><span class="o">-&gt;</span><span class="n">Fuse</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// split test fuse precision</span>
+<span class="n">TEST</span><span class="p">(</span><span class="n">Fuse</span><span class="p">,</span> <span class="n">jit_precision_test2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">TestElementwiseAddJitPrecession</span><span class="p">([](</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[(</span><span class="o">*</span><span class="n">C</span><span class="p">)]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">stages</span><span class="p">[(</span><span class="o">*</span><span class="n">C</span><span class="p">)]</span><span class="o">-&gt;</span><span class="n">Fuse</span><span class="p">(</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Tile</span><span class="p">,</span> <span class="n">jit_precision_test</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">TestElementwiseAddJitPrecession</span><span class="p">([](</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span> <span class="n">stages</span><span class="p">[(</span><span class="o">*</span><span class="n">C</span><span class="p">)]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Reorder</span><span class="p">,</span> <span class="n">jit_precision_test</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">TestElementwiseAddJitPrecession</span><span class="p">([](</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">stage</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[(</span><span class="o">*</span><span class="n">C</span><span class="p">)];</span>
+    <span class="n">stage</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">({</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">axis</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">axis</span><span class="p">(</span><span class="mi">0</span><span class="p">)});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Unroll</span><span class="p">,</span> <span class="n">jit_precision_test</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">TestElementwiseAddJitPrecession</span><span class="p">([](</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span> <span class="n">stages</span><span class="p">[(</span><span class="o">*</span><span class="n">C</span><span class="p">)]</span><span class="o">-&gt;</span><span class="n">Unroll</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Unroll</span><span class="p">,</span> <span class="n">jit_precision_test1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">TestElementwiseAddJitPrecession</span><span class="p">([](</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">*</span> <span class="n">C</span><span class="p">,</span> <span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span> <span class="n">stages</span><span class="p">[</span><span class="o">*</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Unroll</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeInline</span><span class="p">,</span> <span class="n">basic</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B1</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B2</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B2&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">B1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">B2</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">inlined_B</span> <span class="o">=</span> <span class="n">B</span><span class="o">-&gt;</span><span class="n">inline_expanded</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)});</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="s">&quot;(A[2, 1] + 1)&quot;</span><span class="p">,</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">inlined_B</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _C)</span>
+<span class="s">{</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      C[i, j] = (6 + (2 * A[i, j]))</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="s">  </span><span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">)));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ComputeInline</span><span class="p">,</span> <span class="n">complex_graph</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B1</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B2</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B2&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C1</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;C1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C2</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;C2&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">,</span> <span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">B1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">B2</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ComputeInline</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">C1</span><span class="p">,</span> <span class="n">C2</span><span class="p">});</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">target</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">function fn (_A, _C, _C1, _C2)</span>
+<span class="s">{</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      C2[i, j] = (6 + (2 * A[i, j]))</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      C1[i, j] = (4 + (2 * A[i, j]))</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j, 200)</span>
+<span class="s">    {</span>
+<span class="s">      C[i, j] = (2 + (2 * A[i, j]))</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="s">  </span><span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">target</span><span class="p">),</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">fn</span><span class="p">)));</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">ShareBufferWith</span><span class="p">,</span> <span class="n">basic</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Expr</span> <span class="n">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B1</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">},</span> <span class="s">&quot;B1&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">B</span><span class="p">,</span> <span class="n">B1</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">B1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ShareBufferWith</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]);</span>
+
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">B1</span><span class="p">});</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;some_module&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+
+  <span class="n">CodeGenC</span> <span class="nf">codegen</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="n">codegen</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">codegen</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">backends</span><span class="o">::</span><span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">isl</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span>
+      <span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0, p1] -&gt; { p[i, j] : p0 = 0 and 0 &lt;= p1 &lt;= 2 and 4p1 &lt;= i &lt;= 1 + 4p1 and 0 &lt;= j &lt;= 9 + 4p1 - i }&quot;</span><span class="p">);</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">schedule</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0, p1] -&gt; { p[i, j] -&gt; p[t0, t1, t2 = j] : 2t1 = i and (t0) mod 2 = 0 and 0 &lt;= t0 &lt;= 1 }&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">schedule_intersected</span> <span class="o">=</span> <span class="n">schedule</span><span class="p">.</span><span class="n">intersect_domain</span><span class="p">(</span><span class="n">domain</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;schedule_intersected: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">schedule_intersected</span><span class="p">.</span><span class="n">coalesce</span><span class="p">();</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">context</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0,p1]-&gt;{:p0&lt;100 and p1&lt;100}&quot;</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;space: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">context</span><span class="p">.</span><span class="n">space</span><span class="p">();</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">build</span> <span class="o">=</span> <span class="n">isl_ast_build_from_context</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">node</span>  <span class="o">=</span> <span class="n">isl_ast_build_node_from_schedule_map</span><span class="p">(</span><span class="n">build</span><span class="p">,</span> <span class="n">isl_union_map_from_map</span><span class="p">(</span><span class="n">schedule_intersected</span><span class="p">.</span><span class="n">release</span><span class="p">()));</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;code:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">isl_ast_node_to_C_str</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">isl</span><span class="p">,</span> <span class="n">test1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">(</span><span class="n">isl_ctx_alloc</span><span class="p">());</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span><span class="p">(</span>
+      <span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0, p1] -&gt; { p[i, j] : p0 = 0 and 0 &lt;= p1 &lt;= 2 and 4p1 &lt;= i &lt;= 1 + 4p1 and 0 &lt;= j &lt;= 9 + 4p1 - i }&quot;</span><span class="p">);</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">schedule</span><span class="p">(</span>
+      <span class="n">ctx</span><span class="p">,</span>
+      <span class="s">&quot;[p0, p1] -&gt; { p[i, j] -&gt; p[o0, o1, t0, t1, t2 = j] : 2t1 = i and (o0) mod 4 = 0 and (t0) mod 2 = 0 &quot;</span>
+      <span class="s">&quot;and 0 &lt;= o0 &lt;= 3 and 0 &lt;= o1 &lt;= 2 and 0 &lt;= t0 &lt;= 1 }&quot;</span><span class="p">);</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">schedule_t</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span>
+                      <span class="s">&quot;[p0,p1] -&gt; { p[i0,i1,i2,i3,i4] -&gt; [t0,t1,t2,t3,t30,t4] : t0 =i0 and t1 = i1 and t2 = i2 and t3 &quot;</span>
+                      <span class="s">&quot;= i3 and t4 = i4 and t30=0 }&quot;</span><span class="p">);</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">cdomain</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0,p1] -&gt; { c[a,b,c]: 0&lt;=a,b,c&lt;10 }&quot;</span><span class="p">);</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">cschedule</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0,p1] -&gt; { c[a,b,c] -&gt; c[t0,t1,t2,t3]: t0=a%4 and t1=a/4 and t2=b and t3=c }&quot;</span><span class="p">);</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">schedule_t1</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span>
+                       <span class="s">&quot;[p0,p1] -&gt; { c[i0,i1,i2,i3] -&gt; [t0,t1,t2,t3,t30,t4] : t0 =i0 and t1 = i1 and t2 = i2 and t3=i3 &quot;</span>
+                       <span class="s">&quot;and t4=0 and t30=1 }&quot;</span><span class="p">);</span>
+
+  <span class="n">schedule</span>  <span class="o">=</span> <span class="n">schedule</span><span class="p">.</span><span class="n">apply_range</span><span class="p">(</span><span class="n">schedule_t</span><span class="p">);</span>
+  <span class="n">cschedule</span> <span class="o">=</span> <span class="n">cschedule</span><span class="p">.</span><span class="n">apply_range</span><span class="p">(</span><span class="n">schedule_t1</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">whole_domain</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_set_from_set</span><span class="p">(</span><span class="n">domain</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">whole_domain</span>      <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_set_add_set</span><span class="p">(</span><span class="n">whole_domain</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">cdomain</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+
+  <span class="k">auto</span> <span class="n">whole_schedule</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_map_from_map</span><span class="p">(</span><span class="n">schedule</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">whole_schedule</span>      <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_map_add_map</span><span class="p">(</span><span class="n">whole_schedule</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">cschedule</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+
+  <span class="k">auto</span> <span class="n">intersect_schedule</span> <span class="o">=</span> <span class="n">whole_schedule</span><span class="p">.</span><span class="n">intersect_domain</span><span class="p">(</span><span class="n">whole_domain</span><span class="p">);</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">context</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s">&quot;[p0,p1]-&gt;{:p0&lt;100 and p1&lt;100}&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">build</span> <span class="o">=</span> <span class="n">isl_ast_build_from_context</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">node</span>  <span class="o">=</span> <span class="n">isl_ast_build_node_from_schedule_map</span><span class="p">(</span><span class="n">build</span><span class="p">,</span> <span class="n">intersect_schedule</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;code:</span><span class="se">\n\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">isl_ast_node_to_C_str</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace poly</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

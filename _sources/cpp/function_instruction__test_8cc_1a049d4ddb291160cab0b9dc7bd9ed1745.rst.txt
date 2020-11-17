@@ -1,0 +1,13 @@
+.. _exhale_function_instruction__test_8cc_1a049d4ddb291160cab0b9dc7bd9ed1745:
+
+Function cinn::hlir::framework::GetLoweredFunc
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::GetLoweredFunc(int, int)

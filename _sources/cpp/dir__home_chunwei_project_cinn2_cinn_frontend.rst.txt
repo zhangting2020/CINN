@@ -1,0 +1,32 @@
+.. _dir__home_chunwei_project_cinn2_cinn_frontend:
+
+
+Directory frontend
+==================
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn>` (``/home/chunwei/project/cinn2/cinn``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/frontend``
+
+Subdirectories
+--------------
+
+- :ref:`dir__home_chunwei_project_cinn2_cinn_frontend_paddle`
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc`
+
+

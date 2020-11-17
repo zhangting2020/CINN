@@ -1,0 +1,26 @@
+.. _exhale_class_classcinn_1_1ir_1_1Registry:
+
+Class Registry
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Registry_1_1Manager`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::Registry
+   :members:
+   :protected-members:
+   :undoc-members:

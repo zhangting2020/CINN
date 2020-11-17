@@ -1,0 +1,13 @@
+.. _exhale_typedef_node_8h_1a39ebd327783bab09805e89ec532d193b:
+
+Typedef cinn::hlir::framework::NodePtr
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::NodePtr

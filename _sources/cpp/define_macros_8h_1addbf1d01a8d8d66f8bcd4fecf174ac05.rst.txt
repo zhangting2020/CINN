@@ -1,0 +1,13 @@
+.. _exhale_define_macros_8h_1addbf1d01a8d8d66f8bcd4fecf174ac05:
+
+Define CINN_DEBUG
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_DEBUG

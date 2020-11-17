@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File call_arg_list_to_pod_value.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-call-arg-list-to-pod-value-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-optim-call-arg-list-to-pod-value-cc"></span><h1>Program Listing for File call_arg_list_to_pod_value.cc<a class="headerlink" href="#program-listing-for-file-call-arg-list-to-pod-value-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc.html#file-home-chunwei-project-cinn2-cinn-optim-call-arg-list-to-pod-value-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/optim/call_arg_list_to_pod_value.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/call_arg_list_to_pod_value.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;tuple&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_mutator.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/intrinsic.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">optim</span> <span class="p">{</span>
+
+<span class="k">namespace</span> <span class="p">{</span>
+
+<span class="k">struct</span> <span class="nl">CallArgListToPodValueMutator</span> <span class="p">:</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">is_cinn_call</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="p">[</span><span class="n">oprs</span><span class="p">,</span> <span class="n">args</span><span class="p">]</span> <span class="o">=</span> <span class="n">pack_arg_exprs</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+
+      <span class="n">Var</span> <span class="nf">pod_array_var</span><span class="p">(</span><span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">NewName</span><span class="p">(</span><span class="s">&quot;_pod_arr&quot;</span><span class="p">),</span>
+                        <span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span><span class="o">&gt;</span><span class="p">().</span><span class="n">with_lanes</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">total_args_count</span><span class="p">()));</span>
+
+      <span class="c1">// Declare pod_array.</span>
+      <span class="n">oprs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Let</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">pod_array_var</span><span class="p">,</span> <span class="n">Expr</span><span class="p">()));</span>
+      <span class="n">oprs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">ArgsConstruct</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">pod_array_var</span><span class="p">,</span> <span class="n">args</span><span class="p">));</span>
+
+      <span class="k">auto</span> <span class="n">new_call</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Void</span><span class="p">(),</span>
+                                     <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span>
+                                     <span class="p">{</span><span class="n">pod_array_var</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">args</span><span class="p">.</span><span class="n">size</span><span class="p">())},</span>
+                                     <span class="p">{},</span>
+                                     <span class="n">ir</span><span class="o">::</span><span class="n">CallType</span><span class="o">::</span><span class="n">CINN</span><span class="p">,</span>
+                                     <span class="n">op</span><span class="o">-&gt;</span><span class="n">func</span><span class="p">,</span>
+                                     <span class="n">op</span><span class="o">-&gt;</span><span class="n">value_index</span><span class="p">);</span>
+
+      <span class="n">oprs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">new_call</span><span class="p">);</span>
+
+      <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">oprs</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="cm">/*oprs*/</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="cm">/*args*/</span><span class="o">&gt;</span> <span class="n">pack_arg_exprs</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">exprs</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">pack_arg</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Var</span> <span class="n">pod_var</span><span class="p">(</span><span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">NewName</span><span class="p">(</span><span class="s">&quot;_pod_val_&quot;</span><span class="p">),</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span><span class="o">&gt;</span><span class="p">());</span>
+
+      <span class="c1">// declare the array.</span>
+      <span class="n">exprs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Let</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">pod_var</span><span class="p">,</span> <span class="n">Expr</span><span class="p">()));</span>
+
+      <span class="k">auto</span> <span class="n">pod_val_addr_expr</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">intrinsics</span><span class="o">::</span><span class="n">GetAddr</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">pod_var</span><span class="p">);</span>
+
+      <span class="n">Expr</span> <span class="n">cast</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cast</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">::</span><span class="n">IntrinsicCall</span><span class="p">(</span>
+            <span class="n">Void</span><span class="p">(),</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">buffer_p_to_cinn_pod_value_repr</span><span class="p">,</span> <span class="p">{</span><span class="n">arg</span><span class="p">},</span> <span class="p">{</span><span class="n">pod_val_addr_expr</span><span class="p">});</span>
+
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cast</span> <span class="o">=</span>
+            <span class="n">runtime</span><span class="o">::</span><span class="n">IntrinsicCall</span><span class="p">(</span><span class="n">Void</span><span class="p">(),</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">float_to_cinn_pod_value_repr</span><span class="p">,</span> <span class="p">{</span><span class="n">arg</span><span class="p">},</span> <span class="p">{</span><span class="n">pod_val_addr_expr</span><span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cast</span> <span class="o">=</span>
+            <span class="n">runtime</span><span class="o">::</span><span class="n">IntrinsicCall</span><span class="p">(</span><span class="n">Void</span><span class="p">(),</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">int32_to_cinn_pod_value_repr</span><span class="p">,</span> <span class="p">{</span><span class="n">arg</span><span class="p">},</span> <span class="p">{</span><span class="n">pod_val_addr_expr</span><span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">CINN_NOT_IMPLEMENTED</span>
+      <span class="p">}</span>
+
+      <span class="n">exprs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">cast</span><span class="p">);</span>
+      <span class="n">args</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pod_val_addr_expr</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">arg</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">pack_arg</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">arg</span> <span class="p">:</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">write_args</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">pack_arg</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">exprs</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="p">}</span>  <span class="c1">// namespace</span>
+
+<span class="kt">void</span> <span class="n">CallArgListToPodValue</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="n">CallArgListToPodValueMutator</span><span class="p">()(</span><span class="n">e</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace optim</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

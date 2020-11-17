@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File op_broadcast_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-op-broadcast-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-hlir-op-op-broadcast-test-cc"></span><h1>Program Listing for File op_broadcast_test.cc<a class="headerlink" href="#program-listing-for-file-op-broadcast-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-op-op-broadcast-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/op/op_broadcast_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/node.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/op.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/op_strategy.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/op/use_ops.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/pe/broadcast.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">hlir</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">framework</span> <span class="p">{</span>
+
+<span class="k">using</span> <span class="n">CCompute</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Operator</span><span class="p">,</span> <span class="n">Operator_ElementWise_Add_Test0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">add</span>      <span class="o">=</span> <span class="n">Operator</span><span class="o">::</span><span class="n">Get</span><span class="p">(</span><span class="s">&quot;elementwise_add&quot;</span><span class="p">);</span>
+  <span class="n">Operator</span> <span class="n">temp</span> <span class="o">=</span> <span class="o">*</span><span class="n">add</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">strategy</span> <span class="o">=</span> <span class="n">Operator</span><span class="o">::</span><span class="n">GetAttrs</span><span class="o">&lt;</span><span class="n">StrategyFunction</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;CINNStrategy&quot;</span><span class="p">);</span>
+
+  <span class="n">Expr</span> <span class="nf">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="n">NodeAttr</span> <span class="n">attrs</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">inputs</span><span class="p">{</span><span class="n">A</span><span class="p">.</span><span class="n">tensor</span><span class="p">(),</span> <span class="n">B</span><span class="p">.</span><span class="n">tensor</span><span class="p">()};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">type</span><span class="p">{</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">)};</span>
+  <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="n">target</span>            <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">impl</span>                        <span class="o">=</span> <span class="n">OpStrategy</span><span class="o">::</span><span class="n">SelectImpl</span><span class="p">(</span><span class="n">strategy</span><span class="p">[</span><span class="n">add</span><span class="p">](</span><span class="n">attrs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="p">{{</span><span class="mi">100</span><span class="p">,</span> <span class="mi">32</span><span class="p">}},</span> <span class="n">target</span><span class="p">));</span>
+  <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span> <span class="n">cinn_input</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span><span class="p">{{</span><span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="p">(</span><span class="n">B</span><span class="p">)}};</span>
+  <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span> <span class="n">rets</span>       <span class="o">=</span> <span class="n">impl</span><span class="o">-&gt;</span><span class="n">fcompute</span><span class="p">(</span><span class="n">cinn_input</span><span class="p">);</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">rets</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">2UL</span><span class="p">);</span>
+  <span class="n">rets</span> <span class="o">=</span> <span class="n">impl</span><span class="o">-&gt;</span><span class="n">fschedule</span><span class="p">(</span><span class="n">rets</span><span class="p">);</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">rets</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">2UL</span><span class="p">);</span>
+  <span class="c1">// the last element is a StageMap</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rets</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Expr</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">rets</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">inputs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">as_tensor_ref</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;add1&quot;</span><span class="p">,</span> <span class="n">rets</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span> <span class="n">inputs</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Test Strategy Codegen:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">func</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">impl</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;strategy.elementwise_add.x86&quot;</span><span class="p">);</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">add</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">,</span> <span class="s">&quot;Add two tensors&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Operator</span><span class="p">,</span> <span class="n">Operator_ElementWise_Add_Test1</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">add</span>      <span class="o">=</span> <span class="n">Operator</span><span class="o">::</span><span class="n">Get</span><span class="p">(</span><span class="s">&quot;elementwise_add&quot;</span><span class="p">);</span>
+  <span class="n">Operator</span> <span class="n">temp</span> <span class="o">=</span> <span class="o">*</span><span class="n">add</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">strategy</span> <span class="o">=</span> <span class="n">Operator</span><span class="o">::</span><span class="n">GetAttrs</span><span class="o">&lt;</span><span class="n">StrategyFunction</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;CINNStrategy&quot;</span><span class="p">);</span>
+
+  <span class="n">Expr</span> <span class="nf">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">N</span><span class="p">});</span>
+
+  <span class="n">NodeAttr</span> <span class="n">attrs</span><span class="p">;</span>
+  <span class="n">attrs</span><span class="p">.</span><span class="n">attr_store</span><span class="p">[</span><span class="s">&quot;axis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">inputs</span><span class="p">{</span><span class="n">A</span><span class="p">.</span><span class="n">tensor</span><span class="p">(),</span> <span class="n">B</span><span class="p">.</span><span class="n">tensor</span><span class="p">()};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">type</span><span class="p">{</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">)};</span>
+  <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="n">target</span>            <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">impl</span>                        <span class="o">=</span> <span class="n">OpStrategy</span><span class="o">::</span><span class="n">SelectImpl</span><span class="p">(</span><span class="n">strategy</span><span class="p">[</span><span class="n">add</span><span class="p">](</span><span class="n">attrs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="p">{{</span><span class="mi">100</span><span class="p">,</span> <span class="mi">32</span><span class="p">}},</span> <span class="n">target</span><span class="p">));</span>
+  <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span> <span class="n">cinn_input</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span><span class="p">{{</span><span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="p">(</span><span class="n">B</span><span class="p">)}};</span>
+  <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span> <span class="n">rets</span>       <span class="o">=</span> <span class="n">impl</span><span class="o">-&gt;</span><span class="n">fcompute</span><span class="p">(</span><span class="n">cinn_input</span><span class="p">);</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">rets</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">2UL</span><span class="p">);</span>
+  <span class="n">rets</span> <span class="o">=</span> <span class="n">impl</span><span class="o">-&gt;</span><span class="n">fschedule</span><span class="p">(</span><span class="n">rets</span><span class="p">);</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">rets</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">2UL</span><span class="p">);</span>
+  <span class="c1">// the last element is a StageMap</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rets</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Expr</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">rets</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">inputs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">as_tensor_ref</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;add1&quot;</span><span class="p">,</span> <span class="n">rets</span><span class="p">.</span><span class="n">back</span><span class="p">(),</span> <span class="n">inputs</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Test Strategy Codegen:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">func</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">func</span><span class="p">;</span>
+
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">impl</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;strategy.elementwise_add.x86&quot;</span><span class="p">);</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">add</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">,</span> <span class="s">&quot;Add two tensors&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace framework</span>
+<span class="p">}</span>  <span class="c1">// namespace hlir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

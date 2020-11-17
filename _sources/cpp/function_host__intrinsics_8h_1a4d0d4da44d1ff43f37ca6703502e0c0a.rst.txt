@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8h_1a4d0d4da44d1ff43f37ca6703502e0c0a:
+
+Function cinn_cpu_sqrt_fp32(float)
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_sqrt_fp32(float)

@@ -1,0 +1,99 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h:
+
+Program Listing for File op_strategy.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/op_strategy.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <memory>
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   #include "cinn/hlir/framework/node.h"
+   #include "cinn/hlir/framework/schedule.h"
+   #include "cinn/lang/packed_func.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   using CINNCompute  = lang::PackedFunc;
+   using CINNSchedule = lang::PackedFunc;
+   
+   class OpStrategy;
+   
+   using StrategyFunction = std::function<std::shared_ptr<OpStrategy>(const NodeAttr&,
+                                                                      const std::vector<ir::Tensor>&,
+                                                                      const std::vector<Type>&,
+                                                                      const std::vector<std::vector<int>>&,
+                                                                      const common::Target&)>;
+   
+   class OpImpl : public common::Object {
+    public:
+     CINNCompute fcompute;
+     CINNSchedule fschedule;
+     std::string name;
+     int plevel;
+     ir::Tensor Compute(const std::vector<ir::Tensor>& inputs, const Type& out_type) {
+       // TODO(haozech) : add support for packedfunc to return Tensor
+       // Expected : return this->fcompute(inputs, out_type);
+       ir::Tensor temp;
+       return temp;
+     }
+     common::Shared<Schedule> GetSchedule(const std::vector<ir::Tensor>& outs,
+                                          const std::vector<ir::Tensor>& temp_tensors,
+                                          const Target& target) {
+       // TODO(haozech) : add support for packedfunc to return Schedule
+       // Expected : return this->fschedule(outs, target);
+       return nullptr;
+     }
+   
+     const char* type_info() const override { return __type_info__; }
+   
+    private:
+     static constexpr char* __type_info__ = "OpImplementation";
+   };
+   
+   class OpSpec : public common::Object {
+    public:
+     std::vector<std::shared_ptr<OpImpl>> implementations;
+   
+     std::string condition;
+   
+     const char* type_info() const override { return __type_info__; }
+   
+     void AddImpl(CINNCompute fcompute, CINNSchedule fschedule, std::string name, int plevel) {
+       auto n       = std::make_shared<OpImpl>();
+       n->fcompute  = fcompute;
+       n->fschedule = fschedule;
+       n->name      = std::move(name);
+       n->plevel    = plevel;
+       this->implementations.push_back(n);
+     }
+   
+    private:
+     static constexpr char* __type_info__ = "OpSpecialization";
+   };
+   
+   class OpStrategy : public common::Object {
+    public:
+     const char* type_info() const override { return __type_info__; }
+     std::vector<std::shared_ptr<OpSpec>> specializations;
+   
+     void AddImpl(CINNCompute fcompute, CINNSchedule fschedule, std::string name, int plevel);
+     static std::shared_ptr<OpImpl> SelectImpl(const std::shared_ptr<OpStrategy>& strategy);
+   
+    private:
+     static constexpr char* __type_info__ = "OpStrategy";
+   };
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8cc_1a19d7587f63dff6f7b3799527a77c96c9:
+
+Function cinn::poly::isl_maps_to_union_map
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_maps_to_union_map(const std::vector<isl::map>&)

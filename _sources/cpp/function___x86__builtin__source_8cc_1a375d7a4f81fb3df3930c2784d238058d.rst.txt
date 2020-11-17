@@ -1,0 +1,13 @@
+.. _exhale_function___x86__builtin__source_8cc_1a375d7a4f81fb3df3930c2784d238058d:
+
+Function cinn_avx512_mul()
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_avx512_mul()

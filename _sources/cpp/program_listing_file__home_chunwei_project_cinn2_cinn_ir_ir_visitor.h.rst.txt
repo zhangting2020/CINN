@@ -1,0 +1,71 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h:
+
+Program Listing for File ir_visitor.h
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h>` (``/home/chunwei/project/cinn2/cinn/ir/ir_visitor.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <functional>
+   #include <set>
+   
+   #include "cinn/ir/buffer.h"
+   #include "cinn/ir/collect_ir_nodes.h"
+   #include "cinn/ir/intrinsic_ops.h"
+   #include "cinn/ir/ir.h"
+   #include "cinn/ir/lowered_func.h"
+   #include "cinn/ir/tensor.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   struct _Tensor_;
+   
+   template <typename RetTy = void, typename... Args>
+   struct IRVisitorBase {
+     // @{
+     virtual RetTy Visit(const ir::Expr* expr, Args... args) {
+       CHECK(expr->defined());
+       switch (expr->node_type()) {
+   #define __(op__)           \
+     case ir::IrNodeTy::op__: \
+       return Visit(expr->As<ir::op__>(), args...);
+   
+         NODETY_FORALL(__)
+   
+         default:
+           LOG(FATAL) << "not supported NodeTy";
+   #undef __
+       }
+       return RetTy();
+     }
+     // @}
+   
+    protected:
+   #define __(op__) virtual RetTy Visit(const ir::op__* op, Args... args) = 0;
+     NODETY_FORALL(__)
+   #undef __
+   };
+   
+   struct IRVisitor : public IRVisitorBase<void> {
+     IRVisitor() = default;
+   
+     void Visit(const Expr* x) { IRVisitorBase::Visit(x); }
+   #define __m(t__) \
+     virtual void Visit(const t__* x) {}
+     NODETY_FORALL(__m)
+   #undef __m
+   };
+   
+   // std::set<Expr> CollectIRNodes(Expr expr, std::function<bool(const Expr*)> teller);
+   
+   bool operator==(Expr a, Expr b);
+   bool operator!=(Expr a, Expr b);
+   
+   }  // namespace ir
+   }  // namespace cinn

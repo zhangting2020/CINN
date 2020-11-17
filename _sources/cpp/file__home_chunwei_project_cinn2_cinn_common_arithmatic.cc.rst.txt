@@ -1,0 +1,84 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc:
+
+File arithmatic.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/arithmatic.cc``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/arithmatic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``numeric``
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1common_1_1GiNaCToExprVisitor`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_arithmatic_8cc_1af3d70c704298be964f53b7093b88b86a`
+
+- :ref:`exhale_function_arithmatic_8cc_1ac0e69d079960fef39d575f6c4924c85a`
+
+- :ref:`exhale_function_arithmatic_8cc_1ae9088ef7d5f592e467c2eba91138c403`
+
+- :ref:`exhale_function_arithmatic_8cc_1a949a57560d8c565819593f9e7873524c`
+

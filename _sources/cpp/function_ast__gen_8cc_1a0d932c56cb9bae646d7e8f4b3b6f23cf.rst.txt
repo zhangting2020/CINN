@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen_8cc_1a0d932c56cb9bae646d7e8f4b3b6f23cf:
+
+Function cinn::poly::CreateIslAstIndexExpression
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::CreateIslAstIndexExpression(isl_ast_build *, const isl::map&)

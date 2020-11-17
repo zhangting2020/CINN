@@ -1,0 +1,13 @@
+.. _exhale_function_optim_8cc_1aa10d87354ca91e38db32c10e41cf7570:
+
+Function cinn::pybind::BindOptim(py::module \*)
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_optim.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindOptim(py::module *)

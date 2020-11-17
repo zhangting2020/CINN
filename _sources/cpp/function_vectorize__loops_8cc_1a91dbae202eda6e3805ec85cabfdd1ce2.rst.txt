@@ -1,0 +1,13 @@
+.. _exhale_function_vectorize__loops_8cc_1a91dbae202eda6e3805ec85cabfdd1ce2:
+
+Function cinn::optim::detail::Vectorize
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::detail::Vectorize(Var, int, Expr *)

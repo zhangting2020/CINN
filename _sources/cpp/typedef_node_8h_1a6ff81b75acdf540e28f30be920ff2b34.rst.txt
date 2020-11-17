@@ -1,0 +1,13 @@
+.. _exhale_typedef_node_8h_1a6ff81b75acdf540e28f30be920ff2b34:
+
+Typedef cinn::hlir::framework::AttrType
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::AttrType

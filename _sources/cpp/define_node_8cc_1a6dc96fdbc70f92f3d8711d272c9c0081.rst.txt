@@ -1,0 +1,13 @@
+.. _exhale_define_node_8cc_1a6dc96fdbc70f92f3d8711d272c9c0081:
+
+Define VISIT_ELEMENTS
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: VISIT_ELEMENTS

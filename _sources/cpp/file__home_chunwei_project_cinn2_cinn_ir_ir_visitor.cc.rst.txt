@@ -1,0 +1,63 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc:
+
+File ir_visitor.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_visitor.cc``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``unordered_set``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a36fd31830e17929888d78765f022050d`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af1287b31bdf0b3172daa19a8197560ce`
+

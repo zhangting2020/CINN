@@ -1,0 +1,41 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h:
+
+Program Listing for File extern_func_protos.h
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h>` (``/home/chunwei/project/cinn2/cinn/backends/extern_func_protos.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/backends/function_prototype.h"
+   
+   namespace cinn {
+   namespace backends {
+   
+   static const char* extern_func__tanh_v = "tanh_v";
+   
+   class ExternFunctionProtoRegistry : public FunctionProtoRegistry {
+    public:
+     using FunctionProtoRegistry::Lookup;
+     using FunctionProtoRegistry::Register;
+   
+     static ExternFunctionProtoRegistry& Global();
+   
+    private:
+     ExternFunctionProtoRegistry();
+     CINN_DISALLOW_COPY_AND_ASSIGN(ExternFunctionProtoRegistry);
+   };
+   
+   namespace detail {
+   
+   FunctionProto* CreateTanhVProto();
+   
+   }  // namespace detail
+   
+   }  // namespace backends
+   }  // namespace cinn

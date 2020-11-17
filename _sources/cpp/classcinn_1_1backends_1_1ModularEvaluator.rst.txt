@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1backends_1_1ModularEvaluator:
+
+Class ModularEvaluator
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_modular.cc`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IRVisitorBase< ModularEntry >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1IRVisitorBase`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::ModularEvaluator
+   :members:
+   :protected-members:
+   :undoc-members:

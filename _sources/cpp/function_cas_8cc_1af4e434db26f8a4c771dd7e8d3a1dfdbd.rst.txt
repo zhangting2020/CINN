@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1af4e434db26f8a4c771dd7e8d3a1dfdbd:
+
+Function cinn::common::detail::Irem
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::Irem(int, int)

@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1aadb83a1418de42a5dcee5696bec22c65:
+
+Function cinn::poly::TEST(ShareBufferWith, basic)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(ShareBufferWith, basic)

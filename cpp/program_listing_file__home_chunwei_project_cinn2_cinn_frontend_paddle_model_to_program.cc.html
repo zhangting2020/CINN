@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File paddle_model_to_program.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-paddle-model-to-program-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-frontend-paddle-model-to-program-cc"></span><h1>Program Listing for File paddle_model_to_program.cc<a class="headerlink" href="#program-listing-for-file-paddle-model-to-program-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.cc.html#file-home-chunwei-project-cinn2-cinn-frontend-paddle-model-to-program-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/frontend/paddle_model_to_program.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/paddle_model_to_program.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/paddle/model_parser.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/paddle/pb/program_desc.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/node.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">frontend</span> <span class="p">{</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_feed</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;feed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">outs</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">);</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">outs</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Model get feed [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+    <span class="n">Placeholder</span> <span class="nf">input</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{},</span> <span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">input</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_fetch</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;fetch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">output_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;detect model output: [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">output_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_scale</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;scale&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">x</span>      <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="kt">float</span> <span class="n">scale</span><span class="p">{};</span>
+    <span class="kt">float</span> <span class="n">bias</span><span class="p">{};</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;scale&quot;</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// the old model format</span>
+      <span class="n">scale</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;scale&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  <span class="c1">// the newly refactored format</span>
+      <span class="c1">// load scale tensor</span>
+      <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;ScaleTensor&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+      <span class="k">auto</span><span class="o">*</span> <span class="n">scale_tensor_var</span> <span class="o">=</span> <span class="n">scope_</span><span class="o">-&gt;</span><span class="n">FindVar</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;ScaleTensor&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">());</span>
+      <span class="n">CHECK</span><span class="p">(</span><span class="n">scale_tensor_var</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;No scale tensor found in the scope&quot;</span><span class="p">;</span>
+      <span class="k">auto</span><span class="o">&amp;</span> <span class="n">scale_tensor</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">scale_tensor_var</span><span class="p">);</span>
+      <span class="n">scale</span>              <span class="o">=</span> <span class="n">scale_tensor</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">())[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;bias&quot;</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// the old model format</span>
+      <span class="n">bias</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;bias&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Didn&#39;t find [bias] attr in Scale operator!!&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;scale&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span><span class="p">;</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;bias&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">bias</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">out</span>       <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">scale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_mul</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;mul&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">y_name</span>        <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">x</span>             <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">y</span>             <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">y_name</span><span class="p">));</span>
+    <span class="kt">int</span> <span class="n">x_num_col_dims</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;x_num_col_dims&quot;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">y_num_col_dims</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;y_num_col_dims&quot;</span><span class="p">);</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Mul x_num_col_dims: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x_num_col_dims</span><span class="p">;</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Mul y_num_col_dims: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">y_num_col_dims</span><span class="p">;</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x shape: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;y shape: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">y</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x_num_col_dims</span><span class="p">,</span> <span class="n">y_num_col_dims</span><span class="p">);</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_relu</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;relu&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">x</span>        <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span>      <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_softmax</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;softmax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;axis&quot;</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;axis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;axis&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;axis&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">auto</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_elementwise_add</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;elementwise_add&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">y_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">axis</span>      <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;axis&quot;</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">y</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">y_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">elementwise_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_elementwise_mul</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;elementwise_mul&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">y_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">axis</span>      <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;axis&quot;</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">y</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">y_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">elementwise_mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_relu6</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;relu6&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;threshold&quot;</span><span class="p">));</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;threshold&quot;</span><span class="p">),</span> <span class="mf">6.0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Threshold of Relu6 is not 6! To be implemented.&quot;</span><span class="p">;</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;threshold&quot;</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">relu6</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_depthwise_conv2d</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;depthwise_conv2d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Filter&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">y_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Filter&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Output&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Output&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;paddings&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;padding&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;paddings&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;strides&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;stride&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;strides&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;dilations&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;dilation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;dilations&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;groups&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;groups&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;groups&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x</span>          <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">y</span>          <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">y_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span>        <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">depthwise_conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_conv2d</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;conv2d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Filter&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">y_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Filter&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Output&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Output&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;paddings&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;padding&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;paddings&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;strides&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;stride&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;strides&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;dilations&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;dilation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;dilations&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;groups&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;groups&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;groups&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x</span>          <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">y</span>          <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">y_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span>        <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_pool2d</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;pool2d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;pooling_type&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;pool_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;pooling_type&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;ksize&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;kernel_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;ksize&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;strides&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;stride_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;strides&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;paddings&quot;</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">padding_size</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;paddings&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">padding_size</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">padding_size</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">padding_size</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">padding_size</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
+      <span class="n">padding_size</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">padding_size</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;padding_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">padding_size</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;ceil_mode&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;ceil_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;ceil_mode&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;exclusive&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;exclusive&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;exclusive&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;data_format&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;data_format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;data_format&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;global_pooling&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;global_pooling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;global_pooling&quot;</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">pool2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_batchnorm</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;batch_norm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Scale&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">scale_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Scale&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Bias&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">bias_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Bias&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Mean&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">mean_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Mean&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Variance&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">variance_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Variance&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">empty</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Y&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;epsilon&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;epsilon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;epsilon&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x</span>           <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">scale</span>       <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">scale_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">bias</span>        <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">bias_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">mean</span>        <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">mean_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">variance</span>    <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">variance_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span>         <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">batchnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">bias</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">variance</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_sigmoid</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;sigmoid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_slice</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;slice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;starts&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;starts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;starts&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;ends&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;ends&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;ends&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;axes&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;axes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;axes&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x</span>        <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span>      <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">slice</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOpMapper_dropout_infer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">op_mappers_</span><span class="p">[</span><span class="s">&quot;dropout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Input</span><span class="p">(</span><span class="s">&quot;X&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">out_name</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Out&quot;</span><span class="p">).</span><span class="n">front</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span><span class="o">&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;dropout_prob&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;dropout_prob&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;dropout_prob&quot;</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op_desc</span><span class="p">.</span><span class="n">HasAttr</span><span class="p">(</span><span class="s">&quot;dropout_implementation&quot;</span><span class="p">));</span>
+    <span class="n">attrs</span><span class="p">[</span><span class="s">&quot;dropout_implementation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">GetAttr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;dropout_implementation&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">x</span>                          <span class="o">=</span> <span class="n">GetVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">x_name</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">out</span>                        <span class="o">=</span> <span class="n">program_</span><span class="o">-&gt;</span><span class="n">dropout_infer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attrs</span><span class="p">);</span>
+
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">TransValidVarName</span><span class="p">(</span><span class="n">out_name</span><span class="p">),</span> <span class="n">out</span><span class="p">);</span>
+    <span class="n">var_model_to_program_map_</span><span class="p">[</span><span class="n">out_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddOp</span><span class="p">(</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span> <span class="n">op_desc</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">op_type</span> <span class="o">=</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Type</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">it</span>             <span class="o">=</span> <span class="n">op_mappers_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">op_type</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">op_mappers_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">(</span><span class="n">op_desc</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// feed op&#39;s output is a input of the model</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not supported op [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op_desc</span><span class="p">.</span><span class="n">Type</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] found&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Variable</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">GetVar</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CheckVarNameValid</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">var_map_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">var_map_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="k">return</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">var</span> <span class="o">=</span> <span class="n">scope_</span><span class="o">-&gt;</span><span class="n">FindVar</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">tensor</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">var</span><span class="p">);</span>
+    <span class="n">Variable</span> <span class="n">var</span><span class="p">;</span>
+    <span class="n">var</span><span class="p">.</span><span class="n">set_id</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+    <span class="n">var</span><span class="o">-&gt;</span><span class="n">shape</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">();</span>
+    <span class="c1">// TODO(Superjomn) Make this determined by model.</span>
+    <span class="n">var</span><span class="o">-&gt;</span><span class="n">type</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+    <span class="n">AddVar</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">var</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">var</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;No var called [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] exists&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nf">Variable</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Program</span><span class="o">&gt;</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">model_dir</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">is_combined</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">ProgramDesc</span> <span class="n">program_desc</span><span class="p">;</span>
+  <span class="n">paddle</span><span class="o">::</span><span class="n">LoadModelPb</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s">&quot;__model__&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">scope_</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">program_desc</span><span class="p">,</span> <span class="n">is_combined</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="n">target_</span><span class="p">);</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">program_desc</span><span class="p">.</span><span class="n">BlocksSize</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;CINN can only support the model with a single block&quot;</span><span class="p">;</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">block_desc</span> <span class="o">=</span> <span class="n">program_desc</span><span class="p">.</span><span class="n">GetBlock</span><span class="o">&lt;</span><span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">BlockDesc</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">block_desc</span><span class="o">-&gt;</span><span class="n">OpsSize</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">op_desc</span> <span class="o">=</span> <span class="n">block_desc</span><span class="o">-&gt;</span><span class="n">GetOp</span><span class="o">&lt;</span><span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">AddOp</span><span class="p">(</span><span class="o">*</span><span class="n">op_desc</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">program_</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">PaddleModelToProgram</span><span class="o">::</span><span class="n">AddVar</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variable</span><span class="o">&amp;</span> <span class="n">var</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CheckVarNameValid</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">var_map_</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">name</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Duplicate variable [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] found&quot;</span><span class="p">;</span>
+  <span class="n">var_map_</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace frontend</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

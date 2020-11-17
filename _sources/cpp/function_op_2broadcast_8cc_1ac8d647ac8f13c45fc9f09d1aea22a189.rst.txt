@@ -1,0 +1,13 @@
+.. _exhale_function_op_2broadcast_8cc_1ac8d647ac8f13c45fc9f09d1aea22a189:
+
+Function cinn::hlir::op::StrategyForElementwiseAdd
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::StrategyForElementwiseAdd(const framework::NodeAttr&, const std::vector<ir::Tensor>&, const std::vector<Type>&, const std::vector<std::vector<int>>&, const Target&)

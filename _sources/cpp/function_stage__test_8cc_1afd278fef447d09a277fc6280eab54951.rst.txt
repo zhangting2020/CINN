@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1afd278fef447d09a277fc6280eab54951:
+
+Function cinn::poly::TEST(isl, test)
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(isl, test)

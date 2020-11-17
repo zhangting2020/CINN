@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1a9ec546b90d4ec1de3a05b05dafd6a891:
+
+Variable cinn::in_size
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::in_size

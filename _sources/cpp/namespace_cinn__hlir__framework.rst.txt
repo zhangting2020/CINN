@@ -1,0 +1,155 @@
+
+.. _namespace_cinn__hlir__framework:
+
+Namespace cinn::hlir::framework
+===============================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__hlir__framework__@139`
+
+- :ref:`namespace_cinn__hlir__framework__@141`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1hlir_1_1framework_1_1Buffer`
+
+- :ref:`exhale_struct_structcinn_1_1hlir_1_1framework_1_1NodeAttr`
+
+- :ref:`exhale_struct_structcinn_1_1hlir_1_1framework_1_1OpRegistry`
+
+- :ref:`exhale_struct_structcinn_1_1hlir_1_1framework_1_1Shape`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1__Tensor__`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Graph`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1GraphCompiler`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Instruction`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1MemoryInterface`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1MemoryManager`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Node`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1NodeData`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Operator`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpImpl`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpSpec`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpStrategy`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpValueType`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1PassFunctionRegister`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Program`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Schedule`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Scope`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Tensor`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_pass_8h_1a282797b046dedfa2212f8a9d3ce17cac`
+
+- :ref:`exhale_function_pass_8cc_1afbdc9d43b52539075518a58275894811`
+
+- :ref:`exhale_function_graph__compiler_8cc_1a221aa68ecf73510bda3da5932b4dc1e0`
+
+- :ref:`exhale_function_print__graph__pass__test_8cc_1a7f43657b4a7a40cb93a877e06a159641`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1af36b8939e330a02f860fbb385fc0f0c5`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1ab7f80b12f64e3b2b63b368ae95d21f4d`
+
+- :ref:`exhale_function_node_8cc_1aecc372c4a3d4144af91f83a935df9303`
+
+- :ref:`exhale_function_pass_8cc_1a0167df012f532f1e351439cc491959b4`
+
+- :ref:`exhale_function_instruction__test_8cc_1a049d4ddb291160cab0b9dc7bd9ed1745`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1a78c1de8a1fa487fb5a9ea90a36e22e12`
+
+- :ref:`exhale_function_node_8cc_1a2f76227bb433617ca1c2b614fda871c0`
+
+- :ref:`exhale_function_print__graph__pass__test_8cc_1a2337921079c602c91319f8e647aee9ec`
+
+- :ref:`exhale_function_infershape__pass__test_8cc_1a61bdddc02c929df37257534157d5688b`
+
+- :ref:`exhale_function_instruction__test_8cc_1aa84a0ff9b11582b0446bdb6da587345a`
+
+- :ref:`exhale_function_scope__test_8cc_1ad0add17e85882726cb87a72a571a0a5c`
+
+- :ref:`exhale_function_hlir_2framework_2tensor__test_8cc_1a9c3ac726d117461169eb343cba17d19b`
+
+- :ref:`exhale_function_op__broadcast__test_8cc_1a8dab94fe35a147b276eda99291b7acc6`
+
+- :ref:`exhale_function_op__broadcast__test_8cc_1a45309dc4e132a6ca25bf4c6e982fe20b`
+
+- :ref:`exhale_function_op__nn__test_8cc_1af5dd55d6be935a7128b1c60c41e05c33`
+
+- :ref:`exhale_function_op__nn__test_8cc_1ad49596aa9dd8545c4a06d7f3e46c3f1a`
+
+- :ref:`exhale_function_op__nn__test_8cc_1a53b559d444c2548dd062e7ab11527c34`
+
+- :ref:`exhale_function_hlir_2framework_2buffer__test_8cc_1ad5f6fe1452fa3e77b032b8a94fdbb3f1`
+
+- :ref:`exhale_function_op__nn__test_8cc_1af705709b48d1cd9f278c02873c3f1442`
+
+- :ref:`exhale_function_op__nn__test_8cc_1ae0b55effe5c3cc3242002895579550f9`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1a67fa58e8f9eb347f9fc509f9e84c086b`
+
+- :ref:`exhale_function_infershape__pass__test_8cc_1a53a045d4514042eb5cb292aae13b3a55`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1a2220cced09dfe609160c0b5e25889ee1`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_node_8h_1a6ff81b75acdf540e28f30be920ff2b34`
+
+- :ref:`exhale_typedef_op__test_8cc_1a79e85c9282e073cf27c7bca2aea967ca`
+
+- :ref:`exhale_typedef_op__strategy_8h_1aede2c6492b71af3258ef0870e9989d01`
+
+- :ref:`exhale_typedef_op__strategy_8h_1ac2ac35ba8bdab231773f6e49bfc33594`
+
+- :ref:`exhale_typedef_op_8h_1a4f379d05a70df0f38177455603087a08`
+
+- :ref:`exhale_typedef_node_8h_1a39ebd327783bab09805e89ec532d193b`
+
+- :ref:`exhale_typedef_pass_8h_1a126928dffab7bb7d276b64ff1c8a1459`
+
+- :ref:`exhale_typedef_op_8h_1a67b383e4595792d82d1b2f2ac9b69db6`
+
+- :ref:`exhale_typedef_op__strategy_8h_1a3ab4d532effe57fe4870b604ef629978`
+
+- :ref:`exhale_typedef_scope_8h_1a49dd9463c380b8e916ce5fac1ec992d1`

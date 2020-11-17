@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File execution_engine.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-execution-engine-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-llvm-execution-engine-cc"></span><h1>Program Listing for File execution_engine.cc<a class="headerlink" href="#program-listing-for-file-execution-engine-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-execution-engine-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm/execution_engine.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/execution_engine.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ADT/Triple.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/AsmParser/Parser.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Config/llvm-config.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/JITSymbol.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/Core.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/ExecutionUtils.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/JITTargetMachineBuilder.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/LLJIT.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/ThreadSafeModule.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/IRBuilder.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/LLVMContext.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/LegacyPassManager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/PassManager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/Verifier.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IRReader/IRReader.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/InitializePasses.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/PassRegistry.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Passes/PassBuilder.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/Error.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/Host.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/MemoryBuffer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/SourceMgr.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/TargetRegistry.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/TargetSelect.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/raw_ostream.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Target/TargetMachine.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/InstCombine/InstCombine.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/GVN.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/NewGVN.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/Reassociate.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/SimplifyCFG.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;  // NOLINT</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string_view&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_cuda_host.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/cinn_runtime_llvm_ir.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/codegen_llvm.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/codegen_x86.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/llvm_optimizer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/llvm_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/runtime_symbol_registry.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/intrinsic.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">backends</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="n">InitializeLLVMPasses</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">mu</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mu</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="o">&amp;</span><span class="n">registry</span> <span class="o">=</span> <span class="o">*</span><span class="n">llvm</span><span class="o">::</span><span class="n">PassRegistry</span><span class="o">::</span><span class="n">getPassRegistry</span><span class="p">();</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeCore</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeTransformUtils</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeScalarOpts</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeIPO</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeInstCombine</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeAggressiveInstCombine</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeAnalysis</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeVectorization</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">initializeSROALegacyPassPass</span><span class="p">(</span><span class="n">registry</span><span class="p">);</span>
+
+  <span class="c1">// llvm::initializeCodeGen(registry);</span>
+  <span class="c1">// llvm::initializeTarget(registry);</span>
+  <span class="c1">// llvm::initializeCodeGenPreparePass(registry);</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace</span>
+<span class="kt">void</span> <span class="n">NaiveObjectCache</span><span class="o">::</span><span class="n">notifyObjectCompiled</span><span class="p">(</span><span class="k">const</span> <span class="n">llvm</span><span class="o">::</span><span class="n">Module</span> <span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">MemoryBufferRef</span> <span class="n">obj_buffer</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">cached_objects_</span><span class="p">[</span><span class="n">m</span><span class="o">-&gt;</span><span class="n">getModuleIdentifier</span><span class="p">()]</span> <span class="o">=</span>
+      <span class="n">llvm</span><span class="o">::</span><span class="n">MemoryBuffer</span><span class="o">::</span><span class="n">getMemBufferCopy</span><span class="p">(</span><span class="n">obj_buffer</span><span class="p">.</span><span class="n">getBuffer</span><span class="p">(),</span> <span class="n">obj_buffer</span><span class="p">.</span><span class="n">getBufferIdentifier</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">MemoryBuffer</span><span class="o">&gt;</span> <span class="n">NaiveObjectCache</span><span class="o">::</span><span class="n">getObject</span><span class="p">(</span><span class="k">const</span> <span class="n">llvm</span><span class="o">::</span><span class="n">Module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">cached_objects_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">m</span><span class="o">-&gt;</span><span class="n">getModuleIdentifier</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">==</span> <span class="n">cached_objects_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;No object for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m</span><span class="o">-&gt;</span><span class="n">getModuleIdentifier</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; in cache. Compiling.&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Object for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m</span><span class="o">-&gt;</span><span class="n">getModuleIdentifier</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loaded from cache.&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">llvm</span><span class="o">::</span><span class="n">MemoryBuffer</span><span class="o">::</span><span class="n">getMemBuffer</span><span class="p">(</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">getMemBufferRef</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="cm">/*static*/</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">ExecutionEngine</span><span class="o">&gt;</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="k">const</span> <span class="n">ExecutionOptions</span> <span class="o">&amp;</span><span class="n">config</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;===================== Create CINN ExecutionEngine begin ====================&quot;</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;initialize llvm config&quot;</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;llvm version: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">LLVM_VERSION_STRING</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;llvm default target triple: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">LLVM_DEFAULT_TARGET_TRIPLE</span><span class="p">;</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">InitializeNativeTarget</span><span class="p">();</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">InitializeNativeTargetAsmPrinter</span><span class="p">();</span>
+  <span class="n">InitializeLLVMPasses</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">engine</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">ExecutionEngine</span><span class="o">&gt;</span><span class="p">(</span><span class="cm">/*enable_object_cache=*/</span><span class="nb">true</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">compile_layer_creator</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">engine</span><span class="p">](</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">JITTargetMachineBuilder</span> <span class="n">jtmb</span><span class="p">)</span>
+      <span class="o">-&gt;</span> <span class="n">llvm</span><span class="o">::</span><span class="n">Expected</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">IRCompileLayer</span><span class="o">::</span><span class="n">IRCompiler</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">machine</span> <span class="o">=</span> <span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">jtmb</span><span class="p">.</span><span class="n">createTargetMachine</span><span class="p">());</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;create llvm compile layer&quot;</span><span class="p">;</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Target Name: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">machine</span><span class="o">-&gt;</span><span class="n">getTarget</span><span class="p">().</span><span class="n">getName</span><span class="p">();</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Target CPU: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">machine</span><span class="o">-&gt;</span><span class="n">getTargetCPU</span><span class="p">().</span><span class="n">str</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">TMOwningSimpleCompiler</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">machine</span><span class="p">),</span> <span class="n">engine</span><span class="o">-&gt;</span><span class="n">cache_</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+  <span class="p">};</span>
+
+  <span class="k">auto</span> <span class="n">object_layer_creator</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">ExecutionSession</span> <span class="o">&amp;</span><span class="n">session</span><span class="p">,</span> <span class="k">const</span> <span class="n">llvm</span><span class="o">::</span><span class="n">Triple</span> <span class="o">&amp;</span><span class="n">triple</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">object_layer</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">RTDyldObjectLinkingLayer</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">session</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">SectionMemoryManager</span><span class="o">&gt;</span><span class="p">();</span> <span class="p">});</span>
+    <span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">JITDylib</span> <span class="o">*</span><span class="n">main_jd</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">getJITDylibByName</span><span class="p">(</span><span class="s">&quot;&lt;main&gt;&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">main_jd</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">main_jd</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">createJITDylib</span><span class="p">(</span><span class="s">&quot;&lt;main&gt;&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">object_layer</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;create jit execution engine&quot;</span><span class="p">;</span>
+  <span class="n">engine</span><span class="o">-&gt;</span><span class="n">jit_</span> <span class="o">=</span> <span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">LLJITBuilder</span><span class="p">()</span>
+                                    <span class="p">.</span><span class="n">setCompileFunctionCreator</span><span class="p">(</span><span class="n">compile_layer_creator</span><span class="p">)</span>
+                                    <span class="p">.</span><span class="n">setObjectLinkingLayerCreator</span><span class="p">(</span><span class="n">object_layer_creator</span><span class="p">)</span>
+                                    <span class="p">.</span><span class="n">create</span><span class="p">());</span>
+  <span class="n">engine</span><span class="o">-&gt;</span><span class="n">jit_</span><span class="o">-&gt;</span><span class="n">getMainJITDylib</span><span class="p">().</span><span class="n">addGenerator</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span>
+      <span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">DynamicLibrarySearchGenerator</span><span class="o">::</span><span class="n">GetForCurrentProcess</span><span class="p">(</span><span class="n">engine</span><span class="o">-&gt;</span><span class="n">jit_</span><span class="o">-&gt;</span><span class="n">getDataLayout</span><span class="p">().</span><span class="n">getGlobalPrefix</span><span class="p">())));</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;register runtime call symbols&quot;</span><span class="p">;</span>
+
+  <span class="n">engine</span><span class="o">-&gt;</span><span class="n">RegisterRuntimeSymbols</span><span class="p">();</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;===================== Create CINN ExecutionEngine end ====================&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">engine</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">CodeGenT</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Link</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">SMDiagnostic</span> <span class="n">error</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">ctx</span>        <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">LLVMContext</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">m</span>          <span class="o">=</span> <span class="n">llvm</span><span class="o">::</span><span class="n">parseAssemblyString</span><span class="p">(</span><span class="n">AsStringRef</span><span class="p">(</span><span class="n">backends</span><span class="o">::</span><span class="n">kRuntimeLlvmIr</span><span class="p">),</span> <span class="n">error</span><span class="p">,</span> <span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">b</span>          <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">IRBuilder</span><span class="o">&lt;&gt;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">ir_emitter</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">CodeGenT</span><span class="o">&gt;</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">b</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+  <span class="n">ir_emitter</span><span class="o">-&gt;</span><span class="n">Compile</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">llvm</span><span class="o">::</span><span class="n">verifyModule</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">llvm</span><span class="o">::</span><span class="n">errs</span><span class="p">()))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Invalid module found&quot;</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">machine</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">JITTargetMachineBuilder</span><span class="o">::</span><span class="n">detectHost</span><span class="p">()).</span><span class="n">createTargetMachine</span><span class="p">()));</span>
+  <span class="n">LLVMModuleOptimizer</span> <span class="nf">optimize</span><span class="p">(</span><span class="n">machine</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="mi">3</span><span class="p">,</span> <span class="p">{},</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="n">optimize</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">llvm</span><span class="o">::</span><span class="n">verifyModule</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">llvm</span><span class="o">::</span><span class="n">errs</span><span class="p">()))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Invalid optimized module detected&quot;</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">f</span> <span class="p">:</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;function: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">DumpToString</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">AddModule</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ctx</span><span class="p">)));</span>
+
+  <span class="k">decltype</span><span class="p">(</span><span class="k">auto</span><span class="p">)</span> <span class="n">es</span> <span class="o">=</span> <span class="n">jit_</span><span class="o">-&gt;</span><span class="n">getExecutionSession</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;======= dump jit execution session ======&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buffer</span><span class="p">;</span>
+    <span class="n">llvm</span><span class="o">::</span><span class="n">raw_string_ostream</span> <span class="n">os</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+    <span class="n">es</span><span class="p">.</span><span class="n">dump</span><span class="p">(</span><span class="n">os</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">buffer</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">AddModule</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">Module</span><span class="o">&gt;</span> <span class="n">module</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">LLVMContext</span><span class="o">&gt;</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">module</span><span class="o">-&gt;</span><span class="n">setDataLayout</span><span class="p">(</span><span class="n">jit_</span><span class="o">-&gt;</span><span class="n">getDataLayout</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;======= dump jit lib ==========&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buffer</span><span class="p">;</span>
+    <span class="n">llvm</span><span class="o">::</span><span class="n">raw_string_ostream</span> <span class="n">os</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+    <span class="n">module</span><span class="o">-&gt;</span><span class="n">print</span><span class="p">(</span><span class="n">os</span><span class="p">,</span> <span class="p">{});</span>
+    <span class="c1">// main_jd_-&gt;dump(os);</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">flush</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">buffer</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">ThreadSafeContext</span> <span class="n">tsc</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">context</span><span class="p">));</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">ThreadSafeModule</span> <span class="n">tsm</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">module</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">tsc</span><span class="p">));</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">jit_</span><span class="o">-&gt;</span><span class="n">addIRModule</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">tsm</span><span class="p">)));</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Lookup</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mu_</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="n">symbol</span> <span class="o">=</span> <span class="n">jit_</span><span class="o">-&gt;</span><span class="n">lookup</span><span class="p">(</span><span class="n">AsStringRef</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">symbol</span><span class="o">-&gt;</span><span class="n">getAddress</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">ERROR</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Unknown symbol name[&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">RegisterRuntimeSymbols</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">registry</span> <span class="o">=</span> <span class="n">RuntimeSymbolRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">session</span>        <span class="o">=</span> <span class="o">&amp;</span><span class="n">jit_</span><span class="o">-&gt;</span><span class="n">getExecutionSession</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="p">[</span><span class="n">name</span><span class="p">,</span> <span class="n">addr</span><span class="p">]</span> <span class="o">:</span> <span class="n">registry</span><span class="p">.</span><span class="n">All</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">jit_</span><span class="o">-&gt;</span><span class="n">define</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">absoluteSymbols</span><span class="p">(</span>
+        <span class="p">{{</span><span class="n">session</span><span class="o">-&gt;</span><span class="n">intern</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="p">{</span><span class="n">llvm</span><span class="o">::</span><span class="n">pointerToJITTargetAddress</span><span class="p">(</span><span class="n">addr</span><span class="p">),</span> <span class="n">llvm</span><span class="o">::</span><span class="n">JITSymbolFlags</span><span class="o">::</span><span class="n">None</span><span class="p">}}})));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="kt">void</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Link</span><span class="o">&lt;</span><span class="n">CodeGenLLVM</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">);</span>
+<span class="k">template</span> <span class="kt">void</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Link</span><span class="o">&lt;</span><span class="n">CodeGenX86</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">);</span>
+<span class="k">template</span> <span class="kt">void</span> <span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Link</span><span class="o">&lt;</span><span class="n">CodeGenCUDA_Host</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">);</span>
+
+<span class="p">}</span>  <span class="c1">// namespace cinn::backends</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

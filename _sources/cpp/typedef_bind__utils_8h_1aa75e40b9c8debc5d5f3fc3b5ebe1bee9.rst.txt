@@ -1,0 +1,13 @@
+.. _exhale_typedef_bind__utils_8h_1aa75e40b9c8debc5d5f3fc3b5ebe1bee9:
+
+Typedef cinn::pybind::ExprOp
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::pybind::ExprOp

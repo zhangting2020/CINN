@@ -1,0 +1,147 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_utils_string.h:
+
+File string.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_utils>` (``/home/chunwei/project/cinn2/cinn/utils``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/utils/string.h``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_utils_string.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``sstream``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_print_graph_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_fold_cinn_call_arguments.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_dim.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_domain.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_map.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_optim.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_pe.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_utils_string_test.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__utils`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ac7950f8a97cdfa90fd86a681c7478aed`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a48cdf2d41e5ac53bddba3055755f9671`
+

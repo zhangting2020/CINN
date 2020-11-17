@@ -1,0 +1,143 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc:
+
+File llvm_optimizer.cc
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_optimizer.cc``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``cinn/backends/llvm/llvm_optimizer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.h`)
+
+- ``glog/logging.h``
+
+- ``llvm/ADT/Triple.h``
+
+- ``llvm/Analysis/CGSCCPassManager.h``
+
+- ``llvm/AsmParser/Parser.h``
+
+- ``llvm/ExecutionEngine/ExecutionEngine.h``
+
+- ``llvm/ExecutionEngine/JITSymbol.h``
+
+- ``llvm/ExecutionEngine/Orc/CompileUtils.h``
+
+- ``llvm/ExecutionEngine/Orc/Core.h``
+
+- ``llvm/ExecutionEngine/Orc/ExecutionUtils.h``
+
+- ``llvm/ExecutionEngine/Orc/IRCompileLayer.h``
+
+- ``llvm/ExecutionEngine/Orc/LambdaResolver.h``
+
+- ``llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h``
+
+- ``llvm/ExecutionEngine/Orc/ThreadSafeModule.h``
+
+- ``llvm/ExecutionEngine/SectionMemoryManager.h``
+
+- ``llvm/IR/IRBuilder.h``
+
+- ``llvm/IR/LegacyPassManager.h``
+
+- ``llvm/IR/Module.h``
+
+- ``llvm/IR/PassManager.h``
+
+- ``llvm/IRReader/IRReader.h``
+
+- ``llvm/Passes/PassBuilder.h``
+
+- ``llvm/Support/CodeGen.h``
+
+- ``llvm/Support/Error.h``
+
+- ``llvm/Support/MemoryBuffer.h``
+
+- ``llvm/Support/SmallVectorMemoryBuffer.h``
+
+- ``llvm/Support/SourceMgr.h``
+
+- ``llvm/Support/TargetRegistry.h``
+
+- ``llvm/Support/TargetSelect.h``
+
+- ``llvm/Support/raw_ostream.h``
+
+- ``llvm/Target/TargetMachine.h``
+
+- ``llvm/Target/TargetOptions.h``
+
+- ``llvm/Transforms/IPO.h``
+
+- ``llvm/Transforms/IPO/PassManagerBuilder.h``
+
+- ``llvm/Transforms/InstCombine/InstCombine.h``
+
+- ``llvm/Transforms/Scalar.h``
+
+- ``llvm/Transforms/Scalar/GVN.h``
+
+- ``llvm/Transforms/Scalar/NewGVN.h``
+
+- ``llvm/Transforms/Scalar/Reassociate.h``
+
+- ``llvm/Transforms/Scalar/SimplifyCFG.h``
+
+- ``llvm/Transforms/Vectorize.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``type_traits``
+
+- ``utility``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__backends`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_llvm__optimizer_8cc_1aca044de764d93a458cf0a1a14a2b7180`
+
+- :ref:`exhale_variable_llvm__optimizer_8cc_1a74f03c765f27a7ec4bb3c533941e5fa0`
+
+- :ref:`exhale_variable_llvm__optimizer_8cc_1a7a3839799bddb978cc8082f8dc50d33d`
+

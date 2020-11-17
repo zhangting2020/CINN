@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File compute_at_transform.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-compute-at-transform-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-poly-compute-at-transform-cc"></span><h1>Program Listing for File compute_at_transform.cc<a class="headerlink" href="#program-listing-for-file-compute-at-transform-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.cc.html#file-home-chunwei-project-cinn2-cinn-poly-compute-at-transform-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/compute_at_transform.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/compute_at_transform.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">poly</span> <span class="p">{</span>
+
+<span class="kt">void</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">AdjustPdomain</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">ct_with_params</span> <span class="o">=</span> <span class="n">ctransform_with_params</span><span class="p">();</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">ct_domain</span>      <span class="o">=</span> <span class="n">ct_with_params</span><span class="p">.</span><span class="n">domain</span><span class="p">();</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">cdomain1</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">cdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;ct_domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ct_domain</span><span class="p">.</span><span class="n">space</span><span class="p">();</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cdomain1: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cdomain1</span><span class="p">.</span><span class="n">space</span><span class="p">();</span>
+
+  <span class="n">ct_domain</span> <span class="o">=</span> <span class="n">ct_domain</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">cdomain1</span><span class="p">);</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;ct_domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ct_domain</span><span class="p">;</span>
+
+  <span class="c1">// get producer domain from access</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">access_with_params</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">access_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">pdomain</span> <span class="o">=</span> <span class="n">ct_domain</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">access_with_params</span><span class="p">);</span>
+
+  <span class="c1">// intect with the original producer domain</span>
+  <span class="k">auto</span> <span class="n">pdomain_params</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">pdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;pdomain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pdomain</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;pdomain_params: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pdomain_params</span><span class="p">;</span>
+  <span class="n">adjusted_pdomain_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_intersect</span><span class="p">(</span><span class="n">pdomain</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">pdomain_params</span><span class="p">.</span><span class="n">release</span><span class="p">()));</span>
+  <span class="n">adjusted_pdomain_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_simplify</span><span class="p">(</span><span class="n">adjusted_pdomain_</span><span class="p">.</span><span class="n">release</span><span class="p">()));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;adjusted pdomain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">adjusted_pdomain_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">AdjustPtransform</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// insert level+1 dims from ctransform&#39;s range into ptransform&#39;s range</span>
+
+  <span class="p">{</span>
+    <span class="c1">// insert empty dims to ptransform&#39;s range</span>
+    <span class="n">adjusted_ptransform_</span> <span class="o">=</span> <span class="n">ptransform_</span><span class="p">;</span>
+    <span class="n">adjusted_ptransform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_insert_dims</span><span class="p">(</span><span class="n">adjusted_ptransform_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+
+    <span class="c1">// update the tuple name</span>
+    <span class="n">adjusted_ptransform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_set_tuple_name</span><span class="p">(</span><span class="n">adjusted_ptransform_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_in</span><span class="p">,</span> <span class="n">ptuple</span><span class="p">()));</span>
+    <span class="n">adjusted_ptransform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_set_tuple_name</span><span class="p">(</span><span class="n">adjusted_ptransform_</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="n">ptuple</span><span class="p">()));</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>
+    <span class="c1">// make ctransform range the same space with ptransform&#39;s range so that we can copy the dims</span>
+    <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">ct_range</span>  <span class="o">=</span> <span class="n">cdomain_</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">);</span>
+    <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">ct_range1</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_project_out</span><span class="p">(</span>
+        <span class="n">ct_range</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">,</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">ct_range</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">)</span> <span class="o">-</span> <span class="n">level_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="n">ct_range1</span>          <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_add_dims</span><span class="p">(</span>
+        <span class="n">ct_range1</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">,</span> <span class="n">isl_map_dim</span><span class="p">(</span><span class="n">adjusted_ptransform_</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">)</span> <span class="o">-</span> <span class="n">level_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="c1">// set as the producer&#39;s tuple to make a same space</span>
+    <span class="n">ct_range1</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_set_tuple_name</span><span class="p">(</span><span class="n">ct_range1</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">ptuple</span><span class="p">()));</span>
+
+    <span class="n">adjusted_ptransform_</span> <span class="o">=</span> <span class="n">adjusted_ptransform_</span><span class="p">.</span><span class="n">intersect_range</span><span class="p">(</span><span class="n">ct_range1</span><span class="p">);</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;adjusted_ptransform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">adjusted_ptransform_</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>  <span class="c1">// add params</span>
+    <span class="n">adjusted_ptransform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">adjusted_ptransform_</span><span class="p">.</span><span class="n">release</span><span class="p">()));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">cdomain_with_params</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// add level+1 param to consumer transform</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">cd_with_params</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_add_dims</span><span class="p">(</span><span class="n">cdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">cd_with_params</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">ctransform_with_params</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// add level+1 param to consumer transform</span>
+  <span class="kt">int</span> <span class="n">num_existing_param</span>  <span class="o">=</span> <span class="n">isl_map_dim</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_param</span><span class="p">);</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">ct_with_params</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="p">{</span>
+    <span class="n">isl_local_space</span><span class="o">*</span> <span class="n">local_space</span> <span class="o">=</span> <span class="n">isl_local_space_from_space</span><span class="p">(</span><span class="n">ct_with_params</span><span class="p">.</span><span class="n">space</span><span class="p">().</span><span class="n">release</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">isl_constraint</span><span class="o">*</span> <span class="n">cst</span> <span class="o">=</span> <span class="n">isl_constraint_alloc_equality</span><span class="p">(</span><span class="n">isl_local_space_copy</span><span class="p">(</span><span class="n">local_space</span><span class="p">));</span>
+      <span class="n">cst</span>                 <span class="o">=</span> <span class="n">isl_constraint_set_coefficient_val</span><span class="p">(</span>
+          <span class="n">cst</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">num_existing_param</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">isl_val_int_from_si</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">ctx</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+      <span class="n">cst</span> <span class="o">=</span> <span class="n">isl_constraint_set_coefficient_val</span><span class="p">(</span><span class="n">cst</span><span class="p">,</span> <span class="n">isl_dim_out</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">isl_val_int_from_si</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">ctx</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="mi">1</span><span class="p">));</span>
+      <span class="n">ct_with_params</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_add_constraint</span><span class="p">(</span><span class="n">ct_with_params</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">cst</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">isl_local_space_free</span><span class="p">(</span><span class="n">local_space</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">ct_with_params</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">DisplayC</span><span class="p">(</span><span class="n">isl_map</span><span class="o">*</span> <span class="n">pschedule</span><span class="p">,</span> <span class="n">isl_map</span><span class="o">*</span> <span class="n">cschedule</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;adjusted cdomain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">adjusted_cdomain_</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;adjusted ctransform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">adjusted_ctransform_</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">adjusted_ctransform</span> <span class="o">=</span> <span class="n">adjusted_ctransform_</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">adjusted_ptransform</span> <span class="o">=</span> <span class="n">adjusted_ptransform_</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">cschedule</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">adjusted_ctransform</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_apply_range</span><span class="p">(</span><span class="n">adjusted_ctransform</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">cschedule</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">pschedule</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">adjusted_ptransform</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_map_apply_range</span><span class="p">(</span><span class="n">adjusted_ptransform</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">pschedule</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">auto</span> <span class="n">whole_domain</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_set_from_set</span><span class="p">(</span><span class="n">adjusted_pdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">whole_domain</span>      <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_set_add_set</span><span class="p">(</span><span class="n">whole_domain</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">adjusted_cdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;whole domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">whole_domain</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">whole_schedule</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_map_from_map</span><span class="p">(</span><span class="n">adjusted_ptransform</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">whole_schedule</span>      <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_union_map_add_map</span><span class="p">(</span><span class="n">whole_schedule</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">adjusted_ctransform</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;whole_schedule: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">whole_schedule</span><span class="p">;</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">context</span><span class="p">(</span><span class="n">whole_domain</span><span class="p">.</span><span class="n">ctx</span><span class="p">(),</span> <span class="s">&quot;{:}&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">intersect_schedule</span> <span class="o">=</span> <span class="n">whole_schedule</span><span class="p">.</span><span class="n">intersect_domain</span><span class="p">(</span><span class="n">whole_domain</span><span class="p">);</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">build</span> <span class="o">=</span> <span class="n">isl_ast_build_from_context</span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">node</span>  <span class="o">=</span> <span class="n">isl_ast_build_node_from_schedule_map</span><span class="p">(</span><span class="n">build</span><span class="p">,</span> <span class="n">intersect_schedule</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;code:</span><span class="se">\n\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">isl_ast_node_to_C_str</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+  <span class="n">isl_ast_node_free</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">isl_set</span><span class="o">*</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">isl_set</span><span class="o">*</span> <span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">existing_params</span> <span class="o">=</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">);</span>
+  <span class="n">set</span>                 <span class="o">=</span> <span class="n">isl_set_add_dims</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// set name</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">pname</span> <span class="o">=</span> <span class="n">GenConsumerParamName</span><span class="p">(</span><span class="n">ctuple</span><span class="p">(),</span> <span class="n">i</span><span class="p">);</span>
+    <span class="n">set</span>               <span class="o">=</span> <span class="n">isl_set_set_dim_name</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">existing_params</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">pname</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">set</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">isl_map</span><span class="o">*</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">isl_map</span><span class="o">*</span> <span class="n">map</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">existing_params</span> <span class="o">=</span> <span class="n">isl_map_dim</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">);</span>
+  <span class="n">map</span>                 <span class="o">=</span> <span class="n">isl_map_add_dims</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// set name</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">pname</span> <span class="o">=</span> <span class="n">GenConsumerParamName</span><span class="p">(</span><span class="n">ctuple</span><span class="p">(),</span> <span class="n">i</span><span class="p">);</span>
+    <span class="n">map</span>               <span class="o">=</span> <span class="n">isl_map_set_dim_name</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">existing_params</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">pname</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">map</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">ComputeAtTransform</span><span class="p">(</span>
+    <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">pdomain</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">cdomain</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">access</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">ptransform</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">ctransform</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">pdomain_</span><span class="p">(</span><span class="n">pdomain</span><span class="p">),</span>
+      <span class="n">cdomain_</span><span class="p">(</span><span class="n">cdomain</span><span class="p">),</span>
+      <span class="n">access_</span><span class="p">(</span><span class="n">access</span><span class="p">),</span>
+      <span class="n">ptransform_</span><span class="p">(</span><span class="n">ptransform</span><span class="p">),</span>
+      <span class="n">ctransform_</span><span class="p">(</span><span class="n">ctransform</span><span class="p">),</span>
+      <span class="n">level_</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;pdomain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pdomain</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;ptransform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ptransform</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cdomain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cdomain</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;ctransform: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ctransform</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;access: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">access</span><span class="p">;</span>
+
+  <span class="n">adjusted_ctransform_</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">adjusted_cdomain_</span>    <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">cdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GenConsumerParamName</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">tuple</span><span class="p">,</span> <span class="kt">int</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;%s%s_%d&quot;</span><span class="p">,</span> <span class="n">kConsumerParamPrefix</span><span class="p">,</span> <span class="n">tuple</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">GetProducerAdjustedShape</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">adjusted_pdomain</span><span class="p">();</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">param_limit</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_universe</span><span class="p">(</span><span class="n">adjusted_pdomain</span><span class="p">().</span><span class="n">space</span><span class="p">().</span><span class="n">release</span><span class="p">()));</span>
+  <span class="c1">// set all the params to 0</span>
+  <span class="n">isl_local_space</span><span class="o">*</span> <span class="n">local_space</span> <span class="o">=</span> <span class="n">isl_local_space_from_space</span><span class="p">(</span><span class="n">param_limit</span><span class="p">.</span><span class="n">space</span><span class="p">().</span><span class="n">release</span><span class="p">());</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">param_limit</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_param</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">isl_constraint</span><span class="o">*</span> <span class="n">cst</span> <span class="o">=</span> <span class="n">isl_constraint_alloc_equality</span><span class="p">(</span><span class="n">isl_local_space_copy</span><span class="p">(</span><span class="n">local_space</span><span class="p">));</span>
+    <span class="n">cst</span> <span class="o">=</span> <span class="n">isl_constraint_set_coefficient_val</span><span class="p">(</span><span class="n">cst</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">isl_val_int_from_si</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">ctx</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="n">param_limit</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_add_constraint</span><span class="p">(</span><span class="n">param_limit</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">cst</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;param_limit: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">param_limit</span><span class="p">;</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">domain</span> <span class="o">=</span> <span class="n">adjusted_pdomain</span><span class="p">().</span><span class="n">intersect</span><span class="p">(</span><span class="n">param_limit</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">shape</span><span class="p">;</span>
+  <span class="c1">// collect the min and max and get the num elements for each axis.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">domain</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_set</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">minv</span><span class="p">,</span> <span class="n">maxv</span><span class="p">]</span> <span class="o">=</span> <span class="n">isl_set_get_axis_range</span><span class="p">(</span><span class="n">domain</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">i</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">num_elements</span>  <span class="o">=</span> <span class="n">maxv</span><span class="p">.</span><span class="n">num_si</span><span class="p">()</span> <span class="o">-</span> <span class="n">minv</span><span class="p">.</span><span class="n">num_si</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">shape</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num_elements</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">shape</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ComputeAtTransform</span><span class="o">::</span><span class="n">GetAccessesPrecedingIndicesMinAssumingParamsZero</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">;</span>
+
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">cdomain_with_param</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">cdomain_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cdomain_with_param: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cdomain_with_param</span><span class="p">;</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">access_with_param</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">AddParamsTo</span><span class="p">(</span><span class="n">access_</span><span class="p">.</span><span class="n">copy</span><span class="p">()));</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;applied: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">cdomain_with_param</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">access_with_param</span><span class="p">);</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">param_limited_cdomain</span> <span class="o">=</span> <span class="n">ctransform_with_params</span><span class="p">().</span><span class="n">domain</span><span class="p">();</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;ctransform.domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">param_limited_cdomain</span><span class="p">;</span>
+  <span class="n">isl</span><span class="o">::</span><span class="n">set</span> <span class="n">access_domain</span> <span class="o">=</span> <span class="n">param_limited_cdomain</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">access_with_param</span><span class="p">);</span>
+
+  <span class="c1">// set all the params to 0</span>
+  <span class="n">isl_local_space</span><span class="o">*</span> <span class="n">local_space</span> <span class="o">=</span> <span class="n">isl_local_space_from_space</span><span class="p">(</span><span class="n">access_domain</span><span class="p">.</span><span class="n">space</span><span class="p">().</span><span class="n">release</span><span class="p">());</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">isl_set_dim</span><span class="p">(</span><span class="n">access_domain</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_param</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">isl_constraint</span><span class="o">*</span> <span class="n">cst</span> <span class="o">=</span> <span class="n">isl_constraint_alloc_equality</span><span class="p">(</span><span class="n">isl_local_space_copy</span><span class="p">(</span><span class="n">local_space</span><span class="p">));</span>
+    <span class="n">cst</span> <span class="o">=</span> <span class="n">isl_constraint_set_coefficient_val</span><span class="p">(</span><span class="n">cst</span><span class="p">,</span> <span class="n">isl_dim_param</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">isl_val_int_from_si</span><span class="p">(</span><span class="n">ctransform_</span><span class="p">.</span><span class="n">ctx</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="n">access_domain</span> <span class="o">=</span> <span class="n">isl</span><span class="o">::</span><span class="n">manage</span><span class="p">(</span><span class="n">isl_set_add_constraint</span><span class="p">(</span><span class="n">access_domain</span><span class="p">.</span><span class="n">release</span><span class="p">(),</span> <span class="n">cst</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="n">isl_local_space_free</span><span class="p">(</span><span class="n">local_space</span><span class="p">);</span>
+
+  <span class="n">access_domain</span> <span class="o">=</span> <span class="n">access_domain</span><span class="p">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">adjusted_pdomain</span><span class="p">());</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;access_with_param: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">access_domain</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">minv</span><span class="p">,</span> <span class="n">maxv</span><span class="p">]</span> <span class="o">=</span> <span class="n">isl_set_get_axis_range</span><span class="p">(</span><span class="n">access_domain</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">i</span><span class="p">);</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">minv</span><span class="p">.</span><span class="n">get_num_si</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace poly</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

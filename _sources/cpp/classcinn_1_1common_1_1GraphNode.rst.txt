@@ -1,0 +1,36 @@
+.. _exhale_class_classcinn_1_1common_1_1GraphNode:
+
+Class GraphNode
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::Object`` (:ref:`exhale_struct_structcinn_1_1common_1_1Object`)
+
+
+Derived Types
+*************
+
+- ``public cinn::common::GraphNodeWithName`` (:ref:`exhale_struct_structcinn_1_1common_1_1GraphNodeWithName`)
+- ``public cinn::hlir::framework::Node`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Node`)
+- ``public cinn::hlir::framework::NodeData`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1NodeData`)
+- ``public cinn::lang::detail::CompuGraphNode`` (:ref:`exhale_struct_structcinn_1_1lang_1_1detail_1_1CompuGraphNode`)
+- ``public cinn::poly::DataFlowGraphNode`` (:ref:`exhale_struct_structcinn_1_1poly_1_1DataFlowGraphNode`)
+- ``public cinn::poly::ScheduleGraphNode`` (:ref:`exhale_struct_structcinn_1_1poly_1_1ScheduleGraphNode`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::common::GraphNode
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_typedef_object_8h_1abf1ac23ce284fa7a5c2ec2abfd332dd9:
+
+Typedef cinn::common::object_ptr
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::common::object_ptr

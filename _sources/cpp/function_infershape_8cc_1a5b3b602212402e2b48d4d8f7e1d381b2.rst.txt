@@ -1,0 +1,13 @@
+.. _exhale_function_infershape_8cc_1a5b3b602212402e2b48d4d8f7e1d381b2:
+
+Function CINN_REGISTER_HELPER(passes)
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: CINN_REGISTER_HELPER(passes)

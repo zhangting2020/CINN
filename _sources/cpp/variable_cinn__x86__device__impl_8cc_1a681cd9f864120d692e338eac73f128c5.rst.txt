@@ -1,0 +1,13 @@
+.. _exhale_variable_cinn__x86__device__impl_8cc_1a681cd9f864120d692e338eac73f128c5:
+
+Variable cinn_x86_device_interface_interface
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn_x86_device_interface_interface

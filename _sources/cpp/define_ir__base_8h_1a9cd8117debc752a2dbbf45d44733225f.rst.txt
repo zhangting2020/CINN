@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1a9cd8117debc752a2dbbf45d44733225f:
+
+Define NODETY_FORALL
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: NODETY_FORALL

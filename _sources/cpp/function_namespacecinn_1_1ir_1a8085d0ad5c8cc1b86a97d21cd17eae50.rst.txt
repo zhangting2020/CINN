@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a8085d0ad5c8cc1b86a97d21cd17eae50:
+
+Function cinn::ir::CollectReferencedTensors
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::CollectReferencedTensors(Expr, const std::function<bool(const Expr *)>&)

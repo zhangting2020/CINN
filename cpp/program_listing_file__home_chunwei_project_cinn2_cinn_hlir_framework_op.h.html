@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File op.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-op-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-hlir-framework-op-h"></span><h1>Program Listing for File op.h<a class="headerlink" href="#program-listing-for-file-op-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h.html#file-home-chunwei-project-cinn2-cinn-hlir-framework-op-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/framework/op.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+<span class="cp">#include</span> <span class="cpf">&lt;glog/logging.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;any&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;atomic&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;  //NOLINT</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/macros.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/registry.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">hlir</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">framework</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">Operator</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="n">shape_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">dim_t</span>   <span class="o">=</span> <span class="n">shape_t</span> <span class="o">::</span><span class="n">value_type</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nl">OpRegistry</span> <span class="p">:</span> <span class="k">public</span> <span class="n">Registry</span><span class="o">&lt;</span><span class="n">Operator</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">recursive_mutex</span> <span class="n">mutex</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">op_counter</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">&gt;&gt;</span> <span class="n">attrs</span><span class="p">;</span>
+
+  <span class="k">static</span> <span class="n">OpRegistry</span><span class="o">*</span> <span class="nf">Global</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">OpRegistry</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
+  <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">OpRegistry</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">CINN_DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">OpRegistry</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">OpValueType</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="kr">inline</span> <span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kr">inline</span> <span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="n">Get</span><span class="p">(</span><span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="n">def_value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">Find</span><span class="p">(</span><span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="k">friend</span> <span class="k">class</span> <span class="nc">Operator</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">attr_name</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;</span> <span class="n">data</span><span class="p">;</span>
+  <span class="n">OpValueType</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Operator</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">description</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">num_inputs</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+  <span class="kt">uint32_t</span> <span class="n">num_outputs</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>
+  <span class="kt">uint32_t</span> <span class="n">support_level</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>
+
+  <span class="kr">inline</span> <span class="n">Operator</span><span class="o">&amp;</span> <span class="n">describe</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">description</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="n">Operator</span><span class="o">&amp;</span> <span class="n">set_num_inputs</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">num_inputs</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="n">Operator</span><span class="o">&amp;</span> <span class="n">set_num_outputs</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">num_outputs</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">inline</span> <span class="n">Operator</span><span class="o">&amp;</span> <span class="n">set_support_level</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">support_level</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">Get</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">op_name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span> <span class="o">=</span> <span class="n">OpRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Find</span><span class="p">(</span><span class="n">op_name</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Operator [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] is not registered&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">op</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+  <span class="kr">inline</span> <span class="n">Operator</span><span class="o">&amp;</span> <span class="n">set_attr</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">attr_name</span><span class="p">,</span> <span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">UpdateAttrMap</span><span class="p">(</span><span class="n">attr_name</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">value</span><span class="p">](</span><span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">*</span> <span class="n">pmap</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pmap</span><span class="o">-&gt;</span><span class="n">has_value</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;</span> <span class="n">pm</span><span class="p">;</span>
+        <span class="n">pm</span><span class="p">.</span><span class="n">attr_name</span> <span class="o">=</span> <span class="n">attr_name</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">pmap</span>        <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">pm</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">any_cast</span><span class="o">&lt;</span><span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;&amp;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">pmap</span><span class="p">).</span><span class="n">data</span><span class="p">;</span>
+      <span class="c1">// resize the value type.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vec</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ValueType</span><span class="p">());</span>
+      <span class="p">}</span>
+      <span class="n">vec</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;&amp;</span> <span class="n">GetAttrs</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">attr_name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">*</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">GetAttrMap</span><span class="p">(</span><span class="n">attr_name</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ref</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">UpdateAttrMap</span><span class="p">(</span><span class="n">attr_name</span><span class="p">,</span> <span class="p">[</span><span class="n">attr_name</span><span class="p">](</span><span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">*</span> <span class="n">pmap</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pmap</span><span class="o">-&gt;</span><span class="n">has_value</span><span class="p">())</span> <span class="p">{</span>
+          <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;</span> <span class="n">pm</span><span class="p">;</span>
+          <span class="n">pm</span><span class="p">.</span><span class="n">attr_name</span> <span class="o">=</span> <span class="n">attr_name</span><span class="p">;</span>
+          <span class="o">*</span><span class="n">pmap</span>        <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">pm</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+      <span class="n">ref</span> <span class="o">=</span> <span class="n">GetAttrMap</span><span class="p">(</span><span class="n">attr_name</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">any_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;&amp;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">ref</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">auto</span> <span class="n">get_index</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">index</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+  <span class="k">friend</span> <span class="k">class</span> <span class="nc">OpValueType</span><span class="p">;</span>
+  <span class="k">friend</span> <span class="k">class</span> <span class="nc">Registry</span><span class="o">&lt;</span><span class="n">Operator</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">index</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+  <span class="n">Operator</span><span class="p">()</span> <span class="p">{</span> <span class="n">index</span> <span class="o">=</span> <span class="n">OpRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">op_counter</span><span class="o">++</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">*</span> <span class="n">GetAttrMap</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">dict</span> <span class="o">=</span> <span class="n">OpRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">it</span>    <span class="o">=</span> <span class="n">dict</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">!=</span> <span class="n">dict</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">static</span> <span class="kt">void</span> <span class="n">UpdateAttrMap</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">updater</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">OpRegistry</span><span class="o">*</span> <span class="n">reg</span> <span class="o">=</span> <span class="n">OpRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">recursive_mutex</span><span class="o">&gt;</span><span class="p">(</span><span class="n">reg</span><span class="o">-&gt;</span><span class="n">mutex</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="o">&gt;&amp;</span> <span class="n">value</span> <span class="o">=</span> <span class="n">reg</span><span class="o">-&gt;</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="n">value</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">std</span><span class="o">::</span><span class="n">any</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">updater</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="n">updater</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+<span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;::</span><span class="k">operator</span><span class="p">[](</span><span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The input op is nullptr and it is invalid! Please check again.&quot;</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">uint32_t</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">;</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Attribute &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">attr_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; has not been registered for Operator &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+<span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;::</span><span class="n">Get</span><span class="p">(</span><span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="k">const</span> <span class="n">ValueType</span><span class="o">&amp;</span> <span class="n">def_value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">)</span> <span class="k">return</span> <span class="n">def_value</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">uint32_t</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">def_value</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ValueType</span><span class="o">&gt;</span>
+<span class="kt">bool</span> <span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">ValueType</span><span class="o">&gt;::</span><span class="n">Find</span><span class="p">(</span><span class="k">const</span> <span class="n">Operator</span><span class="o">*</span> <span class="n">op</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">uint32_t</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// internal macros to make</span>
+<span class="cp">#define CINN_REGISTER_VAR_DEF(OpName) static ::cinn::hlir::framework::Operator&amp; __make_##HlirOp##_##OpName</span>
+
+<span class="cp">#define CINN_REGISTER_OP(OpName)                                \</span>
+<span class="cp">  CINN_STR_CONCAT(CINN_REGISTER_VAR_DEF(OpName), __COUNTER__) = \</span>
+<span class="cp">      ::cinn::hlir::framework::OpRegistry::Global()-&gt;__REGISTER_OR_GET__(#OpName)</span>
+
+<span class="p">}</span>  <span class="c1">// namespace framework</span>
+<span class="p">}</span>  <span class="c1">// namespace hlir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

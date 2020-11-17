@@ -1,0 +1,89 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h:
+
+File paddle_model_to_program.h
+==============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_frontend>` (``/home/chunwei/project/cinn2/cinn/frontend``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/frontend/paddle_model_to_program.h``)
+------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h``
+
+- ``cinn/common/context.h``
+
+- ``cinn/common/object.h``
+
+- ``cinn/common/type.h``
+
+- ``cinn/frontend/paddle/cpp/program_desc.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_program_desc.h`)
+
+- ``cinn/frontend/syntax.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`)
+
+- ``cinn/hlir/framework/node.h``
+
+- ``cinn/hlir/framework/scope.h``
+
+- ``glog/logging.h``
+
+- ``memory``
+
+- ``string``
+
+- ``unordered_map``
+
+- ``utility``
+
+- ``variant``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__frontend`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1frontend_1_1PaddleModelToProgram`
+

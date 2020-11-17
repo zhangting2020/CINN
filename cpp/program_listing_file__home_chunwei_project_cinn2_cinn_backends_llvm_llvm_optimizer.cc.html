@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File llvm_optimizer.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-llvm-optimizer-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-optimizer-cc"></span><h1>Program Listing for File llvm_optimizer.cc<a class="headerlink" href="#program-listing-for-file-llvm-optimizer-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-optimizer-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_optimizer.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/llvm_optimizer.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;glog/logging.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ADT/Triple.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Analysis/CGSCCPassManager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/AsmParser/Parser.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/ExecutionEngine.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/JITSymbol.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/CompileUtils.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/Core.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/ExecutionUtils.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/IRCompileLayer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/LambdaResolver.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/Orc/ThreadSafeModule.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ExecutionEngine/SectionMemoryManager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/IRBuilder.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/LegacyPassManager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/Module.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IR/PassManager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/IRReader/IRReader.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Passes/PassBuilder.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/Error.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/MemoryBuffer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/SmallVectorMemoryBuffer.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/SourceMgr.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/TargetRegistry.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/TargetSelect.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/raw_ostream.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Target/TargetMachine.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Target/TargetOptions.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/IPO.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/IPO/PassManagerBuilder.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/InstCombine/InstCombine.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/GVN.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/NewGVN.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/Reassociate.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Scalar/SimplifyCFG.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Transforms/Vectorize.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;type_traits&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;llvm/Support/CodeGen.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">backends</span> <span class="p">{</span>
+
+<span class="k">namespace</span> <span class="p">{</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">PassManagerT</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">CustomPassManager</span> <span class="o">:</span> <span class="k">public</span> <span class="n">PassManagerT</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span> <span class="n">Ts</span><span class="o">&gt;</span>
+  <span class="k">explicit</span> <span class="n">CustomPassManager</span><span class="p">(</span><span class="kt">bool</span> <span class="n">print_passes</span><span class="p">,</span> <span class="n">Ts</span> <span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">ts</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">PassManagerT</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Ts</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ts</span><span class="p">)...),</span> <span class="n">print_passes_</span><span class="p">(</span><span class="n">print_passes</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">Pass</span> <span class="o">*</span><span class="n">pass</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">print_passes_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="k">constexpr</span> <span class="p">(</span><span class="n">is_function_pass_manager_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;llvm run function pass[&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">pass</span><span class="o">-&gt;</span><span class="n">getPassName</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="k">if</span> <span class="k">constexpr</span> <span class="p">(</span><span class="n">is_module_pass_manager_</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;llvm run module pass[&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">pass</span><span class="o">-&gt;</span><span class="n">getPassName</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// static bool add_pass = true;</span>
+    <span class="c1">// if (add_pass) {</span>
+    <span class="c1">//  PassManagerT::add(pass);</span>
+    <span class="c1">//}</span>
+
+    <span class="c1">// if (std::string(pass-&gt;getPassName()) == &quot;Loop Vectorization&quot;) {</span>
+    <span class="c1">//  return;</span>
+    <span class="c1">//}</span>
+    <span class="n">PassManagerT</span><span class="o">::</span><span class="n">add</span><span class="p">(</span><span class="n">pass</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">run</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">Function</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// NOLINT</span>
+    <span class="k">if</span> <span class="k">constexpr</span> <span class="p">(</span><span class="n">is_function_pass_manager_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">PassManagerT</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">run</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// NOLINT</span>
+    <span class="k">if</span> <span class="k">constexpr</span> <span class="p">(</span><span class="n">is_module_pass_manager_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">PassManagerT</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">bool</span> <span class="n">is_function_pass_manager_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">legacy</span><span class="o">::</span><span class="n">FunctionPassManager</span><span class="p">,</span> <span class="n">PassManagerT</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">bool</span> <span class="n">is_module_pass_manager_</span>   <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">legacy</span><span class="o">::</span><span class="n">PassManager</span><span class="p">,</span> <span class="n">PassManagerT</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">print_passes_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">using</span> <span class="n">CustomFunctionPassManager</span> <span class="o">=</span> <span class="n">CustomPassManager</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">legacy</span><span class="o">::</span><span class="n">FunctionPassManager</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">CustomModulePassManager</span>   <span class="o">=</span> <span class="n">CustomPassManager</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">legacy</span><span class="o">::</span><span class="n">PassManager</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>  <span class="c1">// namespace</span>
+
+<span class="n">LLVMModuleOptimizer</span><span class="o">::</span><span class="n">LLVMModuleOptimizer</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">TargetMachine</span> <span class="o">*</span><span class="n">machine</span><span class="p">,</span>
+                                         <span class="kt">int</span> <span class="n">opt_level</span><span class="p">,</span>
+                                         <span class="n">llvm</span><span class="o">::</span><span class="n">FastMathFlags</span> <span class="n">fast_math_flags</span><span class="p">,</span>
+                                         <span class="kt">bool</span> <span class="n">print_passes</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">opt_level_</span><span class="p">(</span><span class="n">opt_level</span><span class="p">),</span> <span class="n">print_passes_</span><span class="p">(</span><span class="n">print_passes</span><span class="p">),</span> <span class="n">machine_</span><span class="p">(</span><span class="n">machine</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="n">LLVMModuleOptimizer</span><span class="o">::</span><span class="k">operator</span><span class="p">()(</span><span class="n">llvm</span><span class="o">::</span><span class="n">Module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">machine</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">cantFail</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">orc</span><span class="o">::</span><span class="n">JITTargetMachineBuilder</span><span class="o">::</span><span class="n">detectHost</span><span class="p">()).</span><span class="n">createTargetMachine</span><span class="p">()));</span>
+  <span class="k">auto</span> <span class="n">fpm</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">CustomFunctionPassManager</span><span class="o">&gt;</span><span class="p">(</span><span class="n">print_passes_</span><span class="p">,</span> <span class="n">m</span><span class="p">);</span>
+  <span class="c1">// fpm-&gt;add(llvm::createTargetTransformInfoWrapperPass(llvm::TargetIRAnalysis()));</span>
+  <span class="c1">// fpm-&gt;add(llvm::createInstructionCombiningPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createReassociatePass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createGVNPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createCFGSimplificationPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createSROAPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createEarlyCSEPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createLowerExpectIntrinsicPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createCallSiteSplittingPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createLoopVectorizePass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createSLPVectorizerPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createLoadStoreVectorizerPass());</span>
+  <span class="c1">// fpm-&gt;add(llvm::createLoopUnrollPass());</span>
+
+  <span class="k">auto</span> <span class="n">mpm</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">CustomModulePassManager</span><span class="o">&gt;</span><span class="p">(</span><span class="n">print_passes_</span><span class="p">);</span>
+  <span class="c1">// mpm-&gt;add(llvm::createTargetTransformInfoWrapperPass(llvm::TargetIRAnalysis()));</span>
+  <span class="c1">// LOG(INFO) &lt;&lt; &quot;llvm run pass: target machine: name[&quot; &lt;&lt; machine_-&gt;getTarget().getName() &lt;&lt; &quot;]&quot;;</span>
+  <span class="c1">// LOG(INFO) &lt;&lt; &quot;llvm run pass: target machine: cpu[&quot; &lt;&lt; machine_-&gt;getTargetCPU().str() &lt;&lt; &quot;]&quot;;</span>
+  <span class="n">fpm</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">createTargetTransformInfoWrapperPass</span><span class="p">(</span><span class="n">machine</span><span class="o">-&gt;</span><span class="n">getTargetIRAnalysis</span><span class="p">()));</span>
+  <span class="n">mpm</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">createTargetTransformInfoWrapperPass</span><span class="p">(</span><span class="n">machine</span><span class="o">-&gt;</span><span class="n">getTargetIRAnalysis</span><span class="p">()));</span>
+  <span class="k">auto</span> <span class="n">builder</span>           <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">PassManagerBuilder</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">builder</span><span class="o">-&gt;</span><span class="n">OptLevel</span>      <span class="o">=</span> <span class="n">opt_level_</span><span class="p">;</span>
+  <span class="n">builder</span><span class="o">-&gt;</span><span class="n">Inliner</span>       <span class="o">=</span> <span class="n">llvm</span><span class="o">::</span><span class="n">createFunctionInliningPass</span><span class="p">();</span>
+  <span class="n">builder</span><span class="o">-&gt;</span><span class="n">LoopVectorize</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="n">builder</span><span class="o">-&gt;</span><span class="n">SLPVectorize</span>  <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="n">builder</span><span class="o">-&gt;</span><span class="n">populateFunctionPassManager</span><span class="p">(</span><span class="o">*</span><span class="n">fpm</span><span class="p">);</span>
+  <span class="n">builder</span><span class="o">-&gt;</span><span class="n">populateModulePassManager</span><span class="p">(</span><span class="o">*</span><span class="n">mpm</span><span class="p">);</span>
+
+  <span class="n">fpm</span><span class="o">-&gt;</span><span class="n">doInitialization</span><span class="p">();</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span><span class="n">m</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">m</span><span class="o">-&gt;</span><span class="n">end</span><span class="p">(),</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">fpm</span><span class="p">](</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">fn</span><span class="p">)</span> <span class="p">{</span> <span class="n">fpm</span><span class="o">-&gt;</span><span class="n">run</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span> <span class="p">});</span>
+  <span class="n">fpm</span><span class="o">-&gt;</span><span class="n">doFinalization</span><span class="p">();</span>
+
+  <span class="n">mpm</span><span class="o">-&gt;</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace cinn::backends</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

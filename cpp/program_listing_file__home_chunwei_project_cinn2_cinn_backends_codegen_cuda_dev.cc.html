@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File codegen_cuda_dev.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-codegen-cuda-dev-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-codegen-cuda-dev-cc"></span><h1>Program Listing for File codegen_cuda_dev.cc<a class="headerlink" href="#program-listing-for-file-codegen-cuda-dev-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.cc.html#file-home-chunwei-project-cinn2-cinn-backends-codegen-cuda-dev-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/codegen_cuda_dev.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_cuda_dev.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_set&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_verify.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/remove_nested_block.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">backends</span> <span class="p">{</span>
+
+<span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">CodeGenCUDA_Dev</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">)</span> <span class="o">:</span> <span class="n">CodeGenC</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">for_nvrtc</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">for_nvrtc_</span>  <span class="o">=</span> <span class="n">for_nvrtc</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">Compile</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">source</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">,</span> <span class="k">const</span> <span class="n">Outputs</span> <span class="o">&amp;</span><span class="n">outputs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">ir</span><span class="o">::</span><span class="n">IrVerify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">module</span><span class="p">));</span>
+
+  <span class="n">CodeGenC</span><span class="o">::</span><span class="n">inline_builtin_codes_</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">Compile</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CHeader</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">file</span><span class="p">(</span><span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;failed to open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">;</span>
+    <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="n">source</span><span class="p">;</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">WARNING</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Output C header to file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">c_header_name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">outputs</span><span class="p">.</span><span class="n">cuda_source_name</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">source</span> <span class="o">=</span> <span class="n">Compile</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">file</span><span class="p">(</span><span class="n">outputs</span><span class="p">.</span><span class="n">cuda_source_name</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;failed to open file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">cuda_source_name</span><span class="p">;</span>
+    <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="n">source</span><span class="p">;</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">WARNING</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Output C source to file &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">outputs</span><span class="p">.</span><span class="n">cuda_source_name</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">LoweredFunc</span> <span class="o">&amp;</span><span class="n">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">ss_</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">GenerateBufferAliasExprs</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_LoweredFunc_</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span>
+                                                            <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">temp_buffers</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span> <span class="n">temp_buffer_set</span><span class="p">(</span><span class="n">temp_buffers</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">temp_buffers</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="c1">// prepare temp buffer alias</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">buffer_alias</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">tensors</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span>
+      <span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">temp_buffer_set</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">);</span> <span class="p">});</span>
+
+  <span class="c1">// unique tensors</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">unique_tensors</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">e</span> <span class="p">:</span> <span class="n">tensors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">unique_tensors</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">as_tensor_ref</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">t</span> <span class="p">:</span> <span class="n">unique_tensors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">data_type</span>     <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">data_ptr_type</span> <span class="o">=</span> <span class="n">data_type</span><span class="p">;</span>
+    <span class="n">data_ptr_type</span><span class="p">.</span><span class="n">set_cpp_handle</span><span class="p">();</span>
+
+    <span class="n">Var</span> <span class="nf">t_var</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">data_ptr_type</span><span class="p">);</span>
+    <span class="n">Var</span> <span class="nf">buf_var</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">data_ptr_type</span><span class="p">);</span>
+    <span class="n">buffer_alias</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Let</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">t_var</span><span class="p">,</span> <span class="n">buf_var</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">buffer_alias</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_LoweredFunc_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;__global__</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">PrintFunctionDeclaration</span><span class="p">(</span><span class="n">op</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">DoIndent</span><span class="p">();</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">new_body</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">alloca_temp_buffers</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">PrepareAllocTempBufferExprs</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">temp_buffer_alias</span>   <span class="o">=</span> <span class="n">GenerateBufferAliasExprs</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">temp_bufs</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">alis_var_exprs</span>      <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">CudaAliasVarExprs</span><span class="p">();</span>
+
+<span class="cp">#define APPEND_TO_NEW_BODY(field__) new_body.insert(std::end(new_body), std::begin(field__), std::end(field__));</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">alloca_temp_buffers</span><span class="p">)</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">temp_buffer_alias</span><span class="p">)</span>
+  <span class="n">APPEND_TO_NEW_BODY</span><span class="p">(</span><span class="n">alis_var_exprs</span><span class="p">)</span>
+
+  <span class="n">new_body</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+
+  <span class="n">Expr</span> <span class="n">func_body</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">new_body</span><span class="p">);</span>
+
+  <span class="n">optim</span><span class="o">::</span><span class="n">RemoveNestedBlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">func_body</span><span class="p">);</span>
+
+  <span class="n">Print</span><span class="p">(</span><span class="n">func_body</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Alloc</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">.</span><span class="n">as_buffer</span><span class="p">());</span>
+  <span class="n">PrintTempBufferCreation</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">.</span><span class="n">as_buffer_ref</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Min</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_nvgpu_min_fp32(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Max</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;cinn_nvgpu_max_fp32(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">PrintFunctionDeclaration</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_LoweredFunc_</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// os() &lt;&lt; &quot;void &quot; &lt;&lt; GenKernelName(op-&gt;name) &lt;&lt; &quot;(&quot;;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;void &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">&amp;</span><span class="n">arg</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">PrintFuncArg</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">PrintFuncArg</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">PrintFuncArg</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Argument</span> <span class="o">&amp;</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">is_buffer</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// In CUDA kernel, only primitive type is supported, so we replace the buffer with T*j</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">is_input</span><span class="p">())</span> <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;const &quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">buffer_arg</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">dtype</span><span class="p">);</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;* &quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">kCKeywordRestrict</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">ir</span><span class="o">::</span><span class="n">BufferGetTensorName</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">buffer_arg</span><span class="p">().</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">&gt;</span><span class="p">());</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">is_var</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">var_arg</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">is_cpp_handle</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">kCKeywordRestrict</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">arg</span><span class="p">.</span><span class="n">type</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">arg</span><span class="p">.</span><span class="n">name</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">PrintBuiltinCodes</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">,</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span> <span class="n">output_kind</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">ss_</span><span class="p">.</span><span class="n">str</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">for_nvrtc_</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;extern </span><span class="se">\&quot;</span><span class="s">C</span><span class="se">\&quot;</span><span class="s"> {</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">output_kind</span> <span class="o">==</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CHeader</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">GenerateHeaderFile</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">output_kind</span> <span class="o">==</span> <span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">PrintIncludes</span><span class="p">();</span>
+
+    <span class="n">PrintBuiltinCodes</span><span class="p">();</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">func</span> <span class="p">:</span> <span class="n">module</span><span class="p">.</span><span class="n">functions</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">Compile</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not supported OutputKind&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">for_nvrtc_</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n\n</span><span class="s">}&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">ss_</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">PrintIncludes</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;#include </span><span class="se">\&quot;</span><span class="s">cinn_cuda_runtime_source.cuh</span><span class="se">\&quot;\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;#ifdef __CUDACC_RTC__</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;typedef int int32_t;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;typedef char int8_t;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;#endif</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">PrintTempBufferCreation</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span> <span class="o">&amp;</span><span class="n">buffer</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_NE</span><span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="n">Void</span><span class="p">());</span>
+  <span class="k">auto</span> <span class="n">print_gpu_memory</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">mark</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">mark</span> <span class="o">&lt;&lt;</span> <span class="n">GetTypeRepr</span><span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">dtype</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;[ &quot;</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Print</span><span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; * &quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">Print</span><span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">back</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; ]&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">memory_type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">ir</span><span class="o">::</span><span class="n">MemoryType</span><span class="o">::</span><span class="nl">GPUShared</span><span class="p">:</span>
+      <span class="n">print_gpu_memory</span><span class="p">(</span><span class="s">&quot;__shared__ &quot;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="n">ir</span><span class="o">::</span><span class="n">MemoryType</span><span class="o">::</span><span class="nl">GPULocal</span><span class="p">:</span>
+      <span class="n">print_gpu_memory</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">default</span><span class="o">:</span>
+      <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;CUDA device codegen not support memory type &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">memory_type</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CodeGenCUDA_Dev</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+  <span class="n">Print</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">read_args</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace backends</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

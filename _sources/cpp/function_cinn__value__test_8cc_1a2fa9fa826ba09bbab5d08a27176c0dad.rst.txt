@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__value__test_8cc_1a2fa9fa826ba09bbab5d08a27176c0dad:
+
+Function cinn::common::TEST(CINNValue, test)
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(CINNValue, test)

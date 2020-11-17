@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File cinn_runtime.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-cinn-runtime-h">
+<span id="file-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h"></span><h1>File cinn_runtime.h<a class="headerlink" href="#file-cinn-runtime-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_runtime.html#dir-home-chunwei-project-cinn2-cinn-runtime"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cinn_runtime.h</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#included-by" id="id3">Included By</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id4">Classes</a></p></li>
+<li><p><a class="reference internal" href="#enums" id="id5">Enums</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id6">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id7">Defines</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id8">Typedefs</a></p></li>
+<li><p><a class="reference internal" href="#unions" id="id9">Unions</a></p></li>
+<li><p><a class="reference internal" href="#variables" id="id10">Variables</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cinn_runtime.h</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h.html">Program Listing for File cinn_runtime.h</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stddef.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdint.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdio.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdlib.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_string.h.html#file-home-chunwei-project-cinn2-cinn-utils-string-h"><span class="std std-ref">File string.h</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="included-by">
+<h2>Included By<a class="headerlink" href="#included-by" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h.html#file-home-chunwei-project-cinn2-cinn-backends-codegen-c-h"><span class="std std-ref">File codegen_c.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h.html#file-home-chunwei-project-cinn2-cinn-backends-codegen-cuda-dev-h"><span class="std std-ref">File codegen_cuda_dev.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-llvm-cc"><span class="std std-ref">File codegen_llvm.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86_test.cc.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-codegen-x86-test-cc"><span class="std std-ref">File codegen_x86_test.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc.html#file-home-chunwei-project-cinn2-cinn-common-cinn-value-cc"><span class="std std-ref">File cinn_value.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cinn_value.h.html#file-home-chunwei-project-cinn2-cinn-common-cinn-value-h"><span class="std std-ref">File cinn_value.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_target.cc.html#file-home-chunwei-project-cinn2-cinn-common-target-cc"><span class="std std-ref">File target.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_type.h.html#file-home-chunwei-project-cinn2-cinn-common-type-h"><span class="std std-ref">File type.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h.html#file-home-chunwei-project-cinn2-cinn-hlir-framework-buffer-h"><span class="std std-ref">File buffer.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_runtime.cc.html#file-home-chunwei-project-cinn2-cinn-pybind-runtime-cc"><span class="std std-ref">File runtime.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc.html#file-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-cc"><span class="std std-ref">File cinn_runtime.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime_test.cc.html#file-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-test-cc"><span class="std std-ref">File cinn_runtime_test.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc.html#file-home-chunwei-project-cinn2-cinn-runtime-cinn-x86-device-impl-cc"><span class="std std-ref">File cinn_x86_device_impl.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-cblas-h"><span class="std std-ref">File cblas.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-h"><span class="std std-ref">File host_intrinsics.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-mkl-math-h"><span class="std std-ref">File mkl_math.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cuda-cuda-util-h"><span class="std std-ref">File cuda_util.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h.html#file-home-chunwei-project-cinn2-cinn-runtime-intrinsic-h"><span class="std std-ref">File intrinsic.h</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="structcinn__buffer__t.html#exhale-struct-structcinn-buffer-t"><span class="std std-ref">Struct cinn_buffer_t</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn__device__interface__t.html#exhale-struct-structcinn-device-interface-t"><span class="std std-ref">Struct cinn_device_interface_t</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn__pod__value__t.html#exhale-struct-structcinn-pod-value-t"><span class="std std-ref">Struct cinn_pod_value_t</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn__type__t.html#exhale-struct-structcinn-type-t"><span class="std std-ref">Struct cinn_type_t</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="enum_cinn__runtime_8h_1aa18edb6ea1599f86f13e17b6f45a7131.html#exhale-enum-cinn-runtime-8h-1aa18edb6ea1599f86f13e17b6f45a7131"><span class="std std-ref">Enum cinn_buffer_kind_t</span></a></p></li>
+<li><p><a class="reference internal" href="enum_cinn__runtime_8h_1af60e93be8ea904162ec0b3fc2c991499.html#exhale-enum-cinn-runtime-8h-1af60e93be8ea904162ec0b3fc2c991499"><span class="std std-ref">Enum cinn_device_kind_t</span></a></p></li>
+<li><p><a class="reference internal" href="enum_cinn__runtime_8h_1a4f280c3f8da4aebd981f3769c207ebeb.html#exhale-enum-cinn-runtime-8h-1a4f280c3f8da4aebd981f3769c207ebeb"><span class="std std-ref">Enum cinn_type_code_t</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1ac6f7917391446ef39bd46308c2f75db8.html#exhale-function-cinn-runtime-8h-1ac6f7917391446ef39bd46308c2f75db8"><span class="std std-ref">Function __attribute__</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1aad342575a133c39c1cbe90214de1a400.html#exhale-function-cinn-runtime-8h-1aad342575a133c39c1cbe90214de1a400"><span class="std std-ref">Function buffer_p_to_cinn_pod_value()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1abea716ca447095875369f8b8ff920cac.html#exhale-function-cinn-runtime-8h-1abea716ca447095875369f8b8ff920cac"><span class="std std-ref">Function cinn_args_construct(cinn_pod_value_t *, int, …)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1ab438271d56e2327a9c8146d9268bcb6c.html#exhale-function-cinn-runtime-8h-1ab438271d56e2327a9c8146d9268bcb6c"><span class="std std-ref">Function cinn_buffer_copy(void *, struct cinn_buffer_t *, struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a56441486517fa7526740d68703a91e01.html#exhale-function-cinn-runtime-8h-1a56441486517fa7526740d68703a91e01"><span class="std std-ref">Function cinn_buffer_copy_to_device(void *, struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1ad7fcb08a5930587025f6455a19b33303.html#exhale-function-cinn-runtime-8h-1ad7fcb08a5930587025f6455a19b33303"><span class="std std-ref">Function cinn_buffer_copy_to_host(void *, struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a2ac2a6c2ed31b2a9a24e81a6d1fcce6c.html#exhale-function-cinn-runtime-8h-1a2ac2a6c2ed31b2a9a24e81a6d1fcce6c"><span class="std std-ref">Function cinn_buffer_free(void *, struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a1110225df0bad0878e4cdafe5c0f5e6a.html#exhale-function-cinn-runtime-8h-1a1110225df0bad0878e4cdafe5c0f5e6a"><span class="std std-ref">Function cinn_buffer_get_data_const_handle(const struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1ade10c3ce36c0e9cb217628c74d12e4ad.html#exhale-function-cinn-runtime-8h-1ade10c3ce36c0e9cb217628c74d12e4ad"><span class="std std-ref">Function cinn_buffer_get_data_handle(struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a09952b3d3be54deb5cc6873ac1ccbc51.html#exhale-function-cinn-runtime-8h-1a09952b3d3be54deb5cc6873ac1ccbc51"><span class="std std-ref">Function cinn_buffer_malloc(void *, struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a2c2de9b24bf122e1c7e392f995dcbcd9.html#exhale-function-cinn-runtime-8h-1a2c2de9b24bf122e1c7e392f995dcbcd9"><span class="std std-ref">Function cinn_device_release(void *, const struct cinn_device_interface_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a37791fedfaa366416de6c1249d0a1034.html#exhale-function-cinn-runtime-8h-1a37791fedfaa366416de6c1249d0a1034"><span class="std std-ref">Function cinn_device_sync(void *, struct cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a40871d1e92c951874ecf064b3a335027.html#exhale-function-cinn-runtime-8h-1a40871d1e92c951874ecf064b3a335027"><span class="std std-ref">Function cinn_float32_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a4956a1b7f09c842fc33b7d8c85151eef.html#exhale-function-cinn-runtime-8h-1a4956a1b7f09c842fc33b7d8c85151eef"><span class="std std-ref">Function cinn_float64_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a7e3f4ea08e55c4380acc1a7231ce5ff3.html#exhale-function-cinn-runtime-8h-1a7e3f4ea08e55c4380acc1a7231ce5ff3"><span class="std std-ref">Function cinn_int32_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1af10bfea365f80f17dccded066847a03b.html#exhale-function-cinn-runtime-8h-1af10bfea365f80f17dccded066847a03b"><span class="std std-ref">Function cinn_int64_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a548ad277b674f8da8c41b2f9b0d505c7.html#exhale-function-cinn-runtime-8h-1a548ad277b674f8da8c41b2f9b0d505c7"><span class="std std-ref">Function cinn_max</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a2e6e5e968ec7cf167090cbe5102aeaed.html#exhale-function-cinn-runtime-8h-1a2e6e5e968ec7cf167090cbe5102aeaed"><span class="std std-ref">Function cinn_min</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1ae2a058387c87668445f9c910759d9e75.html#exhale-function-cinn-runtime-8h-1ae2a058387c87668445f9c910759d9e75"><span class="std std-ref">Function cinn_pod_value_to_buffer_p()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a05942afc82bc0040ecb79681d5adfeb2.html#exhale-function-cinn-runtime-8h-1a05942afc82bc0040ecb79681d5adfeb2"><span class="std std-ref">Function cinn_pod_value_to_double()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a681ae3eb9f5d2ebfead965175219e48b.html#exhale-function-cinn-runtime-8h-1a681ae3eb9f5d2ebfead965175219e48b"><span class="std std-ref">Function cinn_pod_value_to_float()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a6cf7da05c930237067e471a641ce7a96.html#exhale-function-cinn-runtime-8h-1a6cf7da05c930237067e471a641ce7a96"><span class="std std-ref">Function cinn_pod_value_to_int32()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a69b0334c5c144699f74f2b157a111d02.html#exhale-function-cinn-runtime-8h-1a69b0334c5c144699f74f2b157a111d02"><span class="std std-ref">Function cinn_pod_value_to_int64()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a873e1a2b777e58bfff062d4b6a28553a.html#exhale-function-cinn-runtime-8h-1a873e1a2b777e58bfff062d4b6a28553a"><span class="std std-ref">Function cinn_pod_value_to_void_p()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a15bcd8c3de1cc580d3f17253946f23a6.html#exhale-function-cinn-runtime-8h-1a15bcd8c3de1cc580d3f17253946f23a6"><span class="std std-ref">Function cinn_print_debug_args(cinn_pod_value_t *, int)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a4a05c0ded83cbd18456c792ee7d37750.html#exhale-function-cinn-runtime-8h-1a4a05c0ded83cbd18456c792ee7d37750"><span class="std std-ref">Function cinn_print_debug_string(const char *, …)</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a2332189074692cd3b5520f236725a616.html#exhale-function-cinn-runtime-8h-1a2332189074692cd3b5520f236725a616"><span class="std std-ref">Function cinn_uint32_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1afd051dd0ebb208f80cff4c64ed797b5c.html#exhale-function-cinn-runtime-8h-1afd051dd0ebb208f80cff4c64ed797b5c"><span class="std std-ref">Function cinn_uint64_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a9c9eebf87f071052eafe3cb76f9d340d.html#exhale-function-cinn-runtime-8h-1a9c9eebf87f071052eafe3cb76f9d340d"><span class="std std-ref">Function cinn_unk_t()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1af2d5b7ea83193f691071c9b5981e070e.html#exhale-function-cinn-runtime-8h-1af2d5b7ea83193f691071c9b5981e070e"><span class="std std-ref">Function float_to_cinn_pod_value()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1ad3b67127001a7a930ba53ae42c7b859d.html#exhale-function-cinn-runtime-8h-1ad3b67127001a7a930ba53ae42c7b859d"><span class="std std-ref">Function handle_to_cinn_pod_value()</span></a></p></li>
+<li><p><a class="reference internal" href="function_cinn__runtime_8h_1a5af2147e3b85c187a33af687b1846fa4.html#exhale-function-cinn-runtime-8h-1a5af2147e3b85c187a33af687b1846fa4"><span class="std std-ref">Function int32_to_cinn_pod_value()</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1a6a758320a0fad126c845860ea05de914.html#exhale-define-cinn-runtime-8h-1a6a758320a0fad126c845860ea05de914"><span class="std std-ref">Define ASSERT_NOT_NULL</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1aabcad300b2ba7dc5481948f76004a04a.html#exhale-define-cinn-runtime-8h-1aabcad300b2ba7dc5481948f76004a04a"><span class="std std-ref">Define CINN_ALWAYS_INLINE</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1a5bc9641c4ff8811fc3845fb09e828c65.html#exhale-define-cinn-runtime-8h-1a5bc9641c4ff8811fc3845fb09e828c65"><span class="std std-ref">Define CINN_ATTRIBUTE_ALIGN</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1aed5dc9e04676991703fb44075cc5fae8.html#exhale-define-cinn-runtime-8h-1aed5dc9e04676991703fb44075cc5fae8"><span class="std std-ref">Define CINN_BUFFER_MAX_DIMS</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1a5a9f297cec5a5a764e7e6b3a54b37030.html#exhale-define-cinn-runtime-8h-1a5a9f297cec5a5a764e7e6b3a54b37030"><span class="std std-ref">Define CINN_CHECK</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1a8950fc5b379c6e4df85e745054c0c288.html#exhale-define-cinn-runtime-8h-1a8950fc5b379c6e4df85e745054c0c288"><span class="std std-ref">Define CINN_CHECK_EQ</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1a75313abc9c18edaaa0eeae4d1d1f825d.html#exhale-define-cinn-runtime-8h-1a75313abc9c18edaaa0eeae4d1d1f825d"><span class="std std-ref">Define CINN_CHECK_LT</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1aa2455a107a577911de6e5f28a075002e.html#exhale-define-cinn-runtime-8h-1aa2455a107a577911de6e5f28a075002e"><span class="std std-ref">Define CINN_CHECKP</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1ad5f3c43a6ecbc9c846549ca545f90564.html#exhale-define-cinn-runtime-8h-1ad5f3c43a6ecbc9c846549ca545f90564"><span class="std std-ref">Define CINN_LOG</span></a></p></li>
+<li><p><a class="reference internal" href="define_cinn__runtime_8h_1a8c58d792d547396ca770cc718e4fd9a9.html#exhale-define-cinn-runtime-8h-1a8c58d792d547396ca770cc718e4fd9a9"><span class="std std-ref">Define CINN_RUNTIME_NOT_IMPLEMENTED</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="typedefs">
+<h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1ae8498075316108d07f90e7aac33e78ee.html#exhale-typedef-cinn-runtime-8h-1ae8498075316108d07f90e7aac33e78ee"><span class="std std-ref">Typedef cinn_buffer_kind_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1a8d263279163a54da179c81a1500611f1.html#exhale-typedef-cinn-runtime-8h-1a8d263279163a54da179c81a1500611f1"><span class="std std-ref">Typedef cinn_buffer_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1a00618ecef143976e86b6cf2e6d42d788.html#exhale-typedef-cinn-runtime-8h-1a00618ecef143976e86b6cf2e6d42d788"><span class="std std-ref">Typedef cinn_device_kind_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1aeb22db9448497e685434c38f46051631.html#exhale-typedef-cinn-runtime-8h-1aeb22db9448497e685434c38f46051631"><span class="std std-ref">Typedef cinn_dimension_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1a6d87e5a3cf1965085316a78f2dd5059b.html#exhale-typedef-cinn-runtime-8h-1a6d87e5a3cf1965085316a78f2dd5059b"><span class="std std-ref">Typedef cinn_pod_value_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1a10cc8fa4b7027c086a4249a925ace436.html#exhale-typedef-cinn-runtime-8h-1a10cc8fa4b7027c086a4249a925ace436"><span class="std std-ref">Typedef cinn_type_code_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1a156658972bb91abc3cab552d89d110ee.html#exhale-typedef-cinn-runtime-8h-1a156658972bb91abc3cab552d89d110ee"><span class="std std-ref">Typedef cinn_type_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_cinn__runtime_8h_1ae659016a50e5079ca62142a5ff36bd2a.html#exhale-typedef-cinn-runtime-8h-1ae659016a50e5079ca62142a5ff36bd2a"><span class="std std-ref">Typedef lower_func_ptr_t</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="unions">
+<h2>Unions<a class="headerlink" href="#unions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="unioncinn__value__t.html#exhale-union-unioncinn-value-t"><span class="std std-ref">Union cinn_value_t</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="variable_cinn__runtime_8h_1a894bdfa2d603d8343f8ef01dda6fcd23.html#exhale-variable-cinn-runtime-8h-1a894bdfa2d603d8343f8ef01dda6fcd23"><span class="std std-ref">Variable offset</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

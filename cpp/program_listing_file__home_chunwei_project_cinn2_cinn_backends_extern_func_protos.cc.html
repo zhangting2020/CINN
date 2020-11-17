@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File extern_func_protos.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-extern-func-protos-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-extern-func-protos-cc"></span><h1>Program Listing for File extern_func_protos.cc<a class="headerlink" href="#program-listing-for-file-extern-func-protos-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.cc.html#file-home-chunwei-project-cinn2-cinn-backends-extern-func-protos-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/extern_func_protos.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/extern_func_protos.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">backends</span> <span class="p">{</span>
+
+<span class="n">ExternFunctionProtoRegistry</span><span class="o">::</span><span class="n">ExternFunctionProtoRegistry</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">extern_funcs_fp32</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s">&quot;exp&quot;</span><span class="p">,</span>      <span class="s">&quot;erf&quot;</span><span class="p">,</span>   <span class="s">&quot;sigmoid&quot;</span><span class="p">,</span>    <span class="s">&quot;sqrt&quot;</span><span class="p">,</span>        <span class="s">&quot;log&quot;</span><span class="p">,</span>        <span class="s">&quot;log2&quot;</span><span class="p">,</span>        <span class="s">&quot;log10&quot;</span><span class="p">,</span>       <span class="s">&quot;floor&quot;</span><span class="p">,</span>
+      <span class="s">&quot;ceil&quot;</span><span class="p">,</span>     <span class="s">&quot;round&quot;</span><span class="p">,</span> <span class="s">&quot;trunc&quot;</span><span class="p">,</span>      <span class="s">&quot;cos&quot;</span><span class="p">,</span>         <span class="s">&quot;cosh&quot;</span><span class="p">,</span>       <span class="s">&quot;tan&quot;</span><span class="p">,</span>         <span class="s">&quot;sin&quot;</span><span class="p">,</span>         <span class="s">&quot;sinh&quot;</span><span class="p">,</span>
+      <span class="s">&quot;acos&quot;</span><span class="p">,</span>     <span class="s">&quot;acosh&quot;</span><span class="p">,</span> <span class="s">&quot;asin&quot;</span><span class="p">,</span>       <span class="s">&quot;asinh&quot;</span><span class="p">,</span>       <span class="s">&quot;atan&quot;</span><span class="p">,</span>       <span class="s">&quot;atanh&quot;</span><span class="p">,</span>       <span class="s">&quot;isnan&quot;</span><span class="p">,</span>       <span class="s">&quot;tanh&quot;</span><span class="p">,</span>
+      <span class="s">&quot;isfinite&quot;</span><span class="p">,</span> <span class="s">&quot;isinf&quot;</span><span class="p">,</span> <span class="s">&quot;left_shift&quot;</span><span class="p">,</span> <span class="s">&quot;right_shift&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_or&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_and&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_xor&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_not&quot;</span><span class="p">};</span>
+  <span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">extern_funcs_int64</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s">&quot;left_shift&quot;</span><span class="p">,</span> <span class="s">&quot;right_shift&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_or&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_and&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_xor&quot;</span><span class="p">,</span> <span class="s">&quot;bitwise_not&quot;</span><span class="p">};</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">extern_funcs_fp32</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">proto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FunctionProto</span><span class="p">(</span><span class="n">extern_funcs_fp32</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">{</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">)},</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="n">Register</span><span class="p">(</span><span class="n">proto</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">proto</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">extern_funcs_int64</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">proto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FunctionProto</span><span class="p">(</span><span class="n">extern_funcs_int64</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">{</span><span class="n">Int</span><span class="p">(</span><span class="mi">64</span><span class="p">)},</span> <span class="n">Int</span><span class="p">(</span><span class="mi">64</span><span class="p">));</span>
+    <span class="n">Register</span><span class="p">(</span><span class="n">proto</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">proto</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">n</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">CreateTanhVProto</span><span class="p">();</span>
+  <span class="n">Register</span><span class="p">(</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">ExternFunctionProtoRegistry</span><span class="o">&amp;</span> <span class="n">ExternFunctionProtoRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="n">ExternFunctionProtoRegistry</span> <span class="n">x</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">namespace</span> <span class="n">detail</span> <span class="p">{</span>
+
+<span class="n">FunctionProto</span><span class="o">*</span> <span class="n">CreateTanhVProto</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">FunctionProto</span><span class="p">(</span>
+      <span class="n">extern_func__tanh_v</span><span class="p">,</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">()},</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">()},</span> <span class="n">Void</span><span class="p">(),</span> <span class="n">FunctionProto</span><span class="o">::</span><span class="n">ShapeFollowNthArgument</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace detail</span>
+<span class="p">}</span>  <span class="c1">// namespace backends</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1aa28136d51a8ae32a1de9a3008e548218:
+
+Function cinn::TEST(test02_matmul, basic)
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(test02_matmul, basic)

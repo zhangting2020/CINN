@@ -1,0 +1,25 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.h:
+
+Program Listing for File cache_read_write_replace.h
+===================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.h>` (``/home/chunwei/project/cinn2/cinn/optim/cache_read_write_replace.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <string>
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/poly/stage.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void CacheReadWriteReplace(Expr* expr, poly::StageMap stages, std::map<std::string, ir::Tensor>* global_tensor_map);
+   
+   }  // namespace optim
+   }  // namespace cinn

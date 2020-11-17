@@ -1,0 +1,73 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86_test.cc:
+
+File codegen_c_x86_test.cc
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/codegen_c_x86_test.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c_x86.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/lang/lower.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`)
+
+- ``cinn/lang/placeholder.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`)
+
+- ``cinn/optim/ir_simplify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h`)
+
+- ``cinn/optim/transform_polyfor_to_for.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.h`)
+
+- ``cinn/optim/vectorize_loops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_codegen__c__x86__test_8cc_1a43be4c9cdf40631c48243c672a007569`
+

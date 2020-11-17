@@ -1,0 +1,60 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h:
+
+File reduction.h
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pe>` (``/home/chunwei/project/cinn2/cinn/hlir/pe``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pe/reduction.h``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_pe.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__pe`
+

@@ -1,0 +1,13 @@
+.. _exhale_function_compute__inline__expand_8cc_1add17cdd4256e75eba1f5c9dbad19dc3b:
+
+Function cinn::optim::ComputeInlineExpand
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::ComputeInlineExpand(Expr *, poly::StageMap)

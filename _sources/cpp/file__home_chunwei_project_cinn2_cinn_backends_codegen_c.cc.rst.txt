@@ -1,0 +1,89 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc:
+
+File codegen_c.cc
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/codegen_c.cc``)
+-----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`)
+
+- ``cinn/backends/extern_func_emitter.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`)
+
+- ``cinn/ir/ir_verify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.h`)
+
+- ``cinn/ir/lowered_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`)
+
+- ``cinn/optim/remove_nested_block.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h`)
+
+- ``cinn/runtime/intrinsic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``fstream``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+- :ref:`namespace_cinn__backends__detail`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_codegen__c_8cc_1accddd26ff044a82343f89ae7e530d0f8`
+
+- :ref:`exhale_function_codegen__c_8cc_1a8b80107752ec905ba86b6ab850eb32b7`
+
+- :ref:`exhale_function_namespacecinn_1a203c2bc27a6d4fbc3a0d1f867d22e38f`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_codegen__c_8cc_1a6604f17d32e6e066f93321882e5460d1`
+
+- :ref:`exhale_define_codegen__c_8cc_1adb03bf7c56dfa07a60577fa63aa89f70`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_codegen__c_8cc_1ade6c3cc7ecd85f7509c4ea36e63f3c09`
+

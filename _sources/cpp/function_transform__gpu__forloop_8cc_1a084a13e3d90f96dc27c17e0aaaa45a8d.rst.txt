@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop_8cc_1a084a13e3d90f96dc27c17e0aaaa45a8d:
+
+Function cinn::optim::TransformGpuForloops
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TransformGpuForloops(const forloop_infos_t&, Expr *)

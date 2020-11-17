@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math_8cc_1a4b8886851e00577f3a4957e4f36981a6:
+
+Function CINN_REGISTER_HELPER(mkl_math)
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: CINN_REGISTER_HELPER(mkl_math)

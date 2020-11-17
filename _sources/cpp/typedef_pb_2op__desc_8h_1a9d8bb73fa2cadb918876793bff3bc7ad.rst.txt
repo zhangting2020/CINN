@@ -1,0 +1,13 @@
+.. _exhale_typedef_pb_2op__desc_8h_1a9d8bb73fa2cadb918876793bff3bc7ad:
+
+Typedef cinn::frontend::paddle::pb::Attribute
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_op_desc.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::frontend::paddle::pb::Attribute

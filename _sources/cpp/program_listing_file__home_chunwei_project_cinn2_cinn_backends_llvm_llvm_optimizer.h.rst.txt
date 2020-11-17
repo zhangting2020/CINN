@@ -1,0 +1,41 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.h:
+
+Program Listing for File llvm_optimizer.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.h>` (``/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_optimizer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <llvm/IR/Instruction.h>
+   #include <llvm/IR/LegacyPassManager.h>
+   #include <llvm/IR/Module.h>
+   #include <llvm/Pass.h>
+   #include <llvm/Target/TargetMachine.h>
+   
+   #include <functional>
+   
+   namespace cinn::backends {
+   
+   // TODO(fc500110): define class OptimizeOptions
+   
+   // llvm module optimizer
+   class LLVMModuleOptimizer final {
+    public:
+     explicit LLVMModuleOptimizer(llvm::TargetMachine *machine,
+                                  int opt_level,
+                                  llvm::FastMathFlags fast_math_flags,
+                                  bool print_passes = false);
+     void operator()(llvm::Module *m);
+   
+    private:
+     llvm::TargetMachine *machine_;
+     int opt_level_{};
+     bool print_passes_{};
+   };
+   }  // namespace cinn::backends

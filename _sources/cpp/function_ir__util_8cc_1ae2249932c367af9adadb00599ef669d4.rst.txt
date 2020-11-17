@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1ae2249932c367af9adadb00599ef669d4:
+
+Function cinn::common::cast
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::cast(Expr, Type)

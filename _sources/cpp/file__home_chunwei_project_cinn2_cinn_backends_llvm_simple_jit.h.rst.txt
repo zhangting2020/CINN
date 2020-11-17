@@ -1,0 +1,133 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h:
+
+File simple_jit.h
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/simple_jit.h``)
+----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/llvm_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`)
+
+- ``cinn/backends/llvm/runtime_symbol_registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/runtime/intrinsic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``llvm/AsmParser/Parser.h``
+
+- ``llvm/ExecutionEngine/ExecutionEngine.h``
+
+- ``llvm/ExecutionEngine/JITSymbol.h``
+
+- ``llvm/ExecutionEngine/Orc/CompileUtils.h``
+
+- ``llvm/ExecutionEngine/Orc/ExecutionUtils.h``
+
+- ``llvm/ExecutionEngine/Orc/IRCompileLayer.h``
+
+- ``llvm/ExecutionEngine/Orc/LLJIT.h``
+
+- ``llvm/ExecutionEngine/Orc/LambdaResolver.h``
+
+- ``llvm/ExecutionEngine/Orc/RTDyldObjectLinkingLayer.h``
+
+- ``llvm/ExecutionEngine/Orc/ThreadSafeModule.h``
+
+- ``llvm/ExecutionEngine/SectionMemoryManager.h``
+
+- ``llvm/IR/IRBuilder.h``
+
+- ``llvm/IR/Module.h``
+
+- ``llvm/Support/Error.h``
+
+- ``llvm/Support/MemoryBuffer.h``
+
+- ``llvm/Support/SmallVectorMemoryBuffer.h``
+
+- ``llvm/Support/TargetSelect.h``
+
+- ``llvm/Support/raw_ostream.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string_view``
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1SimpleJIT`
+

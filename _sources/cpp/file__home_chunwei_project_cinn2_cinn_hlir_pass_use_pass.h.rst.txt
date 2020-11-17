@@ -1,0 +1,53 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h:
+
+File use_pass.h
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pass>` (``/home/chunwei/project/cinn2/cinn/hlir/pass``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pass/use_pass.h``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc`
+
+
+

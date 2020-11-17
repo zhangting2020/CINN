@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1poly_1_1DataFlowGraphEdge:
+
+Struct DataFlowGraphEdge
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_graph.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::GraphEdge`` (:ref:`exhale_class_classcinn_1_1common_1_1GraphEdge`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::poly::DataFlowGraphEdge
+   :members:
+   :protected-members:
+   :undoc-members:

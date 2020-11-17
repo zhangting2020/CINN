@@ -1,0 +1,80 @@
+.. _exhale_class_classcinn_1_1ir_1_1IrNode:
+
+Class IrNode
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::Object`` (:ref:`exhale_struct_structcinn_1_1common_1_1Object`)
+
+
+Derived Types
+*************
+
+- ``public cinn::ir::ExprNode< T >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::FunctionBase`` (:ref:`exhale_class_classcinn_1_1ir_1_1FunctionBase`)
+- ``public cinn::ir::IntrinsicOp`` (:ref:`exhale_class_classcinn_1_1ir_1_1IntrinsicOp`)
+- ``private cinn::pybind::IrNodeWrapper`` (:ref:`exhale_class_classcinn_1_1pybind_1_1IrNodeWrapper`)
+- ``public cinn::ir::ExprNode< _Buffer_ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< _LoweredFunc_ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< _Module_ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< _Tensor_ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< _Var_ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Add >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Alloc >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< And >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Block >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Broadcast >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Call >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Cast >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Div >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< EQ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< FloatImm >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< For >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< FracOp >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Free >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< GE >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< GT >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< IfThenElse >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< IntImm >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< LE >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Let >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Load >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< LT >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Max >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Min >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Minus >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Mod >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Mul >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< NE >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Not >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Or >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< PolyFor >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Power >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< PrimitiveNode >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Product >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Ramp >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Reduce >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Select >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Store >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< StringImm >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Sub >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< Sum >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ExprNode< UIntImm >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::IrNode
+   :members:
+   :protected-members:
+   :undoc-members:

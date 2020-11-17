@@ -1,0 +1,67 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_debug_manager.h:
+
+File debug_manager.h
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/debug_manager.h``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_debug_manager.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``any``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_context.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_debug_manager.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1common_1_1DebugManager`
+

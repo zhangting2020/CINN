@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1a6fd210800dc6dadd34f2673fd62c5383:
+
+Variable cinn::batch
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::batch

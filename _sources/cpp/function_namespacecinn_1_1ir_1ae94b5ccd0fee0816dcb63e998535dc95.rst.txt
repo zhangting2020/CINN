@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1ae94b5ccd0fee0816dcb63e998535dc95:
+
+Function cinn::ir::TEST(IrVerify, basic)
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(IrVerify, basic)

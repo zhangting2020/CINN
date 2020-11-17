@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Function cinn::lang::ProcessComputeAtInfo &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Function cinn::lang::ReduceMax" href="function_builtin_8h_1a7680d5171b1ae6815650c7f476a9c572.html" />
+    <link rel="prev" title="Function cinn::lang::Negative" href="function_builtin_8h_1a36944908ffa71a0a5f7cd76e3f9b701d.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="function-cinn-lang-processcomputeatinfo">
+<span id="exhale-function-compute-at-postprocess-8cc-1a1b9cbe9e2d8c66d361a1cf9ad268ff22"></span><h1>Function cinn::lang::ProcessComputeAtInfo<a class="headerlink" href="#function-cinn-lang-processcomputeatinfo" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc.html#file-home-chunwei-project-cinn2-cinn-lang-compute-at-postprocess-cc"><span class="std std-ref">File compute_at_postprocess.cc</span></a></p></li>
+</ul>
+<div class="section" id="function-documentation">
+<h2>Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang20ProcessComputeAtInfoEP4ExprN4poly8StageMapE">
+<span id="_CPPv3N4cinn4lang20ProcessComputeAtInfoEP4ExprN4poly8StageMapE"></span><span id="_CPPv2N4cinn4lang20ProcessComputeAtInfoEP4ExprN4poly8StageMapE"></span><span id="cinn::lang::ProcessComputeAtInfo__ExprP.poly::StageMap"></span><span class="target" id="compute__at__postprocess_8cc_1a1b9cbe9e2d8c66d361a1cf9ad268ff22"></span>void <code class="sig-prename descclassname">cinn::lang<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">ProcessComputeAtInfo</code><span class="sig-paren">(</span>Expr *<em>expr</em>, poly::StageMap <em>stages</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang20ProcessComputeAtInfoEP4ExprN4poly8StageMapE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Deal with the <code class="docutils literal notranslate"><span class="pre">compute_at</span></code> transform, in the stage transform phase, we modified the domain and transform of the producer tensor, after isl Ast generation, there remains some postprocess here include</p>
+<p><ol class="loweralpha simple">
+<li><p>in producer tensor load, make each axis to zero</p></li>
+<li><p>add offset</p></li>
+</ol>
+</p>
+<p>e.g.</p>
+<p>auto A_cache = Compute({M, N}, [&amp;](Expr i, Expr j) { return A(i, j); }, “cache”); auto C = Compute( {Expr(10), Expr(10)}, [&amp;](Expr i, Expr j) { return A_cache(i, j) + A_cache(i+1,j) + B(i, j); }, “C”); A_cache-&gt;stage()-&gt;ComputeAt2(C-&gt;stage(), 0);</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="nf">fn</span> <span class="p">(</span><span class="n">_A</span><span class="p">,</span> <span class="n">_B</span><span class="p">,</span> <span class="n">_cache</span><span class="p">,</span> <span class="n">_C</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">_p0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">cache</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="n">C</span><span class="p">[</span><span class="n">_p0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="n">_p0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cache</span><span class="p">[(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">_p0</span><span class="p">),</span> <span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">_p0</span><span class="p">,</span> <span class="n">i</span><span class="p">]))</span>
+     <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p>The expression <code class="docutils literal notranslate"><span class="pre">C[_p0,</span> <span class="pre">i]</span> <span class="pre">=</span> <span class="pre">(cache[_p0,</span> <span class="pre">i]</span> <span class="pre">+</span> <span class="pre">(cache[(1</span> <span class="pre">+</span> <span class="pre">_p0),</span> <span class="pre">i]</span> <span class="pre">+</span> <span class="pre">B[_p0,</span> <span class="pre">i]))</span></code> produces tensor <code class="docutils literal notranslate"><span class="pre">C</span></code>, but the cache should start from zero. </p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ Symbols</a><ul>
+      <li>Previous: <a href="function_builtin_8h_1a36944908ffa71a0a5f7cd76e3f9b701d.html" title="previous chapter">Function cinn::lang::Negative</a></li>
+      <li>Next: <a href="function_builtin_8h_1a7680d5171b1ae6815650c7f476a9c572.html" title="next chapter">Function cinn::lang::ReduceMax</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/function_compute__at__postprocess_8cc_1a1b9cbe9e2d8c66d361a1cf9ad268ff22.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

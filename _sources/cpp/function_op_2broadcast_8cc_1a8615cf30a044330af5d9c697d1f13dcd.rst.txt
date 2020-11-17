@@ -1,0 +1,13 @@
+.. _exhale_function_op_2broadcast_8cc_1a8615cf30a044330af5d9c697d1f13dcd:
+
+Function cinn::hlir::op::InferShapeForElementwise
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForElementwise(const std::vector<shape_t>&, const framework::NodeAttr&)

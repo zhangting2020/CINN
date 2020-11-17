@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime__test_8cc_1a1a516f0b50667db122d6cec5782232ec:
+
+Function TEST(buffer, basic)
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: TEST(buffer, basic)

@@ -1,0 +1,63 @@
+.. _dir__home_chunwei_project_cinn2_cinn_ir:
+
+
+Directory ir
+============
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn>` (``/home/chunwei/project/cinn2/cinn``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/ir``
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_context.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_context.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_definition.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_definition.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_module.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+

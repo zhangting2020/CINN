@@ -1,0 +1,46 @@
+
+.. _namespace_cinn__runtime:
+
+Namespace cinn::runtime
+=======================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__runtime__cpu`
+
+- :ref:`namespace_cinn__runtime__cuda`
+
+- :ref:`namespace_cinn__runtime__intrisic`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1runtime_1_1BufferType`
+
+- :ref:`exhale_struct_structcinn_1_1runtime_1_1Shape`
+
+- :ref:`exhale_class_classcinn_1_1runtime_1_1Buffer`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_intrinsic_8cc_1aebed44167696805584bf92bcb97843ee`
+
+- :ref:`exhale_function_intrinsic__types_8h_1a702a59d189a68e4cde8fb2c872b989a4`
+
+- :ref:`exhale_function_intrinsic_8cc_1affcfadd3a55668253c7319653408446d`

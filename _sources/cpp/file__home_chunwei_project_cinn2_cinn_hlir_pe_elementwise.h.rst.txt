@@ -1,0 +1,88 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h:
+
+File elementwise.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pe>` (``/home/chunwei/project/cinn2/cinn/hlir/pe``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pe/elementwise.h``)
+-----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_pe.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__pe`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_elementwise_8h_1a51e937732608d71ad3da4b8eb752cde9`
+
+- :ref:`exhale_function_elementwise_8h_1abeaa74eadf6291ce221d49ebb22d0fd4`
+
+- :ref:`exhale_function_elementwise_8h_1a20ffa2e0185b7fef8f1112691df59f17`
+
+- :ref:`exhale_function_elementwise_8h_1af7f6cc4520e18ab7a8ab3689dc24fe50`
+
+- :ref:`exhale_function_elementwise_8h_1af66b4d359e1f47561aca13aa1002a875`
+
+- :ref:`exhale_function_elementwise_8h_1a1d40a63c4fea048f67e03a01311b960d`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_elementwise_8h_1a19a178829be72b78f62c7290703bc07d`
+

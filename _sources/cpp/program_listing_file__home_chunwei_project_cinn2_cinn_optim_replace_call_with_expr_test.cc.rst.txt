@@ -1,0 +1,29 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc:
+
+Program Listing for File replace_call_with_expr_test.cc
+=======================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc>` (``/home/chunwei/project/cinn2/cinn/optim/replace_call_with_expr_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/optim/replace_call_with_expr.h"
+   
+   #include <gtest/gtest.h>
+   
+   #include "cinn/ir/buffer.h"
+   #include "cinn/ir/ir_operators.h"
+   #include "cinn/ir/ir_printer.h"
+   #include "cinn/lang/placeholder.h"
+   #include "cinn/poly/ast_gen.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   using namespace poly;
+   
+   }  // namespace optim
+   }  // namespace cinn

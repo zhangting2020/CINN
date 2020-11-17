@@ -1,0 +1,20 @@
+
+.. _namespace_cinn__hlir__pass:
+
+Namespace cinn::hlir::pass
+==========================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_infershape_8cc_1a84fd9bd735fcc2fe4efdfe8a9a1fbc99`

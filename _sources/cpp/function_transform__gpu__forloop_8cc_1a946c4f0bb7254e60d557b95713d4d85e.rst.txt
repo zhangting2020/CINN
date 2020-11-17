@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop_8cc_1a946c4f0bb7254e60d557b95713d4d85e:
+
+Function cinn::optim::GatherAxisInfoFromStages
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::GatherAxisInfoFromStages(const std::vector<poly::Stage *>&)

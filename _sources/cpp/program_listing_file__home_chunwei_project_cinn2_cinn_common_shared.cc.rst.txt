@@ -1,0 +1,13 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_shared.cc:
+
+Program Listing for File shared.cc
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_shared.cc>` (``/home/chunwei/project/cinn2/cinn/common/shared.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/common/shared.h"

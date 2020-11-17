@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__c__test_8cc_1a01d27a9ba808a18750d504ab123987e5:
+
+Function cinn::backends::TEST(CodeGenC, matmul_packed)
+======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(CodeGenC, matmul_packed)

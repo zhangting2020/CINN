@@ -1,0 +1,27 @@
+.. _exhale_class_classcinn_1_1common_1_1Graph:
+
+Class Graph
+===========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public cinn::hlir::framework::Graph`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Graph`)
+- ``public cinn::poly::DataFlowGraph`` (:ref:`exhale_struct_structcinn_1_1poly_1_1DataFlowGraph`)
+- ``public cinn::poly::ScheduleGraph`` (:ref:`exhale_struct_structcinn_1_1poly_1_1ScheduleGraph`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::common::Graph
+   :members:
+   :protected-members:
+   :undoc-members:

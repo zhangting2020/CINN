@@ -1,0 +1,13 @@
+.. _exhale_variable_cinn__runtime_8h_1a894bdfa2d603d8343f8ef01dda6fcd23:
+
+Variable offset
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: offset

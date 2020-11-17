@@ -1,0 +1,70 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc:
+
+File frontend.cc
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/frontend.cc``)
+--------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/frontend/interpreter.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.h`)
+
+- ``cinn/frontend/syntax.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`)
+
+- ``cinn/hlir/framework/graph.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`)
+
+- ``cinn/hlir/framework/graph_compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h`)
+
+- ``cinn/hlir/framework/pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``cinn/utils/timer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_timer.h`)
+
+- ``pybind11/functional.h``
+
+- ``pybind11/numpy.h``
+
+- ``pybind11/operators.h``
+
+- ``pybind11/pybind11.h``
+
+- ``pybind11/stl.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+

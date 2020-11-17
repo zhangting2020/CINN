@@ -1,0 +1,54 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.h:
+
+File cast_simplify.h
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/cast_simplify.h``)
+-----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__optim`
+

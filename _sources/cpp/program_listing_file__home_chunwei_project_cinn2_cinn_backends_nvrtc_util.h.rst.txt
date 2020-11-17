@@ -1,0 +1,41 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util.h:
+
+Program Listing for File nvrtc_util.h
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util.h>` (``/home/chunwei/project/cinn2/cinn/backends/nvrtc_util.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #ifdef CINN_WITH_CUDA
+   #if defined(__linux__)
+   #include <sys/stat.h>
+   #endif
+   #include <glog/logging.h>
+   
+   #include <string>
+   #include <vector>
+   
+   namespace cinn {
+   namespace backends {
+   
+   class NVRTC_Compiler {
+    public:
+     std::string operator()(const std::string& code, bool include_headers = true);
+   
+    private:
+     std::vector<std::string> FindCUDAIncludePaths();
+   
+     std::vector<std::string> FindCINNRuntimeIncludePaths();
+   
+     std::string CompilePTX(const std::string& code, bool include_headers);
+   };
+   
+   }  // namespace backends
+   }  // namespace cinn
+   
+   #endif  // CINN_WITH_CUDA

@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1aff6cd40c2c011ef6f65d7dc41df053fe:
+
+Function cinn::poly::TEST(Unroll, jit_precision_test1)
+======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(Unroll, jit_precision_test1)

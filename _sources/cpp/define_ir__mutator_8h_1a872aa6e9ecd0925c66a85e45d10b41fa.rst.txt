@@ -1,0 +1,13 @@
+.. _exhale_define_ir__mutator_8h_1a872aa6e9ecd0925c66a85e45d10b41fa:
+
+Define BINARY_OP_IMPL
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: BINARY_OP_IMPL

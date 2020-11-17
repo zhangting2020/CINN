@@ -1,0 +1,28 @@
+.. _exhale_class_classcinn_1_1poly_1_1SchedulerBase:
+
+Class SchedulerBase
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public cinn::poly::NaiveGroupScheduler`` (:ref:`exhale_class_classcinn_1_1poly_1_1NaiveGroupScheduler`)
+- ``public cinn::poly::NaiveScheduler`` (:ref:`exhale_class_classcinn_1_1poly_1_1NaiveScheduler`)
+- ``public cinn::poly::PolyGroupScheduler`` (:ref:`exhale_class_classcinn_1_1poly_1_1PolyGroupScheduler`)
+- ``public cinn::poly::PolyScheduler`` (:ref:`exhale_class_classcinn_1_1poly_1_1PolyScheduler`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::poly::SchedulerBase
+   :members:
+   :protected-members:
+   :undoc-members:

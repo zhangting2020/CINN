@@ -1,0 +1,13 @@
+.. _exhale_function_hlir_2framework_2tensor__test_8cc_1a9c3ac726d117461169eb343cba17d19b:
+
+Function cinn::hlir::framework::TEST(Tensor, basic)
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_tensor_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::TEST(Tensor, basic)

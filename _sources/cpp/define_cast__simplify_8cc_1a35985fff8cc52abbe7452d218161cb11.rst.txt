@@ -1,0 +1,13 @@
+.. _exhale_define_cast__simplify_8cc_1a35985fff8cc52abbe7452d218161cb11:
+
+Define __CAST_TO_TYPE
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __CAST_TO_TYPE

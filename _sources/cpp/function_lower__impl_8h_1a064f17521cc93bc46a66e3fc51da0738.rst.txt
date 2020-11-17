@@ -1,0 +1,13 @@
+.. _exhale_function_lower__impl_8h_1a064f17521cc93bc46a66e3fc51da0738:
+
+Function cinn::lang::detail::LowerGroup(const poly::ScheduleGroup&, const std::map<std::string, Expr>&, std::map<std::string, Tensor> \*, StageMap, ir::CudaAxisInfo \*)
+========================================================================================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::detail::LowerGroup(const poly::ScheduleGroup&, const std::map<std::string, Expr>&, std::map<std::string, Tensor> *, StageMap, ir::CudaAxisInfo *)

@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__c_8cc_1accddd26ff044a82343f89ae7e530d0f8:
+
+Function cinn::backends::detail::StridedRampBase
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::detail::StridedRampBase(Expr, int)

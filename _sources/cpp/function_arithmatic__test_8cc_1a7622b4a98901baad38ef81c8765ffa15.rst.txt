@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic__test_8cc_1a7622b4a98901baad38ef81c8765ffa15:
+
+Function cinn::common::TEST(Solve, basic)
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(Solve, basic)

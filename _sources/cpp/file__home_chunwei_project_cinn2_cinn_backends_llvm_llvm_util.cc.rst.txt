@@ -1,0 +1,90 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc:
+
+File llvm_util.cc
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_util.cc``)
+----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``atomic``
+
+- ``cinn/backends/llvm/llvm_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`)
+
+- ``glog/logging.h``
+
+- ``llvm/Support/Alignment.h``
+
+- ``mutex``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_llvm__util_8cc_1ab8799bd68f68bf18fbb16a141139cc70`
+
+- :ref:`exhale_function_llvm__util_8cc_1a28ae7ef570a9620f2cf2a519535aa4fe`
+
+- :ref:`exhale_function_llvm__util_8cc_1a37a519c67b22d047a078f2fb33bdd011`
+
+- :ref:`exhale_function_llvm__util_8cc_1a8d3233486ff8be9ada2f1e3c94b7b418`
+
+- :ref:`exhale_function_llvm__util_8cc_1a13bf473ff88a996301a42149d4a17fd3`
+
+- :ref:`exhale_function_llvm__util_8cc_1a696f22fd53af9afb373862176a00114c`
+
+- :ref:`exhale_function_llvm__util_8cc_1aeb8b21cbcf58f62a6b9899594042e1e6`
+
+- :ref:`exhale_function_llvm__util_8cc_1a43c1c9c233d61a289b39d11e59e8aa77`
+
+- :ref:`exhale_function_llvm__util_8cc_1a7f1e8fad944cbd62a4582663d6f9c5b1`
+
+- :ref:`exhale_function_llvm__util_8cc_1adbf9b367e57a6875d7f4d5035891130d`
+
+- :ref:`exhale_function_llvm__util_8cc_1a4f27768b20a7e0a72b20e66b285ad26f`
+
+- :ref:`exhale_function_llvm__util_8cc_1ad1f23ea79bfebc77d18e405030ed23f2`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_llvm__util_8cc_1a27cba26b32ee36f497907cd81d9b4817`
+

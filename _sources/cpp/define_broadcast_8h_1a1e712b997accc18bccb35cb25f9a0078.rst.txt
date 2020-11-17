@@ -1,0 +1,13 @@
+.. _exhale_define_broadcast_8h_1a1e712b997accc18bccb35cb25f9a0078:
+
+Define HLIR_DCL_BC_PE
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: HLIR_DCL_BC_PE

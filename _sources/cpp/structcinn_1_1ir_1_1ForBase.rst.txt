@@ -1,0 +1,26 @@
+.. _exhale_struct_structcinn_1_1ir_1_1ForBase:
+
+Struct ForBase
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public cinn::ir::For`` (:ref:`exhale_struct_structcinn_1_1ir_1_1For`)
+- ``public cinn::ir::PolyFor`` (:ref:`exhale_struct_structcinn_1_1ir_1_1PolyFor`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::ForBase
+   :members:
+   :protected-members:
+   :undoc-members:

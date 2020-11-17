@@ -1,0 +1,15 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_utils_error.cc:
+
+Program Listing for File error.cc
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_utils_error.cc>` (``/home/chunwei/project/cinn2/cinn/utils/error.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/utils/error.h"
+   
+   namespace cinn::utils {}  // namespace cinn::utils

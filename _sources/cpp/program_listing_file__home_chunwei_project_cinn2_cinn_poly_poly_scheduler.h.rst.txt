@@ -1,0 +1,60 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.h:
+
+Program Listing for File poly_scheduler.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.h>` (``/home/chunwei/project/cinn2/cinn/poly/poly_scheduler.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <algorithm>
+   #include <memory>
+   #include <string>
+   #include <unordered_map>
+   #include <utility>
+   #include <vector>
+   
+   #include "cinn/common/common.h"
+   #include "cinn/ir/tensor.h"
+   #include "cinn/poly/graph.h"
+   #include "cinn/poly/isl_utils.h"
+   #include "cinn/poly/map.h"
+   #include "cinn/poly/schedule.h"
+   #include "cinn/poly/stage.h"
+   
+   namespace cinn {
+   namespace poly {
+   
+   class PolyGroupScheduler : public SchedulerBase {
+    public:
+     explicit PolyGroupScheduler(const std::vector<Stage *> &stages);
+   
+     std::vector<Shared<ScheduleGraphNode>> Build();
+   
+    private:
+     const std::vector<Stage *> &stages_;
+   };
+   
+   class PolyScheduler : public SchedulerBase {
+    public:
+     explicit PolyScheduler(const std::vector<Stage *> &stages,
+                            const std::vector<std::pair<std::string, std::string>> &extra_links = {});
+   
+     std::unique_ptr<Schedule> BuildSchedule();
+   
+    private:
+     std::vector<detail::Group> PartitionGroups(DataFlowGraph *graph);
+     void ScheduleAGroup(ScheduleGroup *group);
+     void ScheduleGroups();
+   
+     std::unique_ptr<DataFlowGraph> dfg_;
+   
+     std::vector<ScheduleGroup> schedule_groups_;
+   };
+   
+   }  // namespace poly
+   }  // namespace cinn

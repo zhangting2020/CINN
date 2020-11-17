@@ -1,0 +1,31 @@
+.. _exhale_class_classcinn_1_1ir_1_1FunctionBase:
+
+Class FunctionBase
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IrNode`` (:ref:`exhale_class_classcinn_1_1ir_1_1IrNode`)
+
+
+Derived Type
+************
+
+- ``public cinn::ir::_Operation_`` (:ref:`exhale_class_classcinn_1_1ir_1_1__Operation__`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::FunctionBase
+   :members:
+   :protected-members:
+   :undoc-members:

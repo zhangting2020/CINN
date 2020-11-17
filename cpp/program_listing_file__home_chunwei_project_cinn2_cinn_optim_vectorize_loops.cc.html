@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File vectorize_loops.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-vectorize-loops-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-optim-vectorize-loops-cc"></span><h1>Program Listing for File vectorize_loops.cc<a class="headerlink" href="#program-listing-for-file-vectorize-loops-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc.html#file-home-chunwei-project-cinn2-cinn-optim-vectorize-loops-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/optim/vectorize_loops.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/vectorize_loops.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/ir_replace.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/ir_simplify.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/functional.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">optim</span> <span class="p">{</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">ir</span><span class="p">;</span>  <span class="c1">// NOLINT</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">make_one</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">make_zero</span><span class="p">;</span>
+
+<span class="n">Expr</span> <span class="nf">Widen</span><span class="p">(</span><span class="n">Expr</span> <span class="n">e</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lanes</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="n">lanes</span><span class="p">)</span> <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Broadcast</span> <span class="o">*</span><span class="n">op</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Broadcast</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lanes</span> <span class="o">%</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">lanes</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Broadcast</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cannot broadcast lanes from &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; to &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">lanes</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Broadcast</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Vectorizer</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IRMutator</span><span class="o">&lt;</span><span class="n">Expr</span> <span class="o">*&gt;</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">var</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">lanes_</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
+
+  <span class="kt">bool</span> <span class="n">need_scalarize_</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+
+  <span class="kt">bool</span> <span class="n">to_vectorize_</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+
+  <span class="n">Expr</span> <span class="n">ramp_</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">widen_suffix</span><span class="p">;</span>
+
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">Vectorizer</span><span class="p">(</span><span class="k">const</span> <span class="n">Var</span> <span class="o">&amp;</span><span class="n">var</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lanes</span><span class="p">)</span> <span class="o">:</span> <span class="n">var</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="n">lanes_</span><span class="p">(</span><span class="n">lanes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// the identity ramp.</span>
+    <span class="n">ramp_</span> <span class="o">=</span> <span class="n">Ramp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">make_zero</span><span class="p">(),</span> <span class="n">make_one</span><span class="p">(),</span> <span class="n">lanes_</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">need_scalarize_</span><span class="p">);</span>
+    <span class="n">IRMutator</span><span class="o">&lt;</span><span class="n">Expr</span> <span class="o">*&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">need_scalarize_</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">need_scalarize_</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+      <span class="n">Scalarize</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Cast</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">Cast</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">v0</span>    <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">();</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">v0</span><span class="p">.</span><span class="n">same_as</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">()))</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="n">Type</span> <span class="n">t</span> <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">().</span><span class="n">with_lanes</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="n">node</span><span class="o">-&gt;</span><span class="n">set_type</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">_Var_</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">var</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Expr</span><span class="p">(</span><span class="n">ramp_</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Add</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">MutateAddSubOperator</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Sub</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">MutateAddSubOperator</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Mul</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">MutateMulDivOperator</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Div</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">MutateMulDivOperator</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Mod</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Min</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Max</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">EQ</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">NE</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">LT</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">LE</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">GT</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">GE</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">And</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Or</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Ramp</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Select</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span>        <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">Select</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">condition0</span>   <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">true_value0</span>  <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">false_value0</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">;</span>
+
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">);</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">condition0</span><span class="p">.</span><span class="n">same_as</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">true_value0</span><span class="p">.</span><span class="n">same_as</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+        <span class="n">false_value0</span><span class="p">.</span><span class="n">same_as</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">))</span>
+      <span class="k">return</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">lanes</span> <span class="o">=</span>
+        <span class="n">utils</span><span class="o">::</span><span class="n">Max</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="n">node</span><span class="o">-&gt;</span><span class="n">true_value</span>  <span class="o">=</span> <span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">true_value</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+    <span class="n">node</span><span class="o">-&gt;</span><span class="n">false_value</span> <span class="o">=</span> <span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">false_value</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Load</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span>                <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">;</span>
+    <span class="c1">// We ignore the predicate here.</span>
+    <span class="kt">bool</span> <span class="n">need_visit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">indices</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">same_as</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="n">need_visit</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">need_visit</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Load</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Store</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span>  <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">Store</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">value0</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">;</span>
+    <span class="c1">// We ignore the predicate here.</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">idx</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">idx</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">need_visit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">indices</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">same_as</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+        <span class="n">need_visit</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">need_visit</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">lanes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">idx</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="n">lanes</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">idx</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">);</span>
+    <span class="n">lanes</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">lanes</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+
+    <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">new_indices</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">idx</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">new_indices</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Widen</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">lanes</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Store</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="n">new_indices</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Call</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">LOG</span><span class="p">(</span><span class="n">ERROR</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ignore widen Call node&quot;</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">Let</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">Let</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">symbol</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">ERROR</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Let not supported&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">IfThenElse</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">IfThenElse</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">lanes</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">.</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">();</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">true_case</span><span class="p">);</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">false_case</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">ERROR</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ignore Width IfThenElse&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">For</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Scalarize</span><span class="p">(</span><span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Var</span> <span class="n">idx</span><span class="p">(</span><span class="n">var</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;_s&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span> <span class="o">*</span><span class="p">,</span> <span class="n">Expr</span><span class="o">&gt;</span> <span class="n">var_map</span><span class="p">;</span>
+    <span class="n">var_map</span><span class="p">[</span><span class="n">var</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">&gt;</span><span class="p">()]</span> <span class="o">=</span> <span class="n">idx</span><span class="p">;</span>
+
+    <span class="n">common</span><span class="o">::</span><span class="n">Substitute</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">var_map</span><span class="p">);</span>
+    <span class="o">*</span><span class="n">expr</span> <span class="o">=</span>
+        <span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">lanes_</span><span class="p">),</span> <span class="n">ForType</span><span class="o">::</span><span class="n">Serial</span><span class="p">,</span> <span class="n">DeviceAPI</span><span class="o">::</span><span class="n">Host</span><span class="p">,</span> <span class="o">*</span><span class="n">expr</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+  <span class="kt">void</span> <span class="n">MutateAddSubOperator</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">Expr</span> <span class="n">a0</span>    <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">();</span>
+    <span class="n">Expr</span> <span class="n">b0</span>    <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">();</span>
+
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+
+    <span class="c1">// if (a0.same_as(node-&gt;a()) &amp;&amp; b0.same_as(node-&gt;b())) return;</span>
+
+    <span class="kt">int</span> <span class="n">lanes</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lanes</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">const</span> <span class="n">Ramp</span> <span class="o">*</span><span class="n">a_ramp_n</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="k">template</span> <span class="n">As</span><span class="o">&lt;</span><span class="n">Ramp</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">const</span> <span class="n">Ramp</span> <span class="o">*</span><span class="n">b_ramp_n</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="k">template</span> <span class="n">As</span><span class="o">&lt;</span><span class="n">Ramp</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">b_ramp_n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// a + Ramp(base,stride,lanes) = Ramp(base+a, stride,lanes)</span>
+        <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Ramp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">(),</span> <span class="n">b_ramp_n</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">),</span>  <span class="c1">// base</span>
+                           <span class="n">b_ramp_n</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">,</span>                    <span class="c1">// stride</span>
+                           <span class="n">b_ramp_n</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">a_ramp_n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Ramp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">(),</span> <span class="n">a_ramp_n</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">),</span>  <span class="c1">// base</span>
+                           <span class="n">a_ramp_n</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">,</span>                    <span class="c1">// stride</span>
+                           <span class="n">a_ramp_n</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">),</span> <span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+  <span class="kt">void</span> <span class="n">MutateMulDivOperator</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Expr</span> <span class="n">a0</span>    <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">();</span>
+    <span class="n">Expr</span> <span class="n">b0</span>    <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+
+    <span class="c1">// if (a0.same_as(node-&gt;a()) &amp;&amp; b0.same_as(node-&gt;b())) return;</span>
+    <span class="kt">int</span> <span class="n">lanes</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lanes</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">const</span> <span class="n">Ramp</span> <span class="o">*</span><span class="n">a_ramp_n</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="k">template</span> <span class="n">As</span><span class="o">&lt;</span><span class="n">Ramp</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">const</span> <span class="n">Ramp</span> <span class="o">*</span><span class="n">b_ramp_n</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="k">template</span> <span class="n">As</span><span class="o">&lt;</span><span class="n">Ramp</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">b_ramp_n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// a * Ramp(base,stride,lanes) = Ramp(base*a, stride*a,lanes)</span>
+        <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Ramp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">(),</span> <span class="n">b_ramp_n</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">),</span>    <span class="c1">// base</span>
+                           <span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">(),</span> <span class="n">b_ramp_n</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">),</span>  <span class="c1">// stride</span>
+                           <span class="n">b_ramp_n</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">);</span>
+
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="c1">// Ramp(base,stride,lanes) * b  = Ramp(base*b, stride*b,lanes)</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">a_ramp_n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">Ramp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a_ramp_n</span><span class="o">-&gt;</span><span class="n">base</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">()),</span>    <span class="c1">// base</span>
+                           <span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a_ramp_n</span><span class="o">-&gt;</span><span class="n">stride</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">()),</span>  <span class="c1">// stride</span>
+                           <span class="n">a_ramp_n</span><span class="o">-&gt;</span><span class="n">lanes</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">*</span><span class="n">expr</span> <span class="o">=</span> <span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">),</span> <span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+  <span class="n">Expr</span> <span class="n">BinaryOperatorVec</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="o">*</span><span class="n">op</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">Expr</span> <span class="n">a0</span>    <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">();</span>
+    <span class="n">Expr</span> <span class="n">b0</span>    <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">();</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">());</span>
+    <span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">());</span>
+    <span class="c1">// if (a0.same_as(node-&gt;a()) &amp;&amp; b0.same_as(node-&gt;b())) return *expr;</span>
+
+    <span class="kt">int</span> <span class="n">lanes</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">(),</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">().</span><span class="n">type</span><span class="p">().</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="k">return</span> <span class="n">T</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">),</span> <span class="n">Widen</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">(),</span> <span class="n">lanes</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">VectorizeLoops_</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IRMutator</span><span class="o">&lt;</span><span class="n">Expr</span> <span class="o">*&gt;</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">;</span>
+
+  <span class="k">explicit</span> <span class="nf">VectorizeLoops_</span><span class="p">(</span><span class="k">const</span> <span class="n">Target</span> <span class="o">&amp;</span><span class="n">t</span><span class="p">)</span> <span class="o">:</span> <span class="n">target</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span> <span class="n">IRMutator</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">For</span> <span class="o">*</span><span class="n">forloop</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">For</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="c1">// the extent the forloops marked as Vectorized should be int constant</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">forloop</span><span class="o">-&gt;</span><span class="n">is_vectorized</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">info_rgt</span><span class="p">().</span><span class="n">Get</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;vectorized_forloop_count&quot;</span><span class="p">)</span><span class="o">++</span><span class="p">;</span>
+
+      <span class="n">CHECK</span><span class="p">(</span><span class="n">forloop</span><span class="o">-&gt;</span><span class="n">vectorize_info</span><span class="p">().</span><span class="n">valid</span><span class="p">());</span>
+      <span class="k">auto</span> <span class="n">_new_forloop</span> <span class="o">=</span> <span class="n">SplitForLoop</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">vectorize_info</span><span class="p">().</span><span class="n">factor</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_new_forloop</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="n">node</span><span class="o">-&gt;</span><span class="n">reset_vectorize_info</span><span class="p">();</span>
+
+      <span class="k">auto</span> <span class="o">*</span><span class="n">new_forloop</span> <span class="o">=</span> <span class="n">_new_forloop</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">&gt;</span><span class="p">();</span>
+
+      <span class="c1">// The forloop generated from polyhedral analysis might have a complex condition that is not something like</span>
+      <span class="c1">// &quot;i&lt;20&quot; or &quot;i&lt;=20&quot;, those cases is not possible to extract the extent.</span>
+      <span class="k">auto</span> <span class="o">*</span><span class="n">extent_int</span> <span class="o">=</span> <span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">extent</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">IntImm</span><span class="o">&gt;</span><span class="p">();</span>
+
+      <span class="kt">int</span> <span class="n">extent</span> <span class="o">=</span> <span class="n">extent_int</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+      <span class="n">CHECK_GT</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Loop over &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">Expr</span><span class="p">(</span><span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; has extent &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">extent</span>
+                          <span class="o">&lt;&lt;</span> <span class="s">&quot;. Can only vectorize loops over a constant extent &gt; 1&quot;</span><span class="p">;</span>
+
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Vectorizing &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">loop_var</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; extent &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">extent</span><span class="p">;</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;body:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">;</span>
+
+      <span class="n">Vectorizer</span><span class="p">(</span><span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">,</span> <span class="n">extent</span><span class="p">).</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;after vectorize body:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">;</span>
+
+      <span class="c1">// Remove the forloop, the new_forloop&#39;s body is vectorized to Ramp, so no forloop is needed.</span>
+      <span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span> <span class="o">=</span> <span class="n">new_forloop</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">IRMutator</span><span class="o">::</span><span class="n">Visit</span><span class="p">(</span><span class="n">forloop</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="nf">SplitForLoop</span><span class="p">(</span><span class="n">For</span> <span class="o">*</span><span class="n">forloop</span><span class="p">,</span> <span class="kt">int</span> <span class="n">factor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_GT</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">for_min_i</span> <span class="o">=</span> <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">min</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">IntImm</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">forloop</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">for_min_i</span><span class="p">)</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">for_min_i</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">();</span>
+
+    <span class="n">Expr</span> <span class="n">times</span> <span class="o">=</span> <span class="n">Div</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">forloop</span><span class="o">-&gt;</span><span class="n">extent</span><span class="p">,</span> <span class="n">make_const</span><span class="p">(</span><span class="n">factor</span><span class="p">));</span>
+    <span class="n">Simplify</span><span class="p">(</span><span class="o">&amp;</span><span class="n">times</span><span class="p">);</span>
+
+    <span class="c1">// update the current forloop</span>
+    <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">extent</span> <span class="o">=</span> <span class="n">times</span><span class="p">;</span>
+    <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">set_vectorized</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+    <span class="c1">// create the new forloop</span>
+    <span class="p">{</span>
+      <span class="n">Var</span> <span class="n">new_iterator</span><span class="p">(</span><span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">NewName</span><span class="p">(</span><span class="s">&quot;vi&quot;</span><span class="p">));</span>
+      <span class="n">Expr</span> <span class="n">new_index</span> <span class="o">=</span> <span class="n">Expr</span><span class="p">(</span><span class="n">forloop</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">)</span> <span class="o">*</span> <span class="n">factor</span> <span class="o">+</span> <span class="n">Expr</span><span class="p">(</span><span class="n">new_iterator</span><span class="p">);</span>
+      <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="o">&amp;</span><span class="n">forloop</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">,</span> <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">,</span> <span class="n">new_index</span><span class="p">);</span>
+      <span class="k">auto</span> <span class="n">new_forloop</span> <span class="o">=</span> <span class="n">For</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">new_iterator</span><span class="p">,</span>
+                                   <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">min</span><span class="p">,</span>
+                                   <span class="n">make_const</span><span class="p">(</span><span class="n">factor</span><span class="p">),</span>
+                                   <span class="n">ForType</span><span class="o">::</span><span class="n">Vectorized</span><span class="p">,</span>
+                                   <span class="n">DeviceAPI</span><span class="o">::</span><span class="n">UNK</span><span class="p">,</span>
+                                   <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">,</span>
+                                   <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">vectorize_info</span><span class="p">());</span>
+      <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">body</span>    <span class="o">=</span> <span class="n">Block</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">new_forloop</span><span class="p">});</span>
+      <span class="k">return</span> <span class="n">new_forloop</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">VectorizeLoops</span><span class="p">(</span><span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">,</span> <span class="k">const</span> <span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">VectorizeLoops_</span><span class="p">(</span><span class="n">target</span><span class="p">)(</span><span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="k">namespace</span> <span class="n">detail</span> <span class="p">{</span>
+
+<span class="kt">void</span> <span class="n">Vectorize</span><span class="p">(</span><span class="n">Var</span> <span class="n">var</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lanes</span><span class="p">,</span> <span class="n">Expr</span> <span class="o">*</span><span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Vectorizer</span> <span class="n">vectorizer</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">lanes</span><span class="p">);</span>
+  <span class="n">vectorizer</span><span class="p">.</span><span class="n">Visit</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace detail</span>
+
+<span class="p">}</span>  <span class="c1">// namespace optim</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

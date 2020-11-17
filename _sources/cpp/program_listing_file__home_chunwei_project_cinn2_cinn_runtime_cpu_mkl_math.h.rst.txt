@@ -1,0 +1,27 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h:
+
+Program Listing for File mkl_math.h
+===================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h>` (``/home/chunwei/project/cinn2/cinn/runtime/cpu/mkl_math.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   
+   #pragma once
+   
+   #include "cinn/runtime/cinn_runtime.h"
+   
+   extern "C" {
+   
+   // @{
+   void cinn_mkl_tanh_v_fp32(cinn_buffer_t* x, cinn_buffer_t* out);
+   void cinn_mkl_tanh_v_fp64(cinn_buffer_t* x, cinn_buffer_t* out);
+   void cinn_mkl_exp_v_fp32(cinn_buffer_t* x, cinn_buffer_t* out);
+   void cinn_mkl_cos_v_fp32(cinn_buffer_t* x, cinn_buffer_t* out);
+   void cinn_mkl_cos_v_fp64(cinn_buffer_t* x, cinn_buffer_t* out);
+   // @}
+   }

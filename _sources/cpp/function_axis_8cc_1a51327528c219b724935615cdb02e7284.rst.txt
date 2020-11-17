@@ -1,0 +1,13 @@
+.. _exhale_function_axis_8cc_1a51327528c219b724935615cdb02e7284:
+
+Function cinn::common::IsAxisNameReserved
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::IsAxisNameReserved(const std::string&)

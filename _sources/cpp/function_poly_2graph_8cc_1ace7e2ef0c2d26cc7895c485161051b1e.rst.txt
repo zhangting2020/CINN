@@ -1,0 +1,13 @@
+.. _exhale_function_poly_2graph_8cc_1ace7e2ef0c2d26cc7895c485161051b1e:
+
+Function cinn::poly::CreateGraph
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_graph.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::CreateGraph(const std::vector<Stage *>&, const std::vector<std::pair<std::string, std::string>>&)

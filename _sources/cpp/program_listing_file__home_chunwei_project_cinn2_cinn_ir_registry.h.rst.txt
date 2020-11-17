@@ -1,0 +1,43 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_registry.h:
+
+Program Listing for File registry.h
+===================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_registry.h>` (``/home/chunwei/project/cinn2/cinn/ir/registry.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <string>
+   #include <string_view>
+   #include <vector>
+   
+   #include "cinn/lang/packed_func.h"
+   
+   namespace cinn::ir {
+   
+   class Registry {
+    public:
+     Registry &SetBody(lang::PackedFunc f);
+     Registry &SetBody(lang::PackedFunc::body_t f);
+   
+     static Registry &Register(const std::string &name, bool can_override = false);
+     static bool Remove(const std::string &name);
+     static const lang::PackedFunc *Get(const std::string &name);
+     static std::vector<std::string> ListNames();
+   
+     struct Manager;
+   
+     explicit Registry(const std::string &);
+   
+    protected:
+     std::string name_;
+     lang::PackedFunc func_;
+     friend class Manager;
+   };
+   
+   }  // namespace cinn::ir

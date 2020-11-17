@@ -1,0 +1,36 @@
+.. _exhale_class_classcinn_1_1tests_1_1MatmulTester:
+
+Class MatmulTester
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::tests::OpBenchmarkTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1OpBenchmarkTester`)
+
+
+Derived Types
+*************
+
+- ``public cinn::tests::MatmulArrayPackingTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulArrayPackingTester`)
+- ``public cinn::tests::MatmulBlockTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulBlockTester`)
+- ``public cinn::tests::MatmulLoopPermutationTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulLoopPermutationTester`)
+- ``public cinn::tests::MatmulSplitTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulSplitTester`)
+- ``public cinn::tests::MatmulTileTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulTileTester`)
+- ``public cinn::tests::MatmulVectorizeTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulVectorizeTester`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::tests::MatmulTester
+   :members:
+   :protected-members:
+   :undoc-members:

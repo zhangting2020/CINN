@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1ir_1_1IRVisitorBase:
+
+Template Struct IRVisitorBase
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::IRVisitorBase
+   :members:
+   :protected-members:
+   :undoc-members:

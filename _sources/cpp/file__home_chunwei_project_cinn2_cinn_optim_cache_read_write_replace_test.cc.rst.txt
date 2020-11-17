@@ -1,0 +1,61 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace_test.cc:
+
+File cache_read_write_replace_test.cc
+=====================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/cache_read_write_replace_test.cc``)
+----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/optim/cache_read_write_replace.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_cache__read__write__replace__test_8cc_1a1b252c6c2ca309f2137cc35e6005424e`
+
+- :ref:`exhale_function_cache__read__write__replace__test_8cc_1ac3be5226b4dc2cb39998ead6fb478c64`
+

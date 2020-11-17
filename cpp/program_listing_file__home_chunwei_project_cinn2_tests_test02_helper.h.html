@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File test02_helper.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-test02-helper-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-tests-test02-helper-h"></span><h1>Program Listing for File test02_helper.h<a class="headerlink" href="#program-listing-for-file-test02-helper-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_tests_test02_helper.h.html#file-home-chunwei-project-cinn2-tests-test02-helper-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests/test02_helper.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string_view&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;tuple&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/execution_engine.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/simple_jit.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/optimize.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">tests</span> <span class="p">{</span>
+
+<span class="k">auto</span> <span class="n">CreateMatmulBasicModule</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">k1</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span>  <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k1</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k1</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_basic&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_basic&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">CreateMatmulTileModule</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">k1</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span>  <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k1</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k1</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_tile&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_tile&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">CreateMatmulSplitModule</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">k1</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span>  <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k1</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k1</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">c_poly_iterators</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span> <span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">poly</span><span class="o">::</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="n">iters</span><span class="p">;</span>
+    <span class="p">(</span><span class="n">iters</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ith_iterator</span><span class="p">(</span><span class="n">args</span><span class="p">)),</span> <span class="p">...);</span>
+    <span class="k">return</span> <span class="n">iters</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">(</span><span class="n">c_poly_iterators</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_split&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_split&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">CreateMatmulBlockModule</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">k1</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k1&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span>  <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k1</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k1</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="k">constexpr</span> <span class="kt">int</span> <span class="n">bn</span>                          <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bn</span><span class="p">,</span> <span class="n">bn</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">k_outer</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">]</span>                   <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="n">k1</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">({</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">k_outer</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">});</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_block&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_block&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">CreateMatmulVectorizeModule</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="n">Var</span> <span class="nf">k0</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k0&quot;</span><span class="p">);</span>
+
+  <span class="kt">int</span> <span class="n">bn</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k0</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k0</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bn</span><span class="p">,</span> <span class="n">bn</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">k_outer</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">]</span>                   <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="s">&quot;k0&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">({</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">k_outer</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">});</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Vectorize</span><span class="p">(</span><span class="n">j_inner</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_vectorize&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_vectorize&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="n">CreateMatmulLoopPermutation</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k_</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">=</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">;</span>
+  <span class="n">target</span><span class="p">.</span><span class="n">bits</span> <span class="o">=</span> <span class="n">Target</span><span class="o">::</span><span class="n">Bit</span><span class="o">::</span><span class="n">k32</span><span class="p">;</span>
+  <span class="n">target</span><span class="p">.</span><span class="n">os</span>   <span class="o">=</span> <span class="n">Target</span><span class="o">::</span><span class="n">OS</span><span class="o">::</span><span class="n">Linux</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k_</span><span class="p">));</span>
+
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="n">Var</span> <span class="nf">k</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k0&quot;</span><span class="p">);</span>
+
+  <span class="kt">int</span> <span class="n">bn</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="c1">// Blocking by loop tiling.</span>
+  <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bn</span><span class="p">,</span> <span class="n">bn</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">k_outer</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">]</span>                   <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="s">&quot;k0&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>      <span class="c1">// NOLINT</span>
+
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">({</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">k_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">});</span>
+
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Vectorize</span><span class="p">(</span><span class="n">j_inner</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Unroll</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_loop_permutation&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_loop_permutation&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="n">CreateMatmulArrayPacking</span><span class="p">(</span><span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k_</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="p">[</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="n">k_</span><span class="p">));</span>
+
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+
+  <span class="n">Var</span> <span class="nf">k</span><span class="p">(</span><span class="n">K</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="s">&quot;k0&quot;</span><span class="p">);</span>
+
+  <span class="n">Expr</span> <span class="nf">bn</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">C_init</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Expr</span><span class="p">(</span><span class="mf">0.f</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;C_init&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">packedB</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">N</span> <span class="o">/</span> <span class="n">bn</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">bn</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">x</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">y</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">B</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">bn</span> <span class="o">+</span> <span class="n">z</span><span class="p">);</span> <span class="p">},</span> <span class="s">&quot;packedB&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">packedB</span><span class="p">(</span><span class="n">j</span> <span class="o">/</span> <span class="n">bn</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">j</span> <span class="o">%</span> <span class="n">bn</span><span class="p">),</span> <span class="p">{</span><span class="n">k</span><span class="p">});</span> <span class="p">},</span> <span class="s">&quot;C&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C_init</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">ShareBufferWith</span><span class="p">(</span><span class="n">stages</span><span class="p">[</span><span class="n">C_init</span><span class="p">]);</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">CtrlDepend</span><span class="p">(</span><span class="n">C_init</span><span class="p">);</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">packedB</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Vectorize</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+
+  <span class="p">{</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">]</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bn</span><span class="p">.</span><span class="n">as_int32</span><span class="p">(),</span> <span class="n">bn</span><span class="p">.</span><span class="n">as_int32</span><span class="p">());</span>  <span class="c1">// NOLINT</span>
+    <span class="k">auto</span> <span class="p">[</span><span class="n">k_outer</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">]</span>                   <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="s">&quot;k0&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>                            <span class="c1">// NOLINT</span>
+
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Reorder</span><span class="p">({</span><span class="n">i_outer</span><span class="p">,</span> <span class="n">j_outer</span><span class="p">,</span> <span class="n">k_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">k_inner</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">});</span>
+    <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Vectorize</span><span class="p">(</span><span class="n">j_inner</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module_array_packing&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul_array_packing&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">packedB</span><span class="p">});</span>
+
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">func</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// TODO(Superjomn) To refactor this, strange to use if-else here.</span>
+<span class="k">auto</span> <span class="n">CreateCinnMatmulModule</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="n">Target</span> <span class="n">target</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;basic&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulBasicModule</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;tile&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulTileModule</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;split&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulSplitModule</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;block&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulBlockModule</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;vectorize&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulVectorizeModule</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;loop_permutation&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulLoopPermutation</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;array_packing&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">CreateMatmulArrayPacking</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="p">{</span> <span class="n">CINN_NOT_IMPLEMENTED</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">CreateExecutionEngine</span><span class="p">(</span><span class="k">const</span> <span class="n">cinn</span><span class="o">::</span><span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">engine</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">::</span><span class="n">backends</span><span class="o">::</span><span class="n">ExecutionEngine</span><span class="o">::</span><span class="n">Create</span><span class="p">({});</span>
+  <span class="n">engine</span><span class="o">-&gt;</span><span class="n">Link</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">engine</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">CreateSimpleJit</span><span class="p">(</span><span class="k">const</span> <span class="n">cinn</span><span class="o">::</span><span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="o">&amp;</span><span class="n">module</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">jit</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">::</span><span class="n">backends</span><span class="o">::</span><span class="n">SimpleJIT</span><span class="o">::</span><span class="n">Create</span><span class="p">();</span>
+  <span class="n">jit</span><span class="o">-&gt;</span><span class="n">Link</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">jit</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace tests</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_tests_test02_helper.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

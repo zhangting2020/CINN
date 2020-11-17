@@ -1,0 +1,13 @@
+.. _exhale_function_op_2broadcast_8cc_1ad979b093cc304f54b99d3e1bbd96367c:
+
+Function cinn::hlir::op::InferDtypeForElementwise
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferDtypeForElementwise(const std::vector<Type>&, const framework::NodeAttr&)

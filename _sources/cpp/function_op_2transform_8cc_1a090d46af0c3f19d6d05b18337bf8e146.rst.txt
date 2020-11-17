@@ -1,0 +1,13 @@
+.. _exhale_function_op_2transform_8cc_1a090d46af0c3f19d6d05b18337bf8e146:
+
+Function cinn::hlir::op::InferShapeForMatMul
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_transform.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForMatMul(const std::vector<std::vector<int>>&, const framework::NodeAttr&)

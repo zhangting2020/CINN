@@ -1,0 +1,13 @@
+.. _exhale_function_cuda__graph__compiler__test_8cc_1af36b8939e330a02f860fbb385fc0f0c5:
+
+Function cinn::hlir::framework::CudaGetData
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::CudaGetData(const Tensor&, const Target&)

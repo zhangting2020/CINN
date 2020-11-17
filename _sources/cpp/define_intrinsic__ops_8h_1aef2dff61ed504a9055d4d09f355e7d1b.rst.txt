@@ -1,0 +1,13 @@
+.. _exhale_define_intrinsic__ops_8h_1aef2dff61ed504a9055d4d09f355e7d1b:
+
+Define INTRINSIC_KIND_FOR_EACH
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: INTRINSIC_KIND_FOR_EACH

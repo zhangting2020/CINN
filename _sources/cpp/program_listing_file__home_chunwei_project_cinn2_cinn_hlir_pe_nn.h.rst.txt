@@ -1,0 +1,150 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h:
+
+Program Listing for File nn.h
+=============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h>` (``/home/chunwei/project/cinn2/cinn/hlir/pe/nn.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/lang/builtin.h"
+   #include "cinn/lang/compute.h"
+   #include "cinn/poly/stage.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace pe {
+   
+   void CudaSplitSchedule(poly::Stage *stage, const std::vector<int> &output_shape);
+   
+   template <typename T>
+   ir::Tensor Relu(const ir::Tensor &A,
+                   T threshold                    = static_cast<T>(0),
+                   const std::string &output_name = UniqName("T_Relu_out")) {
+     return lang::Compute(
+         A->shape, [&](const std::vector<Expr> &indice) { return lang::Relu(A(indice), threshold); }, output_name);
+   }
+   
+   template <typename T>
+   ir::Tensor Relu6(const ir::Tensor &A,
+                    T threshold                    = static_cast<T>(0),
+                    const std::string &output_name = UniqName("T_Relu6_out")) {
+     return lang::Compute(
+         A->shape, [&](const std::vector<Expr> &indice) { return lang::Relu6(A(indice), threshold); }, output_name);
+   }
+   
+   ir::Tensor LeakyRelu(const ir::Tensor &A,
+                        double alpha                   = 0.1,
+                        const std::string &output_name = UniqName("T_LeakyRelu_out"));
+   
+   ir::Tensor PRelu(const ir::Tensor &A,
+                    const ir::Tensor &slope,
+                    const int axis                 = 1,
+                    const std::string &output_name = UniqName("T_PRelu_out"));
+   
+   std::vector<ir::Tensor> Conv2d_NCHW(const ir::Tensor &input,
+                                       const ir::Tensor &weights,
+                                       int pad_h,
+                                       int pad_w,
+                                       int stride_h,
+                                       int stride_w,
+                                       int dilation_h,
+                                       int dilation_w,
+                                       const std::string &output_name = UniqName("T_Conv2d_NCHW_out"));
+   
+   std::vector<ir::Tensor> Conv2d_NHWC(const ir::Tensor &input,
+                                       const ir::Tensor &weights,
+                                       int pad_h,
+                                       int pad_w,
+                                       int stride_h,
+                                       int stride_w,
+                                       int dilation_h,
+                                       int dilation_w,
+                                       const std::string &output_name = UniqName("T_Conv2d_NHWC_out"));
+   
+   std::vector<ir::Tensor> Depthwise_Conv2d_NCHW(const ir::Tensor &input,
+                                                 const ir::Tensor &weight,
+                                                 int pad_h,
+                                                 int pad_w,
+                                                 int stride_h,
+                                                 int stride_w,
+                                                 const std::string output_name = UniqName("T_depthwise_conv2d_nchw"));
+   
+   std::vector<ir::Tensor> Depthwise_Conv2d_NHWC(const ir::Tensor &input,
+                                                 const ir::Tensor &weight,
+                                                 int pad_h,
+                                                 int pad_w,
+                                                 int stride_h,
+                                                 int stride_w,
+                                                 const std::string output_name = UniqName("T_depthwise_conv2d_nhwc"));
+   
+   ir::Tensor BatchNorm_NCHW(const ir::Tensor &input,
+                             const ir::Tensor &scale,
+                             const ir::Tensor &bias,
+                             const ir::Tensor &mean,
+                             const ir::Tensor &variance,
+                             float epsilon,
+                             const std::string &output_name = UniqName("T_BatchNorm_NCHW_out"));
+   
+   ir::Tensor Pad(const ir::Tensor &tensor,
+                  const std::vector<Expr> &pad_before,
+                  std::vector<Expr> pad_after = std::vector<Expr>(),
+                  Expr pad_value              = Expr(),
+                  const std::string &name     = UniqName("T_pad_out"),
+                  const std::string &pad_mode = "constant");
+   
+   std::vector<ir::Tensor> Softmax(const ir::Tensor &A, int axis, const std::string &output_name);
+   
+   ir::Tensor Slice(const ir::Tensor &A,
+                    const std::vector<int> &starts,
+                    const std::vector<int> &axes,
+                    const std::vector<Expr> &output_shape,
+                    const std::string &output_name);
+   
+   std::vector<ir::Tensor> Pool1d(const ir::Tensor &tensor,
+                                  const std::vector<int> &kernel_size,
+                                  const std::vector<int> &stride_size,
+                                  const std::vector<int> &padding_size,
+                                  const std::string &pool_type   = "max",
+                                  bool ceil_mode                 = false,
+                                  bool exclusive                 = true,
+                                  const std::string &data_format = "NCW",
+                                  const std::string &output_name = UniqName("T_Pool1d_out"));
+   
+   std::vector<ir::Tensor> Pool2d(const ir::Tensor &tensor,
+                                  const std::vector<int> &kernel_size,
+                                  const std::vector<int> &stride_size,
+                                  const std::vector<int> &padding_size,
+                                  const std::string &pool_type   = "max",
+                                  bool ceil_mode                 = false,
+                                  bool exclusive                 = true,
+                                  const std::string &data_format = "NCHW",
+                                  const std::string &output_name = UniqName("T_Pool2d_out"));
+   
+   std::vector<ir::Tensor> Pool3d(const ir::Tensor &tensor,
+                                  const std::vector<int> &kernel_size,
+                                  const std::vector<int> &stride_size,
+                                  const std::vector<int> &padding_size,
+                                  const std::string &pool_type   = "max",
+                                  bool ceil_mode                 = false,
+                                  bool exclusive                 = true,
+                                  const std::string &data_format = "NCDHW",
+                                  const std::string &output_name = UniqName("T_Pool3d_out"));
+   
+   ir::Tensor DropoutInfer(const ir::Tensor &tensor,
+                           float dropout_prob,
+                           const std::string &dropout_implementation = "downgrade_in_infer",
+                           const std::string &output_name            = UniqName("T_Dropout_infer_out"));
+   
+   }  // namespace pe
+   }  // namespace hlir
+   }  // namespace cinn

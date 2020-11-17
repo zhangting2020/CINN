@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8h_1a6fd360e4962ae2e60ae387eb6e5ad415:
+
+Function cinn::common::make_bool
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::make_bool()

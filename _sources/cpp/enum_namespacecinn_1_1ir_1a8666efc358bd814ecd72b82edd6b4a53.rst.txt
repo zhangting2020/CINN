@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacecinn_1_1ir_1a8666efc358bd814ecd72b82edd6b4a53:
+
+Enum IntrinsicKind
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::ir::IntrinsicKind

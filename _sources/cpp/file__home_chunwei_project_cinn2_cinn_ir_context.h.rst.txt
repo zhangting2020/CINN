@@ -1,0 +1,61 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_context.h:
+
+File context.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/context.h``)
+--------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_context.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_context.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1CINNContext`
+

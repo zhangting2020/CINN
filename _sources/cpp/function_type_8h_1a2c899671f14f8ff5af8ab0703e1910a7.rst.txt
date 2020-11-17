@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1a2c899671f14f8ff5af8ab0703e1910a7:
+
+Function cinn::common::type_of< cinn_buffer_t >
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::type_of< cinn_buffer_t >()

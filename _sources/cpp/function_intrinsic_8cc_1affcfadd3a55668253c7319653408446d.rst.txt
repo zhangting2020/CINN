@@ -1,0 +1,13 @@
+.. _exhale_function_intrinsic_8cc_1affcfadd3a55668253c7319653408446d:
+
+Function cinn::runtime::ToRuntimeType
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::ToRuntimeType(Type)

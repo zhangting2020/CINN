@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8cc_1a551df61c9111acf145fd34666f3a6723:
+
+Function cinn::poly::isl_map_get_statement_repr
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_map_get_statement_repr(__isl_keep isl_map *, isl_dim_type)

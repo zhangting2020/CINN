@@ -1,0 +1,34 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_lang_buffer.cc:
+
+Program Listing for File buffer.cc
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_lang_buffer.cc>` (``/home/chunwei/project/cinn2/cinn/lang/buffer.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/lang/buffer.h"
+   
+   #include "cinn/ir/buffer.h"
+   
+   namespace cinn {
+   namespace lang {
+   
+   using ir::_Buffer_;
+   
+   Buffer::Buffer(Type type, const std::string& name) {
+     buffer_        = _Buffer_::Make();
+     buffer_->dtype = type;
+     buffer_->set_type(type_of<cinn_buffer_t*>());
+     buffer_->elem_offset = Expr(0);
+     if (!name.empty()) {
+       buffer_->name = name;
+     }
+     buffer_->target = common::DefaultHostTarget();
+   }
+   
+   }  // namespace lang
+   }  // namespace cinn

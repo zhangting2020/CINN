@@ -1,0 +1,19 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_variable.cc:
+
+Program Listing for File variable.cc
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_variable.cc>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/variable.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/hlir/framework/variable.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {}  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

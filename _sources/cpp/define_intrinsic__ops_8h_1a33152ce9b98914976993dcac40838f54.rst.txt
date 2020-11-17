@@ -1,0 +1,13 @@
+.. _exhale_define_intrinsic__ops_8h_1a33152ce9b98914976993dcac40838f54:
+
+Define __
+=========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __

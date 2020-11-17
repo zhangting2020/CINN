@@ -1,0 +1,25 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.h:
+
+Program Listing for File insert_debug_log_callee.h
+==================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.h>` (``/home/chunwei/project/cinn2/cinn/optim/insert_debug_log_callee.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <tuple>
+   #include <utility>
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void InsertDebugLogCallee(Expr* e);
+   
+   }  // namespace optim
+   }  // namespace cinn

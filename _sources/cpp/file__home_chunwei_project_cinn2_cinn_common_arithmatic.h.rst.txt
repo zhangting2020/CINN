@@ -1,0 +1,88 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_arithmatic.h:
+
+File arithmatic.h
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/arithmatic.h``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_arithmatic.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``ginac/ginac.h``
+
+- ``limits``
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``tuple``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1ExprToGinacConerter`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_arithmatic_8h_1ae84acf5e1c496bac12256b2976d75554`
+

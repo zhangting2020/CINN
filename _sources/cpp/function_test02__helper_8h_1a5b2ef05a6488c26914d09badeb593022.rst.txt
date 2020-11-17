@@ -1,0 +1,13 @@
+.. _exhale_function_test02__helper_8h_1a5b2ef05a6488c26914d09badeb593022:
+
+Function cinn::tests::CreateMatmulBlockModule
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::CreateMatmulBlockModule(Target, int, int, int)

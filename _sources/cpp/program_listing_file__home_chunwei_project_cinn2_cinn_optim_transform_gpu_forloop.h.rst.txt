@@ -1,0 +1,36 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h:
+
+Program Listing for File transform_gpu_forloop.h
+================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h>` (``/home/chunwei/project/cinn2/cinn/optim/transform_gpu_forloop.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <algorithm>
+   #include <utility>
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/ir/lowered_func.h"
+   #include "cinn/poly/isl_utils.h"
+   #include "cinn/poly/stage.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   using forloop_infos_t = std::map<std::string, std::map<std::string, poly::StageForloopInfo>>;
+   
+   ir::CudaAxisInfo GatherAxisInfoFromStages(const std::vector<poly::Stage*>& stage_group);
+   
+   void TransformGpuForloops(const forloop_infos_t& forloop_infos, Expr* expr);
+   
+   void RemoveGpuForloopsAxis(Expr* expr);
+   
+   void CudaSyncThreadsDropIfThenElse(Expr* expr);
+   
+   }  // namespace optim
+   }  // namespace cinn

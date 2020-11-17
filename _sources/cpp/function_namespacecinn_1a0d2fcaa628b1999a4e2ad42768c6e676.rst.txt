@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1a0d2fcaa628b1999a4e2ad42768c6e676:
+
+Function cinn::TEST(test01_elementwise_add, vectorize)
+======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test01_elementwise_add_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(test01_elementwise_add, vectorize)

@@ -1,0 +1,67 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc:
+
+File infershape.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pass>` (``/home/chunwei/project/cinn2/cinn/hlir/pass``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pass/infershape.cc``)
+-------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/graph.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`)
+
+- ``cinn/hlir/pass/use_pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__pass`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_infershape_8cc_1a84fd9bd735fcc2fe4efdfe8a9a1fbc99`
+
+- :ref:`exhale_function_infershape_8cc_1a5b3b602212402e2b48d4d8f7e1d381b2`
+

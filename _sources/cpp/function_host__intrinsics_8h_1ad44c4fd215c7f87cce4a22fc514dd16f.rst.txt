@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8h_1ad44c4fd215c7f87cce4a22fc514dd16f:
+
+Function cinn_cpu_cos_fp32(float)
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_cos_fp32(float)

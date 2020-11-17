@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1aebfa34eb05d5f32346be0e5d23a88b22:
+
+Template Function cinn::common::Rest
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Rest(const std::vector<T>&)

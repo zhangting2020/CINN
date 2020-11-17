@@ -1,0 +1,13 @@
+.. _exhale_define_ir__copy_8cc_1aa16d22691afbba404a72105c6a9a3da6:
+
+Define OP_BINARY_HANDLE
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: OP_BINARY_HANDLE

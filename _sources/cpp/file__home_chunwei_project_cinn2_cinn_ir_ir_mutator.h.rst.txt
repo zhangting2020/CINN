@@ -1,0 +1,147 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h:
+
+File ir_mutator.h
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_mutator.h``)
+-----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/intrinsic_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_eliminate_broadcast_in_forloop.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_fold_cinn_call_arguments.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_unroll_loops.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IRMutator`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a675f9d3c5f020daf0598f5c7cdd40a8e`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_ir__mutator_8h_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+
+- :ref:`exhale_define_ir__mutator_8h_1a872aa6e9ecd0925c66a85e45d10b41fa`
+
+- :ref:`exhale_define_ir__mutator_8h_1a82e1f73cc81d9024d41969afd11b3f41`
+

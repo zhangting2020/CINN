@@ -1,0 +1,25 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_tests_test03_convolution_case.cc:
+
+Program Listing for File test03_convolution_case.cc
+===================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_tests_test03_convolution_case.cc>` (``/home/chunwei/project/cinn2/tests/test03_convolution_case.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include <glog/logging.h>
+   #include <gtest/gtest.h>
+   
+   #include "cinn/runtime/cinn_runtime.h"
+   #include "cinn/utils/timer.h"
+   #include "tests/test03_convolution.h"
+   
+   TEST(test03, basic) {}
+   
+   // include the generated C source code:
+   // @{
+   #include "tests/test03_convolution.cc"
+   // @}

@@ -1,0 +1,13 @@
+.. _exhale_enum_poly_2schedule_8h_1a78ce879cfe537b38afd6f13881cb8711:
+
+Enum ScheduleKind
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::poly::ScheduleKind

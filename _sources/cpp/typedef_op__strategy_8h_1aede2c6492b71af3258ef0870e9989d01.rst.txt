@@ -1,0 +1,13 @@
+.. _exhale_typedef_op__strategy_8h_1aede2c6492b71af3258ef0870e9989d01:
+
+Typedef cinn::hlir::framework::CINNCompute
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::CINNCompute

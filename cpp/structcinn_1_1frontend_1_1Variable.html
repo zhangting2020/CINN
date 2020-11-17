@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struct Variable &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Struct CorrectComputeAtRelatedIndiceMutator" href="structcinn_1_1lang_1_1CorrectComputeAtRelatedIndiceMutator.html" />
+    <link rel="prev" title="Struct Program" href="structcinn_1_1frontend_1_1Program.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="struct-variable">
+<span id="exhale-struct-structcinn-1-1frontend-1-1variable"></span><h1>Struct Variable<a class="headerlink" href="#struct-variable" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_frontend_syntax.h.html#file-home-chunwei-project-cinn2-cinn-frontend-syntax-h"><span class="std std-ref">File syntax.h</span></a></p></li>
+</ul>
+<div class="section" id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">common::Shared&lt;</span> <span class="pre">_Variable_</span> <span class="pre">&gt;</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="struct-documentation">
+<h2>Struct Documentation<a class="headerlink" href="#struct-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp struct">
+<dt id="_CPPv4N4cinn8frontend8VariableE">
+<span id="_CPPv3N4cinn8frontend8VariableE"></span><span id="_CPPv2N4cinn8frontend8VariableE"></span><span id="cinn::frontend::Variable"></span><span class="target" id="structcinn_1_1frontend_1_1Variable"></span><em class="property">struct </em><code class="sig-prename descclassname">cinn::frontend<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Variable</code> : <em class="property">public</em> common::Shared&lt;<a class="reference internal" href="structcinn_1_1frontend_1_1__Variable__.html#_CPPv4N4cinn8frontend10_Variable_E" title="cinn::frontend::_Variable_">_Variable_</a>&gt;<a class="headerlink" href="#_CPPv4N4cinn8frontend8VariableE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#structcinn_1_1frontend_1_1Variable"><span class="std std-ref">Variable</span></a> represents the variable in a computation. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend8Variable8VariableENSt11string_viewE">
+<span id="_CPPv3N4cinn8frontend8Variable8VariableENSt11string_viewE"></span><span id="_CPPv2N4cinn8frontend8Variable8VariableENSt11string_viewE"></span><span id="cinn::frontend::Variable::Variable__std::string_view"></span><span class="target" id="structcinn_1_1frontend_1_1Variable_1a3e6287c8d28efddff4b7670c4ef82f03"></span><code class="sig-name descname">Variable</code><span class="sig-paren">(</span>std::string_view <em>id_hint</em> = &quot;&quot;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend8Variable8VariableENSt11string_viewE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id_hint</span></code>: The identifier of the variable, if null, a random ID will be assigned. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend8Variable6set_idERKNSt6stringE">
+<span id="_CPPv3N4cinn8frontend8Variable6set_idERKNSt6stringE"></span><span id="_CPPv2N4cinn8frontend8Variable6set_idERKNSt6stringE"></span><span id="cinn::frontend::Variable::set_id__ssCR"></span><span class="target" id="structcinn_1_1frontend_1_1Variable_1a281098d625f936f2808281eacb14d29b"></span>void <code class="sig-name descname">set_id</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend8Variable6set_idERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend8VariableptEv">
+<span id="_CPPv3N4cinn8frontend8VariableptEv"></span><span id="_CPPv2N4cinn8frontend8VariableptEv"></span><span id="cinn::frontend::Variable::pointer-operator"></span><span class="target" id="structcinn_1_1frontend_1_1Variable_1a9c3dc7fbae2c451a90cc533d31e3727f"></span><a class="reference internal" href="structcinn_1_1frontend_1_1__Variable__.html#_CPPv4N4cinn8frontend10_Variable_E" title="cinn::frontend::_Variable_">_Variable_</a> *<code class="sig-name descname">operator-&gt;</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend8VariableptEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4cinn8frontend8VariableptEv">
+<span id="_CPPv3NK4cinn8frontend8VariableptEv"></span><span id="_CPPv2NK4cinn8frontend8VariableptEv"></span><span id="cinn::frontend::Variable::pointer-operatorC"></span><span class="target" id="structcinn_1_1frontend_1_1Variable_1a1be04d4125aab25cc4f48f8167629005"></span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1__Variable__.html#_CPPv4N4cinn8frontend10_Variable_E" title="cinn::frontend::_Variable_">_Variable_</a> *<code class="sig-name descname">operator-&gt;</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4cinn8frontend8VariableptEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ Symbols</a><ul>
+      <li>Previous: <a href="structcinn_1_1frontend_1_1Program.html" title="previous chapter">Struct Program</a></li>
+      <li>Next: <a href="structcinn_1_1lang_1_1CorrectComputeAtRelatedIndiceMutator.html" title="next chapter">Struct CorrectComputeAtRelatedIndiceMutator</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/structcinn_1_1frontend_1_1Variable.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

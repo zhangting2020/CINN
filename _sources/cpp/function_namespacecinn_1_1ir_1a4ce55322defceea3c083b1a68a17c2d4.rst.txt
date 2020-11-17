@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a4ce55322defceea3c083b1a68a17c2d4:
+
+Function cinn::ir::Zero
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::Zero(const Type&)

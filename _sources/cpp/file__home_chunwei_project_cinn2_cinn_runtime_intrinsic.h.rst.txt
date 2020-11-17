@@ -1,0 +1,149 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h:
+
+File intrinsic.h
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/intrinsic.h``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/runtime/cinn_runtime.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`)
+
+- ``cinn/runtime/intrinsic_types.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+- :ref:`namespace_cinn__runtime`
+
+- :ref:`namespace_cinn__runtime__intrisic`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_intrinsic_8h_1a68adeb9d06c11c53a490911839218169`
+
+- :ref:`exhale_variable_intrinsic_8h_1a36ec7f0c6846fefe927fc46117937924`
+
+- :ref:`exhale_variable_intrinsic_8h_1a37b96ffa3bc14e46dfc29ec7d161db9f`
+
+- :ref:`exhale_variable_intrinsic_8h_1ad37014f279bf5daf6caa9dd03ed7111e`
+
+- :ref:`exhale_variable_intrinsic_8h_1a88263e4a93a24871e0ef18e57a3e0063`
+
+- :ref:`exhale_variable_intrinsic_8h_1a6792fecdbf6175e15ad63abe3897be4d`
+
+- :ref:`exhale_variable_intrinsic_8h_1a223b671ec7d3da6257fccc32e3f09f38`
+
+- :ref:`exhale_variable_intrinsic_8h_1af7a329684ee4ae999c44f098db7b6f52`
+
+- :ref:`exhale_variable_intrinsic_8h_1a8fcf36f7359fbc802fc73aa579a9f560`
+
+- :ref:`exhale_variable_intrinsic_8h_1a840a9660bacc1e9e1ab83797259e3449`
+
+- :ref:`exhale_variable_intrinsic_8h_1a34081b96a62bf1bb5fb8050b6486f3f2`
+
+- :ref:`exhale_variable_intrinsic_8h_1a9fc47bd0b9fb68d4f1d6c7e34442b58d`
+
+- :ref:`exhale_variable_intrinsic_8h_1afccb2e69a42325bebf91f505a830ca95`
+
+- :ref:`exhale_variable_intrinsic_8h_1aa0e49b5b57ec0794cddc013a9b181170`
+
+- :ref:`exhale_variable_intrinsic_8h_1ac740b6ab35fe75d0e724e9c9a34612e9`
+
+- :ref:`exhale_variable_intrinsic_8h_1a5c7e8d9a094fc55f3ae317ebe7ec264f`
+
+- :ref:`exhale_variable_intrinsic_8h_1a02541cd5af6721b265e947f6dbd3bc4e`
+
+- :ref:`exhale_variable_intrinsic_8h_1aa94879e7fb27e276a82d4cab8de4d7ba`
+
+- :ref:`exhale_variable_intrinsic_8h_1ab4eb5ae5e80ae542f61786181684d0b6`
+
+- :ref:`exhale_variable_intrinsic_8h_1a191318e746b2d405c55b59f62a7c0a07`
+
+- :ref:`exhale_variable_intrinsic_8h_1a978215b9c5443260287369bdde61b7b6`
+
+- :ref:`exhale_variable_intrinsic_8h_1a5a63834affd14d6cfd38315b8c6a21e1`
+
+- :ref:`exhale_variable_intrinsic_8h_1ad84151a44b6028ae9ac50a6dc020305d`
+
+- :ref:`exhale_variable_intrinsic_8h_1aba7bc95d628e69084a6310bd421ae4cf`
+
+- :ref:`exhale_variable_intrinsic_8h_1aa0bb71f709187630b642e63f780c0961`
+
+- :ref:`exhale_variable_intrinsic_8h_1a0cb2231c20d7fdd64c4147ca8808434e`
+

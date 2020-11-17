@@ -1,0 +1,87 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_desc_api.h:
+
+File desc_api.h
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp>` (``/home/chunwei/project/cinn2/cinn/frontend/paddle/cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/frontend/paddle/cpp/desc_api.h``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_desc_api.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``sstream``
+
+- ``string``
+
+- ``variant``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_compatible_pb.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_block_desc.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_op_desc.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_program_desc.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_cpp_var_desc.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_block_desc.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_program_desc.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_var_desc.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_pb_var_desc.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__frontend__paddle__cpp`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1frontend_1_1paddle_1_1cpp_1_1BlockDescAPI`
+
+- :ref:`exhale_class_classcinn_1_1frontend_1_1paddle_1_1cpp_1_1OpDescAPI`
+
+- :ref:`exhale_class_classcinn_1_1frontend_1_1paddle_1_1cpp_1_1ProgramDescAPI`
+
+- :ref:`exhale_class_classcinn_1_1frontend_1_1paddle_1_1cpp_1_1VarDescAPI`
+

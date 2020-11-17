@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1ir_1_1GE:
+
+Struct GE
+=========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::BinaryOpNode< GE >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1BinaryOpNode`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::GE
+   :members:
+   :protected-members:
+   :undoc-members:

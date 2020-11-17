@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__value_8cc_1ad14ca621cc408fe659d9db461d60216f:
+
+Function cinn::common::ToValue< double >
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::ToValue< double >()

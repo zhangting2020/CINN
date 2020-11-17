@@ -1,0 +1,61 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc:
+
+File ir_simplify_test.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/ir_simplify_test.cc``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/optim/ir_simplify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_ir__simplify__test_8cc_1a948678959174b5785282ed9c660510f2`
+
+- :ref:`exhale_function_ir__simplify__test_8cc_1a5057016f83817a4ef39c6316de0978b9`
+

@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1a2dbf17afcd51e553e62326c43a135c56:
+
+Function cinn::hlir::op::StrategyForDropoutInfer
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::StrategyForDropoutInfer(const framework::NodeAttr&, const std::vector<ir::Tensor>&, const std::vector<Type>&, const std::vector<std::vector<int>>&, const Target&)

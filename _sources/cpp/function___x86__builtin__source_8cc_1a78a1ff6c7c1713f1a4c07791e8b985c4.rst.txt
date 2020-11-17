@@ -1,0 +1,13 @@
+.. _exhale_function___x86__builtin__source_8cc_1a78a1ff6c7c1713f1a4c07791e8b985c4:
+
+Function cinn_avx256_div()
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_avx256_div()

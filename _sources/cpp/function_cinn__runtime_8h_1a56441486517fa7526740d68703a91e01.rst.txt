@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8h_1a56441486517fa7526740d68703a91e01:
+
+Function cinn_buffer_copy_to_device(void \*, struct cinn_buffer_t \*)
+=====================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_buffer_copy_to_device(void *, struct cinn_buffer_t *)

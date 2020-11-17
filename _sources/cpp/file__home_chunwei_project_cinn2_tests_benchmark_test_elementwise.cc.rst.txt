@@ -1,0 +1,59 @@
+
+.. _file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.cc:
+
+File test_elementwise.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests_benchmark>` (``/home/chunwei/project/cinn2/tests/benchmark``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/benchmark/test_elementwise.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``tests/benchmark/test_elementwise.h`` (:ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__tests`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_test__elementwise_8cc_1ab95c64eb508b7c778110cbab4acc5747`
+
+- :ref:`exhale_function_test__elementwise_8cc_1add0aad53754ec2da3cfd987defd2fe29`
+

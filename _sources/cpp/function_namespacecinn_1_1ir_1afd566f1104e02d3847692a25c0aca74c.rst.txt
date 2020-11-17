@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1afd566f1104e02d3847692a25c0aca74c:
+
+Function cinn::ir::TEST(Tensor, inlined)
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(Tensor, inlined)

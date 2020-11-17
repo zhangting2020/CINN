@@ -1,0 +1,13 @@
+.. _exhale_function_extern__func__jit__register_8h_1ad407cabb0ecf16091bfebc033ae7d317:
+
+Function cinn::backends::TargetToBackendRepr
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TargetToBackendRepr(Target)

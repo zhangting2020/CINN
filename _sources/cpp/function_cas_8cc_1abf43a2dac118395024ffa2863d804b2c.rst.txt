@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1abf43a2dac118395024ffa2863d804b2c:
+
+Template Function cinn::common::Concat
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Concat(const std::vector<T>&, const std::vector<T>&)

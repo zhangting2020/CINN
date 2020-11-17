@@ -1,0 +1,13 @@
+.. _exhale_enum_namespacecinn_1_1ir_1ab34e366aeab67f67f3588a2e2de60d67:
+
+Enum AccessMask
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn::ir::AccessMask

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1aa84f303f3f3a85bf70411d5b89a11cd9:
+
+Function cinn::ir::CollectTensorMap
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::CollectTensorMap(Expr, std::function<bool(const Expr *)>&&)

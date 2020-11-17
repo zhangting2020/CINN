@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1ae01e2608e11de478d9cd4d6a12b7abd6:
+
+Function cinn::ir::operator<<(std::ostream&, MemoryType)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<<(std::ostream&, MemoryType)

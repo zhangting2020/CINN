@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__value_8h_1a99df730fa0e2fe02247f7c5def47a7f7:
+
+Template Function cinn::common::ToValue
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::ToValue(T)

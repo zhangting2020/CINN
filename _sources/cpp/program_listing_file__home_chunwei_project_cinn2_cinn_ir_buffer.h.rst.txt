@@ -1,0 +1,122 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_buffer.h:
+
+Program Listing for File buffer.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_buffer.h>` (``/home/chunwei/project/cinn2/cinn/ir/buffer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <memory>
+   #include <set>
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/common/common.h"
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   class _Buffer_;
+   class Tensor;
+   class _Tensor_;
+   
+   enum class AccessMask : int {
+     kRead = 1,
+     kWrite,
+   };
+   
+   std::string TensorGetBufferName(const _Tensor_* tensor);
+   std::string BufferGetTensorName(const _Buffer_* buffer);
+   
+   class Buffer : public IrNodeRef {
+    public:
+     Buffer() = default;
+     explicit Buffer(IrNode* n) : IrNodeRef(n) {}
+     operator Expr() const { return Expr(get()); }
+   
+     // TODO(Superjom) Abandon them.
+     // @{
+     Expr DestroyExpr() const;
+     // @}
+   
+     const _Buffer_* operator->() const;
+     _Buffer_* operator->();
+   };
+   
+   class _Buffer_ : public ExprNode<_Buffer_> {
+    public:
+     std::vector<Expr> shape;
+     // This can be empty, indicating that the array is contiguous.
+     std::vector<Expr> strides;
+     std::string name;
+     std::string scope;
+     Expr elem_offset;
+     // elem_offset is guaranteed to be multiple of offset_factor.
+     int offset_factor{0};
+     Target target{UnkTarget()};
+     mutable int data_alignment{0};
+     MemoryType memory_type{MemoryType::Heap};
+   
+     Type dtype;
+   
+     _Buffer_() : elem_offset(Expr(0)) { set_type(type_of<cinn_buffer_t*>()); }
+   
+     static Buffer Make(Var data,
+                        Type dtype,
+                        const std::vector<Expr>& shape,
+                        const std::vector<Expr>& strides,
+                        Expr elem_offset,
+                        const std::string& name,
+                        const std::string& scope,
+                        int data_alignment,
+                        int offset_factor,
+                        Target target = UnkTarget());
+   
+     static Buffer Make(const std::string& name, const std::vector<Expr>& shape = {});
+   
+     static Buffer Make(const std::string& name, Type type) {
+       CHECK(!type.is_void());
+       CHECK(!type.is_unk());
+       auto n   = make_shared<_Buffer_>();
+       n->name  = name;
+       n->dtype = type;
+       return Buffer(n);
+     }
+   
+     static Buffer Make();
+   
+     bool is_on_gpu() const { return memory_type == MemoryType::GPULocal || memory_type == MemoryType::GPUShared; }
+     bool is_on_host() const { return !is_on_gpu(); }
+   
+     void BindTo(const Tensor& tensor);
+     void BindTo(const _Tensor_* tensor);
+     void Unbind(const _Tensor_* tensor);
+   
+     const std::set<std::string>& binded_tensor_names() const { return binded_tensors_names_; }
+   
+     Var buffer_addr() const;
+   
+     IrNodeTy node_type() const override;
+   
+     void Verify() const override;
+   
+     static const IrNodeTy _node_type_ = IrNodeTy::_Buffer_;
+   
+     // Copy the meta infos to other.
+     void CopyMeta(_Buffer_* other) const { other->binded_tensors_names_ = binded_tensors_names_; }
+   
+    private:
+     std::set<std::string> binded_tensors_names_;
+   };
+   
+   static bool operator<(const ir::Buffer& a, const ir::Buffer& b) { return a->name < b->name; }
+   
+   }  // namespace ir
+   }  // namespace cinn

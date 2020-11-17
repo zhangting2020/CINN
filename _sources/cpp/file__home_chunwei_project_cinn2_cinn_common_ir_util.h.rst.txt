@@ -1,0 +1,155 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_ir_util.h:
+
+File ir_util.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/ir_util.h``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_ir_util.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``unordered_map``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_optim.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_ir__util_8h_1aa7167b269a24c515256d5880c45992ee`
+
+- :ref:`exhale_function_ir__util_8h_1a6fd360e4962ae2e60ae387eb6e5ad415`
+
+- :ref:`exhale_function_ir__util_8h_1a7cff6736c54c20ec96c948edf8f257e1`
+
+- :ref:`exhale_function_ir__util_8h_1a0e64780cebf43e99e4ee9629a5ec36a3`
+
+- :ref:`exhale_function_ir__util_8h_1ab99afce8b59c624301fa88d65ac784fe`
+
+- :ref:`exhale_function_ir__util_8h_1a33eb8c857194204abc207e22b21c61e2`
+
+- :ref:`exhale_function_ir__util_8h_1a258fc5f7a5b3f22a9057c51b30100c77`
+
+- :ref:`exhale_function_ir__util_8h_1ac10187aa1fd778267468b3ac070b74be`
+
+- :ref:`exhale_function_ir__util_8h_1ad51364c4600e873220d0a6d4c0e41351`
+
+- :ref:`exhale_function_ir__util_8h_1a399018c1a3981b5da88b77dfb7e2eafa`
+
+- :ref:`exhale_function_ir__util_8h_1aae0953c507c5c0d7056873f1b76fb3cc`
+

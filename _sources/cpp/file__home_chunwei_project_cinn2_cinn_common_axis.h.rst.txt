@@ -1,0 +1,64 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_axis.h:
+
+File axis.h
+===========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/axis.h``)
+---------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_axis.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+- :ref:`namespace_cinn__ir`
+

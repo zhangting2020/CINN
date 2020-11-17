@@ -1,0 +1,20 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.h:
+
+Program Listing for File replace_const_param_to_integer.h
+=========================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.h>` (``/home/chunwei/project/cinn2/cinn/optim/replace_const_param_to_integer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn::optim {
+   
+   void ReplaceConstParamToInteger(Expr* e);
+   
+   }  // namespace cinn::optim

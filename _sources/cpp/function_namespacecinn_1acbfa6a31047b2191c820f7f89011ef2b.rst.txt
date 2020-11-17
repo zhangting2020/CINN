@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1acbfa6a31047b2191c820f7f89011ef2b:
+
+Function cinn::TEST(matmul, call)
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(matmul, call)

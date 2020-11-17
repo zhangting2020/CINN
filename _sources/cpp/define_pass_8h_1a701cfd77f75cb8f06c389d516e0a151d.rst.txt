@@ -1,0 +1,13 @@
+.. _exhale_define_pass_8h_1a701cfd77f75cb8f06c389d516e0a151d:
+
+Define CINN_REGISTER_PASS
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_REGISTER_PASS

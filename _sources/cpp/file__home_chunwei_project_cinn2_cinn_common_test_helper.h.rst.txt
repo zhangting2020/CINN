@@ -1,0 +1,95 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_test_helper.h:
+
+File test_helper.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/test_helper.h``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_test_helper.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/simple_jit.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_transform_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1ArgsBuilder`
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1BufferBuilder`
+

@@ -1,0 +1,13 @@
+.. _exhale_function_stage_8cc_1a338f16b32d0f91bf77c35cf978e8d7d7:
+
+Function cinn::poly::GatherAccesses(Stage \*, const std::string&)
+=================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::GatherAccesses(Stage *, const std::string&)

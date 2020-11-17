@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1poly_1_1StageForloopInfo:
+
+Struct StageForloopInfo
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::poly::StageForloopInfo
+   :members:
+   :protected-members:
+   :undoc-members:

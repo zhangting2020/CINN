@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1abea55acc93bb8fbdccba81fe4a7c73b1:
+
+Template Function cinn::Reference
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::Reference(const T *)

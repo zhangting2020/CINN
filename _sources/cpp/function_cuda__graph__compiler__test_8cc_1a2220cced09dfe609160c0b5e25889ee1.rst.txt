@@ -1,0 +1,13 @@
+.. _exhale_function_cuda__graph__compiler__test_8cc_1a2220cced09dfe609160c0b5e25889ee1:
+
+Function cinn::hlir::framework::test_mul
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::test_mul(const std::vector<float>&, const std::vector<float>&, int, int, int)

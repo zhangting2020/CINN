@@ -1,0 +1,81 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_target.h:
+
+Program Listing for File target.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_target.h>` (``/home/chunwei/project/cinn2/cinn/common/target.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <ostream>
+   #include <vector>
+   
+   namespace cinn {
+   namespace common {
+   
+   struct Target {
+     enum class OS : int {
+       Unk = -1,
+       Linux,
+       Windows,
+     };
+   
+     enum class Arch : int {
+       Unk = -1,
+       X86,
+       ARM,
+       NVGPU,
+     };
+   
+     enum Bit : int {
+       Unk = -1,
+       k32,
+       k64,
+     };
+   
+     OS os{OS::Unk};
+     Arch arch{Arch::Unk};
+     Bit bits{Unk};
+   
+     enum class Feature : int {
+       JIT = 0,
+       Debug,
+     };
+     std::vector<Feature> features;
+   
+     explicit Target(OS o = OS::Linux, Arch a = Arch::Unk, Bit b = Bit::Unk, const std::vector<Feature>& features = {})
+         : os(o), arch(a), bits(b), features(features) {}
+   
+     bool defined() const { return os != OS::Unk && arch != Arch::Unk && bits != Bit::Unk; }
+   
+     int runtime_arch() const;
+   
+     bool operator==(const Target& other) const;
+     bool operator!=(const Target& other) const { return !(*this == other); }
+     friend std::ostream& operator<<(std::ostream& os, const Target& target);
+   };
+   
+   static const Target& UnkTarget() {
+     static Target target(Target::OS::Unk, Target::Arch::Unk, Target::Bit::Unk, {});
+     return target;
+   }
+   
+   static const Target& DefaultHostTarget() {
+     static Target target(Target::OS::Linux, Target::Arch::X86, Target::Bit::k64, {});
+     return target;
+   }
+   
+   static const Target& DefaultNVGPUTarget() {
+     static Target target(Target::OS::Linux, Target::Arch::NVGPU, Target::Bit::k64, {});
+     return target;
+   }
+   
+   std::ostream& operator<<(std::ostream& os, Target::Arch arch);
+   
+   }  // namespace common
+   }  // namespace cinn

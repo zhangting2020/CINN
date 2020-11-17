@@ -1,0 +1,13 @@
+.. _exhale_define_common_8cc_1a0a130a184b1942e4533dc104fed9093f:
+
+Define DEFINE_BINARY_OP
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DEFINE_BINARY_OP

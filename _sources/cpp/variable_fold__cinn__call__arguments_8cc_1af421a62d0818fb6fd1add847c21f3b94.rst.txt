@@ -1,0 +1,13 @@
+.. _exhale_variable_fold__cinn__call__arguments_8cc_1af421a62d0818fb6fd1add847c21f3b94:
+
+Variable visited_call_
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_fold_cinn_call_arguments.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: visited_call_

@@ -1,0 +1,13 @@
+.. _exhale_variable_llvm__optimizer_8cc_1a7a3839799bddb978cc8082f8dc50d33d:
+
+Variable print_passes_
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: print_passes_

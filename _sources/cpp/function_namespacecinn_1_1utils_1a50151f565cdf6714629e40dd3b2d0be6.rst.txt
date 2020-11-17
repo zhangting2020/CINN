@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1a50151f565cdf6714629e40dd3b2d0be6:
+
+Template Function cinn::utils::Max
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Max(T&&, Ts&&...)

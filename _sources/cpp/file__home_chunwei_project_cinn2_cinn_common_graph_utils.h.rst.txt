@@ -1,0 +1,109 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_graph_utils.h:
+
+File graph_utils.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/graph_utils.h``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_graph_utils.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``cinn/common/object.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`)
+
+- ``cinn/common/shared.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``glog/logging.h``
+
+- ``list`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc`)
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``tuple``
+
+- ``unordered_map``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_graph.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+- :ref:`namespace_std`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1GraphEdgeCompare`
+
+- :ref:`exhale_struct_structstd_1_1hash_3_01cinn_1_1common_1_1GraphNode_01_4`
+
+- :ref:`exhale_class_classcinn_1_1common_1_1Graph`
+
+- :ref:`exhale_class_classcinn_1_1common_1_1GraphEdge`
+
+- :ref:`exhale_class_classcinn_1_1common_1_1GraphNode`
+

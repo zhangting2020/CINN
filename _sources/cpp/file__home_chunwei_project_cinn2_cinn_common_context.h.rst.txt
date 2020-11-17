@@ -1,0 +1,98 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_context.h:
+
+File context.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/context.h``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_context.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``any``
+
+- ``cinn/common/debug_manager.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_debug_manager.h`)
+
+- ``cinn/common/info_registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_info_registry.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``gflags/gflags.h``
+
+- ``isl/cpp.h``
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_context.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_domain.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1NameGenerator`
+
+- :ref:`exhale_class_classcinn_1_1common_1_1Context`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_common_2context_8h_1a3ede401b98e59c5b056465aa03531ae6`
+
+- :ref:`exhale_function_namespacecinn_1a35d2dcd260c188d8babc0841cc2d4804`
+

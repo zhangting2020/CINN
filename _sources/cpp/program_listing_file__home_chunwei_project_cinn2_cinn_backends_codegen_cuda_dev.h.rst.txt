@@ -1,0 +1,74 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h:
+
+Program Listing for File codegen_cuda_dev.h
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h>` (``/home/chunwei/project/cinn2/cinn/backends/codegen_cuda_dev.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/backends/codegen_c.h"
+   #include "cinn/common/common.h"
+   #include "cinn/ir/ir.h"
+   #include "cinn/ir/ir_printer.h"
+   #include "cinn/ir/lowered_func.h"
+   #include "cinn/ir/module.h"
+   #include "cinn/lang/packed_func.h"
+   #include "cinn/runtime/cinn_runtime.h"
+   
+   namespace cinn::ir {
+   class Module;
+   }  // namespace cinn::ir
+   
+   namespace cinn {
+   namespace backends {
+   
+   class CodeGenCUDA_Dev : public CodeGenC {
+    public:
+     explicit CodeGenCUDA_Dev(Target target);
+   
+     void Compile(const ir::Module& module, const Outputs& outputs);
+   
+     std::string Compile(const ir::Module& module, bool for_nvrtc = true);
+   
+     std::string Compile(const ir::LoweredFunc& func);
+   
+     static std::string GenKernelName(const std::string& func_name) { return func_name + "_kernel"; }
+   
+     void PrintFuncArg(const ir::Argument& arg);
+   
+     std::string Compile(const ir::Module& module, OutputKind output_kind);
+   
+    protected:
+     void Visit(const ir::_LoweredFunc_* op) override;
+     void Visit(const ir::Min* op) override;
+     void Visit(const ir::Max* op) override;
+     void Visit(const ir::Alloc* op) override;
+     void Visit(const ir::Call* op) override;
+   
+     void PrintBuiltinCodes();
+   
+     void PrintIncludes() override;
+   
+     void PrintTempBufferCreation(const ir::Buffer& buffer);
+   
+     void PrintTempBufferAliasDefinition(const ir::Buffer& buffer);
+   
+     std::vector<Expr> GenerateBufferAliasExprs(const ir::_LoweredFunc_* op, const std::vector<ir::Buffer>& temp_buffers);
+   
+     void PrintFunctionDeclaration(const ir::_LoweredFunc_* op);
+   
+    private:
+     Target target_;
+     bool for_nvrtc_{false};
+   };
+   
+   }  // namespace backends
+   }  // namespace cinn

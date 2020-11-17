@@ -1,0 +1,65 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_if_simplify_test.cc:
+
+Program Listing for File if_simplify_test.cc
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_if_simplify_test.cc>` (``/home/chunwei/project/cinn2/cinn/optim/if_simplify_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/optim/if_simplify.h"
+   #include <gtest/gtest.h>
+   #include <string>
+   #include "cinn/ir/ir_printer.h"
+   
+   namespace cinn::optim {
+   
+   TEST(IfSimplify, if_true) {
+     Var n("n");
+     auto e = ir::IfThenElse::Make(Expr(1) /*true*/, ir::Let::Make(n, Expr(1)), ir::Let::Make(n, Expr(2)));
+   
+     LOG(INFO) << "\n" << e;
+   
+     IfSimplify(&e);
+   
+     LOG(INFO) << e;
+   
+     ASSERT_EQ(utils::GetStreamCnt(e), "int32 n = 1");
+   }
+   
+   TEST(IfSimplify, if_false) {
+     Var n("n");
+     auto e = ir::IfThenElse::Make(Expr(0) /*false*/, ir::Let::Make(n, Expr(1)), ir::Let::Make(n, Expr(2)));
+   
+     LOG(INFO) << "\n" << e;
+   
+     IfSimplify(&e);
+   
+     LOG(INFO) << e;
+   
+     ASSERT_EQ(utils::GetStreamCnt(e), "int32 n = 2");
+   }
+   
+   TEST(IfSimplify, if_else_empty) {
+     Var n("n");
+     auto e = ir::IfThenElse::Make(Expr(0) /*false*/, ir::Let::Make(n, Expr(1)));
+   
+     LOG(INFO) << "\n" << e;
+   
+     IfSimplify(&e);
+   
+     LOG(INFO) << e;
+   
+     std::string target = utils::Trim(R"ROC(
+   {
+   
+   }
+   )ROC");
+   
+     ASSERT_EQ(utils::GetStreamCnt(e), target);
+   }
+   
+   }  // namespace cinn::optim

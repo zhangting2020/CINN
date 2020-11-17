@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1af02e0a81a7d8b510431b444b7451012a:
+
+Function cinn::common::type_of< uint64_t >
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::type_of< uint64_t >()

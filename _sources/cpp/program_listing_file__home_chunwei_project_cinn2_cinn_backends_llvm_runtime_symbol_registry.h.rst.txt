@@ -1,0 +1,62 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h:
+
+Program Listing for File runtime_symbol_registry.h
+==================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h>` (``/home/chunwei/project/cinn2/cinn/backends/llvm/runtime_symbol_registry.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <glog/logging.h>
+   
+   #include <any>
+   #include <map>
+   #include <mutex>  // NOLINT
+   #include <string>
+   #include <string_view>
+   #include <variant>
+   #include <vector>
+   
+   #include "cinn/common/macros.h"
+   
+   namespace cinn {
+   namespace backends {
+   
+   class RuntimeSymbolRegistry {
+    public:
+     static RuntimeSymbolRegistry &Global();
+   
+     void RegisterFn(const std::string &name, void *address) { Register(name, address); }
+   
+     template <typename T>
+     void RegisterVar(const std::string &name, T val) {
+       auto &data = scalar_holder_[name];
+       data.resize(sizeof(T));
+       memcpy(data.data(), &val, sizeof(T));
+       Register(name, reinterpret_cast<void *>(data.data()));
+     }
+   
+     void *Lookup(std::string_view name) const;
+   
+     const std::map<std::string, void *> &All() const { return symbols_; }
+   
+     void Clear();
+   
+    private:
+     void Register(const std::string &name, void *address);
+   
+     RuntimeSymbolRegistry() = default;
+     CINN_DISALLOW_COPY_AND_ASSIGN(RuntimeSymbolRegistry);
+   
+     mutable std::mutex mu_;
+     std::map<std::string, void *> symbols_;
+     std::map<std::string, std::vector<int8_t>> scalar_holder_;
+   };
+   
+   }  // namespace backends
+   }  // namespace cinn

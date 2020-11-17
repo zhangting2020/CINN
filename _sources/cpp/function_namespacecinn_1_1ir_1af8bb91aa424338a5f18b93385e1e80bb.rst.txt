@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1af8bb91aa424338a5f18b93385e1e80bb:
+
+Function cinn::ir::operator<<(std::ostream&, DeviceAPI)
+=======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<<(std::ostream&, DeviceAPI)

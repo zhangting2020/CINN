@@ -1,0 +1,36 @@
+.. _exhale_class_classcinn_1_1ir_1_1__Operation__:
+
+Class _Operation_
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::FunctionBase`` (:ref:`exhale_class_classcinn_1_1ir_1_1FunctionBase`)
+
+
+Derived Types
+*************
+
+- ``public cinn::ir::BufferShareOp`` (:ref:`exhale_struct_structcinn_1_1ir_1_1BufferShareOp`)
+- ``public cinn::ir::CallOp`` (:ref:`exhale_struct_structcinn_1_1ir_1_1CallOp`)
+- ``public cinn::ir::ComputeOp`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ComputeOp`)
+- ``public cinn::ir::PlaceholderOp`` (:ref:`exhale_struct_structcinn_1_1ir_1_1PlaceholderOp`)
+- ``public cinn::ir::PrecedingViewOp`` (:ref:`exhale_struct_structcinn_1_1ir_1_1PrecedingViewOp`)
+- ``private cinn::pybind::_Operation_Wrapper`` (:ref:`exhale_class_classcinn_1_1pybind_1_1__Operation__Wrapper`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::_Operation_
+   :members:
+   :protected-members:
+   :undoc-members:

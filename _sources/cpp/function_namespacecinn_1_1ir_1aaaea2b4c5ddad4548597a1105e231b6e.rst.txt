@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1aaaea2b4c5ddad4548597a1105e231b6e:
+
+Function cinn::ir::TEST(Tensor, reduce)
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(Tensor, reduce)

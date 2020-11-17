@@ -1,0 +1,13 @@
+.. _exhale_typedef_cinn__runtime_8h_1a6d87e5a3cf1965085316a78f2dd5059b:
+
+Typedef cinn_pod_value_t
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn_pod_value_t

@@ -1,0 +1,61 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop_test.cc:
+
+File transform_gpu_forloop_test.cc
+==================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/transform_gpu_forloop_test.cc``)
+-------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/optim/remove_nested_block.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h`)
+
+- ``cinn/optim/transform_gpu_forloop.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_transform__gpu__forloop__test_8cc_1ac2c764e9c98a9e42fbe552b3fdf5ddf9`
+
+- :ref:`exhale_function_transform__gpu__forloop__test_8cc_1aba03741f90bafdb23132f0efee09bbd1`
+

@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File common.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-common-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-pybind-common-cc"></span><h1>Program Listing for File common.cc<a class="headerlink" href="#program-listing-for-file-common-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_common.cc.html#file-home-chunwei-project-cinn2-cinn-pybind-common-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/pybind/common.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/object.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/shared.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/target.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/type.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/pybind/bind.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/pybind/bind_utils.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">py</span> <span class="o">=</span> <span class="n">pybind11</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">pybind</span> <span class="p">{</span>
+
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">Object</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">Type</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="p">{</span>
+<span class="kt">void</span> <span class="n">BindTarget</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">BindType</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">BindObject</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">BindShared</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">BindCinnValue</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">BindTarget</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">&gt;</span> <span class="n">target</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;Target&quot;</span><span class="p">);</span>
+  <span class="n">target</span><span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;os&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Target</span><span class="o">::</span><span class="n">os</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;arch&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Target</span><span class="o">::</span><span class="n">arch</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;bits&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Target</span><span class="o">::</span><span class="n">bits</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;features&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Target</span><span class="o">::</span><span class="n">features</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">::</span><span class="n">OS</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Bit</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">::</span><span class="n">Feature</span><span class="o">&gt;</span> <span class="o">&amp;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;defined&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Target</span><span class="o">::</span><span class="n">defined</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;runtime_arch&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Target</span><span class="o">::</span><span class="n">runtime_arch</span><span class="p">);</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;DefaultHostTarget&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">).</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;DefaultNVGPUTarget&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultNVGPUTarget</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">::</span><span class="n">OS</span><span class="o">&gt;</span> <span class="n">os</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s">&quot;OS&quot;</span><span class="p">);</span>
+  <span class="n">os</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Unk&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">OS</span><span class="o">::</span><span class="n">Unk</span><span class="p">).</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Linux&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">OS</span><span class="o">::</span><span class="n">Linux</span><span class="p">).</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Windows&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">OS</span><span class="o">::</span><span class="n">Windows</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">&gt;</span> <span class="n">arch</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s">&quot;Arch&quot;</span><span class="p">);</span>
+  <span class="n">arch</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Unk&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">Unk</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;X86&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;ARM&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">ARM</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;NVGPU&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">NVGPU</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">::</span><span class="n">Bit</span><span class="o">&gt;</span> <span class="n">bit</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s">&quot;Bit&quot;</span><span class="p">);</span>
+  <span class="n">bit</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Unk&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Bit</span><span class="o">::</span><span class="n">Unk</span><span class="p">).</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;k32&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Bit</span><span class="o">::</span><span class="n">k32</span><span class="p">).</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;k64&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Bit</span><span class="o">::</span><span class="n">k64</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">Target</span><span class="o">::</span><span class="n">Feature</span><span class="o">&gt;</span> <span class="n">feature</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s">&quot;Feature&quot;</span><span class="p">);</span>
+  <span class="n">feature</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;JIT&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Feature</span><span class="o">::</span><span class="n">JIT</span><span class="p">).</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Debug&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="o">::</span><span class="n">Feature</span><span class="o">::</span><span class="n">Debug</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">BindType</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">type</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;Type&quot;</span><span class="p">);</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">()).</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="cp">#define DEFINE_TYPE_METHOD(__name) (type = type.def(#__name, &amp;Type::__name))</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_primitive</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_unk</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_void</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_bool</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_vector</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_scalar</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_float</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_int</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_uint</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_string</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">set_cpp_handle</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_cpp_handle</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">set_cpp_handle2</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_cpp_handle2</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">set_cpp_const</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_cpp_const</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">set_customized_type</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">customized_type</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">is_customized_type</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">with_bits</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">with_type</span><span class="p">);</span>
+  <span class="n">DEFINE_TYPE_METHOD</span><span class="p">(</span><span class="n">with_cpp_const</span><span class="p">);</span>
+<span class="cp">#undef DEFINE_TYPE_METHOD</span>
+  <span class="n">type</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;vector_of&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">VectorOf</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;element_of&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">ElementOf</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;pointer_of&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Type</span><span class="o">::</span><span class="n">PointerOf</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__str__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__repr__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;&lt;Type: %s&gt;&quot;</span><span class="p">,</span> <span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">self</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span> <span class="p">});</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">&gt;</span> <span class="n">type_t</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="s">&quot;type_t&quot;</span><span class="p">);</span>
+  <span class="n">type_t</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;unk&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">Unk</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;int&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">Int</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;uInt&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">UInt</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;float&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">Float</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;string&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">String</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;void&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">Void</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;customized&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">type_t</span><span class="o">::</span><span class="n">Customized</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">export_values</span><span class="p">();</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">::</span><span class="n">cpp_type_t</span><span class="o">&gt;</span> <span class="n">cpp_type_t</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="s">&quot;cpp_type_t&quot;</span><span class="p">);</span>
+  <span class="n">cpp_type_t</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;None&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">None</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Const&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Const</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Handle&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">Handle</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;HandleHandle&quot;</span><span class="p">,</span> <span class="n">Type</span><span class="o">::</span><span class="n">cpp_type_t</span><span class="o">::</span><span class="n">HandleHandle</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">export_values</span><span class="p">();</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;Void&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">Void</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;Int&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">Int</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;bits&quot;</span><span class="p">),</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;lanes&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;UInt&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">UInt</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;bits&quot;</span><span class="p">),</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;lanes&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;Float&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">Float</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;bits&quot;</span><span class="p">),</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;lanes&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;Bool&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">Bool</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;lanes&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;String&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">String</span><span class="p">);</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span>
+       <span class="s">&quot;make_const&quot;</span><span class="p">,</span>
+       <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">val</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span> <span class="p">},</span>
+       <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">),</span>
+       <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">))</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span>
+          <span class="s">&quot;make_const&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="kt">int64_t</span> <span class="n">val</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span> <span class="p">},</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">),</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">))</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span>
+          <span class="s">&quot;make_const&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="kt">float</span> <span class="n">val</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span> <span class="p">},</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">),</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">))</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span>
+          <span class="s">&quot;make_const&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="kt">double</span> <span class="n">val</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span> <span class="p">},</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">),</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">))</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span>
+          <span class="s">&quot;make_const&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="k">const</span> <span class="n">Type</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">val</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Expr</span> <span class="p">{</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span> <span class="p">},</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">),</span>
+          <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">));</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;type_of&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span> <span class="n">dtype</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;float32&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;float64&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;uchar&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;int16&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int16_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;uint32&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;bool&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;char&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;int32&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;void&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;int8_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int8_t</span> <span class="o">*&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;void_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;void_p_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">**&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;float32_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">float</span> <span class="o">*&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;float64_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">double</span> <span class="o">*&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;cinn_buffer&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;cinn_buffer_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;const_cinn_buffer_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;cinn_pod_value&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&quot;cinn_pod_value_p&quot;</span><span class="p">)</span> <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span> <span class="o">*&gt;</span><span class="p">();</span>
+
+    <span class="n">CINN_NOT_IMPLEMENTED</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">Void</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">BindObject</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span> <span class="n">ObjectWrapper</span><span class="o">&gt;</span> <span class="n">object</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;Object&quot;</span><span class="p">);</span>
+  <span class="n">object</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;type_info&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Object</span><span class="o">::</span><span class="n">type_info</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">BindShared</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">RefCount</span><span class="o">&gt;</span> <span class="n">ref_count</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;RefCount&quot;</span><span class="p">);</span>
+  <span class="n">ref_count</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;inc&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">RefCount</span><span class="o">::</span><span class="n">Inc</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;dec&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">RefCount</span><span class="o">::</span><span class="n">Dec</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;is_zero&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">RefCount</span><span class="o">::</span><span class="n">is_zero</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_string&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">RefCount</span><span class="o">::</span><span class="n">to_string</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">::</span><span class="n">RefCount</span><span class="o">::</span><span class="n">val</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">BindCinnValue</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">_CINNValuePack_</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span><span class="p">;</span>
+
+  <span class="n">DefineShared</span><span class="o">&lt;</span><span class="n">_CINNValuePack_</span><span class="o">&gt;</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;_CINNValuePack_&quot;</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">_CINNValuePack_</span><span class="o">&gt;</span> <span class="n">cinn_value_pack</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;_CINNValuePack_&quot;</span><span class="p">);</span>
+  <span class="n">cinn_value_pack</span><span class="p">.</span><span class="n">def_static</span><span class="p">(</span><span class="s">&quot;make&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_CINNValuePack_</span><span class="o">::</span><span class="n">Make</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__getitem__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">_CINNValuePack_</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="p">[</span><span class="n">offset</span><span class="p">];</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__setitem__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">_CINNValuePack_</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">,</span> <span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;add_value&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_CINNValuePack_</span><span class="o">::</span><span class="n">AddValue</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;clear&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_CINNValuePack_</span><span class="o">::</span><span class="n">Clear</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;size&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_CINNValuePack_</span><span class="o">::</span><span class="n">size</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__len__&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_CINNValuePack_</span><span class="o">::</span><span class="n">size</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;type_info&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_CINNValuePack_</span><span class="o">::</span><span class="n">type_info</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">CINNValuePack</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">_CINNValuePack_</span><span class="o">&gt;&gt;</span> <span class="n">cinn_value_pack_shared</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;CINNValuePack&quot;</span><span class="p">);</span>
+  <span class="n">cinn_value_pack_shared</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">_CINNValuePack_</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__getitem__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValuePack</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="p">[</span><span class="n">offset</span><span class="p">];</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__setitem__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValuePack</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">,</span> <span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">});</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">CINNValue</span><span class="p">,</span> <span class="n">cinn_pod_value_t</span><span class="o">&gt;</span> <span class="n">cinn_value</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;CINNValue&quot;</span><span class="p">);</span>
+  <span class="n">cinn_value</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">cinn_value_t</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Var</span> <span class="o">&amp;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Expr</span> <span class="o">&amp;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">CINNValuePack</span> <span class="o">&amp;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;defined&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">defined</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_double&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_float&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_int32&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_int64&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_void_p&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_cinn_buffer_p&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_str&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_var&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Var</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_expr&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Expr</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="k">operator</span> <span class="n">ir</span><span class="o">::</span><span class="n">Expr</span><span class="p">());</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="kt">char</span> <span class="o">*&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Var</span> <span class="o">&amp;&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Expr</span> <span class="o">&amp;&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">CINNValuePack</span> <span class="o">&amp;&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*&gt;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CINNValue</span><span class="o">::</span><span class="n">Set</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">CINNValue</span> <span class="o">&amp;&gt;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">binary_op_visitor</span> <span class="o">=</span> <span class="p">[](</span><span class="n">CINNValue</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">,</span> <span class="k">auto</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">auto</span> <span class="n">rhs</span><span class="p">,</span> <span class="k">auto</span> <span class="n">fn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">using</span> <span class="n">lhs_t</span> <span class="o">=</span> <span class="k">decltype</span><span class="p">(</span><span class="n">lhs</span><span class="p">);</span>
+    <span class="k">using</span> <span class="n">rhs_t</span> <span class="o">=</span> <span class="k">decltype</span><span class="p">(</span><span class="n">rhs</span><span class="p">);</span>
+    <span class="k">if</span> <span class="k">constexpr</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">lhs_t</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">nullptr_t</span><span class="o">&gt;</span> <span class="o">||</span> <span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">rhs_t</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">nullptr_t</span><span class="o">&gt;</span> <span class="o">||</span>
+                  <span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same_v</span><span class="o">&lt;</span><span class="n">lhs_t</span><span class="p">,</span> <span class="n">rhs_t</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">v</span> <span class="o">=</span> <span class="n">CINNValue</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">v</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">fn</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+<span class="cp">#define DEFINE_BINARY_OP(__op, __fn)                                                         \</span>
+<span class="cp">  auto __op##_fn = [&amp;](auto x, auto y) {                                                     \</span>
+<span class="cp">    constexpr auto is_var_x = std::is_same_v&lt;std::decay_t&lt;decltype(x)&gt;, ir::Var&gt;;            \</span>
+<span class="cp">    constexpr auto is_var_y = std::is_same_v&lt;std::decay_t&lt;decltype(y)&gt;, ir::Var&gt;;            \</span>
+<span class="cp">    if constexpr (is_var_x &amp;&amp; is_var_y) {                                                    \</span>
+<span class="cp">      return __fn(ir::Expr(x), ir::Expr(y)).as_var_ref();                                    \</span>
+<span class="cp">    } else {                                                                                 \</span>
+<span class="cp">      return __fn(x, y);                                                                     \</span>
+<span class="cp">    }                                                                                        \</span>
+<span class="cp">  };                                                                                         \</span>
+<span class="cp">  cinn_value.def(#__op, [&amp;](CINNValue &amp;self, CINNValue &amp;other) {                             \</span>
+<span class="cp">    auto visitor = [&amp;](auto x, auto y) { return binary_op_visitor(self, x, y, __op##_fn); }; \</span>
+<span class="cp">    std::visit(visitor, ConvertToVar(self), ConvertToVar(other));                            \</span>
+<span class="cp">    return self;                                                                             \</span>
+<span class="cp">  })</span>
+
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__add__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__sub__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__mul__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__truediv__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__and__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__or__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">||</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__lt__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__le__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__gt__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">DEFINE_BINARY_OP</span><span class="p">(</span><span class="n">__ge__</span><span class="p">,</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">x</span><span class="p">,</span> <span class="k">auto</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="cp">#undef DEFINE_BINARY_OP</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace</span>
+
+<span class="kt">void</span> <span class="n">BindCommon</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">BindTarget</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+  <span class="n">BindType</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+  <span class="n">BindObject</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+  <span class="n">BindShared</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+  <span class="n">BindCinnValue</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn::pybind</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_pybind_common.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

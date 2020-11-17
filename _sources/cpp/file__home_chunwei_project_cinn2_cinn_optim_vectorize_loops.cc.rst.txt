@@ -1,0 +1,86 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc:
+
+File vectorize_loops.cc
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/vectorize_loops.cc``)
+--------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/optim/ir_replace.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.h`)
+
+- ``cinn/optim/ir_simplify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h`)
+
+- ``cinn/optim/vectorize_loops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.h`)
+
+- ``cinn/utils/functional.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.h`)
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+- :ref:`namespace_cinn__optim__detail`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1VectorizeLoops__`
+
+- :ref:`exhale_class_classcinn_1_1optim_1_1Vectorizer`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_vectorize__loops_8cc_1a91dbae202eda6e3805ec85cabfdd1ce2`
+
+- :ref:`exhale_function_vectorize__loops_8cc_1afcaed71052d2e4bffd485164a0f7b12d`
+
+- :ref:`exhale_function_vectorize__loops_8cc_1a959971e3b1760c38f791bddb5b6525ca`
+

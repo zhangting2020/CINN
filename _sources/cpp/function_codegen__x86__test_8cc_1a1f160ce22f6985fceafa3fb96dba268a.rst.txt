@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__x86__test_8cc_1a1f160ce22f6985fceafa3fb96dba268a:
+
+Function cinn::backends::TEST(Vectorize, basic)
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(Vectorize, basic)

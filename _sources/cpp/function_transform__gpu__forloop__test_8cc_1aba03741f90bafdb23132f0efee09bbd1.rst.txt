@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop__test_8cc_1aba03741f90bafdb23132f0efee09bbd1:
+
+Function cinn::optim::TEST(TransformGpuForloops, basic)
+=======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(TransformGpuForloops, basic)

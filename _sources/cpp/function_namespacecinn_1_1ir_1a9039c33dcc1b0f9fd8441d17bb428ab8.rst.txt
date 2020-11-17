@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a9039c33dcc1b0f9fd8441d17bb428ab8:
+
+Function cinn::ir::kIrNodeTyReprs
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::kIrNodeTyReprs()

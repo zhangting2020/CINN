@@ -1,0 +1,73 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc:
+
+File host_intrinsics_test.cc
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime_cpu>` (``/home/chunwei/project/cinn2/cinn/runtime/cpu``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cpu/host_intrinsics_test.cc``)
+-------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.h`)
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/backends/llvm/simple_jit.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/runtime/cpu/host_intrinsics.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`)
+
+- ``cinn/runtime/cpu/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__runtime`
+
+- :ref:`namespace_cinn__runtime__cpu`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_host__intrinsics__test_8cc_1acf6cfd4c642b42ea9a564dd50e59fc46`
+

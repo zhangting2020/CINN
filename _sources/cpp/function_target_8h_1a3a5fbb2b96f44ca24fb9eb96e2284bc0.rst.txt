@@ -1,0 +1,13 @@
+.. _exhale_function_target_8h_1a3a5fbb2b96f44ca24fb9eb96e2284bc0:
+
+Function cinn::common::UnkTarget
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::UnkTarget()

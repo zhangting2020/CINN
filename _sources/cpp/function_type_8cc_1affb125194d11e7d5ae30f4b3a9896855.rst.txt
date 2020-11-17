@@ -1,0 +1,13 @@
+.. _exhale_function_type_8cc_1affb125194d11e7d5ae30f4b3a9896855:
+
+Function cinn::common::I16
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::I16()

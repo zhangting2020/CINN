@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__c_8cc_1a8b80107752ec905ba86b6ab850eb32b7:
+
+Function cinn::backends::ReadWholeFile
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::ReadWholeFile(const std::string&)

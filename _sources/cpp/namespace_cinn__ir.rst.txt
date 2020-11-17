@@ -1,0 +1,393 @@
+
+.. _namespace_cinn__ir:
+
+Namespace cinn::ir
+==================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+Detailed Description
+--------------------
+
+This file defines some intrinsic IR nodes, this is similar to the MLIR operations, we try to expose some underlying opaque operations to IR system to helpe more intuitive codegen. 
+ 
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__ir__@187`
+
+- :ref:`namespace_cinn__ir__detail`
+
+- :ref:`namespace_cinn__ir__intrinsics`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1__LoweredFunc__`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1__Module__`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1__Var__`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Add`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Alloc`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1And`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Argument`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1BinaryOpNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Block`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Broadcast`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1BufferShareOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Call`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1CallOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Cast`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1ComputeOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1CudaAxisInfo`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Div`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1EQ`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Expr`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1FloatImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1For`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1ForBase`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1FracOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Free`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1GE`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1GT`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IfThenElse`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IntImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IrPrinter`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IrVerifyVisitor`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IRVisitor`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IRVisitorBase`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LE`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Let`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LLVMForLoopMeta`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Load`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LoadStoreAddrMnger`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1LT`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Max`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Min`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Minus`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Mod`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Module_1_1Builder`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Mul`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1NE`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Not`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Or`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1PlaceholderOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1PolyFor`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Power`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1PrecedingViewOp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1PrimitiveNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Product`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Ramp`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Reduce`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Registry_1_1Manager`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Select`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Specialization`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Store`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1StringImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Sub`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Sum`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1UIntImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1UnaryOpNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Var`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1VectorizeInfo`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1__Buffer__`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1__Operation__`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1__Tensor__`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Buffer`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1CINNContext`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Definition`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1FunctionBase`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1FunctionRef`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IntrinsicOp`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IRMutator`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IrNode`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IrNodeRef`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1LoweredFunc`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Module`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Operation`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Registry`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Tensor`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1ab34e366aeab67f67f3588a2e2de60d67`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a77068afce052b34324e21772c1f75777`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a341195f76b87f9299035c4fdea04fa7b`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1afdc21f9d5b2616a187419954bffee1a4`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a8666efc358bd814ecd72b82edd6b4a53`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a1e4c1b8aec1fb20151a0a83a9c9e42f9`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1acb578243f2e77ffeb79ca3305192c80a`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a3125b28cb2700e4fbfc9ca852586ede5`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a427d87814fc08c1f11904fc116e05f27`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1add74fe441ebb43c5032df05d82f0d66a`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aba7a789d94b2df1fffd245335bd32dba`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a8085d0ad5c8cc1b86a97d21cd17eae50`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae7ecc915c74eea7fccb05c27e2d0cd87`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa84f303f3f3a85bf70411d5b89a11cd9`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a707dd50172be25173c39bfb8f97a4bab`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5268ec579840fb0fb7e4848b1d8abf55`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ad6541b25fa3abaf0ef34bb2d5f27f191`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a9039c33dcc1b0f9fd8441d17bb428ab8`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a331670f6a589236530e0874ab9a4da48`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a675f9d3c5f020daf0598f5c7cdd40a8e`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a48d6d98f98839cbebc0179bc9d263410`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a48d6d98f98839cbebc0179bc9d263410`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af4846433b1898e59f4dc02db8a50e849`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a25b6ad3d52fd8ff26d0cde8739a4b778`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a36fd31830e17929888d78765f022050d`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a47ee00bdf36d37382e528804af6d1790`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a72b856267564a2968fb5dda37ad12e11`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a844471b6958238869d8a1dacab9d18a3`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a83528be273d687b612263dff6a3fe1b4`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aee4786a299cfefcbea21dd38fa98cebf`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a255ea26decb32493b55e26d784a008b1`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a4fcbe20458a98ffd15f547ed0c85a60f`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ad2ae034725adbd4be6ea4c954fe07d89`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a63a62fbec47152fb2ec6710f168189f8`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a0bee5581b55d8be5132285934e00c6db`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a543892b6157914a9c329ffb43266e71f`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1acdb088cf30502f63c50e5c661a1ba8dd`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1acd8ebf9fcf03c698ec382630acaf3b64`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ac982c879db883ca3384cc93f3d5b367f`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a44087a68a3ba09789c5bb4f7b19f46ff`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae3bf9ec9dfcd80a3fd26cb61065962e1`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a079d91b363e7557b48f93afbd331e66d`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a1d01336dc6248d44552d3a9f2dd72c6c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af3f08b54944d1578d9a90eb8f890f3cd`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ab8b6b5b5a076409c527f8064f1d1452d`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1afa9420bb9f24ae0c761ef877213f75b7`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa7e0e7c2eb86500453cf595e08beb05b`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a07b72ab140e128c1931891b24dd0a6f8`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5a0904b0b3791238f86d8103b23e2b2c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a45ba8e848a8bdee15aa74c3252451a26`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5aee0dde69c3de745e33d290e1667fa7`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af8bb91aa424338a5f18b93385e1e80bb`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae01e2608e11de478d9cd4d6a12b7abd6`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a246286a48f5c56d7daa9e5d90232658a`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a55a8d860c30ce9c9b6f886c152dcf906`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a4be55b043a9aca60824b66d48ff7a050`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aec122436e04f4045fbfae492d8ffbc55`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a9e1d4b76f3117b9dc35885baa316526c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ad974d5e40f583d12286045746c9d3785`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af1287b31bdf0b3172daa19a8197560ce`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5e29d92c28529ca6a5de3299557fd6b0`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa1536eaff9551e05dd3ea16f503abbed`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a23a61c019269a1e5d18c8bdbda9b0002`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1abca46a74c3702df980cae1a8d9a93c85`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae27af44036d41fa5f8ab2e1857c952c6`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1abd265b7cb55a9063626ac00d689069f7`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aed10292c919140debb49f08713a73f73`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1accf987c7ed787a3a5be1b11f53adc81b`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa04f0cc3f2eb85b416a2fdda67f4e92a`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a75d0b2fb6e4f00675c71212a3d0954cd`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a67144caf0eb5ac51dd232226cebadee6`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aef69799ac5ae6964dfa5bd7c2bf2bd2d`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a0add3f5973a4e08053f1944d4d2b14a6`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa97bba6a650749e1985a890d12348e62`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae94b5ccd0fee0816dcb63e998535dc95`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af223e35bcfb885f567d02aabc609e536`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a9deec1be1a51e29b967921bea758e732`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1afd566f1104e02d3847692a25c0aca74c`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1acfc12b38c3cf76b70886b1d93d2b10b6`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aba834297f0daec5d0a2a15c99c900510`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a8fd8350cf62699d17cfb8e80b2188372`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5917ac7f2ae2c8b99746cb5d5a67cf27`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae316771736c968f521f0fedef7bea3b2`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aa8cb42310d2eebca284c54d10191f0d9`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1aaaea2b4c5ddad4548597a1105e231b6e`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a4ce55322defceea3c083b1a68a17c2d4`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_namespacecinn_1_1ir_1a3973777cb3e46e08d5dcc8da17e299ff`

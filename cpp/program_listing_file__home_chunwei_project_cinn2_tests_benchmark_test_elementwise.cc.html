@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File test_elementwise.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-test-elementwise-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-tests-benchmark-test-elementwise-cc"></span><h1>Program Listing for File test_elementwise.cc<a class="headerlink" href="#program-listing-for-file-test-elementwise-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.cc.html#file-home-chunwei-project-cinn2-tests-benchmark-test-elementwise-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests/benchmark/test_elementwise.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;tests/benchmark/test_elementwise.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/node.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">tests</span> <span class="p">{</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">test_elementwise_add</span><span class="p">,</span> <span class="n">default_fp32</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">input_shapes</span><span class="p">{{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">}};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">op_name</span> <span class="o">=</span> <span class="s">&quot;elementwise_add&quot;</span><span class="p">;</span>
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span> <span class="n">attrs</span><span class="p">;</span>
+  <span class="n">ElementwiseAddTester</span> <span class="nf">add_tester</span><span class="p">(</span><span class="n">op_name</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">type</span><span class="p">{</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">)};</span>
+  <span class="k">auto</span> <span class="n">input_tensors</span> <span class="o">=</span> <span class="n">add_tester</span><span class="p">.</span><span class="n">CreateInputTensors</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">add_tester</span><span class="p">.</span><span class="n">TestOp</span><span class="p">(</span><span class="s">&quot;elementwise_add_default_fp32&quot;</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">type</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">test_elementwise_add</span><span class="p">,</span> <span class="n">default_int32</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">input_shapes</span><span class="p">{{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">}};</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">op_name</span> <span class="o">=</span> <span class="s">&quot;elementwise_add&quot;</span><span class="p">;</span>
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">NodeAttr</span> <span class="n">attrs</span><span class="p">;</span>
+  <span class="n">ElementwiseAddTester</span> <span class="nf">add_tester</span><span class="p">(</span><span class="n">op_name</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">out_types</span><span class="p">{</span><span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">)};</span>
+  <span class="k">auto</span> <span class="n">input_tensors</span> <span class="o">=</span> <span class="n">add_tester</span><span class="p">.</span><span class="n">CreateInputTensors</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">add_tester</span><span class="p">.</span><span class="n">TestOp</span><span class="p">(</span><span class="s">&quot;elementwise_add_default_int32&quot;</span><span class="p">,</span> <span class="n">input_tensors</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">out_types</span><span class="p">);</span>
+  <span class="n">add_tester</span><span class="p">.</span><span class="n">Compare</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace tests</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

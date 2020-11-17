@@ -1,0 +1,13 @@
+.. _exhale_function_test02__helper_8h_1a222166bec7969828315e0bc78bb879e5:
+
+Function cinn::tests::CreateMatmulBasicModule
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::CreateMatmulBasicModule(Target, int, int, int)

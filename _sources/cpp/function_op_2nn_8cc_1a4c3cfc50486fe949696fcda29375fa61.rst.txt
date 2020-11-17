@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1a4c3cfc50486fe949696fcda29375fa61:
+
+Function cinn::hlir::op::InferShapeForRelu
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForRelu(const std::vector<framework::shape_t>&, const framework::NodeAttr&)

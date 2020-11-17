@@ -1,0 +1,13 @@
+.. _exhale_function_llvm__util_8h_1aebaac4d022dbe04a70cb0f898ed32716:
+
+Template Function cinn::backends::DumpToString
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::DumpToString(const T&)

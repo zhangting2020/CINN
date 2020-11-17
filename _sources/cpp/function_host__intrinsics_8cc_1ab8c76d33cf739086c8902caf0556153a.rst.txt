@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8cc_1ab8c76d33cf739086c8902caf0556153a:
+
+Function cinn_cpu_left_shift_int32
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_left_shift_int32(int, int)

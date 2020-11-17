@@ -1,0 +1,13 @@
+.. _exhale_define___x86__builtin__source_8cc_1ae5d885a61a4a51e9eed221d5ef83fb25:
+
+Define _CINN_X86_BUILTIN_SOURCE_
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: _CINN_X86_BUILTIN_SOURCE_

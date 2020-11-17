@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8h_1acc3ce96c1e9b1a5e7552c6c8f151279f:
+
+Function cinn::poly::isl_set_get_axis_range(isl_set \*__isl_keep, int)
+======================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_set_get_axis_range(isl_set *__isl_keep, int)

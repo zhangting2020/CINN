@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8h_1a467a37d63885730d3df119de19592f61:
+
+Function cinn_cpu_right_shift_int
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_right_shift_int(int, int)

@@ -1,0 +1,13 @@
+.. _exhale_function_cas__test_8cc_1abb9cdb16627521342931cfff526046f0:
+
+Function cinn::common::TEST(CAS, SimplifyPower_0)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(CAS, SimplifyPower_0)

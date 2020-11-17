@@ -1,0 +1,13 @@
+.. _exhale_function_bind__utils_8h_1a09278358b4bbce598413b09dc4d4e615:
+
+Template Function cinn::pybind::DefineShared
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::DefineShared(py::module *, std::string_view)

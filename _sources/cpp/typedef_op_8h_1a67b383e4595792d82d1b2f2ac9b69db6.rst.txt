@@ -1,0 +1,13 @@
+.. _exhale_typedef_op_8h_1a67b383e4595792d82d1b2f2ac9b69db6:
+
+Typedef cinn::hlir::framework::shape_t
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::shape_t

@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1hlir_1_1framework_1_1Scope:
+
+Class Scope
+===========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::hlir::framework::Scope
+   :members:
+   :protected-members:
+   :undoc-members:

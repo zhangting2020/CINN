@@ -1,0 +1,13 @@
+.. _exhale_function_bind__utils_8h_1a1ca58ab28265c162a38c13e93a3ca478:
+
+Template Function cinn::pybind::DefineUnaryOpNode
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::DefineUnaryOpNode(py::module *, std::string_view)

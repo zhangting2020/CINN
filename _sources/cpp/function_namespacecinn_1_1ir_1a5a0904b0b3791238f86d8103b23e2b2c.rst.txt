@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a5a0904b0b3791238f86d8103b23e2b2c:
+
+Function cinn::ir::operator<<(std::ostream&, const ir::Module&)
+===============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<<(std::ostream&, const ir::Module&)

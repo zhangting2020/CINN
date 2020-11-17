@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1a42cefaaaa83e19834a78505bdb5f7b14:
+
+Function cinn::common::GatherItersToTensorProducer
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::GatherItersToTensorProducer(const std::string&, Expr *)

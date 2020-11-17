@@ -1,0 +1,51 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_poly_naive_scheduler.h:
+
+Program Listing for File naive_scheduler.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_poly_naive_scheduler.h>` (``/home/chunwei/project/cinn2/cinn/poly/naive_scheduler.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <map>
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/poly/schedule.h"
+   
+   namespace cinn {
+   namespace poly {
+   
+   class NaiveGroupScheduler : public SchedulerBase {
+    public:
+     explicit NaiveGroupScheduler(Stage *x) {
+       AddStage(*x);
+       FinishStageAdd();
+     }
+     void Build() {}
+   };
+   
+   class NaiveScheduler : public SchedulerBase {
+    public:
+     NaiveScheduler() = default;
+     explicit NaiveScheduler(const std::vector<Stage *> &stages) {
+       for (auto *x : stages) AddStage(*x);
+       FinishStageAdd();
+     }
+   
+     std::unique_ptr<Schedule> BuildSchedule();
+   
+    private:
+     void PartitionGroups();
+   
+    private:
+     std::vector<ScheduleGroup> groups_;
+   };
+   
+   }  // namespace poly
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8h_1ab99afce8b59c624301fa88d65ac784fe:
+
+Template Function cinn::common::make_const(Type, T)
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::make_const(Type, T)

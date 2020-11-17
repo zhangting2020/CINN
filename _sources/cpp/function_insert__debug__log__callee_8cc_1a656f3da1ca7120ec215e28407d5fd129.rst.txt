@@ -1,0 +1,13 @@
+.. _exhale_function_insert__debug__log__callee_8cc_1a656f3da1ca7120ec215e28407d5fd129:
+
+Function cinn::optim::InsertDebugLogCallee
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::InsertDebugLogCallee(Expr *)

@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1a6593b0a3a16f479755ed7bac39e11722:
+
+Function cinn::hlir::op::InferDtypeForSoftmax
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferDtypeForSoftmax(const std::vector<Type>&, const framework::NodeAttr&)

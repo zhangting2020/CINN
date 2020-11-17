@@ -1,0 +1,13 @@
+.. _exhale_function_pe__elementwise__test_8cc_1ad84068b230f9aa5fd4855817db7ae41d:
+
+Function cinn::hlir::pe::TEST(elementwise_pe, tan)
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::TEST(elementwise_pe, tan)

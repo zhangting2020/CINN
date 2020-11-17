@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic_8cc_1ac0e69d079960fef39d575f6c4924c85a:
+
+Function cinn::common::MathContainsSymbol
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::MathContainsSymbol(Expr, Var)

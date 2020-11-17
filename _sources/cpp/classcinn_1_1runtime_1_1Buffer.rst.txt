@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1runtime_1_1Buffer:
+
+Template Class Buffer
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_buffer.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::runtime::Buffer
+   :members:
+   :protected-members:
+   :undoc-members:

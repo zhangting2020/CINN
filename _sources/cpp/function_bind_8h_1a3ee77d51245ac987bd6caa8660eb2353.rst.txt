@@ -1,0 +1,13 @@
+.. _exhale_function_bind_8h_1a3ee77d51245ac987bd6caa8660eb2353:
+
+Function cinn::pybind::BindBackends(pybind11::module \*)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindBackends(pybind11::module *)

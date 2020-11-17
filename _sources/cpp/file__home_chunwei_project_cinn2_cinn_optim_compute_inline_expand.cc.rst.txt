@@ -1,0 +1,70 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc:
+
+File compute_inline_expand.cc
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/compute_inline_expand.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/graph_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/optim/compute_inline_expand.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_compute__inline__expand_8cc_1add17cdd4256e75eba1f5c9dbad19dc3b`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_compute__inline__expand_8cc_1a78f0041682095d1a34a95b12ca839ba9`
+
+- :ref:`exhale_variable_compute__inline__expand_8cc_1a94602d06b05ddbc53c3694a326d5652d`
+
+- :ref:`exhale_variable_compute__inline__expand_8cc_1adab38e22f381d2b9bc942bf1772cb80e`
+
+- :ref:`exhale_variable_compute__inline__expand_8cc_1a5b3e7f78c756eaa3f07c088643853ee2`
+

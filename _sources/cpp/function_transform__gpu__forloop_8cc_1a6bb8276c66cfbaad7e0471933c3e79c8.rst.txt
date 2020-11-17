@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop_8cc_1a6bb8276c66cfbaad7e0471933c3e79c8:
+
+Function cinn::optim::MarkGpuForloop
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::MarkGpuForloop(const std::string&, const std::map<std::string, poly::StageForloopInfo>&, Expr *)

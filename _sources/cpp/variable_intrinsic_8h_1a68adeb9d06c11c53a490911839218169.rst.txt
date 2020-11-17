@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a68adeb9d06c11c53a490911839218169:
+
+Variable cinn::runtime::intrisic::args_construct_repr
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::args_construct_repr

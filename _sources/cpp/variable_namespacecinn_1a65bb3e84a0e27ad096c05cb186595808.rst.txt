@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1a65bb3e84a0e27ad096c05cb186595808:
+
+Variable cinn::out_channel
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::out_channel

@@ -1,0 +1,59 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_backends.cc:
+
+File backends.cc
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/backends.cc``)
+--------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_backends.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.h`)
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/pybind/bind.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``pybind11/functional.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_backends_8cc_1a315cb4221a00000cf810d2f37276655f`
+

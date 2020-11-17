@@ -1,0 +1,13 @@
+.. _exhale_function_compare__simplify__test_8cc_1aa33733dba60243848f4b88968219a0fb:
+
+Function cinn::optim::TEST(CompareSimplify, basic_true)
+=======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(CompareSimplify, basic_true)

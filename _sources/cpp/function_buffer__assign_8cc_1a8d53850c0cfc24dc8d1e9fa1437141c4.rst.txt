@@ -1,0 +1,13 @@
+.. _exhale_function_buffer__assign_8cc_1a8d53850c0cfc24dc8d1e9fa1437141c4:
+
+Function cinn::optim::InitialAssignBuffer
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::InitialAssignBuffer(Expr *, poly::StageMap, const std::map<std::string, ir::Tensor>&, const common::Graph *, const std::set<std::string>&)

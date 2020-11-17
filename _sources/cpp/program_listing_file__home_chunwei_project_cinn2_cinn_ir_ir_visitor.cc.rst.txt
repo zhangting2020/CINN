@@ -1,0 +1,33 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc:
+
+Program Listing for File ir_visitor.cc
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc>` (``/home/chunwei/project/cinn2/cinn/ir/ir_visitor.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/ir/ir_visitor.h"
+   
+   #include <unordered_set>
+   
+   #include "cinn/ir/ir_printer.h"
+   #include "cinn/ir/tensor.h"
+   #include "cinn/utils/string.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   bool operator==(Expr a, Expr b) {
+     if (a.get() == b.get()) return true;
+     // TODO(Superjomn) implement with a more accurate one
+     return utils::GetStreamCnt(a) == utils::GetStreamCnt(b);
+   }
+   
+   bool operator!=(Expr a, Expr b) { return !(a == b); }
+   
+   }  // namespace ir
+   }  // namespace cinn

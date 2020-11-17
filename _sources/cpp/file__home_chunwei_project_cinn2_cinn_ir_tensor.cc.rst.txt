@@ -1,0 +1,83 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_tensor.cc:
+
+File tensor.cc
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/tensor.cc``)
+--------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_tensor.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/arithmatic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.h`)
+
+- ``cinn/common/cas.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_cas.h`)
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+- ``cinn/ir/operation.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``cstring``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a707dd50172be25173c39bfb8f97a4bab`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5268ec579840fb0fb7e4848b1d8abf55`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1afa9420bb9f24ae0c761ef877213f75b7`
+

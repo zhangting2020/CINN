@@ -1,0 +1,73 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.h:
+
+File codegen_x86.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/codegen_x86.h``)
+-----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``llvm/IR/IRBuilder.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``unordered_map``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__backends`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenX86`
+

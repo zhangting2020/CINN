@@ -1,0 +1,13 @@
+.. _exhale_function_compute__at__postprocess_8cc_1a1b9cbe9e2d8c66d361a1cf9ad268ff22:
+
+Function cinn::lang::ProcessComputeAtInfo
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::ProcessComputeAtInfo(Expr *, poly::StageMap)

@@ -1,0 +1,13 @@
+.. _exhale_function_runtime_8cc_1a4fdeb40e09d028852de000899b52db36:
+
+Function cinn::pybind::BindRuntime(py::module \*)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindRuntime(py::module *)

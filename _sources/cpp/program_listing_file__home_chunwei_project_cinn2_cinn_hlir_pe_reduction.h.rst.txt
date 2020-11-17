@@ -1,0 +1,49 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h:
+
+Program Listing for File reduction.h
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h>` (``/home/chunwei/project/cinn2/cinn/hlir/pe/reduction.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <vector>
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace pe {
+   ir::Tensor Sum(const ir::Tensor& A,
+                  poly::StageMap stages,
+                  const std::vector<Expr>& axis,
+                  bool keep_dims                 = false,
+                  const Expr& initial            = Expr(0),
+                  const std::string& output_name = "T_Reduce_Sum_out");
+   
+   ir::Tensor Prod(const ir::Tensor& A,
+                   poly::StageMap stages,
+                   const std::vector<Expr>& axis,
+                   bool keep_dims                 = false,
+                   const Expr& initial            = Expr(1),
+                   const std::string& output_name = "T_Reduce_Prod_out");
+   
+   ir::Tensor Max(const ir::Tensor& A,
+                  poly::StageMap stages,
+                  const std::vector<Expr>& axis,
+                  bool keep_dims                 = false,
+                  const std::string& output_name = "T_Reduce_Max_out");
+   
+   ir::Tensor Min(const ir::Tensor& A,
+                  poly::StageMap stages,
+                  const std::vector<Expr>& axis,
+                  bool keep_dims                 = false,
+                  const std::string& output_name = "T_Reduce_Min_out");
+   
+   }  // namespace pe
+   }  // namespace hlir
+   }  // namespace cinn

@@ -1,0 +1,55 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_registry.cc:
+
+File registry.cc
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/registry.cc``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_registry.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.h`)
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``mutex``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Registry_1_1Manager`
+

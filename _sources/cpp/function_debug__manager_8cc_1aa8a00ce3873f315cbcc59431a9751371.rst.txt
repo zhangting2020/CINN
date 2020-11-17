@@ -1,0 +1,13 @@
+.. _exhale_function_debug__manager_8cc_1aa8a00ce3873f315cbcc59431a9751371:
+
+Function cinn::common::DebugManager::AppendTypeSuffix< std::string >
+====================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_debug_manager.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::DebugManager::AppendTypeSuffix< std::string >()

@@ -1,0 +1,13 @@
+.. _exhale_enum_cinn__runtime_8h_1a4f280c3f8da4aebd981f3769c207ebeb:
+
+Enum cinn_type_code_t
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn_type_code_t

@@ -1,0 +1,60 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h:
+
+File mkl_math.h
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime_cpu>` (``/home/chunwei/project/cinn2/cinn/runtime/cpu``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cpu/mkl_math.h``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/runtime/cinn_runtime.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.cc`
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_mkl__math_8h_1a58725a5bfbcb291161b31dd472ebdd6b`
+
+- :ref:`exhale_function_mkl__math_8h_1a4da012ed7f9bbf030cac481ed6fd1645`
+
+- :ref:`exhale_function_mkl__math_8h_1a29064579dcc8fbe4b493915a5902361f`
+
+- :ref:`exhale_function_mkl__math_8h_1a3c97dedfce13e915d420b97d7fe0dbcb`
+
+- :ref:`exhale_function_mkl__math_8h_1a4e0902c666ce856294099f2af66c2427`
+

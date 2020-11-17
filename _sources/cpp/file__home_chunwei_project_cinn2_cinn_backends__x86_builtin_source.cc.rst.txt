@@ -1,0 +1,194 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc:
+
+File _x86_builtin_source.cc
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/_x86_builtin_source.cc``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``immintrin.h``
+
+- ``stdint.h``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structExternalVec`
+
+- :ref:`exhale_struct_structStackVec`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a1eeac84b071474ea39d2547f2b88067c`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a2081d95b19acac17a88c487b0f099841`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1aa035487f974b02bf7b318ae6c5a79b81`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a0e5a5a3e9db43a141318282e7880d477`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a3a7ae1f99b25e448670b47085c1d7c8d`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a83df1248d481a246981b2c4053187504`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1afa6251afe7444cc8a497965272e15e0d`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1adce47e13a8900a85fc71b123dcddd9cf`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a2aabfe092c8f5895c4ba0573facb4821`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a549192e2147105dccb70b95783b1b2fa`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a95f281cc466cbb16cc3bce12d51997a2`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ad4854f6b37c912520fe5fa6f371f6630`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1aaea6ed507ffb3320a3148f906f00c9b6`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a44ed16b39a536a0f2274ea8dfee62bf9`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a78a1ff6c7c1713f1a4c07791e8b985c4`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ae654052dbd30eb77b30c149b31b89674`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a6136d42412981dc1296a69a8b497d1ab`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a5240bdd7a82be054412689432dcef6c8`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ae582dfa6474c7a9ba13a3d8cbeb124f6`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a6f75929dcf56d90d778dfb043dfc2514`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a25a8440fcec0579d45725d0339214cf3`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1aa76cac8f7a7f37df2ebe0a5263150cc3`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ab83723d96ee4b518c4878e98993c6bfb`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ae33d9b1a216e2335a6b3aa25524bbfbc`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a790954fdecd4d5bdbed0aea0ba7456f9`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1abf4d7ac40e896d1eb1d8dd3224a3d9ab`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ad0016d90570b62c580672855d4e9ce59`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a415ee48735917c09084b2e57edaaeb89`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1aac33c5f53f2e490acad8107cab1fb671`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a882e328782cee648c5830fb9afad654f`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ab91929cbe24d773e787eff1fea9bcaa6`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ac16576506a6a03c3463d6d81cb614dc4`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a25834adcab71349fdf98ff30d3b541ee`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a16d43bd773dc89fb8ae3f54c5fdaa788`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ac695ff7798935cda665897a2eb199875`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a2e6cb4b34ad8c2ed13e9847124675f9e`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a8325a550911c771e471c3de118cf4af3`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1abb3497cbb93e0887931183e1cad580cc`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a72c8a268768e7af5dc7829d55b3a31d1`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a6d47b1148ba92d08ed9f4ac5bc87339f`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a5ac351f27fbb3639c2ec8ad11978f3d8`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a643b673b9a0c59b52e0cfd92b16c3b27`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a76d9ea0b8c53fecf37e41845e31afa67`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a5d74ef37d300ccd9eefb478a5551bae1`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a4d8437f56c53af8bd9c0d5c47f6b6b84`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a5808e15ad06a943f56faa937f8e45585`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a397f44ff6d181208296a17323f1322e7`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a027277eac1cea400b3c23cb3362af005`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a3cb7ba5f237b7a6180ee7e0521322397`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a6969a0712fbc896818fad77d2568c1fe`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ab7a3d06894d718787549dfe461b01c0b`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a01229243400417a01aa8da41c295080a`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a9a6a0c8332f0ac9ca1f7500ffae54c61`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ae908f80ffdc66d13af7243391b583a17`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a375d7a4f81fb3df3930c2784d238058d`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a56a092191ef7b33cd909b109983f4935`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a85eee3931ba82bc01a08266f0dd637f2`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1afe91962db8396122a22b928b2ff0c0e3`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a43333427019ec2e65b076088d802ca11`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ae7a3771e7ce36410860322a1417257d6`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1ad1340351ba10499f0799237c3b38cadf`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a6f2b36795da077904d59b63f53100884`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a905cf8f85b8f6675264474dcec93f6ad`
+
+- :ref:`exhale_function___x86__builtin__source_8cc_1a99dcebe2509eab393ae37fb0c9377c9d`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define___x86__builtin__source_8cc_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+
+- :ref:`exhale_define___x86__builtin__source_8cc_1a9150d47ac0e5e7d4a02ee2b3a84b9d86`
+
+- :ref:`exhale_define___x86__builtin__source_8cc_1ae5d885a61a4a51e9eed221d5ef83fb25`
+

@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File cas_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-cas-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-common-cas-test-cc"></span><h1>Program Listing for File cas_test.cc<a class="headerlink" href="#program-listing-for-file-cas-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cas_test.cc.html#file-home-chunwei-project-cinn2-cinn-common-cas-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/common/cas_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/common/cas.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">common</span> <span class="p">{</span>
+
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">ir</span><span class="p">;</span>  <span class="c1">// NOLINT</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">SimplifyPower_0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">{</span>  <span class="c1">// x^0 = 1</span>
+    <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;p0 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p0</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p0</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;simplified &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="p">;</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">p2</span><span class="p">),</span> <span class="s">&quot;1&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="p">{</span>  <span class="c1">// x^1 = x</span>
+    <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p0</span><span class="p">);</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">p2</span><span class="p">),</span> <span class="s">&quot;x&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>  <span class="c1">// 1^x = 1</span>
+    <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">make_const</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p0</span><span class="p">);</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">p2</span><span class="p">),</span> <span class="s">&quot;1&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>  <span class="c1">// 1.^x = 1.</span>
+    <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">make_const</span><span class="p">(</span><span class="mf">1.f</span><span class="p">),</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;p0 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p0</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p0</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;simplified &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="p">;</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">p2</span><span class="p">),</span> <span class="s">&quot;1&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>  <span class="c1">// 0^x = 0</span>
+    <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;p0 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p0</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p0</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;simplified &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="p">;</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">p2</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="p">{</span>  <span class="c1">// 0.^x = 0</span>
+    <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">make_const</span><span class="p">(</span><span class="mf">0.f</span><span class="p">),</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;p0 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p0</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p0</span><span class="p">);</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;simplified &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="p">;</span>
+    <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">p2</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">number_cal</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 1 * 100 * -1 + 0 + 1001</span>
+  <span class="k">auto</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)}),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1001</span><span class="p">)});</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">u1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">SimplifyPower</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span>   <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="k">auto</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;p0 &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p0</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;power: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;simplified: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">cmp</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">detail</span><span class="o">::</span><span class="n">ExprPosCmp</span> <span class="n">cmp</span><span class="p">;</span>
+
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">),</span> <span class="nb">true</span><span class="p">);</span>
+
+  <span class="c1">// x * y * z &gt; x * y</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">}),</span> <span class="n">ir</span><span class="o">::</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">})),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="c1">// x * y * z &gt; 10 * y * z</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">}),</span> <span class="n">ir</span><span class="o">::</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">})),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="c1">// 1 * y * z &lt; 10 * y * z</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">}),</span> <span class="n">ir</span><span class="o">::</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">})),</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="c1">// y^1 &lt; y^x</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="c1">// y^1 &lt; y^2</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))),</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="c1">// y * z^2 &gt; x * z^1</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">y</span><span class="p">,</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))}),</span> <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">))})),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="c1">// 1*y^2 &gt; y</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))}),</span> <span class="n">y</span><span class="p">),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="c1">// 1*y^2 &gt; x</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))}),</span> <span class="n">x</span><span class="p">),</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="c1">// 1*y^2 &lt; z</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">cmp</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))}),</span> <span class="n">z</span><span class="p">),</span> <span class="nb">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">SimplifySum</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="c1">// x + y + z + 0</span>
+  <span class="k">auto</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">)});</span>
+  <span class="c1">// x*1 + y + z + 0</span>
+  <span class="k">auto</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)}),</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">)});</span>
+  <span class="c1">// z + 1 + y + x + zx</span>
+  <span class="k">auto</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">z</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">})}));</span>
+  <span class="c1">// z + 1 + y + 3 + x + 0 + zx</span>
+  <span class="k">auto</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">z</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">})}));</span>
+  <span class="c1">// x2 + 3zy + -3*yz + -2x + 1</span>
+  <span class="k">auto</span> <span class="n">u5</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)}),</span>
+                                   <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">3</span><span class="p">)}),</span>
+                                   <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">}),</span>
+                                   <span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">x</span><span class="p">}),</span>
+                                   <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)}));</span>
+
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">CasSimplify</span><span class="p">(</span><span class="n">u1</span><span class="p">)),</span> <span class="s">&quot;(x + y + z)&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">CasSimplify</span><span class="p">(</span><span class="n">u2</span><span class="p">)),</span> <span class="s">&quot;(x + y + z)&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u3</span><span class="p">),</span> <span class="s">&quot;(1 + x + y + z + (x * z))&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u4</span><span class="p">),</span> <span class="s">&quot;(4 + x + y + z + (x * z))&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u5</span><span class="p">),</span> <span class="s">&quot;1&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">SimplifyProduct</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="c1">// x * x^-1</span>
+  <span class="k">auto</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))}));</span>
+  <span class="c1">// zyx*(-1)</span>
+  <span class="k">auto</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)}));</span>
+  <span class="c1">// x^2*y*z*x*x*x^-5</span>
+  <span class="k">auto</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">))}));</span>
+  <span class="c1">// x^(4/2) * x^3</span>
+  <span class="k">auto</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">FracOp</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))),</span> <span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">3</span><span class="p">))}));</span>
+
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u1</span><span class="p">),</span> <span class="s">&quot;1&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u2</span><span class="p">),</span> <span class="s">&quot;(-1 * x * y * z)&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u3</span><span class="p">),</span> <span class="s">&quot;((x^-1) * y * z)&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u4</span><span class="p">),</span> <span class="s">&quot;(x^5)&quot;</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">u4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">SimplifyMod</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="c1">// 2*x % 2 = 0</span>
+  <span class="k">auto</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)}),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+  <span class="c1">// (x+y+z) % 2 = x%2 + y%2 + z%2</span>
+  <span class="k">auto</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">}),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)));</span>
+  <span class="c1">// x%2 + 1%2 + x%2</span>
+  <span class="k">auto</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span> <span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">))}));</span>
+  <span class="c1">// x^3 + x % 5 + y + 1 + (4*x)%5</span>
+  <span class="k">auto</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">Sum</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span> <span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span> <span class="n">y</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Mod</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Product</span><span class="o">::</span><span class="n">Make</span><span class="p">({</span><span class="n">x</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">4</span><span class="p">)}),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">5</span><span class="p">))}));</span>
+
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u1</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u2</span><span class="p">),</span> <span class="s">&quot;((x + y + z) % 2)&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u3</span><span class="p">),</span> <span class="s">&quot;1&quot;</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u4</span><span class="p">),</span> <span class="s">&quot;(1 + (x^3) + y)&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">ConvertCinnToCAS</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">10</span><span class="p">)},</span>
+                   <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.f</span> <span class="o">+</span> <span class="mf">1.f</span> <span class="o">+</span> <span class="mf">2.f</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.f</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">});</span>
+
+  <span class="n">Expr</span> <span class="n">body</span> <span class="o">=</span> <span class="n">C</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">();</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;body &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">body</span><span class="p">;</span>
+
+  <span class="n">body</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">ConvertCinnToCAS</span><span class="p">(</span><span class="n">body</span><span class="p">);</span>
+  <span class="n">body</span> <span class="o">=</span> <span class="n">CasSimplify</span><span class="p">(</span><span class="n">body</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">body</span><span class="p">),</span> <span class="s">&quot;(1 + A[i, j] + (2 * B[i, j]))&quot;</span><span class="p">);</span>
+  <span class="n">body</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">ConvertCasToCinn</span><span class="p">(</span><span class="n">body</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">body</span><span class="p">),</span> <span class="s">&quot;(1 + (A[i, j] + (2 * B[i, j])))&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">FracOp</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Div</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u1</span><span class="p">),</span> <span class="s">&quot;((1 / x) * x)&quot;</span><span class="p">);</span>
+  <span class="c1">// 64x/32 + y + 64/32</span>
+  <span class="k">auto</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span> <span class="o">/</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">ASSERT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u2</span><span class="p">),</span> <span class="s">&quot;(2 + ((2 * x) + y))&quot;</span><span class="p">);</span>
+  <span class="c1">// 1/32 * y * z * 32768 * 2</span>
+  <span class="k">auto</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="mi">32768</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u3</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+  <span class="c1">// 32768 * (32x + y) + y</span>
+  <span class="k">auto</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">32768</span><span class="p">)</span> <span class="o">*</span> <span class="p">(((</span><span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span><span class="p">));</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u4</span><span class="p">),</span> <span class="s">&quot;((32768 * (y / 32)) + (32768 * x))&quot;</span><span class="p">);</span>
+
+  <span class="n">common</span><span class="o">::</span><span class="n">cas_intervals_t</span> <span class="n">var_intervals</span><span class="p">;</span>
+  <span class="n">var_intervals</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">CasInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">31</span><span class="p">));</span>
+  <span class="k">auto</span> <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">Expr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span><span class="p">,</span> <span class="n">var_intervals</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="s">&quot;x&quot;</span><span class="p">);</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">Expr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">33</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span><span class="p">,</span> <span class="n">var_intervals</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="s">&quot;(((33 * x) + y) / 32)&quot;</span><span class="p">);</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">125</span><span class="p">)</span> <span class="o">/</span> <span class="mi">8</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="s">&quot;14&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#define OUTPUT_EQUAL(s__) EXPECT_EQ(GetStreamCnt(u), s__);</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">Mod</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">k</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;k&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">CasInterval</span><span class="o">&gt;</span> <span class="n">var_intervals0</span><span class="p">,</span> <span class="n">var_intervals1</span><span class="p">;</span>
+  <span class="n">var_intervals0</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">CasInterval</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">});</span>
+  <span class="n">var_intervals0</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">CasInterval</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">});</span>
+  <span class="n">var_intervals0</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">CasInterval</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">});</span>
+  <span class="n">var_intervals0</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;k&quot;</span><span class="p">,</span> <span class="n">CasInterval</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">});</span>
+
+  <span class="n">Expr</span> <span class="n">u</span><span class="p">;</span>
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="s">&quot;(x % 5)&quot;</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;(x % 5)&quot;</span><span class="p">)</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="mi">5</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;(x % 5)&quot;</span><span class="p">)</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">z</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;((x + (-3 * z)) % 5)&quot;</span><span class="p">)</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">,</span> <span class="n">var_intervals0</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">,</span> <span class="n">var_intervals0</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;((x + y) % 5)&quot;</span><span class="p">)</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">,</span> <span class="n">var_intervals0</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">x</span> <span class="o">%</span> <span class="mi">32</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">32768</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">32</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">32768</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">32</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">128</span> <span class="o">*</span> <span class="n">k</span><span class="p">)))));</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;((32768 * (x / 32)) + ((x % 32) + ((128 * k) + ((32768 * y) + (32 * z)))))&quot;</span><span class="p">);</span>
+
+  <span class="n">u</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((</span><span class="n">x</span> <span class="o">%</span> <span class="mi">32</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">32768</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">32</span><span class="p">))</span> <span class="o">+</span> <span class="p">((</span><span class="mi">32768</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="mi">32</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">128</span> <span class="o">*</span> <span class="n">k</span><span class="p">)))),</span> <span class="n">var_intervals0</span><span class="p">);</span>
+  <span class="n">OUTPUT_EQUAL</span><span class="p">(</span><span class="s">&quot;((128 * k) + (x + ((32768 * y) + (32 * z))))&quot;</span><span class="p">)</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">u</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">CAS</span><span class="p">,</span> <span class="n">IntConnerCase</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="n">z</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="s">&quot;z&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">u1</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u1</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">32</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">+</span> <span class="mi">64</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u2</span><span class="p">),</span> <span class="s">&quot;((x / 32) + (2 + x))&quot;</span><span class="p">);</span>
+  <span class="c1">// (32x+y)/32 * 1024 * 32</span>
+  <span class="k">auto</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">((((((</span><span class="mi">32</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">*</span> <span class="mi">32</span><span class="p">));</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u3</span><span class="p">),</span> <span class="s">&quot;((32768 * (y / 32)) + (32768 * x))&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">u4</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u4</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">CasInterval</span><span class="o">&gt;</span> <span class="n">var_intervals0</span><span class="p">,</span> <span class="n">var_intervals1</span><span class="p">;</span>
+  <span class="n">var_intervals0</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">CasInterval</span><span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">});</span>
+  <span class="n">var_intervals1</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">CasInterval</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">u5</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">y</span><span class="p">,</span> <span class="n">var_intervals0</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u5</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">u6</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="n">var_intervals0</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u6</span><span class="p">),</span> <span class="s">&quot;0&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">u7</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">y</span><span class="p">,</span> <span class="n">var_intervals1</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u7</span><span class="p">),</span> <span class="s">&quot;(1 / y)&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">u8</span> <span class="o">=</span> <span class="n">AutoSimplify</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="n">y</span><span class="p">,</span> <span class="n">var_intervals1</span><span class="p">);</span>
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">u8</span><span class="p">),</span> <span class="s">&quot;(-1 / y)&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">SolveInequality</span><span class="p">,</span> <span class="n">basic</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Var</span> <span class="n">x</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+  <span class="n">Var</span> <span class="nf">y</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
+
+<span class="cp">#define TEST_SOLVE(expr__, str__) EXPECT_EQ(GetStreamCnt(SolveInequality(expr__, x)), str__);</span>
+  <span class="n">TEST_SOLVE</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;(x &gt; 20)&quot;</span><span class="p">);</span>
+  <span class="n">TEST_SOLVE</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&quot;(x &gt; 2)&quot;</span><span class="p">);</span>
+  <span class="n">TEST_SOLVE</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;(x &gt; 1)&quot;</span><span class="p">);</span>
+  <span class="n">TEST_SOLVE</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">200</span><span class="p">,</span> <span class="s">&quot;(x &gt; -50)&quot;</span><span class="p">);</span>
+  <span class="n">TEST_SOLVE</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">30</span> <span class="o">-</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="mi">23</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;(x &gt; int32((28 + (23 * y))))&quot;</span><span class="p">);</span>
+  <span class="n">TEST_SOLVE</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">ir</span><span class="o">::</span><span class="n">Min</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&quot;(x &lt; int32((100 - cinn_min(2, (3 * y)))))&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace common</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_common_cas_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

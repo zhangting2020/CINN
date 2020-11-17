@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File llvm_util.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-llvm-util-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-util-cc"></span><h1>File llvm_util.cc<a class="headerlink" href="#file-llvm-util-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_backends_llvm.html#dir-home-chunwei-project-cinn2-cinn-backends-llvm"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-util-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_util.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id5">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-util-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_util.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-util-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc.html">Program Listing for File llvm_util.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">atomic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/llvm/llvm_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-llvm-util-h"><span class="std std-ref">File llvm_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glog/logging.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llvm/Support/Alignment.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mutex</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__backends.html#namespace-cinn-backends"><span class="std std-ref">Namespace cinn::backends</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1ab8799bd68f68bf18fbb16a141139cc70.html#exhale-function-llvm-util-8cc-1ab8799bd68f68bf18fbb16a141139cc70"><span class="std std-ref">Function cinn::backends::CinnTypeToLLVMType</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a28ae7ef570a9620f2cf2a519535aa4fe.html#exhale-function-llvm-util-8cc-1a28ae7ef570a9620f2cf2a519535aa4fe"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; cinn_buffer_t *&gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a37a519c67b22d047a078f2fb33bdd011.html#exhale-function-llvm-util-8cc-1a37a519c67b22d047a078f2fb33bdd011"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; cinn_buffer_t &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a8d3233486ff8be9ada2f1e3c94b7b418.html#exhale-function-llvm-util-8cc-1a8d3233486ff8be9ada2f1e3c94b7b418"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; cinn_pod_value_t *&gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a13bf473ff88a996301a42149d4a17fd3.html#exhale-function-llvm-util-8cc-1a13bf473ff88a996301a42149d4a17fd3"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; cinn_pod_value_t &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a696f22fd53af9afb373862176a00114c.html#exhale-function-llvm-util-8cc-1a696f22fd53af9afb373862176a00114c"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; double &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1aeb8b21cbcf58f62a6b9899594042e1e6.html#exhale-function-llvm-util-8cc-1aeb8b21cbcf58f62a6b9899594042e1e6"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; float &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a43c1c9c233d61a289b39d11e59e8aa77.html#exhale-function-llvm-util-8cc-1a43c1c9c233d61a289b39d11e59e8aa77"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; int32_t &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a7f1e8fad944cbd62a4582663d6f9c5b1.html#exhale-function-llvm-util-8cc-1a7f1e8fad944cbd62a4582663d6f9c5b1"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; int64_t &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1adbf9b367e57a6875d7f4d5035891130d.html#exhale-function-llvm-util-8cc-1adbf9b367e57a6875d7f4d5035891130d"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; int8_t &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1a4f27768b20a7e0a72b20e66b285ad26f.html#exhale-function-llvm-util-8cc-1a4f27768b20a7e0a72b20e66b285ad26f"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; void **&gt;</span></a></p></li>
+<li><p><a class="reference internal" href="function_llvm__util_8cc_1ad1f23ea79bfebc77d18e405030ed23f2.html#exhale-function-llvm-util-8cc-1ad1f23ea79bfebc77d18e405030ed23f2"><span class="std std-ref">Function cinn::backends::llvm_type_of&lt; void *&gt;</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_llvm__util_8cc_1a27cba26b32ee36f497907cd81d9b4817.html#exhale-define-llvm-util-8cc-1a27cba26b32ee36f497907cd81d9b4817"><span class="std std-ref">Define __</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

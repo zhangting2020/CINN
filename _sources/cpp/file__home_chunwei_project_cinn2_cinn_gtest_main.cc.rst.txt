@@ -1,0 +1,46 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_gtest_main.cc:
+
+File gtest_main.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn>` (``/home/chunwei/project/cinn2/cinn``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/gtest_main.cc``)
+---------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_gtest_main.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``gflags/gflags.h``
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_gtest__main_8cc_1a3c04138a5bfe5d72780bb7e82a18e627`
+

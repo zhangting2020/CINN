@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a840a9660bacc1e9e1ab83797259e3449:
+
+Variable cinn::runtime::intrisic::buffer_malloc
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_malloc

@@ -1,0 +1,92 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc:
+
+File simple_jit.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/simple_jit.cc``)
+-----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_cuda_host.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.h`)
+
+- ``cinn/backends/llvm/cinn_runtime_llvm_ir.h``
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/llvm_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`)
+
+- ``cinn/backends/llvm/runtime_symbol_registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`)
+
+- ``cinn/backends/llvm/simple_jit.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/runtime/intrinsic.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`)
+
+- ``llvm/AsmParser/Parser.h``
+
+- ``llvm/ExecutionEngine/JITSymbol.h``
+
+- ``llvm/ExecutionEngine/Orc/Core.h``
+
+- ``llvm/IR/LegacyPassManager.h``
+
+- ``llvm/IR/PassManager.h``
+
+- ``llvm/IR/Verifier.h``
+
+- ``llvm/IRReader/IRReader.h``
+
+- ``llvm/Passes/PassBuilder.h``
+
+- ``llvm/Support/SourceMgr.h``
+
+- ``llvm/Support/TargetRegistry.h``
+
+- ``llvm/Transforms/Scalar.h``
+
+- ``llvm/Transforms/Scalar/GVN.h``
+
+- ``llvm/Transforms/Scalar/Reassociate.h``
+
+- ``llvm/Transforms/Scalar/SimplifyCFG.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+

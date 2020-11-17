@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1aea6a1f196f4544bc90a32d63bec9821e:
+
+Function cinn::hlir::op::InferDtypeForBatchNorm
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferDtypeForBatchNorm(const std::vector<Type>&, const framework::NodeAttr&)

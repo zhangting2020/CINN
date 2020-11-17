@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8cc_1a4ad5fdf1066c3eae6dc62c6466f9f81e:
+
+Function cinn::poly::isl_rename_axis(isl_set \*, int, const char \*)
+====================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_rename_axis(isl_set *, int, const char *)

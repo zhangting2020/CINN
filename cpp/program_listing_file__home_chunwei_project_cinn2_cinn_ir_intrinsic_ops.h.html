@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File intrinsic_ops.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-intrinsic-ops-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-ir-intrinsic-ops-h"></span><h1>Program Listing for File intrinsic_ops.h<a class="headerlink" href="#program-listing-for-file-intrinsic-ops-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h.html#file-home-chunwei-project-cinn2-cinn-ir-intrinsic-ops-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/ir/intrinsic_ops.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ADT/ArrayRef.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/ADT/SmallVector.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;llvm/Support/Casting.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/type.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir.h&quot;</span><span class="cp"></span>
+
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">ir</span> <span class="p">{</span>
+
+<span class="c1">// clang-format off</span>
+<span class="cp">#define INTRINSIC_KIND_FOR_EACH(macro__)                 \</span>
+<span class="cp">  macro__(BufferGetDataHandle)                           \</span>
+<span class="cp">  macro__(BufferGetDataConstHandle)                      \</span>
+<span class="cp">  macro__(PodValueToX)                                   \</span>
+<span class="cp">  macro__(BufferCreate)                                  \</span>
+<span class="cp">  macro__(GetAddr)                                       \</span>
+<span class="cp">  macro__(ArgsConstruct)                                 \</span>
+<span class="c1">// clang-format on</span>
+
+
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">IntrinsicKind</span> <span class="p">{</span>
+  <span class="c1">// All the intrinsics should registered here.</span>
+<span class="cp">#define __(x__) k ## x__,</span>
+  <span class="n">INTRINSIC_KIND_FOR_EACH</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
+<span class="cp">#undef __</span>
+<span class="p">};</span>
+
+
+<span class="k">class</span> <span class="nc">IntrinsicOp</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IrNode</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span> <span class="n">kind</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">input_types</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">output_types</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">kind_</span><span class="p">(</span><span class="n">kind</span><span class="p">),</span>
+        <span class="n">input_types_</span><span class="p">(</span><span class="n">input_types</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">input_types</span><span class="p">.</span><span class="n">end</span><span class="p">()),</span>
+        <span class="n">output_types_</span><span class="p">(</span><span class="n">output_types</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">output_types</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{}</span>
+
+  <span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">GetInputType</span><span class="p">(</span><span class="kt">int</span> <span class="n">offset</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">GetOutputType</span><span class="p">(</span><span class="kt">int</span> <span class="n">offset</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="nf">AddInputType</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span> <span class="n">input_types_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">type</span><span class="p">);</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="nf">AddOutputType</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span> <span class="n">output_types_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">type</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="k">const</span> <span class="n">llvm</span><span class="o">::</span><span class="n">SmallVectorImpl</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&amp;</span> <span class="n">input_types</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">input_types_</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">const</span> <span class="n">llvm</span><span class="o">::</span><span class="n">SmallVectorImpl</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&amp;</span> <span class="n">output_types</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">input_types_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Verify</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">input_types</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="n">output_types</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="nf">Verify</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">outputs</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="nf">Verify</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">inputs</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="nf">Verify</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">type_info</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span><span class="p">;</span>
+
+  <span class="n">IntrinsicKind</span> <span class="nf">getKind</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">kind_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">IrNodeTy</span> <span class="nf">node_type</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_node_type_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="n">IrNodeTy</span> <span class="n">_node_type_</span><span class="p">{</span><span class="n">IrNodeTy</span><span class="o">::</span><span class="n">IntrinsicOp</span><span class="p">};</span>
+
+ <span class="k">protected</span><span class="o">:</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">SmallVector</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">input_types_</span><span class="p">;</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">SmallVector</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">output_types_</span><span class="p">;</span>
+  <span class="k">const</span> <span class="n">IntrinsicKind</span> <span class="n">kind_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">namespace</span> <span class="n">intrinsics</span> <span class="p">{</span>
+
+<span class="k">struct</span> <span class="nl">BufferGetDataHandle</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IntrinsicOp</span> <span class="p">{</span>
+  <span class="c1">// signature: (cinn_buffer_t*) -&gt; (void*)</span>
+  <span class="n">BufferGetDataHandle</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kBufferGetDataHandle</span><span class="p">,</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span><span class="o">*&gt;</span><span class="p">()},</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">()})</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">Expr</span> <span class="n">Make</span><span class="p">(</span><span class="n">Expr</span> <span class="n">buffer</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="kt">bool</span> <span class="nf">classof</span><span class="p">(</span><span class="k">const</span> <span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">()</span> <span class="o">==</span> <span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kBufferGetDataHandle</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">BufferGetDataConstHandle</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IntrinsicOp</span> <span class="p">{</span>
+  <span class="c1">// signature: (cinn_buffer_t*) -&gt; (const void*)</span>
+  <span class="n">BufferGetDataConstHandle</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kBufferGetDataConstHandle</span><span class="p">,</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">cinn_buffer_t</span><span class="o">*&gt;</span><span class="p">()},</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">()})</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">Expr</span> <span class="n">Make</span><span class="p">(</span><span class="n">Expr</span> <span class="n">buffer</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="kt">bool</span> <span class="nf">classof</span><span class="p">(</span><span class="k">const</span> <span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">()</span> <span class="o">==</span> <span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kBufferGetDataConstHandle</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">PodValueToX</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IntrinsicOp</span> <span class="p">{</span>
+  <span class="c1">// signature: (cinn_pod_value_t*) -&gt; (X), X is some pod type.</span>
+  <span class="n">PodValueToX</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kPodValueToX</span><span class="p">,</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span><span class="o">*&gt;</span><span class="p">()},</span> <span class="p">{})</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">Expr</span> <span class="n">Make</span><span class="p">(</span><span class="n">Expr</span> <span class="n">pod_value_ptr</span><span class="p">,</span> <span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="kt">bool</span> <span class="nf">classof</span><span class="p">(</span><span class="k">const</span> <span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">()</span> <span class="o">==</span> <span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kPodValueToX</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">pod_value_ptr</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">BufferCreate</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IntrinsicOp</span> <span class="p">{</span>
+  <span class="c1">// signature: (cinn_buffer_t*) -&gt; void</span>
+  <span class="n">BufferCreate</span><span class="p">()</span><span class="o">:</span> <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kBufferCreate</span><span class="p">,</span> <span class="p">{</span><span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span><span class="o">*&gt;</span><span class="p">()},</span> <span class="p">{})</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">Expr</span> <span class="n">Make</span><span class="p">(</span><span class="n">Expr</span> <span class="n">buffer</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="kt">bool</span> <span class="nf">classof</span><span class="p">(</span><span class="k">const</span> <span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">()</span> <span class="o">==</span> <span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kBufferCreate</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">GetAddr</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IntrinsicOp</span> <span class="p">{</span>
+  <span class="c1">// signature: (X) -&gt; (X*)</span>
+  <span class="n">GetAddr</span><span class="p">()</span><span class="o">:</span> <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kGetAddr</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{})</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">Expr</span> <span class="n">Make</span><span class="p">(</span><span class="n">Expr</span> <span class="n">data</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="kt">bool</span> <span class="nf">classof</span><span class="p">(</span><span class="k">const</span> <span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">()</span> <span class="o">==</span> <span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kGetAddr</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Expr</span> <span class="n">data</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">ArgsConstruct</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IntrinsicOp</span> <span class="p">{</span>
+  <span class="n">ArgsConstruct</span><span class="p">()</span> <span class="o">:</span> <span class="n">IntrinsicOp</span><span class="p">(</span><span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kArgsConstruct</span><span class="p">,</span> <span class="p">{},</span> <span class="p">{})</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="n">Expr</span> <span class="n">Make</span><span class="p">(</span><span class="n">Var</span> <span class="n">var</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">ArrayRef</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">);</span>
+
+  <span class="k">static</span> <span class="kt">bool</span> <span class="nf">classof</span><span class="p">(</span><span class="k">const</span> <span class="n">IntrinsicOp</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">getKind</span><span class="p">()</span> <span class="o">==</span> <span class="n">IntrinsicKind</span><span class="o">::</span><span class="n">kArgsConstruct</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Var</span> <span class="n">var</span><span class="p">;</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">SmallVector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="n">args</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="p">}</span>  <span class="c1">// namespace intrinsics</span>
+
+<span class="p">}</span>  <span class="c1">// namespace cinn::ir</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1poly_1_1__StageMap__:
+
+Class _StageMap_
+================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::Object`` (:ref:`exhale_struct_structcinn_1_1common_1_1Object`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::poly::_StageMap_
+   :members:
+   :protected-members:
+   :undoc-members:

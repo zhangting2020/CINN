@@ -1,0 +1,41 @@
+.. _exhale_struct_structcinn_1_1common_1_1Object:
+
+Struct Object
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public cinn::common::_CINNValuePack_`` (:ref:`exhale_struct_structcinn_1_1common_1_1__CINNValuePack__`)
+- ``public cinn::common::A`` (:ref:`exhale_struct_structcinn_1_1common_1_1A`)
+- ``public cinn::common::B`` (:ref:`exhale_class_classcinn_1_1common_1_1B`)
+- ``public cinn::common::GraphEdge`` (:ref:`exhale_class_classcinn_1_1common_1_1GraphEdge`)
+- ``public cinn::common::GraphNode`` (:ref:`exhale_class_classcinn_1_1common_1_1GraphNode`)
+- ``public cinn::common::UnionFindNode`` (:ref:`exhale_struct_structcinn_1_1common_1_1UnionFindNode`)
+- ``public cinn::frontend::_Instruction_`` (:ref:`exhale_struct_structcinn_1_1frontend_1_1__Instruction__`)
+- ``public cinn::frontend::_Variable_`` (:ref:`exhale_struct_structcinn_1_1frontend_1_1__Variable__`)
+- ``public cinn::hlir::framework::_Tensor_`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1__Tensor__`)
+- ``public cinn::hlir::framework::OpImpl`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpImpl`)
+- ``public cinn::hlir::framework::OpSpec`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpSpec`)
+- ``public cinn::hlir::framework::OpStrategy`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpStrategy`)
+- ``public cinn::hlir::framework::Schedule`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Schedule`)
+- ``public cinn::ir::IrNode`` (:ref:`exhale_class_classcinn_1_1ir_1_1IrNode`)
+- ``public cinn::poly::_StageMap_`` (:ref:`exhale_class_classcinn_1_1poly_1_1__StageMap__`)
+- ``public cinn::poly::Stage`` (:ref:`exhale_class_classcinn_1_1poly_1_1Stage`)
+- ``public cinn::pybind::ObjectWrapper`` (:ref:`exhale_class_classcinn_1_1pybind_1_1ObjectWrapper`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::Object
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_function_poly_2schedule_8cc_1ab57095db71ceff04e48272d6c1dc64f1:
+
+Function cinn::poly::CollectScheduleMapFromGroup
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::CollectScheduleMapFromGroup(const ScheduleGroup&)

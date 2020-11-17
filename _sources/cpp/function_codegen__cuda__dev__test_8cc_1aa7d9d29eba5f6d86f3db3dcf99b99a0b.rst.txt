@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__cuda__dev__test_8cc_1aa7d9d29eba5f6d86f3db3dcf99b99a0b:
+
+Function cinn::backends::TEST(CodeGenCUDA, Module_output)
+=========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(CodeGenCUDA, Module_output)

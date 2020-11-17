@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1a6f947094e919f1f4fbfab8a19d1facba:
+
+Function cinn::common::UInt
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::UInt(int, int)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a331670f6a589236530e0874ab9a4da48:
+
+Function cinn::ir::MultiOperandVerify
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::MultiOperandVerify(llvm::ArrayRef<Expr>)

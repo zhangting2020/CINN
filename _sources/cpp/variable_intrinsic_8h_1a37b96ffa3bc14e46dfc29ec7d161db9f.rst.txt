@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a37b96ffa3bc14e46dfc29ec7d161db9f:
+
+Variable cinn::runtime::intrisic::buffer_destroy
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::buffer_destroy

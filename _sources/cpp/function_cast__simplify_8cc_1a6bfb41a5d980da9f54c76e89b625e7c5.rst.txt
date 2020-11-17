@@ -1,0 +1,13 @@
+.. _exhale_function_cast__simplify_8cc_1a6bfb41a5d980da9f54c76e89b625e7c5:
+
+Function cinn::optim::CastSimplify
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::CastSimplify(Expr *)

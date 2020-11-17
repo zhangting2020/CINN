@@ -1,0 +1,13 @@
+.. _exhale_function_axis_8cc_1a1729e4bfdd452ea85d119cd62a7bd8a3:
+
+Function cinn::common::kAxises
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::kAxises({ "i", "j", "k", "a", "b", "c", "d", "e", "f", "g", "h" })

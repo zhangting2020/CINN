@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1common_1_1BufferBuilder:
+
+Struct BufferBuilder
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::BufferBuilder
+   :members:
+   :protected-members:
+   :undoc-members:

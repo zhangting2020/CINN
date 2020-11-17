@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a9e1d4b76f3117b9dc35885baa316526c:
+
+Template Function cinn::ir::operator==(Expr, POD)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator==(Expr, POD)

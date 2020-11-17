@@ -1,0 +1,81 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc:
+
+File infershape_pass_test.cc
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/infershape_pass_test.cc``)
+----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``any``
+
+- ``cinn/hlir/framework/graph.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`)
+
+- ``cinn/hlir/framework/graph_compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`)
+
+- ``cinn/hlir/framework/scope.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``cinn/hlir/pass/use_pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h`)
+
+- ``cinn/hlir/pe/broadcast.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`)
+
+- ``cinn/lang/packed_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`)
+
+- ``gtest/gtest.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_infershape__pass__test_8cc_1a61bdddc02c929df37257534157d5688b`
+
+- :ref:`exhale_function_infershape__pass__test_8cc_1a53a045d4514042eb5cb292aae13b3a55`
+

@@ -1,0 +1,58 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.cc:
+
+File cuda_test_helper.cc
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/cuda_test_helper.cc``)
+----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_cuda_dev.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h`)
+
+- ``cinn/backends/codegen_cuda_host.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.h`)
+
+- ``cinn/backends/codegen_cuda_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.h`)
+
+- ``cinn/backends/nvrtc_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util.h`)
+
+- ``cinn/common/cuda_test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.h`)
+
+- ``cinn/runtime/cuda/cuda_module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_module.h`)
+
+- ``cinn/runtime/cuda/cuda_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+

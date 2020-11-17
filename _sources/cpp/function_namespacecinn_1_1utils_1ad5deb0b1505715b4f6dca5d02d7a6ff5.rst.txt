@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1ad5deb0b1505715b4f6dca5d02d7a6ff5:
+
+Function cinn::utils::Split
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Split(const std::string&, const std::string&)

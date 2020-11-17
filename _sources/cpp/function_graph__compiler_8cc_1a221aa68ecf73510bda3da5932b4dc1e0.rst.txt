@@ -1,0 +1,13 @@
+.. _exhale_function_graph__compiler_8cc_1a221aa68ecf73510bda3da5932b4dc1e0:
+
+Function cinn::hlir::framework::BuildScope
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::BuildScope(Target, const std::shared_ptr<Graph>&, std::shared_ptr<Scope>)

@@ -1,0 +1,13 @@
+.. _exhale_define_extern__func__jit__register_8h_1a736540fe2369f5a06fb275eae3a3172f:
+
+Define REGISTER_FACKED_EXTERN_FUNC_HELPER
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: REGISTER_FACKED_EXTERN_FUNC_HELPER

@@ -1,0 +1,13 @@
+.. _exhale_define_ir__mutator_8h_1a82e1f73cc81d9024d41969afd11b3f41:
+
+Define UNARY_OP_IMPL
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: UNARY_OP_IMPL

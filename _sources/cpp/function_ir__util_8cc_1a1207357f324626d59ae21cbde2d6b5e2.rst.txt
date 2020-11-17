@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1a1207357f324626d59ae21cbde2d6b5e2:
+
+Function cinn::common::max
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::max(Expr, Expr)

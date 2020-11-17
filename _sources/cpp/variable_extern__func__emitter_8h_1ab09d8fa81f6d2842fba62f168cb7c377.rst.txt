@@ -1,0 +1,13 @@
+.. _exhale_variable_extern__func__emitter_8h_1ab09d8fa81f6d2842fba62f168cb7c377:
+
+Variable cinn::backends::backend_C
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::backends::backend_C

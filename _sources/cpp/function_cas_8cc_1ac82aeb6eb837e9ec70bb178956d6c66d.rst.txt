@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1ac82aeb6eb837e9ec70bb178956d6c66d:
+
+Function cinn::common::detail::SumOrProductGetSingleElementsRec
+===============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::SumOrProductGetSingleElementsRec(Expr)

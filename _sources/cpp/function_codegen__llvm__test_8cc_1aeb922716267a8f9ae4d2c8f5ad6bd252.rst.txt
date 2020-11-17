@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__llvm__test_8cc_1aeb922716267a8f9ae4d2c8f5ad6bd252:
+
+Function cinn::backends::TEST(CodeGenLLVM, LowerFunc)
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(CodeGenLLVM, LowerFunc)

@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1ir_1_1Tensor:
+
+Class Tensor
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IrNodeRef`` (:ref:`exhale_class_classcinn_1_1ir_1_1IrNodeRef`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::Tensor
+   :members:
+   :protected-members:
+   :undoc-members:

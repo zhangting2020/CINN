@@ -1,0 +1,13 @@
+.. _exhale_variable_common_2context_8cc_1a7ba9250030d93798b1875784192f6ff0:
+
+Variable cinn::common::kRuntimeIncludeDirEnvironKey
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_context.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::common::kRuntimeIncludeDirEnvironKey

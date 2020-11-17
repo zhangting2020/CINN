@@ -1,0 +1,37 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_generated_module1.cc:
+
+File generated_module1.cc
+=========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/generated_module1.cc``)
+-------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_generated_module1.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/_generated_module1.cc``
+
+
+
+
+

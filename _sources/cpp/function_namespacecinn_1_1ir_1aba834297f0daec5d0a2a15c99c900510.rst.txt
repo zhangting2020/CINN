@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1aba834297f0daec5d0a2a15c99c900510:
+
+Function cinn::ir::TEST(Tensor, IsDependOnStatement)
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(Tensor, IsDependOnStatement)

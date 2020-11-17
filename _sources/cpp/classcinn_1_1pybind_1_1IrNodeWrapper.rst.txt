@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1pybind_1_1IrNodeWrapper:
+
+Class IrNodeWrapper
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``private cinn::ir::IrNode`` (:ref:`exhale_class_classcinn_1_1ir_1_1IrNode`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::pybind::IrNodeWrapper
+   :members:
+   :protected-members:
+   :undoc-members:

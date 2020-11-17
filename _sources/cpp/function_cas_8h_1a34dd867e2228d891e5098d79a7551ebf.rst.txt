@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8h_1a34dd867e2228d891e5098d79a7551ebf:
+
+Function cinn::common::SolveInequalityInt
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::SolveInequalityInt(Expr, Var)

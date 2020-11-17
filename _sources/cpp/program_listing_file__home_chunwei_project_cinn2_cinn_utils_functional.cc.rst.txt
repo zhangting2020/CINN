@@ -1,0 +1,17 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_utils_functional.cc:
+
+Program Listing for File functional.cc
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_utils_functional.cc>` (``/home/chunwei/project/cinn2/cinn/utils/functional.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/utils/functional.h"
+   
+   namespace cinn {
+   namespace utils {}  // namespace utils
+   }  // namespace cinn

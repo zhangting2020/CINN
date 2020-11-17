@@ -1,0 +1,13 @@
+.. _exhale_function_schedule__test_8cc_1ac6ac45fbffb5b3e10680398c4494c980:
+
+Function cinn::poly::TEST(CreateStages, buffer_bind_to_multiple_tensors_schedule)
+=================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(CreateStages, buffer_bind_to_multiple_tensors_schedule)

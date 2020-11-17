@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1a3e0055a9251339f1e2d56106d1879abc:
+
+Variable cinn::stride
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::stride

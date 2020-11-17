@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a3125b28cb2700e4fbfc9ca852586ede5:
+
+Function cinn::ir::BinaryNodeVerify
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::BinaryNodeVerify(const Expr&, const Expr&, std::string_view)

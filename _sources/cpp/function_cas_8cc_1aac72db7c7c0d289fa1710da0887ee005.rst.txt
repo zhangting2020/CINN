@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1aac72db7c7c0d289fa1710da0887ee005:
+
+Function cinn::common::detail::Iquot
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::Iquot(int, int)

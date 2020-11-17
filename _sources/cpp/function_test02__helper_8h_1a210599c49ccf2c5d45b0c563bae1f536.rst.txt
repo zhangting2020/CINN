@@ -1,0 +1,13 @@
+.. _exhale_function_test02__helper_8h_1a210599c49ccf2c5d45b0c563bae1f536:
+
+Function cinn::tests::CreateMatmulSplitModule
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::CreateMatmulSplitModule(Target, int, int, int)

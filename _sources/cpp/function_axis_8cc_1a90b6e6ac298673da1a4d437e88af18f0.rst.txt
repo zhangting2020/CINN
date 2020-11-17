@@ -1,0 +1,13 @@
+.. _exhale_function_axis_8cc_1a90b6e6ac298673da1a4d437e88af18f0:
+
+Function cinn::common::GenDefaultAxisAsExpr
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::GenDefaultAxisAsExpr(int)

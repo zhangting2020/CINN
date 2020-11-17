@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a2718b9dc6e600dab26cf7ccf829db5f2:
+
+Function cinn::hlir::pe::Acosh
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Acosh(const Tensor&, const std::string&)

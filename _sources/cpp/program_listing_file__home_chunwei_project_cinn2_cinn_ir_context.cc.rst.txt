@@ -1,0 +1,15 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_context.cc:
+
+Program Listing for File context.cc
+===================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_context.cc>` (``/home/chunwei/project/cinn2/cinn/ir/context.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/ir/context.h"
+   
+   namespace cinn::ir {}  // namespace cinn::ir

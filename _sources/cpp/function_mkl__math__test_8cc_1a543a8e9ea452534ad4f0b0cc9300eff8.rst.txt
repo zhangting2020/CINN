@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math__test_8cc_1a543a8e9ea452534ad4f0b0cc9300eff8:
+
+Function cinn::runtime::cpu::TEST(mkl_math, sqrt)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::cpu::TEST(mkl_math, sqrt)

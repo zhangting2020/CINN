@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic__test_8cc_1afe8e751e6c4d1e5ff4ac19a66630915a:
+
+Function cinn::common::TEST(GiNaC, simplify)
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(GiNaC, simplify)

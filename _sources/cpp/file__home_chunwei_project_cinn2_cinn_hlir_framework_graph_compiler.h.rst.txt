@@ -1,0 +1,95 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h:
+
+File graph_compiler.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/graph_compiler.h``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.h`)
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``cinn/hlir/framework/graph.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`)
+
+- ``cinn/hlir/framework/instruction.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction.h`)
+
+- ``cinn/hlir/framework/op_strategy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`)
+
+- ``cinn/hlir/framework/scope.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`)
+
+- ``cinn/ir/lowered_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`)
+
+- ``cinn/lang/packed_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1GraphCompiler`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Program`
+

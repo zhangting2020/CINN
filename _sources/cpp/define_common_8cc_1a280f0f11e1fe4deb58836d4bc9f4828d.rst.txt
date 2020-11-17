@@ -1,0 +1,13 @@
+.. _exhale_define_common_8cc_1a280f0f11e1fe4deb58836d4bc9f4828d:
+
+Define DEFINE_TYPE_METHOD
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DEFINE_TYPE_METHOD

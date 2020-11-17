@@ -1,0 +1,13 @@
+.. _exhale_function_type_8cc_1ae60688e3e2d9e1c895f9e723c70534fd:
+
+Function cinn::common::UI8
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::UI8()

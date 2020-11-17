@@ -1,0 +1,63 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_buffer.h:
+
+File buffer.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/buffer.h``)
+------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_buffer.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``glog/logging.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_buffer.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__runtime`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1runtime_1_1Shape`
+
+- :ref:`exhale_class_classcinn_1_1runtime_1_1Buffer`
+

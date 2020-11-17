@@ -1,0 +1,13 @@
+.. _exhale_variable_type_8h_1afacff20729652a6ead029be26ada8bd8:
+
+Variable cinn::common::customized_type::kArgs_type_repr
+=======================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::common::customized_type::kArgs_type_repr

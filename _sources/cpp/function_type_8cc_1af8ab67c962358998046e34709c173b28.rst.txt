@@ -1,0 +1,13 @@
+.. _exhale_function_type_8cc_1af8ab67c962358998046e34709c173b28:
+
+Function cinn::common::operator<<(std::ostream&, Type::type_t)
+==============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::operator<<(std::ostream&, Type::type_t)

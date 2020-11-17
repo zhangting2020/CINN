@@ -1,0 +1,13 @@
+.. _exhale_define_macros_8h_1abf12d95087740e7089f039830de807ef:
+
+Define CINN_NODISCARD
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_NODISCARD

@@ -1,0 +1,44 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_schedule.h:
+
+Program Listing for File schedule.h
+===================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_schedule.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/schedule.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <string>
+   #include <unordered_map>
+   #include <vector>
+   
+   #include "cinn/cinn.h"
+   #include "cinn/ir/tensor.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   class Schedule : public common::Object {
+    public:
+     const char* type_info() const override { return __type_info__; }
+   
+     ir::Tensor operator[](const ir::Operation& op) {
+       auto it = stage_map.find(op.name);
+       CHECK(it != stage_map.end()) << "Cannot find Stage for operator " << op.name << " in the schedule";
+       return it->second;
+     }
+   
+     std::vector<ir::Operation> outputs;
+     std::vector<poly::Stage> stages;
+   
+     std::unordered_map<std::string, ir::Tensor> stage_map;
+   
+    private:
+     static constexpr char* __type_info__ = "CINNSchedule";
+   };
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

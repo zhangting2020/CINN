@@ -1,0 +1,37 @@
+.. _exhale_class_classcinn_1_1ir_1_1IrNodeRef:
+
+Class IrNodeRef
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::Shared< IrNode >`` (:ref:`exhale_struct_classcinn_1_1common_1_1Shared`)
+
+
+Derived Types
+*************
+
+- ``public cinn::ir::Buffer`` (:ref:`exhale_class_classcinn_1_1ir_1_1Buffer`)
+- ``public cinn::ir::Expr`` (:ref:`exhale_struct_structcinn_1_1ir_1_1Expr`)
+- ``public cinn::ir::FunctionRef`` (:ref:`exhale_class_classcinn_1_1ir_1_1FunctionRef`)
+- ``public cinn::ir::LoweredFunc`` (:ref:`exhale_class_classcinn_1_1ir_1_1LoweredFunc`)
+- ``public cinn::ir::Module`` (:ref:`exhale_class_classcinn_1_1ir_1_1Module`)
+- ``public cinn::ir::Tensor`` (:ref:`exhale_class_classcinn_1_1ir_1_1Tensor`)
+- ``public cinn::ir::Var`` (:ref:`exhale_struct_structcinn_1_1ir_1_1Var`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::IrNodeRef
+   :members:
+   :protected-members:
+   :undoc-members:

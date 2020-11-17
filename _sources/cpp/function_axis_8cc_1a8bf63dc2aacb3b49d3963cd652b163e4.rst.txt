@@ -1,0 +1,13 @@
+.. _exhale_function_axis_8cc_1a8bf63dc2aacb3b49d3963cd652b163e4:
+
+Function cinn::common::axis_name
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_axis.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::axis_name(int)

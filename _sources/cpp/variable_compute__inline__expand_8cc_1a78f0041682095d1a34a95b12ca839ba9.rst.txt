@@ -1,0 +1,13 @@
+.. _exhale_variable_compute__inline__expand_8cc_1a78f0041682095d1a34a95b12ca839ba9:
+
+Variable __type_info__
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: __type_info__

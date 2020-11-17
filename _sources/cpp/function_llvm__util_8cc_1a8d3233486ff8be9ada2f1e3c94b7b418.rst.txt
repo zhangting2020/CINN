@@ -1,0 +1,13 @@
+.. _exhale_function_llvm__util_8cc_1a8d3233486ff8be9ada2f1e3c94b7b418:
+
+Function cinn::backends::llvm_type_of< cinn_pod_value_t *>
+==========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::llvm_type_of< cinn_pod_value_t *>(llvm::Module *)

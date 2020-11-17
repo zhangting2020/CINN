@@ -1,0 +1,28 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.h:
+
+Program Listing for File transform_polyfor_to_for.h
+===================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.h>` (``/home/chunwei/project/cinn2/cinn/optim/transform_polyfor_to_for.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void TransformPolyForToFor(Expr* expr, bool auto_separate = true);
+   
+   namespace detail {
+   
+   void PolyForWithSimpleConditionToFor(Expr* expr);
+   
+   }  // namespace detail
+   
+   }  // namespace optim
+   }  // namespace cinn

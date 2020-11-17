@@ -1,0 +1,202 @@
+
+.. _namespace_cinn__optim:
+
+Namespace cinn::optim
+=====================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__optim__@249`
+
+- :ref:`namespace_cinn__optim__@251`
+
+- :ref:`namespace_cinn__optim__@254`
+
+- :ref:`namespace_cinn__optim__@256`
+
+- :ref:`namespace_cinn__optim__@259`
+
+- :ref:`namespace_cinn__optim__@262`
+
+- :ref:`namespace_cinn__optim__@266`
+
+- :ref:`namespace_cinn__optim__@268`
+
+- :ref:`namespace_cinn__optim__@270`
+
+- :ref:`namespace_cinn__optim__@273`
+
+- :ref:`namespace_cinn__optim__@278`
+
+- :ref:`namespace_cinn__optim__@280`
+
+- :ref:`namespace_cinn__optim__@283`
+
+- :ref:`namespace_cinn__optim__@296`
+
+- :ref:`namespace_cinn__optim__@305`
+
+- :ref:`namespace_cinn__optim__@308`
+
+- :ref:`namespace_cinn__optim__detail`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1IRCopyVisitor`
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1NestedBlockRemover`
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1ReplaceCallWithExprModifier`
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1ReplaceVarWithExprMutator`
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1TensorWriteTeller`
+
+- :ref:`exhale_struct_structcinn_1_1optim_1_1VectorizeLoops__`
+
+- :ref:`exhale_class_classcinn_1_1optim_1_1Vectorizer`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_cache__read__write__replace_8cc_1a4afd2ecc878c0cb7ba40dd59c904e499`
+
+- :ref:`exhale_function_call__arg__list__to__pod__value_8cc_1a45afb464859d9196ee51e0eed40d906f`
+
+- :ref:`exhale_function_cast__simplify_8cc_1a6bfb41a5d980da9f54c76e89b625e7c5`
+
+- :ref:`exhale_function_compare__simplify_8cc_1aa01848f4eb1a13000f21ce4635d7b4e9`
+
+- :ref:`exhale_function_compute__inline__expand_8cc_1add17cdd4256e75eba1f5c9dbad19dc3b`
+
+- :ref:`exhale_function_transform__gpu__forloop_8cc_1adb8f460d5a8ebbd76ae0e464e181da1b`
+
+- :ref:`exhale_function_eliminate__broadcast__in__forloop_8cc_1a9cae2db18223db0f974a0b8282e935db`
+
+- :ref:`exhale_function_extern__call__process_8cc_1a3456f811dfff83338f28d4610d01124d`
+
+- :ref:`exhale_function_extern__call__process_8h_1ab9601e418afaba9e99edb15525e6e837`
+
+- :ref:`exhale_function_fold__cinn__call__arguments_8cc_1afeed1db60e804c66c02ec36146ce0100`
+
+- :ref:`exhale_function_transform__gpu__forloop_8cc_1a946c4f0bb7254e60d557b95713d4d85e`
+
+- :ref:`exhale_function_if__simplify_8cc_1a15c22cefaa36172dc778bba2ac1d6ce2`
+
+- :ref:`exhale_function_buffer__assign_8cc_1a8d53850c0cfc24dc8d1e9fa1437141c4`
+
+- :ref:`exhale_function_insert__debug__log__callee_8cc_1a656f3da1ca7120ec215e28407d5fd129`
+
+- :ref:`exhale_function_ir__copy_8cc_1ad17ac73fe7436fc0a9e8f848d9b29418`
+
+- :ref:`exhale_function_ir__replace_8cc_1ab4e705fb5cd1eddca5c9f28dfd49df3f`
+
+- :ref:`exhale_function_lower__function__call__bind__vars_8cc_1a7aba6f31d034d2d9cf47bfcb2c59ba5a`
+
+- :ref:`exhale_function_map__extern__call_8cc_1adfab3e7c73997b6b875d28664eb409a5`
+
+- :ref:`exhale_function_transform__gpu__forloop_8cc_1a6bb8276c66cfbaad7e0471933c3e79c8`
+
+- :ref:`exhale_function_optimize_8cc_1ade972afcf03f466ec56d8ca57508f795`
+
+- :ref:`exhale_function_optimize_8cc_1a66fb20cdd57603a9544735c1d2d073d0`
+
+- :ref:`exhale_function_transform__gpu__forloop_8cc_1ad82647b5a7dd6ec59b71b1bacdf8e59b`
+
+- :ref:`exhale_function_remove__nested__block_8cc_1a3e95ebce96098bda60ff1428125e5f89`
+
+- :ref:`exhale_function_replace__call__with__expr_8cc_1a9f8376095e20e4d6463b969f366b364d`
+
+- :ref:`exhale_function_replace__const__param__to__integer_8cc_1ab923cd62977580e3bf04b6a2f0dded5c`
+
+- :ref:`exhale_function_replace__call__with__expr_8cc_1a193972450cec7487b209bdae867680fb`
+
+- :ref:`exhale_function_replace__var__with__expr_8cc_1a892a724475e6a8cdd9d423e0d13efd52`
+
+- :ref:`exhale_function_ir__simplify_8cc_1a9a747bdd4c9de0a09d1b419baaa6ed3a`
+
+- :ref:`exhale_function_optimize__test_8cc_1a91eb5ed562f232d114ee59e1eb886d31`
+
+- :ref:`exhale_function_cast__simplify__test_8cc_1ac005901ccca4b6bd4cb327581f171ef7`
+
+- :ref:`exhale_function_cast__simplify__test_8cc_1a436f8592719eae3205e42d38a5681938`
+
+- :ref:`exhale_function_remove__nested__block__test_8cc_1afdbd34447c7bd266f7f388b1739da041`
+
+- :ref:`exhale_function_compare__simplify__test_8cc_1aa33733dba60243848f4b88968219a0fb`
+
+- :ref:`exhale_function_compare__simplify__test_8cc_1afffc7048c86b6f1839dbfc2a3536bb94`
+
+- :ref:`exhale_function_transform__gpu__forloop__test_8cc_1aba03741f90bafdb23132f0efee09bbd1`
+
+- :ref:`exhale_function_if__simplify__test_8cc_1abbdd0f79056bf005b17d6d35ecff0cd8`
+
+- :ref:`exhale_function_transform__gpu__forloop__test_8cc_1ac2c764e9c98a9e42fbe552b3fdf5ddf9`
+
+- :ref:`exhale_function_if__simplify__test_8cc_1a5a6c97e341c67a29286b07bc94b5014b`
+
+- :ref:`exhale_function_if__simplify__test_8cc_1aaf4984a74607dfdb50294420215c75da`
+
+- :ref:`exhale_function_transform__polyfor__to__for__test_8cc_1a47e5b5f09241c914f61f258353d3fbc2`
+
+- :ref:`exhale_function_ir__copy__test_8cc_1a91d8f5386c21dbf2fe4a3d7827eebb62`
+
+- :ref:`exhale_function_vectorize__loops__test_8cc_1a663af8fa4478e2079a590d156c661010`
+
+- :ref:`exhale_function_vectorize__loops__test_8cc_1a4072abf3684e660fec2aadc1fbe2096a`
+
+- :ref:`exhale_function_ir__simplify__test_8cc_1a5057016f83817a4ef39c6316de0978b9`
+
+- :ref:`exhale_function_cache__read__write__replace__test_8cc_1ac3be5226b4dc2cb39998ead6fb478c64`
+
+- :ref:`exhale_function_vectorize__loops__test_8cc_1a3e250fc771c79394de0224b2cf0d2cf0`
+
+- :ref:`exhale_function_ir__simplify__test_8cc_1a948678959174b5785282ed9c660510f2`
+
+- :ref:`exhale_function_cache__read__write__replace__test_8cc_1a1b252c6c2ca309f2137cc35e6005424e`
+
+- :ref:`exhale_function_vectorize__loops__test_8cc_1a5c62668fe8d619794f7959916c596787`
+
+- :ref:`exhale_function_cast__simplify__test_8cc_1a4fb2d695698dab56f80cfd09d9ebc12f`
+
+- :ref:`exhale_function_transform__gpu__forloop_8cc_1a084a13e3d90f96dc27c17e0aaaa45a8d`
+
+- :ref:`exhale_function_transform__polyfor__to__for_8cc_1a5f6dea6d51fe2787c345b1740990de46`
+
+- :ref:`exhale_function_unroll__loops_8cc_1a4c7dd5e50c8a7fbc56eaf2e86b45f18f`
+
+- :ref:`exhale_function_vectorize__loops_8cc_1afcaed71052d2e4bffd485164a0f7b12d`
+
+- :ref:`exhale_function_vectorize__loops_8cc_1a959971e3b1760c38f791bddb5b6525ca`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_transform__gpu__forloop_8h_1a88d9ce6e9476ab4e66b2ffb7c54dbb70`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_map__extern__call_8h_1a274c5433d66c5fffdee42e748c6da234`
+
+- :ref:`exhale_variable_map__extern__call_8h_1abbc6953c09045df004a768ab1c2fdf5b`

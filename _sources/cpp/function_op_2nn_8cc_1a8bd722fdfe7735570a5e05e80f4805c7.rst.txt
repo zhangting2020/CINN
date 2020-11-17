@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1a8bd722fdfe7735570a5e05e80f4805c7:
+
+Function cinn::hlir::op::StrategyForSigmoid
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::StrategyForSigmoid(const framework::NodeAttr&, const std::vector<ir::Tensor>&, const std::vector<Type>&, const std::vector<std::vector<int>>&, const Target&)

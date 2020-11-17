@@ -1,0 +1,43 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_cuda_use_extern_funcs.h:
+
+File use_extern_funcs.h
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime_cuda>` (``/home/chunwei/project/cinn2/cinn/runtime/cuda``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/cuda/use_extern_funcs.h``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cuda_use_extern_funcs.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_jit_register.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h`
+
+
+

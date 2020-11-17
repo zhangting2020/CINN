@@ -1,0 +1,134 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc:
+
+File elementwise.cc
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pe>` (``/home/chunwei/project/cinn2/cinn/hlir/pe``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pe/elementwise.cc``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/pe/elementwise.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__pe`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_elementwise_8cc_1a29e19b3306e8dd832c4a1c859fa4a10e`
+
+- :ref:`exhale_function_elementwise_8cc_1a2aee8e8efb4c39fdf32f6c68461c1a1d`
+
+- :ref:`exhale_function_elementwise_8cc_1a2718b9dc6e600dab26cf7ccf829db5f2`
+
+- :ref:`exhale_function_elementwise_8cc_1ac168d8c5cf224d4d9c45983561ac2729`
+
+- :ref:`exhale_function_elementwise_8cc_1ae3a9c04fdfbd65d88db565aa8a60a539`
+
+- :ref:`exhale_function_elementwise_8cc_1a311ca154beefd321eca94d233bd9403c`
+
+- :ref:`exhale_function_elementwise_8cc_1acd67fa844acabc8ae2fe5dab83916b03`
+
+- :ref:`exhale_function_elementwise_8cc_1a097ce15b3846f582bef0e018834dadd6`
+
+- :ref:`exhale_function_elementwise_8cc_1a03bc1b665d306aad379520ea825dd39a`
+
+- :ref:`exhale_function_elementwise_8cc_1a4bae3b1d51c5b1dd98b319d19ed26b01`
+
+- :ref:`exhale_function_elementwise_8cc_1aa4d72397f183ce11dfdceccfeed39de5`
+
+- :ref:`exhale_function_elementwise_8cc_1a03641bbd0bed9a0c0cc7aae1633afb47`
+
+- :ref:`exhale_function_elementwise_8cc_1af2c5ba4846d91129a69bc509fca88ca3`
+
+- :ref:`exhale_function_elementwise_8cc_1ad0527f03e8f1feb8b5aa0dc347549918`
+
+- :ref:`exhale_function_elementwise_8cc_1af717ea524f5edbd2e589606e76d89a32`
+
+- :ref:`exhale_function_elementwise_8cc_1ad6ef2191553a33c3942c47aad7fdf75c`
+
+- :ref:`exhale_function_elementwise_8cc_1a36f0d50c12cbe34b7a0f44e773934bd5`
+
+- :ref:`exhale_function_elementwise_8cc_1a7124a3d7e21f58334291acca0fcde4ae`
+
+- :ref:`exhale_function_elementwise_8cc_1a5e559ceb90425f3b02e1a123b045461d`
+
+- :ref:`exhale_function_elementwise_8cc_1a844e3c58f73b72b2e0dc67b2fc9d1bde`
+
+- :ref:`exhale_function_elementwise_8cc_1aebefd454e81fde59d6df524fbf3920b9`
+
+- :ref:`exhale_function_elementwise_8cc_1a60878624440bf0a5fbfbfbf4ab4da8b3`
+
+- :ref:`exhale_function_elementwise_8cc_1a406d3020489211eb31487c140aab2a60`
+
+- :ref:`exhale_function_elementwise_8cc_1a4d6fe9ec3868e17bd85c250c6237bb76`
+
+- :ref:`exhale_function_elementwise_8cc_1aad3377fd723a5ddb597b4b06a446632e`
+
+- :ref:`exhale_function_elementwise_8cc_1a733d72d04b5900436e01aaa7618f23d5`
+
+- :ref:`exhale_function_elementwise_8cc_1a500b29448a61345ae07eb056fbaf800c`
+
+- :ref:`exhale_function_elementwise_8cc_1ae44f4d114fdcdb3f951d22dd279082bf`
+
+- :ref:`exhale_function_elementwise_8cc_1a7671ab0679352c3f4e40a1546a86dafd`
+
+- :ref:`exhale_function_elementwise_8cc_1a1a1360ad69857a18460b919222f698ab`
+
+- :ref:`exhale_function_elementwise_8cc_1ad050c834859900de11da53257fbb9fcb`
+
+- :ref:`exhale_function_elementwise_8cc_1ae16bf05cb8cbf5bbcf31ec3b5c2ece28`
+
+- :ref:`exhale_function_elementwise_8cc_1ae326a1cdd37688c02437d7bdb5092777`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_elementwise_8cc_1a9eb02efc1405d66b6c650eef3211b054`
+

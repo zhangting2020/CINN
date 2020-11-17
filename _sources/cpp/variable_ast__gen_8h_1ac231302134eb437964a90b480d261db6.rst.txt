@@ -1,0 +1,13 @@
+.. _exhale_variable_ast__gen_8h_1ac231302134eb437964a90b480d261db6:
+
+Variable cinn::poly::kIslParamConstPrefix
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::poly::kIslParamConstPrefix

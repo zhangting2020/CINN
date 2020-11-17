@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1a1f54c53d70476aee4d8709a52b0e9ed4:
+
+Variable cinn::M
+================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::M

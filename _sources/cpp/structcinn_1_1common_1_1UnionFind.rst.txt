@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1common_1_1UnionFind:
+
+Struct UnionFind
+================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_union_find.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::UnionFind
+   :members:
+   :protected-members:
+   :undoc-members:

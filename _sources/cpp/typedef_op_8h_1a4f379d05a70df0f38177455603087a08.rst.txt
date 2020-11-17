@@ -1,0 +1,13 @@
+.. _exhale_typedef_op_8h_1a4f379d05a70df0f38177455603087a08:
+
+Typedef cinn::hlir::framework::dim_t
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::dim_t

@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2broadcast_8cc_1a27018cc41dc1edf105a1b016d541b0dc:
+
+Function cinn::hlir::pe::Add(const Tensor&, const Tensor&, const std::string&, const Expr&)
+===========================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Add(const Tensor&, const Tensor&, const std::string&, const Expr&)

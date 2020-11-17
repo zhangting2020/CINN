@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2transform_8cc_1af4ca38fb65b42a5ef7e65336b245a867:
+
+Function cinn::hlir::pe::Matmul
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Matmul(const ir::Tensor&, const ir::Tensor&, bool, bool, int, int, const std::string&)

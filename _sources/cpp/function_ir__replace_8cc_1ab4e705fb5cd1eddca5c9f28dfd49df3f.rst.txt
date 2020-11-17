@@ -1,0 +1,13 @@
+.. _exhale_function_ir__replace_8cc_1ab4e705fb5cd1eddca5c9f28dfd49df3f:
+
+Function cinn::optim::IrReplace
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::IrReplace(ir::Expr *, ir::Expr, ir::Expr)

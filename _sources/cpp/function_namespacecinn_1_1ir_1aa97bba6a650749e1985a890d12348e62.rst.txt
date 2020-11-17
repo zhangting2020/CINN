@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1aa97bba6a650749e1985a890d12348e62:
+
+Function cinn::ir::TEST(Expr, basic)
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(Expr, basic)

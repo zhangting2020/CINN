@@ -1,0 +1,13 @@
+.. _exhale_define_pybind_2ir_8cc_1a90d43d9f711c3fefc847c210527606d9:
+
+Define DECLARE_IR_NODE_TY
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DECLARE_IR_NODE_TY

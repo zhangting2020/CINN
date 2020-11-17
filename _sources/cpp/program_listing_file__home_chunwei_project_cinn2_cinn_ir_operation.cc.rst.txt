@@ -1,0 +1,111 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_operation.cc:
+
+Program Listing for File operation.cc
+=====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_operation.cc>` (``/home/chunwei/project/cinn2/cinn/ir/operation.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/ir/operation.h"
+   
+   #include <memory>
+   
+   #include "cinn/common/common.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   Operation PlaceholderOp::Make(const std::string &name, const std::vector<Expr> &shape, Type dtype) {
+     auto n   = make_shared<PlaceholderOp>();
+     n->name  = name;
+     n->shape = shape;
+     n->set_type(dtype);
+     return Operation(n);
+   }
+   
+   const char *PlaceholderOp::func_type() const { return "placeholder_op"; }
+   
+   const char *ComputeOp::func_type() const { return "compute_op"; }
+   
+   Operation ComputeOp::Make(const std::string &name,
+                             ComputeOp::handle_t handle,
+                             const std::vector<Expr> &shape,
+                             const std::vector<Expr> &domain,
+                             const std::vector<Var> &reduce_axis,
+                             const std::map<std::string, IrNodeRef> &attrs,
+                             const std::string &tag) {
+     auto n         = make_shared<ComputeOp>();
+     n->name        = name;
+     n->producer_fn = handle;
+     n->shape       = domain;
+     n->reduce_axis = reduce_axis;
+     n->tag         = tag;
+     n->attrs       = attrs;
+     auto axis      = common::GenDefaultAxis(domain.size());
+     std::vector<Expr> _axis;
+     for (auto &x : axis) _axis.push_back(x);
+     n->body        = {handle(_axis)};
+     n->reduce_axis = reduce_axis;
+     return Operation(n);
+   }
+   
+   Operation CallOp::Make(const std::string &call_target, Expr call_op) {
+     auto n       = make_shared<CallOp>();
+     n->call_expr = call_op;
+     return Operation(n);
+   }
+   
+   Operation PrecedingViewOp::Make(const Tensor &tensor, int preceding_axis) { return Operation(); }
+   
+   const char *PrecedingViewOp::func_type() const { return PrecedingViewOp::__func_type__; }
+   
+   const char *CallOp::func_type() const { return __func_type__; }
+   
+   const char *ComputeOp::__func_type__     = "compute_op";
+   const char *PlaceholderOp::__func_type__ = "placeholder_op";
+   const char *CallOp::__func_type__        = "call_op";
+   
+   const std::string &CallOp::target() const {
+     auto *call = call_expr.As<ir::Call>();
+     CHECK(call);
+     return call->name;
+   }
+   std::vector<Expr> &CallOp::write_args() {
+     auto *call = call_expr.As<ir::Call>();
+     CHECK(call);
+     return call->write_args;
+   }
+   std::vector<Expr> &CallOp::read_args() {
+     auto *call = call_expr.As<ir::Call>();
+     CHECK(call);
+     return call->read_args;
+   }
+   const std::vector<Expr> &CallOp::write_args() const {
+     auto *call = call_expr.As<ir::Call>();
+     CHECK(call);
+     return call->write_args;
+   }
+   const std::vector<Expr> &CallOp::read_args() const {
+     auto *call = call_expr.As<ir::Call>();
+     CHECK(call);
+     return call->read_args;
+   }
+   std::vector<Expr> CallOp::args() const {
+     std::vector<Expr> args;
+     auto &rargs = read_args();
+     auto &wargs = write_args();
+     args.insert(std::end(args), rargs.begin(), rargs.end());
+     args.insert(std::end(args), wargs.begin(), wargs.end());
+     return args;
+   }
+   const char *PrecedingViewOp::__func_type__ = "preceding_view_op";
+   
+   const char *BufferShareOp::__func_type__ = "buffer_share_op";
+   const char *BufferShareOp::func_type() const { return __func_type__; }
+   
+   }  // namespace ir
+   }  // namespace cinn

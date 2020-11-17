@@ -1,0 +1,38 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.h:
+
+Program Listing for File cblas.h
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_runtime_cpu_cblas.h>` (``/home/chunwei/project/cinn2/cinn/runtime/cpu/cblas.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include "cinn/runtime/cinn_runtime.h"
+   
+   #ifdef CINN_WITH_MKL_CBLAS
+   #include <mkl_cblas.h>
+   #else
+   #include <cblas.h>
+   #endif
+   
+   // define some C APIs
+   extern "C" {
+   
+   void cinn_cpu_mkl_gemm_fp32(float alpha,
+                               int M,
+                               int N,
+                               int K,
+                               bool ta,
+                               bool tb,
+                               int lda,
+                               int ldb,
+                               int ldc,
+                               float beta,
+                               cinn_buffer_t* A,
+                               cinn_buffer_t* B,
+                               cinn_buffer_t* C);
+   }  // extern "C"

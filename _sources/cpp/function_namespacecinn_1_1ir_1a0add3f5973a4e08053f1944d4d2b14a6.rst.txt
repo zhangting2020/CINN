@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a0add3f5973a4e08053f1944d4d2b14a6:
+
+Function cinn::ir::TEST(ir_operators, test)
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(ir_operators, test)

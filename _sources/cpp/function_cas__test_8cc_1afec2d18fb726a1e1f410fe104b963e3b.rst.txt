@@ -1,0 +1,13 @@
+.. _exhale_function_cas__test_8cc_1afec2d18fb726a1e1f410fe104b963e3b:
+
+Function cinn::common::TEST(CAS, FracOp)
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(CAS, FracOp)

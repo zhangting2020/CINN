@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1afccb2e69a42325bebf91f505a830ca95:
+
+Variable cinn::runtime::intrisic::cuda_sync_threads
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::cuda_sync_threads

@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen_8cc_1a642f642b40733cb667ca858f43a7e10d:
+
+Function cinn::poly::IslAstNodeToCinnExpr
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::IslAstNodeToCinnExpr(const isl::ast_node&, ir::Expr *)

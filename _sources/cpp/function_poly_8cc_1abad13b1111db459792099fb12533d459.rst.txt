@@ -1,0 +1,13 @@
+.. _exhale_function_poly_8cc_1abad13b1111db459792099fb12533d459:
+
+Function cinn::pybind::BindPoly(py::module \*)
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_poly.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindPoly(py::module *)

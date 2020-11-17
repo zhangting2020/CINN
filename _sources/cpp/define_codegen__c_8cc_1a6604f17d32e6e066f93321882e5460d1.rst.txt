@@ -1,0 +1,13 @@
+.. _exhale_define_codegen__c_8cc_1a6604f17d32e6e066f93321882e5460d1:
+
+Define __
+=========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __

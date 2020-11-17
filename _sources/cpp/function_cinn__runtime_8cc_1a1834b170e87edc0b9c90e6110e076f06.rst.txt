@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8cc_1a1834b170e87edc0b9c90e6110e076f06:
+
+Function buffer_p_to_cinn_pod_value()
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: buffer_p_to_cinn_pod_value()

@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1af85d5debb8db3e54c9a0354757293e3c:
+
+Function cinn::common::is_zero
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::is_zero(Expr)

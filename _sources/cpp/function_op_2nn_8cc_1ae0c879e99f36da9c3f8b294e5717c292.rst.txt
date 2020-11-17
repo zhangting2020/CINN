@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1ae0c879e99f36da9c3f8b294e5717c292:
+
+Function cinn::hlir::op::InferShapeForPool3d
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForPool3d(const std::vector<std::vector<int>>&, const framework::NodeAttr&)

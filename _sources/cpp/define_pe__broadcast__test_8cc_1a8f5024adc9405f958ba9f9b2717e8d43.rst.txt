@@ -1,0 +1,13 @@
+.. _exhale_define_pe__broadcast__test_8cc_1a8f5024adc9405f958ba9f9b2717e8d43:
+
+Define TEST_BROADCAST_PE_FP32
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TEST_BROADCAST_PE_FP32

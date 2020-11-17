@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File host_intrinsics.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-host-intrinsics-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-cc"></span><h1>File host_intrinsics.cc<a class="headerlink" href="#file-host-intrinsics-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_runtime_cpu.html#dir-home-chunwei-project-cinn2-cinn-runtime-cpu"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cpu</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cpu/host_intrinsics.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id3">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id4">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cpu/host_intrinsics.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc.html">Program Listing for File host_intrinsics.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/extern_func_jit_register.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h.html#file-home-chunwei-project-cinn2-cinn-backends-extern-func-jit-register-h"><span class="std std-ref">File extern_func_jit_register.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/function_prototype.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_function_prototype.h.html#file-home-chunwei-project-cinn2-cinn-backends-function-prototype-h"><span class="std std-ref">File function_prototype.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/runtime/cpu/host_intrinsics.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-h"><span class="std std-ref">File host_intrinsics.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/runtime/cpu/mkl_math.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-mkl-math-h"><span class="std std-ref">File mkl_math.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glog/logging.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">math.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-mkl-math-h"><span class="std std-ref">File mkl_math.h</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a98598708d4f6a3ce644152af91dbcc4c.html#exhale-function-host-intrinsics-8cc-1a98598708d4f6a3ce644152af91dbcc4c"><span class="std std-ref">Function __cinn_host_tanh_v(const cinn_buffer_t *, cinn_buffer_t *)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1ab2a572c594e76595c5e88d0530e508de.html#exhale-function-host-intrinsics-8cc-1ab2a572c594e76595c5e88d0530e508de"><span class="std std-ref">Function cinn_cpu_acos_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a9e71d90c991ef5077b09c2e37f7a6060.html#exhale-function-host-intrinsics-8cc-1a9e71d90c991ef5077b09c2e37f7a6060"><span class="std std-ref">Function cinn_cpu_acosh_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1aaebd1e6390277f27d797c41436c94f17.html#exhale-function-host-intrinsics-8cc-1aaebd1e6390277f27d797c41436c94f17"><span class="std std-ref">Function cinn_cpu_asin_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a11725e719b6398de89f17ac86f803598.html#exhale-function-host-intrinsics-8cc-1a11725e719b6398de89f17ac86f803598"><span class="std std-ref">Function cinn_cpu_asinh_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a454e3139d009d3d10191ce2e8d316570.html#exhale-function-host-intrinsics-8cc-1a454e3139d009d3d10191ce2e8d316570"><span class="std std-ref">Function cinn_cpu_atan_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1ad29f64c82506300073334e59b7e27426.html#exhale-function-host-intrinsics-8cc-1ad29f64c82506300073334e59b7e27426"><span class="std std-ref">Function cinn_cpu_atanh_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a5d81131d638aa7ac8100e0ae3469f8de.html#exhale-function-host-intrinsics-8cc-1a5d81131d638aa7ac8100e0ae3469f8de"><span class="std std-ref">Function cinn_cpu_bitwise_and_int32</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a612b7c913aa823842f6f50851c090a60.html#exhale-function-host-intrinsics-8cc-1a612b7c913aa823842f6f50851c090a60"><span class="std std-ref">Function cinn_cpu_bitwise_not_int32</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a579a2e22449f004fde85c5768480bca4.html#exhale-function-host-intrinsics-8cc-1a579a2e22449f004fde85c5768480bca4"><span class="std std-ref">Function cinn_cpu_bitwise_or_int32</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1adf49670f9e07ab0d84753ae5a26c9bbf.html#exhale-function-host-intrinsics-8cc-1adf49670f9e07ab0d84753ae5a26c9bbf"><span class="std std-ref">Function cinn_cpu_bitwise_xor_int32</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1acf067e5cd30c83bb5d340477a9d20ee0.html#exhale-function-host-intrinsics-8cc-1acf067e5cd30c83bb5d340477a9d20ee0"><span class="std std-ref">Function cinn_cpu_ceil_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1ad44c4fd215c7f87cce4a22fc514dd16f.html#exhale-function-host-intrinsics-8cc-1ad44c4fd215c7f87cce4a22fc514dd16f"><span class="std std-ref">Function cinn_cpu_cos_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1af084836f237a42bb5488eb00331ff544.html#exhale-function-host-intrinsics-8cc-1af084836f237a42bb5488eb00331ff544"><span class="std std-ref">Function cinn_cpu_cosh_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1ac63a7bad7454ce2e9a501927f5ba5495.html#exhale-function-host-intrinsics-8cc-1ac63a7bad7454ce2e9a501927f5ba5495"><span class="std std-ref">Function cinn_cpu_erf_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a7feca39bc4516c05f87b9f6a2c3ba94d.html#exhale-function-host-intrinsics-8cc-1a7feca39bc4516c05f87b9f6a2c3ba94d"><span class="std std-ref">Function cinn_cpu_exp_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a787783077a409f69ef0ec3d3ec47a169.html#exhale-function-host-intrinsics-8cc-1a787783077a409f69ef0ec3d3ec47a169"><span class="std std-ref">Function cinn_cpu_floor_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a18dd7986245c45fd18e587c504437e2e.html#exhale-function-host-intrinsics-8cc-1a18dd7986245c45fd18e587c504437e2e"><span class="std std-ref">Function cinn_cpu_isfinite_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a3b567bcf9631a7b1ab20d636a348b9fc.html#exhale-function-host-intrinsics-8cc-1a3b567bcf9631a7b1ab20d636a348b9fc"><span class="std std-ref">Function cinn_cpu_isinf_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a4d60396b2f5ced4e13b202b8a93be61a.html#exhale-function-host-intrinsics-8cc-1a4d60396b2f5ced4e13b202b8a93be61a"><span class="std std-ref">Function cinn_cpu_isnan_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1ab8c76d33cf739086c8902caf0556153a.html#exhale-function-host-intrinsics-8cc-1ab8c76d33cf739086c8902caf0556153a"><span class="std std-ref">Function cinn_cpu_left_shift_int32</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1af8ef5beef4ce2d88694135e30dcc30d5.html#exhale-function-host-intrinsics-8cc-1af8ef5beef4ce2d88694135e30dcc30d5"><span class="std std-ref">Function cinn_cpu_log10_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1abba9259c4afb41ec2aaa9e597e128384.html#exhale-function-host-intrinsics-8cc-1abba9259c4afb41ec2aaa9e597e128384"><span class="std std-ref">Function cinn_cpu_log2_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a74d4f66d15710ec35a0114874556f2b4.html#exhale-function-host-intrinsics-8cc-1a74d4f66d15710ec35a0114874556f2b4"><span class="std std-ref">Function cinn_cpu_log_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a5e45312928a53dec95c9e54767fda0d7.html#exhale-function-host-intrinsics-8cc-1a5e45312928a53dec95c9e54767fda0d7"><span class="std std-ref">Function cinn_cpu_right_shift_int32</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a3de59c45688fc49a2fc0cb11f337868c.html#exhale-function-host-intrinsics-8cc-1a3de59c45688fc49a2fc0cb11f337868c"><span class="std std-ref">Function cinn_cpu_round_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a42148c4c575ca353ca920aafa9a6b520.html#exhale-function-host-intrinsics-8cc-1a42148c4c575ca353ca920aafa9a6b520"><span class="std std-ref">Function cinn_cpu_sin_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a63dfde3f8a12a9c49bdaee0fe325906f.html#exhale-function-host-intrinsics-8cc-1a63dfde3f8a12a9c49bdaee0fe325906f"><span class="std std-ref">Function cinn_cpu_sinh_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a4d0d4da44d1ff43f37ca6703502e0c0a.html#exhale-function-host-intrinsics-8cc-1a4d0d4da44d1ff43f37ca6703502e0c0a"><span class="std std-ref">Function cinn_cpu_sqrt_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1a4536c5579e472e8806a7ccfc2c06ea09.html#exhale-function-host-intrinsics-8cc-1a4536c5579e472e8806a7ccfc2c06ea09"><span class="std std-ref">Function cinn_cpu_tan_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1af2760080b3a084ecb1bb541d876de3de.html#exhale-function-host-intrinsics-8cc-1af2760080b3a084ecb1bb541d876de3de"><span class="std std-ref">Function cinn_cpu_tanh_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1ab7dd0fe56a24f35ee13844b5848a6016.html#exhale-function-host-intrinsics-8cc-1ab7dd0fe56a24f35ee13844b5848a6016"><span class="std std-ref">Function cinn_cpu_trunc_fp32(float)</span></a></p></li>
+<li><p><a class="reference internal" href="function_host__intrinsics_8cc_1aae08157ce499752d5cc8c575aa3755c0.html#exhale-function-host-intrinsics-8cc-1aae08157ce499752d5cc8c575aa3755c0"><span class="std std-ref">Function CINN_REGISTER_HELPER(host_intrinsics)</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_host__intrinsics_8cc_1a74b481e1fb93a1bb7cfcf1e365a833f2.html#exhale-define-host-intrinsics-8cc-1a74b481e1fb93a1bb7cfcf1e365a833f2"><span class="std std-ref">Define CINN_IMP_CPU_FUNC_FP32</span></a></p></li>
+<li><p><a class="reference internal" href="define_host__intrinsics_8cc_1a6d694884a2511f8c50ca42b93e2fc64c.html#exhale-define-host-intrinsics-8cc-1a6d694884a2511f8c50ca42b93e2fc64c"><span class="std std-ref">Define CINN_IMP_CPU_FUNC_INT_BINARY</span></a></p></li>
+<li><p><a class="reference internal" href="define_host__intrinsics_8cc_1a2b8e4404bd1a14097f0b023b3026c59e.html#exhale-define-host-intrinsics-8cc-1a2b8e4404bd1a14097f0b023b3026c59e"><span class="std std-ref">Define CINN_IMP_CPU_FUNC_INT_UNARY</span></a></p></li>
+<li><p><a class="reference internal" href="define_host__intrinsics_8cc_1afb99195cfcf4135f3e0dc4f5261cced5.html#exhale-define-host-intrinsics-8cc-1afb99195cfcf4135f3e0dc4f5261cced5"><span class="std std-ref">Define REGISTER_EXTERN_FUNC_1_IN_1_OUT_FLOAT</span></a></p></li>
+<li><p><a class="reference internal" href="define_host__intrinsics_8cc_1a1c2a0ed6e52e37abfa81ddcb7c73bdd8.html#exhale-define-host-intrinsics-8cc-1a1c2a0ed6e52e37abfa81ddcb7c73bdd8"><span class="std std-ref">Define REGISTER_EXTERN_FUNC_1_IN_1_OUT_INT</span></a></p></li>
+<li><p><a class="reference internal" href="define_host__intrinsics_8cc_1ab535dad7d16ef2cbae95c96fe17fc82c.html#exhale-define-host-intrinsics-8cc-1ab535dad7d16ef2cbae95c96fe17fc82c"><span class="std std-ref">Define REGISTER_EXTERN_FUNC_2_IN_1_OUT_INT</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn__pod__value__t:
+
+Struct cinn_pod_value_t
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Type
+************
+
+- ``public cinn::common::CINNValue`` (:ref:`exhale_class_classcinn_1_1common_1_1CINNValue`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn_pod_value_t
+   :members:
+   :protected-members:
+   :undoc-members:

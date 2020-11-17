@@ -1,0 +1,13 @@
+.. _exhale_define_utils_2registry_8h_1a6c9ee6428f186367255873a00d67ff95:
+
+Define CINN_STR_CONCAT_
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_registry.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_STR_CONCAT_

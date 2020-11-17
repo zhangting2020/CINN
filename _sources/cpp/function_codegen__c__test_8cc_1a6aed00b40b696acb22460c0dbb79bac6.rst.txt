@@ -1,0 +1,13 @@
+.. _exhale_function_codegen__c__test_8cc_1a6aed00b40b696acb22460c0dbb79bac6:
+
+Function cinn::backends::CreateTensor1
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::CreateTensor1()

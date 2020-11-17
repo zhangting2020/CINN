@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1a0ec68644f4b443ce07b582bde597be67:
+
+Function cinn::common::type_of< bool >
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::type_of< bool >()

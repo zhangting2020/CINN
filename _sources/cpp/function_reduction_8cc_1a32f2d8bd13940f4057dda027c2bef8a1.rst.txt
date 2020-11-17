@@ -1,0 +1,13 @@
+.. _exhale_function_reduction_8cc_1a32f2d8bd13940f4057dda027c2bef8a1:
+
+Function cinn::hlir::pe::Prod
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Prod(const ir::Tensor&, poly::StageMap, const std::vector<Expr>&, bool, const Expr&, const std::string&)

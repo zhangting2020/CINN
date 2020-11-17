@@ -1,0 +1,13 @@
+.. _exhale_function_stage_8cc_1a382dc08ef9a321ffc3866b0a00fcbda7:
+
+Function cinn::poly::InnerName(const Iterator&)
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::InnerName(const Iterator&)

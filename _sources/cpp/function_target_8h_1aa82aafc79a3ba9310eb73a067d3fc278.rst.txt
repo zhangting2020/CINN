@@ -1,0 +1,13 @@
+.. _exhale_function_target_8h_1aa82aafc79a3ba9310eb73a067d3fc278:
+
+Function cinn::common::DefaultHostTarget
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::DefaultHostTarget()

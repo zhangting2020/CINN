@@ -1,0 +1,13 @@
+.. _exhale_typedef_cas_8h_1ad7a547ff57527f6b8e8291563f4cc2e0:
+
+Typedef cinn::common::cas_intervals_t
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::common::cas_intervals_t

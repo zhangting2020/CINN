@@ -1,0 +1,13 @@
+.. _exhale_function_if__simplify_8cc_1a15c22cefaa36172dc778bba2ac1d6ce2:
+
+Function cinn::optim::IfSimplify
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::IfSimplify(Expr *)

@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File test02_matmul_case.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-test02-matmul-case-cc">
+<span id="file-home-chunwei-project-cinn2-tests-test02-matmul-case-cc"></span><h1>File test02_matmul_case.cc<a class="headerlink" href="#file-test02-matmul-case-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_tests.html#dir-home-chunwei-project-cinn2-tests"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-tests-test02-matmul-case-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests/test02_matmul_case.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id3">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id4">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-tests-test02-matmul-case-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/tests/test02_matmul_case.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-tests-test02-matmul-case-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_tests_test02_matmul_case.cc.html">Program Listing for File test02_matmul_case.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/runtime/cinn_runtime.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h"><span class="std std-ref">File cinn_runtime.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/utils/timer.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_timer.h.html#file-home-chunwei-project-cinn2-cinn-utils-timer-h"><span class="std std-ref">File timer.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glog/logging.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_helper.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_tests_test02_helper.h.html#file-home-chunwei-project-cinn2-tests-test02-helper-h"><span class="std std-ref">File test02_helper.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_array_packing.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_array_packing.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_array_packing_dynamic_shape.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_array_packing_dynamic_shape.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_block.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_block.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_call.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_call.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_loop_permutation.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_loop_permutation.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_split.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_split.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_tile.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_tile.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_varient_shape.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_varient_shape.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_varient_shape_tile.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_varient_shape_tile.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_vectorize.cc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/test02_matmul_vectorize.h</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_test02__matmul__case_8cc_1aa65d796131626bb8dd13f54ec207bc4f.html#exhale-function-test02-matmul-case-8cc-1aa65d796131626bb8dd13f54ec207bc4f"><span class="std std-ref">Function TEST(test02, basic)</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_test02__matmul__case_8cc_1a6833e1568b18ee2ebcb861aa763faa10.html#exhale-define-test02-matmul-case-8cc-1a6833e1568b18ee2ebcb861aa763faa10"><span class="std std-ref">Define TEST_FUNC</span></a></p></li>
+<li><p><a class="reference internal" href="define_test02__matmul__case_8cc_1aaa03173a08d9bf16f37c175d24cf5f5b.html#exhale-define-test02-matmul-case-8cc-1aaa03173a08d9bf16f37c175d24cf5f5b"><span class="std std-ref">Define TEST_FUNC1</span></a></p></li>
+<li><p><a class="reference internal" href="define_test02__matmul__case_8cc_1a08fbe96f478e4688a08d43b6a113bc75.html#exhale-define-test02-matmul-case-8cc-1a08fbe96f478e4688a08d43b6a113bc75"><span class="std std-ref">Define TEST_FUNC2</span></a></p></li>
+<li><p><a class="reference internal" href="define_test02__matmul__case_8cc_1a9b7b540d316d62e76e18549b6b44cef7.html#exhale-define-test02-matmul-case-8cc-1a9b7b540d316d62e76e18549b6b44cef7"><span class="std std-ref">Define TEST_FUNC3</span></a></p></li>
+<li><p><a class="reference internal" href="define_test02__matmul__case_8cc_1a995a6ead49bb8ae44353cd89eaaf2ead.html#exhale-define-test02-matmul-case-8cc-1a995a6ead49bb8ae44353cd89eaaf2ead"><span class="std std-ref">Define TEST_LLVM_MATMUL</span></a></p></li>
+<li><p><a class="reference internal" href="define_test02__matmul__case_8cc_1ade326044e9d10554ffc8ac58ac9113e8.html#exhale-define-test02-matmul-case-8cc-1ade326044e9d10554ffc8ac58ac9113e8"><span class="std std-ref">Define TEST_LLVM_MATMUL1</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_tests_test02_matmul_case.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_ir__simplify__test_8cc_1a5057016f83817a4ef39c6316de0978b9:
+
+Function cinn::optim::TEST(IrSimplify, basic)
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(IrSimplify, basic)

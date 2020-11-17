@@ -1,0 +1,71 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.cc:
+
+File extern_func_emitter.cc
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/extern_func_emitter.cc``)
+---------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/extern_func_emitter.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`)
+
+- ``cinn/backends/extern_func_emitter_builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h`)
+
+- ``cinn/backends/llvm/runtime_symbol_registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_runtime_symbol_registry.h`)
+
+- ``cinn/runtime/cpu/host_intrinsics.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``glog/raw_logging.h``
+
+- ``iostream``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+- :ref:`namespace_std`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_extern__func__emitter_8cc_1a2304149f4f913d1d11915de90c0157dd`
+

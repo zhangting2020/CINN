@@ -1,0 +1,13 @@
+.. _exhale_function_op_2broadcast_8cc_1af06c590afbdea9ed434755cb219e7772:
+
+Function cinn::hlir::op::InferDtypeForScale
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferDtypeForScale(const std::vector<Type>&, const framework::NodeAttr&)

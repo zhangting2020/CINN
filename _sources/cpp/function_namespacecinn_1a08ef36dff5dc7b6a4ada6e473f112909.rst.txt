@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1a08ef36dff5dc7b6a4ada6e473f112909:
+
+Function cinn::DEFINE_bool
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_context.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::DEFINE_bool(cinn_runtime_display_debug_info, false, "Whether to display debug information in runtime")

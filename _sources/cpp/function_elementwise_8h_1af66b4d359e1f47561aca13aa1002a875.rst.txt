@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8h_1af66b4d359e1f47561aca13aa1002a875:
+
+Function cinn::hlir::pe::FullLike
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::FullLike(const ir::Tensor&, const std::string&)

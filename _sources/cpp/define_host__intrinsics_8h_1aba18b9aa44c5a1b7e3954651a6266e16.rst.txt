@@ -1,0 +1,13 @@
+.. _exhale_define_host__intrinsics_8h_1aba18b9aa44c5a1b7e3954651a6266e16:
+
+Define CINN_DCL_CPU_FUNC_INT_BINARY
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_DCL_CPU_FUNC_INT_BINARY

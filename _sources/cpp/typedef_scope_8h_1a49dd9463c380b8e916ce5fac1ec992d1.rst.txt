@@ -1,0 +1,13 @@
+.. _exhale_typedef_scope_8h_1a49dd9463c380b8e916ce5fac1ec992d1:
+
+Typedef cinn::hlir::framework::Variable
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::Variable

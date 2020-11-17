@@ -1,0 +1,57 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h:
+
+Program Listing for File broadcast.h
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h>` (``/home/chunwei/project/cinn2/cinn/hlir/pe/broadcast.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <string>
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace pe {
+   #define HLIR_DCL_BC_PE(name__)                                                                              \
+     Expr name__(const Expr& A, const Expr& B);                                                                \
+     ir::Tensor name__(const ir::Tensor& A,                                                                    \
+                       const ir::Tensor& B,                                                                    \
+                       const std::string& out_name = "T_" #name__ "_out",                                      \
+                       const Expr& axis            = Expr());                                                             \
+     ir::Tensor name__(const Expr& A, const ir::Tensor& B, const std::string& out_name = "T_" #name__ "_out"); \
+     ir::Tensor name__(const ir::Tensor& A, const Expr& B, const std::string& out_name = "T_" #name__ "_out");
+   
+   HLIR_DCL_BC_PE(Add);
+   HLIR_DCL_BC_PE(Substract);
+   HLIR_DCL_BC_PE(Multiply);
+   HLIR_DCL_BC_PE(Divide);
+   HLIR_DCL_BC_PE(FloorDivide);
+   HLIR_DCL_BC_PE(Mod);
+   HLIR_DCL_BC_PE(FloorMod);
+   HLIR_DCL_BC_PE(Maximum);
+   HLIR_DCL_BC_PE(Minimum);
+   HLIR_DCL_BC_PE(Power);
+   HLIR_DCL_BC_PE(LeftShift);
+   HLIR_DCL_BC_PE(RightShift);
+   HLIR_DCL_BC_PE(LogicaAnd);
+   HLIR_DCL_BC_PE(LogicalOr);
+   HLIR_DCL_BC_PE(LogicalXOr);
+   HLIR_DCL_BC_PE(BitwiseAnd);
+   HLIR_DCL_BC_PE(BitwiseOr);
+   HLIR_DCL_BC_PE(BitwiseXor);
+   HLIR_DCL_BC_PE(Greater);
+   HLIR_DCL_BC_PE(Less);
+   HLIR_DCL_BC_PE(Equal);
+   HLIR_DCL_BC_PE(NotEqual);
+   HLIR_DCL_BC_PE(GreaterEqual);
+   HLIR_DCL_BC_PE(LessEqual);
+   
+   }  // namespace pe
+   }  // namespace hlir
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_define_macros_8h_1a431b279ddd9c2372888c2512254fad0c:
+
+Define CINN_DISALLOW_COPY_AND_ASSIGN
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_DISALLOW_COPY_AND_ASSIGN

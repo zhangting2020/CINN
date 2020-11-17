@@ -1,0 +1,13 @@
+.. _exhale_function_execution__engine__test_8cc_1a052a81af679725cf9fce21ae6d43cfa2:
+
+Function cinn::backends::TEST(llvm_test01, elementwise_add)
+===========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(llvm_test01, elementwise_add)

@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1ae5097db2876b4e48379a2da3b6319c43:
+
+Function CINN_REGISTER_HELPER(nn_ops)
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: CINN_REGISTER_HELPER(nn_ops)

@@ -1,0 +1,13 @@
+.. _exhale_function_graph__utils__test_8cc_1ae04d99bd49a9aac88a2aac57652d3a23:
+
+Function cinn::common::TEST(Graph, Visualize)
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(Graph, Visualize)

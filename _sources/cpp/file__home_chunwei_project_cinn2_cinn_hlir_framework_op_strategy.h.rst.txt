@@ -1,0 +1,104 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h:
+
+File op_strategy.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/op_strategy.h``)
+------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/schedule.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_schedule.h`)
+
+- ``cinn/lang/packed_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_transform.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_framework.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpImpl`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpSpec`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpStrategy`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_op__strategy_8h_1aede2c6492b71af3258ef0870e9989d01`
+
+- :ref:`exhale_typedef_op__strategy_8h_1ac2ac35ba8bdab231773f6e49bfc33594`
+
+- :ref:`exhale_typedef_op__strategy_8h_1a3ab4d532effe57fe4870b604ef629978`
+

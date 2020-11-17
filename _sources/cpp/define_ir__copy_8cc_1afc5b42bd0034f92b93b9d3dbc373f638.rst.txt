@@ -1,0 +1,13 @@
+.. _exhale_define_ir__copy_8cc_1afc5b42bd0034f92b93b9d3dbc373f638:
+
+Define COPY_ADD_FIELD
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: COPY_ADD_FIELD

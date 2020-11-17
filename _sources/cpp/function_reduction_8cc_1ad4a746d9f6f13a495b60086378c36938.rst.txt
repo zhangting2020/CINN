@@ -1,0 +1,13 @@
+.. _exhale_function_reduction_8cc_1ad4a746d9f6f13a495b60086378c36938:
+
+Function cinn::hlir::pe::Max
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Max(const ir::Tensor&, poly::StageMap, const std::vector<Expr>&, bool, const std::string&)

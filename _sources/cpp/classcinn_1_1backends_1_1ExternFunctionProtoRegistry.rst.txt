@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1backends_1_1ExternFunctionProtoRegistry:
+
+Class ExternFunctionProtoRegistry
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::backends::FunctionProtoRegistry`` (:ref:`exhale_class_classcinn_1_1backends_1_1FunctionProtoRegistry`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::ExternFunctionProtoRegistry
+   :members:
+   :protected-members:
+   :undoc-members:

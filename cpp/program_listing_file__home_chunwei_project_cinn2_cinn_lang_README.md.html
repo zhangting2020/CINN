@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File README.md &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-readme-md">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-lang-readme-md"></span><h1>Program Listing for File README.md<a class="headerlink" href="#program-listing-for-file-readme-md" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_README.md.html#file-home-chunwei-project-cinn2-cinn-lang-readme-md"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/lang/README.md</span></code>)</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span># Design of CINN/DSL
+This module is a simple DSL defined in CINN project.
+The DSL module aims to represent the overall computation in a hardware indenpendent way.
+
+## Concepts
+### Object
+All the mutable elements in CINN are `Object`.
+### Shared
+The `Shared` objects are reference-count-self-contained container, which is similar to the `std::shared_ptr`.
+
+One can pass a `Shared` object by passing a pointer and the consumer object should store it in a local `Shared` member variable.
+
+## Tensor
+
+The input or the temporary ouptut node.
+
+Every `Compute` will output a Tensor, the tensor can be sliced.
+
+
+
+### PlaceHolder
+
+The special tensor that represents a input slot.
+
+```c++
+PlaceHolder&lt;float&gt; A(&quot;A&quot;, {M, N});
+PlaceHolder&lt;float&gt; B(&quot;B&quot;, {M, N});
+```
+
+## Operation
+
+The Operation is the operation on tensors, including
+
+- placeholder
+- compute
+- bound inference
+
+```c++
+Tensor C = Compute({M,N}/*output shape*/, [&amp;](Var i, Var j) {
+  Var k;
+  return ReduceSum(A[i,k] * B[k,j], {k});
+});
+```
+
+### Bound inference
+
+The PlaceHolder should define a shape.
+
+```c++
+Var M(Int(32));
+Var N(Int(32));
+
+PlaceHolder&lt;float&gt; A({M, N});
+
+Var i,j;
+Expr tmp = A[i][j] + 1; // i \in {0, M}; j \in {0, N}
+```
+
+To simplify the implementation, we use ISL to generate code for basic snippets.
+
+## Schedule
+
+The schedule will
+
+1. determine the order of computation, by topological sorting the computational graph composed of tensors.
+2. transforming the computations
+
+### order schedule
+
+1. Topological sort the tensors
+2. for each tensor, generate the code it needs.
+
+## Some examples
+A matrix multiplication
+
+```c++
+// Declare some iterator variables.
+Var i, j, k;
+Placeholder&lt;float&gt; A({M, K}), B({K, N});
+
+Tensor C = Compute({M, N}/*output shape*/,
+        [](Var i, Var j) {
+            return ReduceSum(A(i,k) * B(k, j), k);
+        }, &quot;C&quot;);
+Tensor D = Compute({M, N}, [](Var i, Var j) {
+  return Map(C(i,j) + 1);
+});
+
+Schedule s = CreateSchedule(C);
+auto func = Build(s, [A, B, C], target=target, name=&quot;matmul&quot;);
+
+func(a, b, c);
+```
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_lang_README.md.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_builtin_8cc_1a8e11aa6f4faf1d10440fdde7df31f232:
+
+Function cinn::lang::Isinf
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::Isinf(Expr)

@@ -1,0 +1,13 @@
+.. _exhale_function_llvm__util_8cc_1ab8799bd68f68bf18fbb16a141139cc70:
+
+Function cinn::backends::CinnTypeToLLVMType
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::CinnTypeToLLVMType(common::Type, llvm::Module *)

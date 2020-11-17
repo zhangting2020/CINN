@@ -1,0 +1,13 @@
+.. _exhale_variable_compute__inline__expand_8cc_1adab38e22f381d2b9bc942bf1772cb80e:
+
+Variable id_
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: id_

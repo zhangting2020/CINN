@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File codegen_cuda_host.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-codegen-cuda-host-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-backends-codegen-cuda-host-cc"></span><h1>Program Listing for File codegen_cuda_host.cc<a class="headerlink" href="#program-listing-for-file-codegen-cuda-host-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.cc.html#file-home-chunwei-project-cinn2-cinn-backends-codegen-cuda-host-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/codegen_cuda_host.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/codegen_cuda_host.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/extern_func_jit_register.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/llvm/llvm_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/intrinsic.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">backends</span> <span class="p">{</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">kArgsArrayMaxLen</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="n">llvm</span><span class="o">::</span><span class="n">Value</span><span class="o">*</span> <span class="n">CodeGenCUDA_Host</span><span class="o">::</span><span class="n">LowerGPUKernelLauncher</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">_LoweredFunc_</span><span class="o">*</span> <span class="n">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">valid</span><span class="p">());</span>
+
+  <span class="cm">/* The current function definiton is</span>
+<span class="cm">   * void fn(cinn_pod_value_t* args, int num_args) {</span>
+<span class="cm">   *     Call(fn_kernel, args, num_args);</span>
+<span class="cm">   * }</span>
+<span class="cm">   * will lower to</span>
+<span class="cm">   * void fn(cinn_pod_value_t* args, int num_args) { // num_args is ignored here.</span>
+<span class="cm">   *    // NOTE the num_args is unnecessary here, but it should follow the pattern of CINN function.</span>
+<span class="cm">   *    cinn_call_cuda_kernel(fn_kernel_ptr, args, grid_dim, block_dim, fn_kernel_stream);</span>
+<span class="cm">   * }</span>
+<span class="cm">   *</span>
+<span class="cm">   * NOTE the global variables related to CUDA in LLVM module are</span>
+<span class="cm">   * 1. fn_kernel_ptr, the pointer to the compiled kernel function returned by CUDA driver</span>
+<span class="cm">   * 2. fn_kernel_stream, the CUDA stream this kernel should launch on.</span>
+<span class="cm">   */</span>
+
+  <span class="c1">// hard-code here to verify it is a simple CUDA host function.</span>
+  <span class="c1">// @{</span>
+  <span class="k">auto</span> <span class="n">body</span>   <span class="o">=</span> <span class="n">func</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">;</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">block</span> <span class="o">=</span> <span class="n">body</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Block</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">block</span><span class="p">);</span>
+
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">block</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">1UL</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">call</span> <span class="o">=</span> <span class="n">block</span><span class="o">-&gt;</span><span class="n">stmts</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">call</span><span class="p">);</span>
+  <span class="c1">// @}</span>
+
+  <span class="c1">// Create the function</span>
+  <span class="c1">// @{</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">function_type</span>      <span class="o">=</span> <span class="n">GenFunctionTypeFromCinnFunction</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+  <span class="n">llvm</span><span class="o">::</span><span class="n">Function</span><span class="o">*</span> <span class="n">function</span> <span class="o">=</span> <span class="n">llvm</span><span class="o">::</span><span class="n">Function</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span><span class="n">function_type</span><span class="p">,</span> <span class="n">llvm</span><span class="o">::</span><span class="n">Function</span><span class="o">::</span><span class="n">ExternalLinkage</span><span class="p">,</span> <span class="n">func</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">m_</span><span class="p">);</span>
+  <span class="n">function</span><span class="o">-&gt;</span><span class="n">setCallingConv</span><span class="p">(</span><span class="n">llvm</span><span class="o">::</span><span class="n">CallingConv</span><span class="o">::</span><span class="n">C</span><span class="p">);</span>
+  <span class="n">function</span><span class="o">-&gt;</span><span class="n">setHasUWTable</span><span class="p">();</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">llvm</span><span class="o">::</span><span class="n">Value</span><span class="o">*&gt;</span> <span class="n">ll_function_args</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">transform</span><span class="p">(</span><span class="n">function</span><span class="o">-&gt;</span><span class="n">arg_begin</span><span class="p">(),</span> <span class="n">function</span><span class="o">-&gt;</span><span class="n">arg_end</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">ll_function_args</span><span class="p">),</span> <span class="p">[](</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">addressof</span><span class="p">(</span><span class="n">arg</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="n">llvm</span><span class="o">::</span><span class="n">BasicBlock</span><span class="o">*</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">llvm</span><span class="o">::</span><span class="n">BasicBlock</span><span class="o">::</span><span class="n">Create</span><span class="p">(</span>
+      <span class="cm">/*Context=*/</span><span class="n">b_</span><span class="o">-&gt;</span><span class="n">getContext</span><span class="p">(),</span>
+      <span class="cm">/*Name=*/</span><span class="s">&quot;entry&quot;</span><span class="p">,</span>
+      <span class="cm">/*Parent=*/</span><span class="n">function</span><span class="p">,</span>
+      <span class="cm">/*InsertBefore=*/</span><span class="k">nullptr</span><span class="p">);</span>
+  <span class="n">b_</span><span class="o">-&gt;</span><span class="n">SetInsertPoint</span><span class="p">(</span><span class="n">entry</span><span class="p">);</span>
+  <span class="c1">// @}</span>
+
+  <span class="c1">// Get the arguments of the function.</span>
+  <span class="c1">// @{</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">ll_args</span>       <span class="o">=</span> <span class="n">ll_function_args</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">ll_args_count</span> <span class="o">=</span> <span class="n">ll_function_args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">ll_args</span><span class="o">-&gt;</span><span class="n">getType</span><span class="p">(),</span> <span class="n">ll_cinn_pod_p_ty</span><span class="p">());</span>   <span class="c1">// cinn_pod_value_t* args</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">ll_args_count</span><span class="o">-&gt;</span><span class="n">getType</span><span class="p">(),</span> <span class="n">ll_int32_ty</span><span class="p">());</span>  <span class="c1">// int32</span>
+
+  <span class="k">auto</span><span class="o">*</span> <span class="n">ll_num_args_copied</span> <span class="o">=</span> <span class="n">b_</span><span class="o">-&gt;</span><span class="n">CreateAlloca</span><span class="p">(</span><span class="n">ll_int32_ty</span><span class="p">(),</span> <span class="k">nullptr</span><span class="p">,</span> <span class="s">&quot;num_args_copied&quot;</span><span class="p">);</span>
+  <span class="n">Store</span><span class="p">(</span><span class="n">ll_args_count</span><span class="p">,</span> <span class="n">ll_num_args_copied</span><span class="p">);</span>
+  <span class="n">SetVar</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">ll_num_args_copied</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()),</span> <span class="n">ll_num_args_copied</span><span class="p">);</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">func_arg0_name</span> <span class="o">=</span> <span class="n">func</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">name</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">LLVM_WillVarLowerAsPointer</span><span class="p">(</span><span class="n">func_arg0_name</span><span class="p">))</span>
+      <span class="o">&lt;&lt;</span> <span class="s">&quot;Variable [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">func_arg0_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] should have a name like someting will be lower to a pointer&quot;</span><span class="p">;</span>
+  <span class="n">SetVar</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">var_arg</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">ll_args</span><span class="p">);</span>
+  <span class="c1">// @}</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">kernel_ptr_global_var_name</span>    <span class="o">=</span> <span class="n">GenKernelPtrVarName</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">kernel_stream_global_var_name</span> <span class="o">=</span> <span class="n">GenKernelStreamVarName</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+  <span class="c1">// set global variables to reference the [kernel_ptr] and [kernel_stream] for this kernel</span>
+  <span class="n">SetVar</span><span class="p">(</span><span class="n">kernel_ptr_global_var_name</span><span class="p">,</span> <span class="n">m_</span><span class="o">-&gt;</span><span class="n">getOrInsertGlobal</span><span class="p">(</span><span class="n">kernel_ptr_global_var_name</span><span class="p">,</span> <span class="n">ll_void_p_ty</span><span class="p">()));</span>
+  <span class="n">SetVar</span><span class="p">(</span><span class="n">kernel_stream_global_var_name</span><span class="p">,</span> <span class="n">m_</span><span class="o">-&gt;</span><span class="n">getOrInsertGlobal</span><span class="p">(</span><span class="n">kernel_stream_global_var_name</span><span class="p">,</span> <span class="n">ll_void_p_ty</span><span class="p">()));</span>
+
+  <span class="p">{</span>  <span class="c1">// create a new Call node for the ExternFunctionEmitter</span>
+    <span class="n">Var</span> <span class="n">args_var</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">var_arg</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span><span class="o">*&gt;</span><span class="p">());</span>  <span class="c1">// pass *args directly to kernel</span>
+    <span class="n">Var</span> <span class="nf">kernel_fn_ptr_var</span><span class="p">(</span><span class="n">kernel_ptr_global_var_name</span><span class="p">,</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">());</span>
+    <span class="n">Var</span> <span class="nf">kernel_stream_var</span><span class="p">(</span><span class="n">kernel_stream_global_var_name</span><span class="p">,</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">());</span>
+
+    <span class="k">auto</span> <span class="n">new_call_node</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Void</span><span class="p">(),</span>
+                                        <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">call_cuda_kernel</span><span class="p">,</span>
+                                        <span class="p">{</span>
+                                            <span class="n">kernel_fn_ptr_var</span><span class="p">,</span>  <span class="c1">// kernel_fn</span>
+                                            <span class="n">args_var</span><span class="p">,</span>           <span class="c1">// args</span>
+                                            <span class="n">Var</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">ll_num_args_copied</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()),</span> <span class="n">type_of</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">()),</span>
+                                            <span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">grid_dim</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span>   <span class="c1">// grid_x</span>
+                                            <span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">grid_dim</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>   <span class="c1">// grid_y</span>
+                                            <span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">grid_dim</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>   <span class="c1">// grid_z</span>
+                                            <span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">block_dim</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span>  <span class="c1">// block_x</span>
+                                            <span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">block_dim</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span>  <span class="c1">// block_y</span>
+                                            <span class="n">Expr</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">cuda_axis_info</span><span class="p">.</span><span class="n">block_dim</span><span class="p">(</span><span class="mi">2</span><span class="p">)),</span>  <span class="c1">// block_z</span>
+                                            <span class="n">kernel_stream_var</span>                         <span class="c1">// stream</span>
+                                        <span class="p">},</span>
+                                        <span class="p">{},</span>
+                                        <span class="n">ir</span><span class="o">::</span><span class="n">CallType</span><span class="o">::</span><span class="n">Extern</span><span class="p">,</span>
+                                        <span class="n">ir</span><span class="o">::</span><span class="n">FunctionRef</span><span class="p">(),</span>
+                                        <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">emitter_id</span> <span class="o">=</span> <span class="n">ExternFuncID</span><span class="p">{</span><span class="n">backend_llvm_host</span><span class="p">,</span> <span class="n">runtime</span><span class="o">::</span><span class="n">intrisic</span><span class="o">::</span><span class="n">call_cuda_kernel</span><span class="p">};</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">emitter</span>   <span class="o">=</span> <span class="n">ExternFunctionEmitterRegistry</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">Lookup</span><span class="p">(</span><span class="n">emitter_id</span><span class="p">);</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">emitter</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;No extern function emitter called &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">emitter_id</span><span class="p">;</span>
+    <span class="n">emitter</span><span class="o">-&gt;</span><span class="n">BindCodeGen</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="n">emitter</span><span class="o">-&gt;</span><span class="n">Emit</span><span class="p">(</span><span class="n">new_call_node</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Call</span><span class="o">&gt;</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="n">RetVoid</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="n">function</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace backends</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

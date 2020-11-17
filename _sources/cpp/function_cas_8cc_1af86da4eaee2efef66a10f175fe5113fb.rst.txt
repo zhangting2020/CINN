@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1af86da4eaee2efef66a10f175fe5113fb:
+
+Function cinn::common::detail::IsExprCasCompatible
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::IsExprCasCompatible(Expr)

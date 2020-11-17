@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a5268ec579840fb0fb7e4848b1d8abf55:
+
+Function cinn::ir::GenReduceInitTensorNameOf
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::GenReduceInitTensorNameOf(const std::string&)

@@ -1,0 +1,13 @@
+.. _exhale_function_type_8cc_1a7b5b1425c834c4e940d6b6f643359402:
+
+Function cinn::common::F32
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::F32()

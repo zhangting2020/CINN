@@ -1,0 +1,13 @@
+.. _exhale_function_common_8cc_1af853274774993d27ac5f2995d0f1a802:
+
+Function cinn::pybind::BindCommon(py::module \*)
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::BindCommon(py::module *)

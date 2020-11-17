@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1a333260c4d59cec9a709f01afd770dd21:
+
+Function cinn::common::Void
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Void()

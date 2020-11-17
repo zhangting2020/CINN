@@ -1,0 +1,13 @@
+.. _exhale_function_if__simplify__test_8cc_1abbdd0f79056bf005b17d6d35ecff0cd8:
+
+Function cinn::optim::TEST(IfSimplify, if_true)
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(IfSimplify, if_true)

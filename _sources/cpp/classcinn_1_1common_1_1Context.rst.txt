@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1common_1_1Context:
+
+Class Context
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_context.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::common::Context
+   :members:
+   :protected-members:
+   :undoc-members:

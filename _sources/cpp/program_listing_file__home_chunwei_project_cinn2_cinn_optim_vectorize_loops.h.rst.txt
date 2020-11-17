@@ -1,0 +1,29 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.h:
+
+Program Listing for File vectorize_loops.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.h>` (``/home/chunwei/project/cinn2/cinn/optim/vectorize_loops.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/ir/ir_mutator.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void VectorizeLoops(Expr* expr, const Target& target);
+   
+   namespace detail {
+   
+   void Vectorize(Var var, int lanes, Expr* expr);
+   
+   }  // namespace detail
+   
+   }  // namespace optim
+   }  // namespace cinn

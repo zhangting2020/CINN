@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1adac95e2d0397919a0448ebf545b50047:
+
+Function cinn::utils::StringFormat
+==================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::StringFormat(const std::string&, ...)

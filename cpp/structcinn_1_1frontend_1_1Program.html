@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struct Program &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Struct Variable" href="structcinn_1_1frontend_1_1Variable.html" />
+    <link rel="prev" title="Struct Interpreter::Impl" href="structcinn_1_1frontend_1_1Interpreter_1_1Impl.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="struct-program">
+<span id="exhale-struct-structcinn-1-1frontend-1-1program"></span><h1>Struct Program<a class="headerlink" href="#struct-program" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_frontend_syntax.h.html#file-home-chunwei-project-cinn2-cinn-frontend-syntax-h"><span class="std std-ref">File syntax.h</span></a></p></li>
+</ul>
+<div class="section" id="struct-documentation">
+<h2>Struct Documentation<a class="headerlink" href="#struct-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp struct">
+<dt id="_CPPv4N4cinn8frontend7ProgramE">
+<span id="_CPPv3N4cinn8frontend7ProgramE"></span><span id="_CPPv2N4cinn8frontend7ProgramE"></span><span id="cinn::frontend::Program"></span><span class="target" id="structcinn_1_1frontend_1_1Program"></span><em class="property">struct </em><code class="sig-prename descclassname">cinn::frontend<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Program</code><a class="headerlink" href="#_CPPv4N4cinn8frontend7ProgramE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#structcinn_1_1frontend_1_1Program"><span class="std std-ref">Program</span></a> is a representation of a computation. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N4cinn8frontend7Program6attr_tE">
+<span id="_CPPv3N4cinn8frontend7Program6attr_tE"></span><span id="_CPPv2N4cinn8frontend7Program6attr_tE"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1af5f4102a975a68c31ecf992928b47afd"></span><em class="property">using </em><code class="sig-name descname">attr_t</code> = hlir::framework::NodeAttr::attr_t<a class="headerlink" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program9SetInputsERKNSt6vectorI8VariableEE">
+<span id="_CPPv3N4cinn8frontend7Program9SetInputsERKNSt6vectorI8VariableEE"></span><span id="_CPPv2N4cinn8frontend7Program9SetInputsERKNSt6vectorI8VariableEE"></span><span id="cinn::frontend::Program::SetInputs__std::vector:Variable:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a051332fb8d2c2c71edee43663f488172"></span>void <code class="sig-name descname">SetInputs</code><span class="sig-paren">(</span><em class="property">const</em> std::vector&lt;<a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a>&gt; &amp;<em>xs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program9SetInputsERKNSt6vectorI8VariableEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program3addERK8VariableRK8Variable">
+<span id="_CPPv3N4cinn8frontend7Program3addERK8VariableRK8Variable"></span><span id="_CPPv2N4cinn8frontend7Program3addERK8VariableRK8Variable"></span><span id="cinn::frontend::Program::add__VariableCR.VariableCR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a91f298dc95db4c99a7a3e7267f7bc89f"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program3addERK8VariableRK8Variable" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add two variables.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The result. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: The first variable. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: The second variable. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program3mulERK8VariableRK8Variableii">
+<span id="_CPPv3N4cinn8frontend7Program3mulERK8VariableRK8Variableii"></span><span id="_CPPv2N4cinn8frontend7Program3mulERK8VariableRK8Variableii"></span><span id="cinn::frontend::Program::mul__VariableCR.VariableCR.i.i"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a936033d92bac4fdbf296937eb13f0a55"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">mul</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>b</em>, int <em>x_num_col_dims</em> = 1, int <em>y_num_col_dims</em> = 1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program3mulERK8VariableRK8Variableii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Multiply two matrix. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program15elementwise_addERK8VariableRK8Variablei">
+<span id="_CPPv3N4cinn8frontend7Program15elementwise_addERK8VariableRK8Variablei"></span><span id="_CPPv2N4cinn8frontend7Program15elementwise_addERK8VariableRK8Variablei"></span><span id="cinn::frontend::Program::elementwise_add__VariableCR.VariableCR.i"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1afa0a65826b8a062d82803efe36ff94e0"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">elementwise_add</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>b</em>, int <em>axis</em> = -1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program15elementwise_addERK8VariableRK8Variablei" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add two tensors element-wise. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program15elementwise_mulERK8VariableRK8Variablei">
+<span id="_CPPv3N4cinn8frontend7Program15elementwise_mulERK8VariableRK8Variablei"></span><span id="_CPPv2N4cinn8frontend7Program15elementwise_mulERK8VariableRK8Variablei"></span><span id="cinn::frontend::Program::elementwise_mul__VariableCR.VariableCR.i"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a45c679bd8d7fcc566b9ab5d717d62689"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">elementwise_mul</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>b</em>, int <em>axis</em> = -1<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program15elementwise_mulERK8VariableRK8Variablei" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Multiply two tensors element-wise. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program4reluERK8Variable">
+<span id="_CPPv3N4cinn8frontend7Program4reluERK8Variable"></span><span id="_CPPv2N4cinn8frontend7Program4reluERK8Variable"></span><span id="cinn::frontend::Program::relu__VariableCR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a008c479a66c5c7b3c7e7eb868155c594"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">relu</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program4reluERK8Variable" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Apply Rectified Linear Unit on input <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#structcinn_1_1frontend_1_1Variable"><span class="std std-ref">Variable</span></a>. Actually apply: outupt = max(input,0)</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The result. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: The first variable. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program5relu6ERK8Variable">
+<span id="_CPPv3N4cinn8frontend7Program5relu6ERK8Variable"></span><span id="_CPPv2N4cinn8frontend7Program5relu6ERK8Variable"></span><span id="cinn::frontend::Program::relu6__VariableCR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1abd5ff064935de335ed8162574f4399b7"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">relu6</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program5relu6ERK8Variable" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program6conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program6conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program6conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::conv2d__VariableCR.VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a024995c9fca881f6a9be5c6cae21e055"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">conv2d</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>b</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program6conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The convolution2D layer calculates the output based on the input, filter and strides, paddings, dilations, groups parameters.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The result. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: The first variable input. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: The second variable filter(weights). </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attr_store</span></code>: The params like padding, stride, dilation, etc. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program16depthwise_conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program16depthwise_conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program16depthwise_conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::depthwise_conv2d__VariableCR.VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1adce355c36c6f255809039a84ecffc35f"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">depthwise_conv2d</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>b</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program16depthwise_conv2dERK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program6pool2dERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program6pool2dERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program6pool2dERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::pool2d__VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a0b747897a86ea935a9e8b0eb55ecb614"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">pool2d</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program6pool2dERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program9batchnormERK8VariableRK8VariableRK8VariableRK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program9batchnormERK8VariableRK8VariableRK8VariableRK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program9batchnormERK8VariableRK8VariableRK8VariableRK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::batchnorm__VariableCR.VariableCR.VariableCR.VariableCR.VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a61bdfbcf7f22d2984f588e7220d6e3be"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">batchnorm</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>scale</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>bias</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>mean</em>, <em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>variance</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program9batchnormERK8VariableRK8VariableRK8VariableRK8VariableRK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The batchnorm layer can be used as a normalizer function for convolution or fully_connected operations.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The result. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: The first variable input. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: The second variable filter(weights). </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attr_store</span></code>: The params like eplison. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program5scaleERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program5scaleERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program5scaleERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::scale__VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1abac6799f7adfddeb33e753921d4b8706"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program5scaleERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program7softmaxERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program7softmaxERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program7softmaxERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::softmax__VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a2630b474eef00d54070fb049d3bb6f0d"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program7softmaxERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program7sigmoidERK8Variable">
+<span id="_CPPv3N4cinn8frontend7Program7sigmoidERK8Variable"></span><span id="_CPPv2N4cinn8frontend7Program7sigmoidERK8Variable"></span><span id="cinn::frontend::Program::sigmoid__VariableCR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a703cef4b01352baf5938a569401f1d7b"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">sigmoid</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program7sigmoidERK8Variable" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program5sliceERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program5sliceERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program5sliceERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::slice__VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a6c455eeebb62f6c60150f136b3755815"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">slice</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program5sliceERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program13dropout_inferERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE">
+<span id="_CPPv3N4cinn8frontend7Program13dropout_inferERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="_CPPv2N4cinn8frontend7Program13dropout_inferERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE"></span><span id="cinn::frontend::Program::dropout_infer__VariableCR.std::unordered_map:ss.attr_t:CR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a95f4034c62ef1f5c9eba62cf0d7fcb5a"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> <code class="sig-name descname">dropout_infer</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Variable.html#_CPPv4N4cinn8frontend8VariableE" title="cinn::frontend::Variable">Variable</a> &amp;<em>a</em>, <em class="property">const</em> std::unordered_map&lt;std::string, <a class="reference internal" href="#_CPPv4N4cinn8frontend7Program6attr_tE" title="cinn::frontend::Program::attr_t">attr_t</a>&gt; &amp;<em>attr_store</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program13dropout_inferERK8VariableRKNSt13unordered_mapINSt6stringE6attr_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7ProgramixE6size_t">
+<span id="_CPPv3N4cinn8frontend7ProgramixE6size_t"></span><span id="_CPPv2N4cinn8frontend7ProgramixE6size_t"></span><span id="cinn::frontend::Program::subscript-operator__s"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a5107f8cda0fac48d5fa83cd2c85236a3"></span><a class="reference internal" href="structcinn_1_1frontend_1_1Instruction.html#_CPPv4N4cinn8frontend11InstructionE" title="cinn::frontend::Instruction">Instruction</a> &amp;<code class="sig-name descname">operator[]</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7ProgramixE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get <code class="docutils literal notranslate"><span class="pre">i-th</span></code> instruction. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4cinn8frontend7ProgramixE6size_t">
+<span id="_CPPv3NK4cinn8frontend7ProgramixE6size_t"></span><span id="_CPPv2NK4cinn8frontend7ProgramixE6size_t"></span><span id="cinn::frontend::Program::subscript-operator__sC"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a9e2a3b004d7ed43846fae77136ed749f"></span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Instruction.html#_CPPv4N4cinn8frontend11InstructionE" title="cinn::frontend::Instruction">Instruction</a> &amp;<code class="sig-name descname">operator[]</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4cinn8frontend7ProgramixE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get <code class="docutils literal notranslate"><span class="pre">i-th</span></code> instruction. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4cinn8frontend7Program4sizeEv">
+<span id="_CPPv3NK4cinn8frontend7Program4sizeEv"></span><span id="_CPPv2NK4cinn8frontend7Program4sizeEv"></span><span id="cinn::frontend::Program::sizeC"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1ae6259102940325a3ab220b19e6c7e44a"></span>size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4cinn8frontend7Program4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get number of instructions in the program. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK4cinn8frontend7Program8ValidateEv">
+<span id="_CPPv3NK4cinn8frontend7Program8ValidateEv"></span><span id="_CPPv2NK4cinn8frontend7Program8ValidateEv"></span><span id="cinn::frontend::Program::ValidateC"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1a80e6713a1ed3233155e1a349de72f300"></span>void <code class="sig-name descname">Validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK4cinn8frontend7Program8ValidateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn8frontend7Program17AppendInstructionERK11Instruction">
+<span id="_CPPv3N4cinn8frontend7Program17AppendInstructionERK11Instruction"></span><span id="_CPPv2N4cinn8frontend7Program17AppendInstructionERK11Instruction"></span><span id="cinn::frontend::Program::AppendInstruction__InstructionCR"></span><span class="target" id="structcinn_1_1frontend_1_1Program_1ae40fa7bc4df018e479d20cbfc84aa218"></span>void <code class="sig-name descname">AppendInstruction</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="structcinn_1_1frontend_1_1Instruction.html#_CPPv4N4cinn8frontend11InstructionE" title="cinn::frontend::Instruction">Instruction</a> &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn8frontend7Program17AppendInstructionERK11Instruction" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ Symbols</a><ul>
+      <li>Previous: <a href="structcinn_1_1frontend_1_1Interpreter_1_1Impl.html" title="previous chapter">Struct Interpreter::Impl</a></li>
+      <li>Next: <a href="structcinn_1_1frontend_1_1Variable.html" title="next chapter">Struct Variable</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/structcinn_1_1frontend_1_1Program.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

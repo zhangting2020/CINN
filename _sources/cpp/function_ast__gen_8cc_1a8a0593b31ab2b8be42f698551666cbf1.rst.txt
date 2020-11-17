@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen_8cc_1a8a0593b31ab2b8be42f698551666cbf1:
+
+Function cinn::poly::EatUser
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::EatUser(const isl::ast_node&, ir::Expr *)

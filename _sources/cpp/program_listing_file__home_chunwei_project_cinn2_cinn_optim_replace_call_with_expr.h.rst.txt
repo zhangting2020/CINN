@@ -1,0 +1,30 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.h:
+
+Program Listing for File replace_call_with_expr.h
+=================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.h>` (``/home/chunwei/project/cinn2/cinn/optim/replace_call_with_expr.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <map>
+   #include <string>
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void ReplaceCallWithExpr(Expr *e, const std::string &statement, const Expr &candidate);
+   
+   void ReplaceIslCallWithExpr(Expr *e,
+                               const std::string &statement,
+                               const Expr &candidate,
+                               const std::map<std::string, Expr> &axis_map);
+   
+   }  // namespace optim
+   }  // namespace cinn

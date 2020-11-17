@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math__test_8cc_1af598b9ec70d58b0251de917fdd31330d:
+
+Function cinn::runtime::cpu::TEST(mkl_math, isinf)
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::cpu::TEST(mkl_math, isinf)

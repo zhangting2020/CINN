@@ -1,0 +1,26 @@
+.. _exhale_class_classcinn_1_1tests_1_1OpBenchmarkTester:
+
+Class OpBenchmarkTester
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_utils.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public cinn::tests::ElementwiseAddTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1ElementwiseAddTester`)
+- ``public cinn::tests::MatmulTester`` (:ref:`exhale_class_classcinn_1_1tests_1_1MatmulTester`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::tests::OpBenchmarkTester
+   :members:
+   :protected-members:
+   :undoc-members:

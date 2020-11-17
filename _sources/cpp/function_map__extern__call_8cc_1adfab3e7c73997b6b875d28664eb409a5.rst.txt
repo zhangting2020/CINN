@@ -1,0 +1,13 @@
+.. _exhale_function_map__extern__call_8cc_1adfab3e7c73997b6b875d28664eb409a5:
+
+Function cinn::optim::MapExternCall
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::MapExternCall(Expr *, Target)

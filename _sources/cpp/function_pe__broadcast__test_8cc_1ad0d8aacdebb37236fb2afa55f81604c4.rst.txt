@@ -1,0 +1,13 @@
+.. _exhale_function_pe__broadcast__test_8cc_1ad0d8aacdebb37236fb2afa55f81604c4:
+
+Function cinn::hlir::pe::TEST(broadcast_pe1, Add)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::TEST(broadcast_pe1, Add)

@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math__test_8cc_1ab24f3a2f23c7a1614e5e423b6d647786:
+
+Function cinn::runtime::cpu::CreateBuffer
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::cpu::CreateBuffer(const std::vector<int>, bool, int)

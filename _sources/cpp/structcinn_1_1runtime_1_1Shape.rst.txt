@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1runtime_1_1Shape:
+
+Struct Shape
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_buffer.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::runtime::Shape
+   :members:
+   :protected-members:
+   :undoc-members:

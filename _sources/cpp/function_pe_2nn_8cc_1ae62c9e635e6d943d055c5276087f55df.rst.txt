@@ -1,0 +1,13 @@
+.. _exhale_function_pe_2nn_8cc_1ae62c9e635e6d943d055c5276087f55df:
+
+Function cinn::hlir::pe::PoolImpl
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::PoolImpl(const Tensor&, const std::vector<int>&, const std::vector<int>&, const std::vector<int>&, const std::string&, const std::vector<int>&, bool, bool, const std::string&)

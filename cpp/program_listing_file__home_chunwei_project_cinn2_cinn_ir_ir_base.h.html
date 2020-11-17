@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File ir_base.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-ir-base-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-ir-ir-base-h"></span><h1>Program Listing for File ir_base.h<a class="headerlink" href="#program-listing-for-file-ir-base-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_base.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-base-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/ir/ir_base.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;glog/logging.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/common.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/object.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/shared.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/type.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+
+<span class="k">namespace</span> <span class="n">ir</span> <span class="p">{</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">Float</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">Int</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">Type</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">type_of</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Module</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">IRVisitor</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">_Buffer_</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Buffer</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">_Module_</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">_LoweredFunc_</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">LoweredFunc</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">_Tensor_</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Tensor</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">_Var_</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">Var</span><span class="p">;</span>
+
+<span class="c1">// clang-format off</span>
+<span class="cp">#define NODETY_PRIMITIVE_TYPE_FOR_EACH(macro__) \</span>
+<span class="cp">  macro__(IntImm)                               \</span>
+<span class="cp">  macro__(UIntImm)                              \</span>
+<span class="cp">  macro__(FloatImm)                             \</span>
+<span class="cp">  macro__(StringImm)                            \</span>
+
+<span class="cp">#define NODETY_BINARY_OP_FOR_EACH(macro__) \</span>
+<span class="cp">  macro__(Add)                      \</span>
+<span class="cp">  macro__(Sub)                      \</span>
+<span class="cp">  macro__(Mul)                      \</span>
+<span class="cp">  macro__(Div)                      \</span>
+<span class="cp">  macro__(Mod)                      \</span>
+<span class="cp">  macro__(EQ)                       \</span>
+<span class="cp">  macro__(NE)                       \</span>
+<span class="cp">  macro__(LT)                       \</span>
+<span class="cp">  macro__(LE)                       \</span>
+<span class="cp">  macro__(GT)                       \</span>
+<span class="cp">  macro__(GE)                       \</span>
+<span class="cp">  macro__(And)                      \</span>
+<span class="cp">  macro__(Or)                       \</span>
+<span class="cp">  macro__(Min)                      \</span>
+<span class="cp">  macro__(Max)                      \</span>
+
+<span class="cp">#define NODETY_UNARY_OP_FOR_EACH(macro__) \</span>
+<span class="cp">  macro__(Minus)                          \</span>
+<span class="cp">  macro__(Not)                            \</span>
+
+<span class="cp">#define NODETY_OP_FOR_EACH(macro__) NODETY_BINARY_OP_FOR_EACH(macro__) NODETY_UNARY_OP_FOR_EACH(macro__)</span>
+
+<span class="cp">#define NODETY_CONTROL_OP_FOR_EACH(macro__) \</span>
+<span class="cp">  macro__(Cast)                             \</span>
+<span class="cp">  macro__(For)                              \</span>
+<span class="cp">  macro__(PolyFor)                          \</span>
+<span class="cp">  macro__(Select)                           \</span>
+<span class="cp">  macro__(IfThenElse)                       \</span>
+<span class="cp">  macro__(Block)                            \</span>
+<span class="cp">  macro__(Call)                             \</span>
+<span class="cp">  macro__(_Var_)                            \</span>
+<span class="cp">  macro__(Load)                             \</span>
+<span class="cp">  macro__(Store)                            \</span>
+<span class="cp">  macro__(Alloc)                            \</span>
+<span class="cp">  macro__(Free)                             \</span>
+<span class="cp">  macro__(_Buffer_)                         \</span>
+<span class="cp">  macro__(_Tensor_)                         \</span>
+<span class="cp">  macro__(_LoweredFunc_)                    \</span>
+<span class="cp">  macro__(_Module_)                         \</span>
+<span class="cp">  macro__(Let)                              \</span>
+<span class="cp">  macro__(Reduce)                           \</span>
+<span class="cp">  macro__(Ramp)                             \</span>
+<span class="cp">  macro__(Broadcast)                        \</span>
+<span class="cp">  macro__(FracOp)                           \</span>
+<span class="cp">  macro__(Power)                            \</span>
+<span class="cp">  macro__(Product)                          \</span>
+<span class="cp">  macro__(Sum)                              \</span>
+<span class="cp">  macro__(PrimitiveNode)                    \</span>
+<span class="cp">  macro__(IntrinsicOp)                      \</span>
+
+<span class="cp">#define NODETY_FORALL(__m)              \</span>
+<span class="cp">  NODETY_PRIMITIVE_TYPE_FOR_EACH(__m)   \</span>
+<span class="cp">  NODETY_OP_FOR_EACH(__m)               \</span>
+<span class="cp">  NODETY_CONTROL_OP_FOR_EACH(__m)</span>
+<span class="c1">// clang-format on</span>
+
+<span class="c1">// @{</span>
+<span class="cp">#define __m(x__) x__,</span>
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">IrNodeTy</span> <span class="p">{</span> <span class="n">kUnk</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">NODETY_FORALL</span><span class="p">(</span><span class="n">__m</span><span class="p">)</span> <span class="p">};</span>
+<span class="cp">#undef __m</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="cp">#define __m(x__) #x__,</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">kIrNodeTyReprs</span><span class="p">({</span><span class="n">NODETY_FORALL</span><span class="p">(</span><span class="n">__m</span><span class="p">)</span> <span class="s">&quot;None&quot;</span><span class="p">});</span>
+<span class="cp">#undef __m</span>
+<span class="c1">// @}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="n">IrNodeTy</span> <span class="n">type</span><span class="p">);</span>
+
+<span class="k">struct</span> <span class="n">Expr</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">IrNode</span> <span class="o">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">Object</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">operands</span><span class="p">;</span>
+
+  <span class="n">IrNode</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="k">explicit</span> <span class="nf">IrNode</span><span class="p">(</span><span class="n">Type</span> <span class="n">t</span><span class="p">)</span> <span class="o">:</span> <span class="n">type_</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">virtual</span> <span class="o">~</span><span class="n">IrNode</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+  <span class="k">virtual</span> <span class="n">IrNodeTy</span> <span class="nf">node_type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">IrNodeTy</span><span class="o">::</span><span class="n">kUnk</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">virtual</span> <span class="n">Type</span> <span class="nf">type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type_</span><span class="p">;</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="nf">set_type</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span> <span class="n">type_</span> <span class="o">=</span> <span class="n">type</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">expr_fields</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
+  <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">expr_fields</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{};</span> <span class="p">}</span>
+
+  <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">type_info</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">__type_info__</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Verify</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="n">CINN_NOT_IMPLEMENTED</span> <span class="p">}</span>
+
+ <span class="k">protected</span><span class="o">:</span>
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">char</span><span class="o">*</span> <span class="n">__type_info__</span> <span class="o">=</span> <span class="s">&quot;IRNode&quot;</span><span class="p">;</span>
+  <span class="n">Type</span> <span class="n">type_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">IrNodeRef</span> <span class="o">:</span> <span class="k">public</span> <span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">IrNode</span><span class="o">&gt;</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">IrNodeRef</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">const</span> <span class="n">IrNodeRef</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="o">:</span> <span class="n">Shared</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">p_</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="n">IrNode</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">Shared</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="k">virtual</span> <span class="n">IrNodeTy</span> <span class="n">node_type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">node_type</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+  <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">As</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">static_assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_base_of</span><span class="o">&lt;</span><span class="n">IrNode</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;IrNodeRef holds null&quot;</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">T</span><span class="o">::</span><span class="n">_node_type_</span><span class="p">)</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">get</span><span class="p">());</span>
+    <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+  <span class="n">T</span><span class="o">*</span> <span class="n">As</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node_type</span><span class="p">()</span> <span class="o">==</span> <span class="n">T</span><span class="o">::</span><span class="n">_node_type_</span><span class="p">)</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">get</span><span class="p">());</span>
+    <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">IrNodeRef</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">*</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">IrNode</span><span class="o">&gt;*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="o">=</span> <span class="o">*</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Shared</span><span class="o">&lt;</span><span class="n">IrNode</span><span class="o">&gt;*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">other</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">IrNode</span><span class="o">*</span> <span class="n">ptr</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">get</span><span class="p">();</span> <span class="p">}</span>
+  <span class="n">IrNode</span><span class="o">*</span> <span class="n">ptr</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">get</span><span class="p">();</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nl">ExprNode</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IrNode</span> <span class="p">{</span>
+  <span class="n">ExprNode</span><span class="p">()</span> <span class="o">:</span> <span class="n">IrNode</span><span class="p">(</span><span class="n">Type</span><span class="p">())</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="n">ExprNode</span><span class="p">(</span><span class="n">Type</span> <span class="n">t</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNode</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">set_type</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">explicit</span> <span class="n">ExprNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_operands</span><span class="p">)</span> <span class="p">{</span> <span class="n">operands</span><span class="p">().</span><span class="n">resize</span><span class="p">(</span><span class="n">num_operands</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="n">T</span><span class="o">*</span> <span class="n">self</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">const_self</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">T</span><span class="o">*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">operands</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">IrNode</span><span class="o">::</span><span class="n">operands</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">operands</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">IrNode</span><span class="o">::</span><span class="n">operands</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">operand</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">operands</span><span class="p">().</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">return</span> <span class="nf">operands</span><span class="p">()[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">operand</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">operands</span><span class="p">().</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">return</span> <span class="nf">operands</span><span class="p">()[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+
+  <span class="k">virtual</span> <span class="n">Expr</span> <span class="n">Copy</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">IrNodeTy</span> <span class="nf">node_type</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">T</span><span class="o">::</span><span class="n">_node_type_</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">IntImm</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">IntImm</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kt">int64_t</span> <span class="n">value</span><span class="p">;</span>
+
+  <span class="n">IntImm</span><span class="p">(</span><span class="n">Type</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int64_t</span> <span class="n">v</span><span class="p">)</span> <span class="o">:</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">IntImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">Verify</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Verify</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">is_int</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">is_scalar</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">8</span> <span class="o">||</span> <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">16</span> <span class="o">||</span> <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">32</span> <span class="o">||</span> <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">64</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">const</span> <span class="n">IrNodeTy</span> <span class="n">_node_type_</span> <span class="o">=</span> <span class="n">IrNodeTy</span><span class="o">::</span><span class="n">IntImm</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">UIntImm</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">UIntImm</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kt">int64_t</span> <span class="n">value</span><span class="p">;</span>
+
+  <span class="n">UIntImm</span><span class="p">(</span><span class="n">Type</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int64_t</span> <span class="n">v</span><span class="p">)</span> <span class="o">:</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">UIntImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">Verify</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Verify</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">is_uint</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">is_scalar</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="cm">/*bool*/</span> <span class="o">||</span> <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">8</span> <span class="o">||</span> <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">16</span> <span class="o">||</span> <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">32</span> <span class="o">||</span>
+          <span class="n">type</span><span class="p">().</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">64</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">const</span> <span class="n">IrNodeTy</span> <span class="n">_node_type_</span> <span class="o">=</span> <span class="n">IrNodeTy</span><span class="o">::</span><span class="n">UIntImm</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">FloatImm</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">FloatImm</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">value</span><span class="p">;</span>
+
+  <span class="n">FloatImm</span><span class="p">(</span><span class="n">Type</span> <span class="n">t</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v</span><span class="p">)</span> <span class="o">:</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">FloatImm</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">Verify</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Verify</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">is_float</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">().</span><span class="n">is_scalar</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="k">static</span> <span class="k">const</span> <span class="n">IrNodeTy</span> <span class="n">_node_type_</span> <span class="o">=</span> <span class="n">IrNodeTy</span><span class="o">::</span><span class="n">FloatImm</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">StringImm</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">StringImm</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">value</span><span class="p">;</span>
+
+  <span class="k">explicit</span> <span class="nf">StringImm</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="o">:</span> <span class="n">value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">Verify</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">Verify</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="k">const</span> <span class="n">IrNodeTy</span> <span class="n">_node_type_</span> <span class="o">=</span> <span class="n">IrNodeTy</span><span class="o">::</span><span class="n">StringImm</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Var</span><span class="p">;</span>
+<span class="k">struct</span> <span class="nl">Expr</span> <span class="p">:</span> <span class="k">public</span> <span class="n">IrNodeRef</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">Expr</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">Expr</span><span class="p">(</span><span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">ptr</span><span class="p">())</span> <span class="p">{}</span>
+  <span class="n">Expr</span><span class="p">(</span><span class="n">IrNode</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="p">{}</span>  <span class="c1">// NOLINT</span>
+  <span class="k">explicit</span> <span class="n">Expr</span><span class="p">(</span><span class="k">const</span> <span class="n">Var</span><span class="o">&amp;</span> <span class="n">var</span><span class="p">);</span>
+
+  <span class="c1">// @{</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">IntImm</span><span class="p">(</span><span class="n">Int</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">UIntImm</span><span class="p">(</span><span class="n">UInt</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="kt">int64_t</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">IntImm</span><span class="p">(</span><span class="n">Int</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">UIntImm</span><span class="p">(</span><span class="n">UInt</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">FloatImm</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">FloatImm</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">64</span><span class="p">),</span> <span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="k">explicit</span> <span class="nf">Expr</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="o">:</span> <span class="n">IrNodeRef</span><span class="p">(</span><span class="k">new</span> <span class="n">StringImm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="p">{}</span>
+  <span class="c1">// @}</span>
+
+  <span class="n">Expr</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">);</span>
+
+  <span class="c1">// primitive types</span>
+  <span class="c1">// @{</span>
+  <span class="kt">int32_t</span> <span class="nf">as_int32</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">int64_t</span> <span class="nf">as_int64</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="nf">as_float</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="nf">as_double</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="c1">// @}</span>
+
+  <span class="n">_Var_</span><span class="o">*</span> <span class="nf">as_var</span><span class="p">();</span>
+  <span class="k">const</span> <span class="n">_Var_</span><span class="o">*</span> <span class="nf">as_var</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="n">Var</span> <span class="nf">as_var_ref</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="c1">// @{ Other nodes caster.</span>
+  <span class="n">_Buffer_</span><span class="o">*</span> <span class="nf">as_buffer</span><span class="p">();</span>
+  <span class="k">const</span> <span class="n">_Buffer_</span><span class="o">*</span> <span class="nf">as_buffer</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="n">Buffer</span> <span class="nf">as_buffer_ref</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">_LoweredFunc_</span><span class="o">*</span> <span class="nf">as_lowered_func</span><span class="p">();</span>
+  <span class="k">const</span> <span class="n">_LoweredFunc_</span><span class="o">*</span> <span class="nf">as_lowered_func</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="n">LoweredFunc</span> <span class="nf">as_lowered_func_ref</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">_Module_</span><span class="o">*</span> <span class="nf">as_module</span><span class="p">();</span>
+  <span class="k">const</span> <span class="n">_Module_</span><span class="o">*</span> <span class="nf">as_module</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="n">ir</span><span class="o">::</span><span class="n">Module</span> <span class="n">as_module_ref</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">_Tensor_</span><span class="o">*</span> <span class="nf">as_tensor</span><span class="p">();</span>
+  <span class="k">const</span> <span class="n">_Tensor_</span><span class="o">*</span> <span class="nf">as_tensor</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span> <span class="n">as_tensor_ref</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="c1">// @}</span>
+
+  <span class="kt">bool</span> <span class="nf">is_constant</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="nf">get_constant</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kt">bool</span> <span class="nf">is_var</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">operator</span> <span class="nf">Var</span><span class="p">();</span>
+
+  <span class="n">Type</span> <span class="nf">type</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">p_</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">();</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nl">UnaryOpNode</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="n">UnaryOpNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">operands</span><span class="p">().</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">UnaryOpNode</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">v</span><span class="p">)</span> <span class="o">:</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+    <span class="n">operands</span><span class="p">().</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">v</span><span class="p">()</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Type</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">v</span><span class="p">().</span><span class="n">defined</span><span class="p">());</span>
+    <span class="k">return</span> <span class="nf">v</span><span class="p">().</span><span class="n">type</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">operands</span><span class="p">().</span><span class="n">front</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">operands</span><span class="p">().</span><span class="n">front</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">expr_fields</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="o">&amp;</span><span class="n">v</span><span class="p">()};</span> <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">expr_fields</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="o">&amp;</span><span class="n">v</span><span class="p">()};</span> <span class="p">}</span>
+
+  <span class="k">using</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">operands</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nl">BinaryOpNode</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="n">BinaryOpNode</span><span class="p">()</span> <span class="p">{</span> <span class="n">operands</span><span class="p">().</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">BinaryOpNode</span><span class="p">(</span><span class="n">Type</span> <span class="n">type</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">a</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">valid</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">defined</span><span class="p">());</span>
+    <span class="n">operands</span><span class="p">().</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">()</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">b</span><span class="p">()</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">type</span><span class="p">(),</span> <span class="n">b</span><span class="p">.</span><span class="n">type</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;the two arguments&#39; type not match&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">operand</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">operand</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">operand</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">operand</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="n">Type</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">().</span><span class="n">type</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">expr_fields</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="o">&amp;</span><span class="n">a</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">()};</span> <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">expr_fields</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="o">&amp;</span><span class="n">a</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">()};</span> <span class="p">}</span>
+
+  <span class="k">using</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">operands</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">Expr</span> <span class="nf">Zero</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">);</span>
+
+<span class="cp">#define DEVICE_API_FOR_ALL(__) \</span>
+<span class="cp">  __(UNK)                      \</span>
+<span class="cp">  __(Host)                     \</span>
+<span class="cp">  __(GPU)                      \</span>
+<span class="cp">  __(CUDA)                     \</span>
+<span class="cp">  __(OpenCL)</span>
+
+<span class="cp">#define __decl__(x) x,</span>
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">DeviceAPI</span> <span class="p">{</span> <span class="n">DEVICE_API_FOR_ALL</span><span class="p">(</span><span class="n">__decl__</span><span class="p">)</span> <span class="p">};</span>
+<span class="cp">#undef __decl__</span>
+
+<span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="n">DeviceAPI</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#define __decl__(x)  \</span>
+<span class="cp">  case DeviceAPI::x: \</span>
+<span class="cp">    os &lt;&lt; #x;        \</span>
+<span class="cp">    break;</span>
+
+    <span class="n">DEVICE_API_FOR_ALL</span><span class="p">(</span><span class="n">__decl__</span><span class="p">)</span>
+<span class="cp">#undef __decl__</span>
+
+    <span class="k">default</span><span class="o">:</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">os</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#define MEMORY_TYPE_FOR_ALL(__)                                                \</span>
+<span class="cp">  __(Auto, &quot;Auto&quot;)                                                             \</span>
+<span class="cp">  __(Heap, &quot;Heap&quot;)                                                             \</span>
+<span class="cp">  __(Stack, &quot;Stack&quot;)                                                           \</span>
+<span class="cp">  __(GPUShared, &quot;GPUShared&quot;)                                                   \</span>
+<span class="cp">  __(GPULocal, &quot;GPULocal&quot;)                                                     \</span>
+
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">MemoryType</span> <span class="p">{</span>
+<span class="cp">#define __(token__, token_repr__) token__,</span>
+  <span class="n">MEMORY_TYPE_FOR_ALL</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
+<span class="cp">#undef __</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="n">MemoryType</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#define __(token__, token_repr__) \</span>
+<span class="cp">  case MemoryType::token__:       \</span>
+<span class="cp">    os &lt;&lt; token_repr__;           \</span>
+<span class="cp">    break;</span>
+
+    <span class="n">MEMORY_TYPE_FOR_ALL</span><span class="p">(</span><span class="n">__</span><span class="p">)</span>
+
+    <span class="k">default</span><span class="o">:</span>
+      <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not supported memory type&quot;</span><span class="p">;</span>
+<span class="cp">#undef __</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">os</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">Expr</span> <span class="n">ExprNode</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">Copy</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not Implemented&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nf">Expr</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace ir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+
+<span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
+
+<span class="k">template</span> <span class="o">&lt;&gt;</span>
+<span class="k">struct</span> <span class="n">hash</span><span class="o">&lt;</span><span class="n">cinn</span><span class="o">::</span><span class="n">ir</span><span class="o">::</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kt">size_t</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">cinn</span><span class="o">::</span><span class="n">ir</span><span class="o">::</span><span class="n">Expr</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">get</span><span class="p">());</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="p">}</span>  <span class="c1">// namespace std</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_base.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1common_1_1NameGenerator:
+
+Struct NameGenerator
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_context.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::NameGenerator
+   :members:
+   :protected-members:
+   :undoc-members:

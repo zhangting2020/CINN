@@ -1,0 +1,44 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_common_info_registry.h:
+
+Program Listing for File info_registry.h
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_common_info_registry.h>` (``/home/chunwei/project/cinn2/cinn/common/info_registry.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <any>
+   #include <string>
+   #include <unordered_map>
+   
+   namespace cinn {
+   namespace common {
+   
+   class InfoRegistry {
+    public:
+     template <typename T>
+     T& Get(const std::string& key);
+   
+     size_t size() const { return data_.size(); }
+   
+     void Clear() { data_.clear(); }
+   
+    private:
+     std::unordered_map<std::string, std::any> data_;
+   };
+   
+   template <typename T>
+   T& InfoRegistry::Get(const std::string& key) {
+     auto it = data_.find(key);
+     if (it == data_.end()) {
+       data_[key] = T();
+     }
+     return std::any_cast<T&>(data_[key]);
+   }
+   
+   }  // namespace common
+   }  // namespace cinn

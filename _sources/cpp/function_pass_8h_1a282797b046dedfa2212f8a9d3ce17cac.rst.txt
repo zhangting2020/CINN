@@ -1,0 +1,13 @@
+.. _exhale_function_pass_8h_1a282797b046dedfa2212f8a9d3ce17cac:
+
+Function cinn::hlir::framework::ApplyPass
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::ApplyPass(Graph *, const std::string&)

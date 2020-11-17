@@ -1,0 +1,13 @@
+.. _exhale_function_test__matmul_8cc_1af55c9a3f3cc74fd672e9e65c56b39430:
+
+Function cinn::tests::TEST(test_matmul, default)
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::TEST(test_matmul, default)

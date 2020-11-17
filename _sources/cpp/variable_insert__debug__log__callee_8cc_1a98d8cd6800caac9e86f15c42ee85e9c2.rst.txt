@@ -1,0 +1,13 @@
+.. _exhale_variable_insert__debug__log__callee_8cc_1a98d8cd6800caac9e86f15c42ee85e9c2:
+
+Variable format_
+================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: format_

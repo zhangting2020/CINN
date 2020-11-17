@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1backends_1_1IrBuilderMixin:
+
+Template Class IrBuilderMixin
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_ir_builder_mixin.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::IrBuilderMixin
+   :members:
+   :protected-members:
+   :undoc-members:

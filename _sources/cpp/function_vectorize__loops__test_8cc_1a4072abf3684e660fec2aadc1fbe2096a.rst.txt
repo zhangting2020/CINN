@@ -1,0 +1,13 @@
+.. _exhale_function_vectorize__loops__test_8cc_1a4072abf3684e660fec2aadc1fbe2096a:
+
+Function cinn::optim::TEST(Vectorize, TestMarkVectorize)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(Vectorize, TestMarkVectorize)

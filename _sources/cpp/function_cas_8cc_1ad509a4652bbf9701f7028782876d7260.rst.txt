@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1ad509a4652bbf9701f7028782876d7260:
+
+Function cinn::common::Exponent
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Exponent(Expr)

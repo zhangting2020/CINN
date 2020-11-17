@@ -1,0 +1,19 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h:
+
+Program Listing for File use_ops.h
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h>` (``/home/chunwei/project/cinn2/cinn/hlir/op/use_ops.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/common/macros.h"
+   
+   CINN_USE_REGISTER(nn_ops)
+   CINN_USE_REGISTER(broadcast_ops)
+   CINN_USE_REGISTER(transform_ops)

@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8h_1af7f6cc4520e18ab7a8ab3689dc24fe50:
+
+Function cinn::hlir::pe::Full
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Full(const ir::Tensor&, const std::string&)

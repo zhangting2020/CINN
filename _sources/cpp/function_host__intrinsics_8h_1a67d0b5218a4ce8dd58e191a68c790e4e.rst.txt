@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8h_1a67d0b5218a4ce8dd58e191a68c790e4e:
+
+Function cinn_cpu_bitwise_or_int
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_bitwise_or_int(int, int)

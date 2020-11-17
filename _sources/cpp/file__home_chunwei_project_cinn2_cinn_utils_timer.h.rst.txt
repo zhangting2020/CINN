@@ -1,0 +1,65 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_utils_timer.h:
+
+File timer.h
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_utils>` (``/home/chunwei/project/cinn2/cinn/utils``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/utils/timer.h``)
+---------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_utils_timer.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``algorithm``
+
+- ``chrono``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_frontend.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_utils_timer.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__utils`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1utils_1_1Timer`
+

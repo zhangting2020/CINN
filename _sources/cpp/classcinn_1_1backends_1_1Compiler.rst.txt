@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1backends_1_1Compiler:
+
+Class Compiler
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::backends::Compiler
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_variable_ir__simplify_8cc_1ae8069c02aedb3b860fede24ca272fc1b:
+
+Variable var_intervals
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: var_intervals

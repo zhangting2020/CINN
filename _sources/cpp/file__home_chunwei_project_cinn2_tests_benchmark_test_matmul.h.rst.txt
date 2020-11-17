@@ -1,0 +1,77 @@
+
+.. _file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h:
+
+File test_matmul.h
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests_benchmark>` (``/home/chunwei/project/cinn2/tests/benchmark``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/benchmark/test_matmul.h``)
+--------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/pe/transform.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``tests/benchmark/test_utils.h`` (:ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_utils.h`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__tests`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulArrayPackingTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulBlockTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulLoopPermutationTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulSplitTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulTileTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulVectorizeTester`
+

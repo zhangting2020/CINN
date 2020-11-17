@@ -1,0 +1,13 @@
+.. _exhale_define_extern__func__jit__register_8h_1a3b9ac843400757f71068a89baaf17cbd:
+
+Define REGISTER_EXTERN_SOURCE_FUNC_1_IN_1_OUT
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: REGISTER_EXTERN_SOURCE_FUNC_1_IN_1_OUT

@@ -1,0 +1,13 @@
+.. _exhale_define_codegen__llvm_8cc_1aa8a30364dcd8405212f640fa8db23dcf:
+
+Define __IR_EMITTER_NOT_IMPLEMENTED
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __IR_EMITTER_NOT_IMPLEMENTED

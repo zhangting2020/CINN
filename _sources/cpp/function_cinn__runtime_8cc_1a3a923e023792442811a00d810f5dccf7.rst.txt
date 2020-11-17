@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8cc_1a3a923e023792442811a00d810f5dccf7:
+
+Function cinn_type_of< int32_t >
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_type_of< int32_t >()

@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1a23af8c621d52d7b834408be9c50bcd59:
+
+Function cinn::poly::TEST(ComputeAtRelation, basic)
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(ComputeAtRelation, basic)

@@ -1,0 +1,13 @@
+.. _exhale_function_intrinsic_8cc_1aebed44167696805584bf92bcb97843ee:
+
+Function cinn::runtime::IntrinsicCall
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::IntrinsicCall(Type, const std::string&, const std::vector<Expr>&, const std::vector<Expr>&)

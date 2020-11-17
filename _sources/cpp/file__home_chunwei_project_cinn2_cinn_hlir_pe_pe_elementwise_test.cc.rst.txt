@@ -1,0 +1,132 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc:
+
+File pe_elementwise_test.cc
+===========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pe>` (``/home/chunwei/project/cinn2/cinn/hlir/pe``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pe/pe_elementwise_test.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/hlir/pe/elementwise.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`)
+
+- ``cinn/hlir/pe/reduction.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h`)
+
+- ``cinn/runtime/cpu/host_intrinsics.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h`)
+
+- ``cinn/runtime/cpu/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__pe`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1ae3e930641904881f4be7dffdb5a1f890`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1adfe6951ddac9a475e53527b6d6ef671f`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a600fcb90b1e672ab85587384719e1e30`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a8a3ee563202952970408ff40d217f33f`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1aecfccccb66800aa1a9e9f8f62250449d`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a05d8bc4cda8f69cc6527fc5705a23e21`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1ae0c295765d1c7eea05e547569573356c`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1aee2d5606be20c6c50686f28bcee1b353`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a4c48121d20a513855d793343ea3fc618`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a7c568fc846251e7b28a08cae46d25997`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1aef16bbb1b71c6a017cb3a75fb207dc0a`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1aa3b1d527131569be49e566775ef93988`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a2d3735366f72fecdf4e57b4d871a6825`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1af04b754df502a70dcdb85d16dd6340ad`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a47cf87f7ebc475c1c30bc673365d36ca`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1aec38bf7effae6378fb3ab67c2131ac33`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1af02cebfc649d22726a5ce7182c94c50e`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a306afbf82914eb8891b26afd16316054`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a75537bf30f8c3aec720c7eded3e27e53`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a9cd0126b0d71858f0031ddf10df80b7a`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a42136bea5eb47407c13d25e15a8bd1a5`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a226922fa0e9e976c3172d19b03d97786`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1ad84068b230f9aa5fd4855817db7ae41d`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a5b2cb7fa83742eac3e7fb2ddb0e59ce3`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1ad2a826553cfeb0c520d7adcc5be52ce4`
+
+- :ref:`exhale_function_pe__elementwise__test_8cc_1a640fbd7d3ed17825deff4036db09252d`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_pe__elementwise__test_8cc_1adbd6bc46fdf689f73077d93329bf9119`
+
+- :ref:`exhale_define_pe__elementwise__test_8cc_1a097c8407d0a8f611eb2f168f721833bf`
+

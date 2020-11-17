@@ -1,0 +1,101 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_poly_map.h:
+
+Program Listing for File map.h
+==============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_poly_map.h>` (``/home/chunwei/project/cinn2/cinn/poly/map.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <glog/logging.h>
+   
+   #include <algorithm>
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   #include "cinn/poly/dim.h"
+   #include "cinn/poly/domain.h"
+   #include "cinn/utils/string.h"
+   
+   namespace cinn {
+   namespace poly {
+   
+   struct Iterator {
+     std::string id;
+   
+     Iterator() = default;
+     explicit Iterator(const std::string& id) : id(id) {}
+     Iterator(const Iterator& x) : id(x.id) {}  // NOLINT
+     explicit Iterator(Iterator&& x) : id(std::move(x.id)) {}
+   
+     Iterator& operator=(const Iterator& other);
+     friend bool operator==(const Iterator& a, const Iterator& b) { return a.id == b.id; }
+     friend bool operator!=(const Iterator& a, const Iterator& b) { return !(a.id == b.id); }
+   
+     friend std::ostream& operator<<(std::ostream& os, const Iterator& x);
+   };
+   
+   struct Condition {
+     std::string cond;
+   
+     explicit Condition(std::string cond) : cond(std::move(cond)) {}
+   
+     friend std::ostream& operator<<(std::ostream& os, const Condition& x) {
+       os << x.__str__();
+       return os;
+     }
+   
+     std::string __str__() const { return utils::StringFormat("%s", cond.c_str()); }
+   };
+   
+   class Map {
+    public:
+     Map(isl::ctx ctx,
+         std::string id,
+         std::vector<Iterator> domain_iterators,
+         std::vector<Iterator> range_iterators,
+         std::vector<Condition> conds,
+         std::string range_id = "");
+   
+     isl::map to_isl() const;
+   
+     std::string __str__() const;
+   
+    protected:
+     isl::ctx ctx_;
+     std::string id_;
+     std::vector<Iterator> domain_iterators_;
+     std::vector<Iterator> range_iterators_;
+     std::vector<Condition> conds_;
+     std::string range_id_;
+   };
+   
+   class Aff : public Map {
+    public:
+     Aff(isl::ctx ctx,
+         std::string id,
+         std::vector<Iterator> domain_iterators,
+         std::vector<Iterator> range_iterators,
+         std::vector<Condition> conds)
+         : Map(std::move(ctx),
+               std::move(id),
+               std::move(domain_iterators),
+               std::move(range_iterators),
+               std::move(conds),
+               "") {}
+   
+     isl::aff to_isl() const { return isl::aff(ctx_, __str__()); }
+   };
+   
+   std::ostream& operator<<(std::ostream& os, const Map& x);
+   std::ostream& operator<<(std::ostream& os, const Aff& x);
+   static bool operator<(const Iterator& a, const Iterator& b) { return a.id < b.id; }
+   
+   }  // namespace poly
+   }  // namespace cinn

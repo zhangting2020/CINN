@@ -1,0 +1,105 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h:
+
+File intrinsic_ops.h
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/intrinsic_ops.h``)
+--------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``llvm/ADT/ArrayRef.h``
+
+- ``llvm/ADT/SmallVector.h``
+
+- ``llvm/Support/Casting.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__ir`
+
+- :ref:`namespace_cinn__ir__intrinsics`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1ArgsConstruct`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferCreate`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferGetDataConstHandle`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferGetDataHandle`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1GetAddr`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1PodValueToX`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IntrinsicOp`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a8666efc358bd814ecd72b82edd6b4a53`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_intrinsic__ops_8h_1a33152ce9b98914976993dcac40838f54`
+
+- :ref:`exhale_define_intrinsic__ops_8h_1aef2dff61ed504a9055d4d09f355e7d1b`
+

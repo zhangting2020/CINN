@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1ae7be10eac356598c6914e29c70c20a25:
+
+Function cinn::common::PrecedingAxisToAbsOffset
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::PrecedingAxisToAbsOffset(const std::vector<Expr>&, int)

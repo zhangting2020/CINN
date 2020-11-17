@@ -1,0 +1,38 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_modular.h:
+
+Program Listing for File modular.h
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_modular.h>` (``/home/chunwei/project/cinn2/cinn/backends/modular.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <map>
+   
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn {
+   namespace backends {
+   
+   // borrowed from Halide and TVM.
+   struct ModularEntry {
+     int base;
+     int coeff;
+   
+     ModularEntry() = default;
+     ModularEntry(int base, int coeff) : base(base), coeff(coeff) {}
+   
+     static ModularEntry everything() { return ModularEntry{0, 1}; }
+   
+     static ModularEntry Add(const ModularEntry& a, const ModularEntry& b);
+   };
+   
+   ModularEntry EvalModular(const Expr& e, const std::map<Var, ModularEntry>& mod_map);
+   
+   }  // namespace backends
+   }  // namespace cinn

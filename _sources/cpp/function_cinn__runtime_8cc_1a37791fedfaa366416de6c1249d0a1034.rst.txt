@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8cc_1a37791fedfaa366416de6c1249d0a1034:
+
+Function cinn_device_sync(void \*, struct cinn_buffer_t \*)
+===========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_device_sync(void *, struct cinn_buffer_t *)

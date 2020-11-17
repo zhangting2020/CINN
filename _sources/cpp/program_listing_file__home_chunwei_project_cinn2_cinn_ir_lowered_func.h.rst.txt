@@ -1,0 +1,154 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h:
+
+Program Listing for File lowered_func.h
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h>` (``/home/chunwei/project/cinn2/cinn/ir/lowered_func.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <map>
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/ir/buffer.h"
+   #include "cinn/ir/ir_base.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   class _LoweredFunc_;
+   
+   struct Argument {
+     enum class IO { kInput = 0, kOutput = 1 };
+   
+     IO io{IO::kInput};
+   
+     Argument() = default;
+     explicit Argument(const ir::Buffer& buffer, IO io = IO::kInput);
+     explicit Argument(const ir::Var& var, IO io = IO::kInput);
+   
+     void set_buffer(const ir::Buffer& x);
+   
+     void set_var(const ir::Var& x);
+   
+     bool is_input() const { return io == IO::kInput; }
+     bool is_output() const { return io == IO::kOutput; }
+   
+     bool is_var() const { return var_arg_.defined(); }
+     bool is_buffer() const { return buffer_arg_.defined(); }
+     bool defined() const { return is_var() || is_buffer(); }
+   
+     ir::Buffer buffer_arg() const;
+     ir::Var var_arg() const;
+   
+     Type type() const;
+   
+     std::string name() const;
+   
+     std::string human_readable() const;
+   
+    private:
+     ir::Buffer buffer_arg_;
+     ir::Var var_arg_;
+   };
+   
+   class LoweredFunc : public IrNodeRef {
+    public:
+     LoweredFunc() = default;
+     explicit LoweredFunc(IrNode* n) : IrNodeRef(n) {}
+   
+     operator Expr() const { return Expr(ptr()); }
+   
+     const _LoweredFunc_* operator->() const;
+     _LoweredFunc_* operator->();
+   };
+   
+   using dim3_t = std::array<int, 3>;
+   struct CudaAxisInfo {
+     CudaAxisInfo() {
+       for (int& v : grid_dims_) v = 1;
+       for (int& v : block_dims_) v = 1;
+       set_valid(false);
+     }
+   
+     void set_grid_dim(int offset, int x);
+     void set_block_dim(int offset, int x);
+   
+     int grid_dim(int offset) const;
+     int block_dim(int offset) const;
+   
+     void CopyGridDimsTo(std::vector<int>* dest) const;
+     void CopyBlockDimsTo(std::vector<int>* dest) const;
+   
+     inline void set_valid(bool x = false) { valid_ = x; }
+     inline bool valid() const { return valid_; }
+   
+     void ExtendWith(const CudaAxisInfo& other);
+   
+    private:
+     // the three dimensions represents x, y, z
+     dim3_t grid_dims_;
+     // the three dimensions represents x, y, z
+     dim3_t block_dims_;
+     bool valid_{false};
+   };
+   
+   std::ostream& operator<<(std::ostream& os, const CudaAxisInfo& x);
+   
+   struct _LoweredFunc_ : ExprNode<_LoweredFunc_> {
+     std::string name;
+   
+     std::vector<Argument> args;
+   
+     std::vector<Buffer> temp_bufs;
+   
+     Expr body;
+   
+     DeviceAPI device_api{DeviceAPI::UNK};
+   
+     CudaAxisInfo cuda_axis_info;
+   
+     // @{
+     std::vector<Expr> alloc_output_buffer_exprs;
+     std::vector<Expr> dealloc_output_buffer_exprs;
+     // @}
+   
+     std::vector<Expr> buffer_data_cast_exprs;
+   
+     std::vector<Expr> argument_prepare_exprs;
+   
+     static LoweredFunc Make(const std::string& name,
+                             const std::vector<Argument>& args,
+                             const Expr& body,
+                             const std::vector<ir::Buffer>& temp_bufs);
+   
+     bool is_gpu_host() const { return cuda_axis_info.valid(); }
+   
+     void Verify() const override {}
+   
+     std::vector<Expr*> expr_fields() override;
+     std::vector<const Expr*> expr_fields() const override;
+   
+     static const IrNodeTy _node_type_ = IrNodeTy::_LoweredFunc_;
+   
+     std::vector<Expr> PrepareAllocTempBufferExprs() const;
+     std::vector<Expr> CudaAliasVarExprs() const;
+   
+    private:
+     void CheckValid() const;
+     void PrepareAllocOutputBufferExprs();
+     void PrepareDeallocOutputBufferExprs();
+     void AllocTempBuffer();
+     void PrepareBufferCastExprs();
+   
+     void PrepareArgumentExprs();
+     std::vector<Tensor> CollectAllTensorReference() const;
+   };
+   
+   }  // namespace ir
+   }  // namespace cinn

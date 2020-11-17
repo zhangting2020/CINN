@@ -1,0 +1,25 @@
+.. _dir__home_chunwei_project_cinn2_tests_benchmark:
+
+
+Directory benchmark
+===================
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests>` (``/home/chunwei/project/cinn2/tests``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/tests/benchmark``
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_elementwise.h`
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h`
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_utils.cc`
+- :ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_utils.h`
+
+

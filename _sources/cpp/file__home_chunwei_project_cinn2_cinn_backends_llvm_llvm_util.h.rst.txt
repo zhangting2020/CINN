@@ -1,0 +1,109 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h:
+
+File llvm_util.h
+================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_util.h``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+- ``llvm/ADT/StringRef.h``
+
+- ``llvm/ExecutionEngine/MCJIT.h``
+
+- ``llvm/IR/Argument.h``
+
+- ``llvm/IR/BasicBlock.h``
+
+- ``llvm/IR/IRBuilder.h``
+
+- ``llvm/IR/Instruction.h``
+
+- ``llvm/IR/Intrinsics.h``
+
+- ``llvm/IR/Module.h``
+
+- ``llvm/IR/Value.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``string_view``
+
+- ``type_traits``
+
+- ``utility``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_llvm__util_8h_1a51be65e2d1f2707b9ef402afd3294601`
+
+- :ref:`exhale_function_llvm__util_8h_1aebaac4d022dbe04a70cb0f898ed32716`
+
+- :ref:`exhale_function_llvm__util_8h_1ad8f5499d2af89fad7f9c2ec70e7070f0`
+

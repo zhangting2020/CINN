@@ -1,0 +1,13 @@
+.. _exhale_define_compare__simplify_8cc_1a48c02b2eb7eedbcb34ffef3eff9d305a:
+
+Define __GET_FIELDS
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __GET_FIELDS

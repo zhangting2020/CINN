@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File compute_at_postprocess.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-compute-at-postprocess-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-lang-compute-at-postprocess-cc"></span><h1>Program Listing for File compute_at_postprocess.cc<a class="headerlink" href="#program-listing-for-file-compute-at-postprocess-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc.html#file-home-chunwei-project-cinn2-cinn-lang-compute-at-postprocess-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/lang/compute_at_postprocess.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/compute_at_postprocess.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_mutator.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/tensor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/ir_replace.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/ir_simplify.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/compute_at_transform.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/stage.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">lang</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">detail</span> <span class="p">{</span>
+<span class="k">using</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">poly</span><span class="o">::</span><span class="n">StageMap</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nl">NormalizeProducerDomainMutator</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">Var</span><span class="p">,</span> <span class="n">Expr</span><span class="o">&gt;</span> <span class="n">offsets</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;</span> <span class="n">consumer_axis</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">producer_tuple</span><span class="p">;</span>
+
+  <span class="n">NormalizeProducerDomainMutator</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">producer_tuple</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;&amp;</span> <span class="n">consumer_axis</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">producer_tuple</span><span class="p">(</span><span class="n">producer_tuple</span><span class="p">),</span> <span class="n">consumer_axis</span><span class="p">(</span><span class="n">consumer_axis</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">forloop</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">forloop</span><span class="p">,</span> <span class="n">forloop</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">AddOffsetsToStoreExpr</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;*AddOffsetsToStoreExpr: &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">expr</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">&gt;</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">offset</span> <span class="p">:</span> <span class="n">offsets</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Add to axis &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">offset</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; with offset &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">offset</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; =&gt; +&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">offset</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+      <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">offset</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="n">offset</span><span class="p">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="cm">/* Set the producer axis to zero in Store node, e.g. a store node, a[c0,c1] = ... will be a[0,0]</span>
+<span class="cm">   *</span>
+<span class="cm">   * poly_for (i, cinn_max(0, (po0 - 1)), (i &lt;= (po0 + 1)), 1)</span>
+<span class="cm">   * {</span>
+<span class="cm">   *   cache[i, po1] = A[i, po1]</span>
+<span class="cm">   * }</span>
+<span class="cm">   *</span>
+<span class="cm">   * will transform to</span>
+<span class="cm">   *</span>
+<span class="cm">   * poly_for (i, cinn_max(0, (po0 - 1)), (i &lt;= (po0 + 1)), 1)</span>
+<span class="cm">   * {</span>
+<span class="cm">   *   cache[i, 0] = A[i, po1]</span>
+<span class="cm">   * }</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">SetProducerAxisToZeroInStore</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;SetProducerAxisToZeroInStore: &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">expr</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">indice</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">consumer_axis</span> <span class="p">:</span> <span class="n">consumer_axis</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">indice</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; set producer axis [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">consumer_axis</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] to 0&quot;</span><span class="p">;</span>
+        <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="o">&amp;</span><span class="n">indice</span><span class="p">,</span> <span class="n">consumer_axis</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="cm">/*</span>
+<span class="cm">   * Make producer Store indice start from zero.</span>
+<span class="cm">   *</span>
+<span class="cm">   * NOTE the axis here should be producer&#39;s axis, `i` in the root function comment.</span>
+<span class="cm">   *</span>
+<span class="cm">   * poly_for (i, cinn_max(0, (po0 - 1)), (i &lt;= (po0 + 1)), 1)</span>
+<span class="cm">   * {</span>
+<span class="cm">   *   cache[i, po1] = A[i, po1]</span>
+<span class="cm">   * }</span>
+<span class="cm">   *</span>
+<span class="cm">   * will transform to</span>
+<span class="cm">   *</span>
+<span class="cm">   * poly_for (i, 0, (i + cinn_max(0, (po0 - 1)) &lt;= (po0 + 1)), 1)</span>
+<span class="cm">   * {</span>
+<span class="cm">   *   cache[i, po1] = A[i + cinn_max(0, (po0 - 1)), po1]</span>
+<span class="cm">   * }</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">AddOffsetToAxisInStoreValue</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">optim</span><span class="o">::</span><span class="n">Simplify</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">loads_but_producer</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">!=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">item</span> <span class="p">:</span> <span class="n">loads_but_producer</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span><span class="o">*</span> <span class="n">load</span> <span class="o">=</span> <span class="n">item</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">indice</span> <span class="p">:</span> <span class="n">load</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">offset</span> <span class="p">:</span> <span class="n">offsets</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;*Add indice to [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">indice</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] =&gt; [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">offset</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] with offset [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">offset</span><span class="p">.</span><span class="n">second</span>
+                  <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+          <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Reference</span><span class="p">(</span><span class="o">&amp;</span><span class="n">indice</span><span class="p">),</span> <span class="n">offset</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="n">offset</span><span class="p">.</span><span class="n">first</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+          <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;get: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">indice</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">producer_tuple</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// AddOffsetsToStoreExpr(expr);</span>
+
+      <span class="c1">// replace the producer axis in store indice to zero.</span>
+      <span class="n">SetProducerAxisToZeroInStore</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+
+      <span class="c1">// replace the consumer axis in value(not producer) to offset.</span>
+      <span class="n">AddOffsetToAxisInStoreValue</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">common</span><span class="o">::</span><span class="n">is_zero</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">min</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">offset</span>             <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">min</span><span class="p">;</span>
+      <span class="n">node</span><span class="o">-&gt;</span><span class="n">min</span>               <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+      <span class="n">node</span><span class="o">-&gt;</span><span class="n">extent</span>            <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">extent</span> <span class="o">-</span> <span class="n">offset</span><span class="p">;</span>
+      <span class="n">offsets</span><span class="p">[</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">common</span><span class="o">::</span><span class="n">is_zero</span><span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">offset</span>             <span class="o">=</span> <span class="n">op</span><span class="o">-&gt;</span><span class="n">init</span><span class="p">;</span>
+      <span class="n">offsets</span><span class="p">[</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">iterator</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span><span class="p">;</span>
+      <span class="n">node</span><span class="o">-&gt;</span><span class="n">init</span>              <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+      <span class="n">UpdatePolyForConditionWithOffset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">iterator</span><span class="p">,</span> <span class="n">offset</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">UpdatePolyForConditionWithOffset</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">cond</span><span class="p">,</span> <span class="n">Var</span> <span class="n">iter</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">iter</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="n">iter</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nl">ResetProducerLoadIndiceInConsumerMutator</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">producer_tensor_name</span><span class="p">;</span>
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;&amp;</span> <span class="n">consumer_axis</span><span class="p">;</span>
+  <span class="k">const</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">compute_at_info</span><span class="p">;</span>
+
+  <span class="n">ResetProducerLoadIndiceInConsumerMutator</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">producer_tensor_name</span><span class="p">,</span>
+                                           <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;&amp;</span> <span class="n">consumer_axis</span><span class="p">,</span>
+                                           <span class="k">const</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">compute_at_info</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">producer_tensor_name</span><span class="p">(</span><span class="n">producer_tensor_name</span><span class="p">),</span> <span class="n">consumer_axis</span><span class="p">(</span><span class="n">consumer_axis</span><span class="p">),</span> <span class="n">compute_at_info</span><span class="p">(</span><span class="n">compute_at_info</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="p">{</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Consumer modify Load &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">expr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&#39;s axis for producer [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">producer_tensor_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;]&quot;</span><span class="p">;</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Load</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">==</span> <span class="n">producer_tensor_name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">compute_at_info</span><span class="p">.</span><span class="n">preceding_offset_for_producer_load</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">axis</span> <span class="p">:</span> <span class="n">consumer_axis</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">indice</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Consumer Load &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">indice</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; set axis [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">axis</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;] to 0&quot;</span><span class="p">;</span>
+          <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="o">&amp;</span><span class="n">indice</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">make_const</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">preceding_offset_for_producer_load</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">preceding_offset_for_producer_load</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// Load not recursive, no need to visit it&#39;s items.</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="p">}</span>  <span class="c1">// namespace detail</span>
+
+<span class="k">struct</span> <span class="nl">CorrectComputeAtRelatedIndiceMutator</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">tensor_name</span><span class="p">;</span>
+  <span class="n">poly</span><span class="o">::</span><span class="n">StageMap</span> <span class="n">stages</span><span class="p">;</span>
+
+  <span class="k">explicit</span> <span class="nf">CorrectComputeAtRelatedIndiceMutator</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">tensor_name</span><span class="p">,</span> <span class="n">poly</span><span class="o">::</span><span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">tensor_name</span><span class="p">(</span><span class="n">tensor_name</span><span class="p">),</span> <span class="n">stages</span><span class="p">(</span><span class="n">stages</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">forloop_stack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+    <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span>
+    <span class="n">forloop_stack</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">forloop_stack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">expr</span><span class="p">);</span>
+    <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span>
+    <span class="n">forloop_stack</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">NormalizeProducerDomain</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">producer_forloop_root</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">producer_tuple</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;&amp;</span> <span class="n">consumer_axis</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Normalize producer domain: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">producer_tuple</span><span class="p">;</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;producer_forloop_root:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">producer_forloop_root</span><span class="p">;</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;consumer_axis:&quot;</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">var</span> <span class="p">:</span> <span class="n">consumer_axis</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;iter: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">var</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">detail</span><span class="o">::</span><span class="n">NormalizeProducerDomainMutator</span><span class="p">(</span><span class="n">producer_tuple</span><span class="p">,</span> <span class="n">consumer_axis</span><span class="p">)(</span><span class="n">producer_forloop_root</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Here we just set the minimum consumer axis to zero. e.g., for consumer statement such as</span>
+  <span class="c1">// `C[i] = A[i-1]+A[i]+A[i+1]` and level set to 0, the result statement will be `C[i] = A[0]+A[1]+A[2]`, this includes</span>
+  <span class="c1">// the following steps:</span>
+  <span class="c1">// 1. make the preceding level+1 axis to zero in producer load, we get `C[i] = A[-1]+A[0]+A[1]`.</span>
+  <span class="c1">// 2. for each adjusted axis, add an offset stored in ComputeAtInfo to make the minimum indice zero, then we get `C[i]</span>
+  <span class="c1">// = A[0]+A[1]+A[2]`.</span>
+  <span class="kt">void</span> <span class="nf">ResetProducerLoadIndiceInConsumer</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;&amp;</span> <span class="n">consumer_axis</span><span class="p">,</span>
+                                         <span class="n">Expr</span><span class="o">*</span> <span class="n">consumer_store_expr</span><span class="p">,</span>
+                                         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">producer_tensor_name</span><span class="p">,</span>
+                                         <span class="k">const</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">compute_at_info</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">detail</span><span class="o">::</span><span class="n">ResetProducerLoadIndiceInConsumerMutator</span><span class="p">(</span>
+        <span class="n">producer_tensor_name</span><span class="p">,</span> <span class="n">consumer_axis</span><span class="p">,</span> <span class="n">compute_at_info</span><span class="p">)(</span><span class="n">consumer_store_expr</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">Visit</span><span class="p">(</span><span class="k">const</span> <span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">*</span> <span class="n">op</span><span class="p">,</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">expr</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Store</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">!=</span> <span class="n">tensor_name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">ir</span><span class="o">::</span><span class="n">IRMutator</span><span class="o">&lt;&gt;::</span><span class="n">Visit</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">expr</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// get the target consumer</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">compute_at_infos</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">op</span><span class="o">-&gt;</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_at_infos</span><span class="p">;</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">compute_at_infos</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;</span> <span class="n">levels</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="nl">forloop</span> <span class="p">:</span> <span class="n">forloop_stack</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span><span class="o">*</span> <span class="n">for_n</span>      <span class="o">=</span> <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">auto</span><span class="o">*</span> <span class="n">poly_for_n</span> <span class="o">=</span> <span class="n">forloop</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span><span class="o">&gt;</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">for_n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">levels</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">for_n</span><span class="o">-&gt;</span><span class="n">loop_var</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">poly_for_n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">levels</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">poly_for_n</span><span class="o">-&gt;</span><span class="n">iterator</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">CINN_NOT_IMPLEMENTED</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">compute_at_info</span> <span class="p">:</span> <span class="n">compute_at_infos</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;compute_at: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">producer_tensor_name</span><span class="p">;</span>
+      <span class="n">detail</span><span class="o">::</span><span class="n">ReplaceParamWithConsumerAxis</span><span class="p">(</span><span class="n">compute_at_info</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">forloop_stack</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">compute_at_info</span> <span class="p">:</span> <span class="n">compute_at_infos</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">level</span> <span class="o">=</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">level</span><span class="p">;</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;</span> <span class="n">consumer_aixs</span><span class="p">(</span><span class="n">levels</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">levels</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+      <span class="n">Expr</span><span class="o">*</span> <span class="n">producer_forloop_root</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">forloop_stack</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">producer_forloop_root</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">forloop_stack</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">For</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">producer_forloop_root</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">forloop_stack</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">PolyFor</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="k">auto</span> <span class="n">forloop_stack_to_store</span> <span class="o">=</span> <span class="n">GetForloopStackToStore</span><span class="p">(</span><span class="n">producer_forloop_root</span><span class="p">,</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">producer_tensor_name</span><span class="p">);</span>
+      <span class="n">producer_forloop_root</span> <span class="o">=</span> <span class="n">forloop_stack_to_store</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">?</span> <span class="n">forloop_stack</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">:</span> <span class="n">forloop_stack_to_store</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+      <span class="n">NormalizeProducerDomain</span><span class="p">(</span><span class="n">producer_forloop_root</span><span class="p">,</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">producer_tensor_name</span><span class="p">,</span> <span class="n">consumer_aixs</span><span class="p">);</span>
+      <span class="n">ResetProducerLoadIndiceInConsumer</span><span class="p">(</span>
+          <span class="n">consumer_aixs</span><span class="p">,</span> <span class="n">forloop_stack</span><span class="p">[</span><span class="n">level</span><span class="p">],</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">producer_tensor_name</span><span class="p">,</span> <span class="n">compute_at_info</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">*&gt;</span> <span class="n">forloop_stack</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">ProcessComputeAtInfo</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">,</span> <span class="n">poly</span><span class="o">::</span><span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 1. collect all the consumer tensors thouse have compute_at_infos.</span>
+  <span class="c1">// 2. for each producer tensor, reset the producer tensor loads indice.</span>
+
+  <span class="c1">// first, visit the consumer tensor with compute_at info.</span>
+  <span class="c1">// second, in the forloop stack, find the producer tensor</span>
+  <span class="c1">//    - set the presending axis to zero in producer&#39;s Store node and Load node</span>
+  <span class="c1">//    - replace the ISL parameter to the precending axis</span>
+  <span class="c1">// in consumer, reset presending axis in producer&#39;s Load to zero.</span>
+
+  <span class="k">auto</span> <span class="n">tensor_with_compute_at_infos</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span>
+      <span class="o">*</span><span class="n">expr</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">stages</span><span class="p">[</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_at_infos</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span> <span class="p">});</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">tensor</span> <span class="p">:</span> <span class="n">tensor_with_compute_at_infos</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;consumer: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">tensor</span><span class="p">;</span>
+    <span class="n">CorrectComputeAtRelatedIndiceMutator</span><span class="p">(</span><span class="n">tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">,</span> <span class="n">stages</span><span class="p">)(</span><span class="n">expr</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">UpdateComputeAtBufferShape</span><span class="p">(</span><span class="n">Expr</span><span class="o">*</span> <span class="n">expr</span><span class="p">,</span> <span class="n">poly</span><span class="o">::</span><span class="n">StageMap</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">tensor_with_compute_at_infos</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="o">*</span><span class="n">expr</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">stages</span><span class="p">[</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">inlined</span><span class="p">()</span> <span class="o">&amp;&amp;</span>
+           <span class="o">!</span><span class="n">stages</span><span class="p">[</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_at_infos</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>
+  <span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">tensor_map</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectTensorMap</span><span class="p">(</span>
+      <span class="o">*</span><span class="n">expr</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">stages</span><span class="p">[</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">inlined</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">.</span><span class="n">defined</span><span class="p">();</span> <span class="p">});</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">*&gt;</span> <span class="n">buffer_to_compute_at_info</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">item</span> <span class="p">:</span> <span class="n">tensor_map</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">compute_at_infos</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">item</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">meta</span><span class="p">.</span><span class="n">compute_at_infos</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">compute_at_infos</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">compute_at</span> <span class="p">:</span> <span class="n">compute_at_infos</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span><span class="o">&amp;</span> <span class="n">producer_tensor</span> <span class="o">=</span> <span class="n">tensor_map</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">compute_at</span><span class="p">.</span><span class="n">producer_tensor_name</span><span class="p">);</span>
+      <span class="n">buffer_to_compute_at_info</span><span class="p">[</span><span class="n">producer_tensor</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">compute_at_infos</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">auto</span> <span class="n">process_tensor</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">ir</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">*</span> <span class="n">tensor</span><span class="p">,</span> <span class="k">const</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">compute_at_info</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">adjusted_producer_shape</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Updated tensor: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">(</span><span class="n">tensor</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">auto</span> <span class="n">process_buffer</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">ir</span><span class="o">::</span><span class="n">_Buffer_</span><span class="o">*</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">const</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">compute_at_info</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">adjusted_producer_shape</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">buffer</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Updated buffer: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">ir</span><span class="o">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">auto</span> <span class="n">process_alloca</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">ir</span><span class="o">::</span><span class="n">Alloc</span><span class="o">*</span> <span class="n">alloca</span><span class="p">,</span> <span class="k">const</span> <span class="n">poly</span><span class="o">::</span><span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">compute_at_info</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">alloca</span><span class="o">-&gt;</span><span class="n">extents</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">compute_at_info</span><span class="p">.</span><span class="n">adjusted_producer_shape</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">alloca</span><span class="o">-&gt;</span><span class="n">extents</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Updated alloca: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">Expr</span><span class="p">(</span><span class="n">alloca</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="k">auto</span> <span class="n">tensors</span> <span class="o">=</span>
+      <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="o">*</span><span class="n">expr</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">stages</span><span class="p">[</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">as_tensor</span><span class="p">()]</span><span class="o">-&gt;</span><span class="n">inlined</span><span class="p">();</span> <span class="p">});</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">t</span> <span class="p">:</span> <span class="n">tensors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">t</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">.</span><span class="n">defined</span><span class="p">()</span> <span class="o">||</span> <span class="o">!</span><span class="n">buffer_to_compute_at_info</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">buffer</span>       <span class="o">=</span> <span class="n">t</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">compute_at_it</span> <span class="o">=</span> <span class="n">buffer_to_compute_at_info</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">compute_at_it</span> <span class="o">!=</span> <span class="n">buffer_to_compute_at_info</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">process_tensor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Reference</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()),</span> <span class="o">*</span><span class="n">compute_at_it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+      <span class="n">process_buffer</span><span class="p">(</span><span class="n">Reference</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()).</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">self</span><span class="p">(),</span> <span class="o">*</span><span class="n">compute_at_it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;resizing buffer &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">;</span>
+      <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;resizing tensor &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">as_tensor</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">buffer</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// update lowered func temporay buffers</span>
+  <span class="k">auto</span> <span class="n">lowered_fns</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">CollectIRNodes</span><span class="p">(</span><span class="o">*</span><span class="n">expr</span><span class="p">,</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">Expr</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">-&gt;</span><span class="n">as_lowered_func</span><span class="p">();</span> <span class="p">});</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">lowered_fn</span> <span class="p">:</span> <span class="n">lowered_fns</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">lowered_fn</span><span class="p">.</span><span class="n">as_lowered_func</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">buf</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">temp_bufs</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">compute_at_it</span> <span class="o">=</span> <span class="n">buffer_to_compute_at_info</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">buf</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">compute_at_it</span> <span class="o">!=</span> <span class="n">buffer_to_compute_at_info</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">process_buffer</span><span class="p">(</span><span class="n">Reference</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf</span><span class="p">).</span><span class="k">operator</span><span class="o">-&gt;</span><span class="p">(),</span> <span class="o">*</span><span class="n">compute_at_it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">namespace</span> <span class="n">detail</span> <span class="p">{</span>
+
+<span class="kt">void</span> <span class="n">ReplaceParamWithConsumerAxis</span><span class="p">(</span><span class="k">const</span> <span class="n">ComputeAtInfo</span><span class="o">&amp;</span> <span class="n">info</span><span class="p">,</span>
+                                  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Var</span><span class="o">&gt;&amp;</span> <span class="n">axis</span><span class="p">,</span>
+                                  <span class="n">Expr</span><span class="o">*</span> <span class="n">consumer_forloop_root</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="c1">// replace the params to consumer&#39;s precending level+1 axis.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">info</span><span class="p">.</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Var</span> <span class="n">var</span><span class="p">(</span><span class="n">poly</span><span class="o">::</span><span class="n">GenConsumerParamName</span><span class="p">(</span><span class="n">info</span><span class="p">.</span><span class="n">consumer_tensor_name</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">i</span><span class="p">));</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;replacing &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">var</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; to &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">axis</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="n">optim</span><span class="o">::</span><span class="n">IrReplace</span><span class="p">(</span><span class="n">consumer_forloop_root</span><span class="p">,</span> <span class="n">Expr</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="n">axis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;After ReplaceParamWithConsumerAxis:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">consumer_forloop_root</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace detail</span>
+
+<span class="p">}</span>  <span class="c1">// namespace lang</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

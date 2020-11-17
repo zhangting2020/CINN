@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8h_1abeaa74eadf6291ce221d49ebb22d0fd4:
+
+Function cinn::hlir::pe::Clip
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Clip(const ir::Tensor&, const std::string&)

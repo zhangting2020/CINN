@@ -1,0 +1,81 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h:
+
+File nn.h
+=========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_pe>` (``/home/chunwei/project/cinn2/cinn/hlir/pe``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/pe/nn.h``)
+--------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__pe`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_nn_8h_1a7a51c8545be0ec335a2b7e07110fe17f`
+
+- :ref:`exhale_function_nn_8h_1a2fecddc6d2dc353db1c0c46321a1d07f`
+

@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1common_1_1__CINNValuePack__:
+
+Struct _CINNValuePack_
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::Object`` (:ref:`exhale_struct_structcinn_1_1common_1_1Object`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::_CINNValuePack_
+   :members:
+   :protected-members:
+   :undoc-members:

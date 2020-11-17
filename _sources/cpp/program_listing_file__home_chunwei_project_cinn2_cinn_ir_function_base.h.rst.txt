@@ -1,0 +1,32 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_function_base.h:
+
+Program Listing for File function_base.h
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_function_base.h>` (``/home/chunwei/project/cinn2/cinn/ir/function_base.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/ir/ir_base.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   class FunctionBase : public IrNode {
+    public:
+     virtual const std::string& func_name() const = 0;
+   };
+   
+   class FunctionRef : public IrNodeRef {
+    public:
+     FunctionRef() = default;
+     FunctionRef(IrNode* n) : IrNodeRef(n) {}
+   };
+   
+   }  // namespace ir
+   }  // namespace cinn

@@ -1,0 +1,83 @@
+
+.. _namespace_cinn__utils:
+
+Namespace cinn::utils
+=====================
+
+
+This file includes some utilities imported from LLVM. 
+ 
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1utils_1_1Attr`
+
+- :ref:`exhale_struct_structcinn_1_1utils_1_1Edge`
+
+- :ref:`exhale_struct_structcinn_1_1utils_1_1Node`
+
+- :ref:`exhale_class_classcinn_1_1utils_1_1DotLang`
+
+- :ref:`exhale_class_classcinn_1_1utils_1_1Timer`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1acd805789a3cc41c5e5e02a37569049aa`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ac7950f8a97cdfa90fd86a681c7478aed`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a48cdf2d41e5ac53bddba3055755f9671`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a0d0b5715dd487467f72f668a0fde5ce1`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a50151f565cdf6714629e40dd3b2d0be6`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ae244e512c3a11c251d8d9d37df97856c`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ac99879b47665ba0e2a5bc6197fa2f35a`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ad5deb0b1505715b4f6dca5d02d7a6ff5`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a807d0087e039d5be9080a5bbd1e3cd37`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1adac95e2d0397919a0448ebf545b50047`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1aad97e7401a3f347ee0ac4cd3033f2120`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1a23d36229ed9dc623653e1f8e0fafce82`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ae13396927e5bd56be87a0d522c5e326e`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1ac8eefdd9c121685713f1e301bb8b59dd`
+
+- :ref:`exhale_function_namespacecinn_1_1utils_1abbada5bee20399eec981b9cdeeccacea`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_namespacecinn_1_1utils_1ae7133507c40cf403dc9614a7f38986c6`
+
+- :ref:`exhale_typedef_namespacecinn_1_1utils_1aa58047e1620b6e3dc028980b960643eb`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_namespacecinn_1_1utils_1a11531b5c43da9cd0ad4669913f9049ea`

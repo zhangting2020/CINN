@@ -1,0 +1,13 @@
+.. _exhale_function_nn_8h_1a2fecddc6d2dc353db1c0c46321a1d07f:
+
+Template Function cinn::hlir::pe::Relu6
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Relu6(const ir::Tensor&, T, const std::string&)

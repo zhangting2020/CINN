@@ -1,0 +1,20 @@
+
+.. _namespace_common__Type:
+
+Namespace common::Type
+======================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1Type_1_1Storage`

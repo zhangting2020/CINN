@@ -1,0 +1,13 @@
+.. _exhale_function_ir__copy_8cc_1ad17ac73fe7436fc0a9e8f848d9b29418:
+
+Function cinn::optim::IRCopy
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::IRCopy(Expr)

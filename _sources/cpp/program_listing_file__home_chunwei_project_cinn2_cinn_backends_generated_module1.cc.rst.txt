@@ -1,0 +1,13 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_generated_module1.cc:
+
+Program Listing for File generated_module1.cc
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_generated_module1.cc>` (``/home/chunwei/project/cinn2/cinn/backends/generated_module1.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/backends/_generated_module1.cc"

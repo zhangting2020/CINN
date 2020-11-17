@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1ad9fc031978d948d83767920b7aee3c7a:
+
+Function cinn::TEST(test01, compute_at)
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test01_elementwise_add_case.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(test01, compute_at)

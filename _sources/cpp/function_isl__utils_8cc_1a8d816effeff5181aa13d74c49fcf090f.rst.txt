@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8cc_1a8d816effeff5181aa13d74c49fcf090f:
+
+Function cinn::poly::SetGetDims
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::SetGetDims(isl::set, const std::vector<int>&)

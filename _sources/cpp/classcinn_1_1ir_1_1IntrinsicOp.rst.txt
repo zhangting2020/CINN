@@ -1,0 +1,36 @@
+.. _exhale_class_classcinn_1_1ir_1_1IntrinsicOp:
+
+Class IntrinsicOp
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_intrinsic_ops.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IrNode`` (:ref:`exhale_class_classcinn_1_1ir_1_1IrNode`)
+
+
+Derived Types
+*************
+
+- ``public cinn::ir::intrinsics::ArgsConstruct`` (:ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1ArgsConstruct`)
+- ``public cinn::ir::intrinsics::BufferCreate`` (:ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferCreate`)
+- ``public cinn::ir::intrinsics::BufferGetDataConstHandle`` (:ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferGetDataConstHandle`)
+- ``public cinn::ir::intrinsics::BufferGetDataHandle`` (:ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1BufferGetDataHandle`)
+- ``public cinn::ir::intrinsics::GetAddr`` (:ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1GetAddr`)
+- ``public cinn::ir::intrinsics::PodValueToX`` (:ref:`exhale_struct_structcinn_1_1ir_1_1intrinsics_1_1PodValueToX`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::ir::IntrinsicOp
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,57 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_poly.cc:
+
+File poly.cc
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/poly.cc``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_poly.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``cinn/pybind/bind.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`)
+
+- ``cinn/pybind/bind_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`)
+
+- ``llvm/Support/FormatVariadic.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_poly_8cc_1abad13b1111db459792099fb12533d459`
+

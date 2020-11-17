@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1adb507edf8bfc22acc2bfb82a021775ec:
+
+Function cinn::common::Substitute
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::Substitute(Expr *, const std::map<const ir::_Var_ *, Expr>&)

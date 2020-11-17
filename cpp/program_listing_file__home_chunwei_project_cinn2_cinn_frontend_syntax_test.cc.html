@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File syntax_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-syntax-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-frontend-syntax-test-cc"></span><h1>Program Listing for File syntax_test.cc<a class="headerlink" href="#program-listing-for-file-syntax-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc.html#file-home-chunwei-project-cinn2-cinn-frontend-syntax-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/frontend/syntax_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/syntax.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/graph.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/graph_compiler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/pass.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/op/use_ops.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/pass/use_pass.h&quot;</span><span class="cp"></span>
+
+<span class="n">DEFINE_string</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">frontend</span> <span class="p">{</span>
+
+<span class="k">using</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Scope</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Program</span><span class="o">&gt;</span> <span class="n">CreateAddProgram</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+
+  <span class="n">Placeholder</span> <span class="nf">a</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">Placeholder</span> <span class="nf">b</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Program</span><span class="o">&gt;</span> <span class="n">program</span><span class="p">(</span><span class="k">new</span> <span class="n">Program</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">program</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="n">program</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+
+  <span class="n">program</span><span class="o">-&gt;</span><span class="n">SetInputs</span><span class="p">({</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">});</span>
+  <span class="n">program</span><span class="o">-&gt;</span><span class="n">Validate</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="n">program</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">syntax</span><span class="p">,</span> <span class="n">basic</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">program</span> <span class="o">=</span> <span class="n">CreateAddProgram</span><span class="p">();</span>
+  <span class="c1">// output program</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">program</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;instruction: &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">program</span><span class="p">)[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">SetRandData</span><span class="p">(</span><span class="k">const</span> <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&amp;</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">Target</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="mf">1.f</span><span class="p">)</span> <span class="o">/</span> <span class="n">RAND_MAX</span><span class="p">;</span>  <span class="c1">// All random data</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">syntax</span><span class="p">,</span> <span class="n">program_execute_multi_elementwise_add</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">program</span> <span class="o">=</span> <span class="n">CreateAddProgram</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">graph</span>   <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Graph</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">program</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;graph:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">graph</span><span class="o">-&gt;</span><span class="n">Visualize</span><span class="p">();</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">ApplyPass</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="s">&quot;InferShape&quot;</span><span class="p">);</span>
+  <span class="n">Target</span> <span class="n">target</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">scope</span>    <span class="o">=</span> <span class="n">BuildScope</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">GraphCompiler</span> <span class="n">gc</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">runtime_program</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">);</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="n">runtime_program</span><span class="o">-&gt;</span><span class="n">Execute</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">syntax</span><span class="p">,</span> <span class="n">program_execute_multi_elementwise_add2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">program</span> <span class="o">=</span> <span class="n">CreateAddProgram</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">graph</span>   <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Graph</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">program</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;graph:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">graph</span><span class="o">-&gt;</span><span class="n">Visualize</span><span class="p">();</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">ApplyPass</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="s">&quot;InferShape&quot;</span><span class="p">);</span>
+  <span class="n">Target</span> <span class="n">target</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">scope</span>    <span class="o">=</span> <span class="n">BuildScope</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">GraphCompiler</span> <span class="n">gc</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">runtime_program</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">);</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="n">runtime_program</span><span class="o">-&gt;</span><span class="n">Execute</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">syntax</span><span class="p">,</span> <span class="n">program_execute_fc</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">B</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>  <span class="c1">// batch size</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">M</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">K</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+
+  <span class="n">Placeholder</span> <span class="nf">a</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">B</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">},</span> <span class="s">&quot;A&quot;</span><span class="p">);</span>
+  <span class="n">Placeholder</span> <span class="nf">w</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="s">&quot;W&quot;</span><span class="p">);</span>  <span class="c1">// weight</span>
+  <span class="n">Placeholder</span> <span class="nf">b</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">N</span><span class="p">},</span> <span class="s">&quot;B&quot;</span><span class="p">);</span>     <span class="c1">// bias</span>
+
+  <span class="n">Program</span> <span class="n">program</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">mul_out</span> <span class="o">=</span> <span class="n">program</span><span class="p">.</span><span class="n">mul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">add_out</span> <span class="o">=</span> <span class="n">program</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">mul_out</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+  <span class="n">program</span><span class="p">.</span><span class="n">SetInputs</span><span class="p">({</span><span class="n">a</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">});</span>
+  <span class="n">program</span><span class="p">.</span><span class="n">Validate</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Graph</span><span class="o">&gt;</span><span class="p">(</span><span class="n">program</span><span class="p">);</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">ApplyPass</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="s">&quot;InferShape&quot;</span><span class="p">);</span>
+  <span class="n">Target</span> <span class="n">target</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">scope</span>    <span class="o">=</span> <span class="n">BuildScope</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">GraphCompiler</span> <span class="n">gc</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">runtime_program</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">()));</span>
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">w</span><span class="p">.</span><span class="n">id</span><span class="p">()));</span>
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="p">()));</span>
+  <span class="n">scope</span><span class="o">-&gt;</span><span class="n">Var</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mul_out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">));</span>
+
+  <span class="k">auto</span> <span class="n">at</span>        <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">()));</span>
+  <span class="k">auto</span> <span class="n">wt</span>        <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">w</span><span class="p">.</span><span class="n">id</span><span class="p">()));</span>
+  <span class="k">auto</span> <span class="n">bt</span>        <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="p">()));</span>
+  <span class="k">auto</span> <span class="n">fake_outt</span> <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mul_out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">));</span>
+  <span class="k">auto</span> <span class="n">add_outt</span>  <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">add_out</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">));</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">at</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+  <span class="n">SetRandData</span><span class="p">(</span><span class="n">bt</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
+
+  <span class="n">runtime_program</span><span class="o">-&gt;</span><span class="n">Execute</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Load a simple Paddle model, execute it</span>
+<span class="n">TEST</span><span class="p">(</span><span class="n">load_paddle_model</span><span class="p">,</span> <span class="n">fc_execute</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">scope</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Scope</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="p">[</span><span class="n">program</span><span class="p">,</span> <span class="n">var_map</span><span class="p">,</span> <span class="n">var_map_paddle_to_program</span><span class="p">]</span> <span class="o">=</span>
+      <span class="n">LoadPaddleProgram</span><span class="p">(</span><span class="n">FLAGS_model_dir</span><span class="p">,</span> <span class="n">scope</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="nb">false</span> <span class="cm">/*is_combined*/</span><span class="p">);</span>
+  <span class="n">var_map</span><span class="p">[</span><span class="s">&quot;A&quot;</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">shape</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">};</span>
+  <span class="n">program</span><span class="o">-&gt;</span><span class="n">SetInputs</span><span class="p">({</span><span class="n">var_map</span><span class="p">[</span><span class="s">&quot;A&quot;</span><span class="p">]});</span>
+  <span class="n">program</span><span class="o">-&gt;</span><span class="n">Validate</span><span class="p">();</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;program:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">program</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Graph</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">program</span><span class="p">);</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">ApplyPass</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="s">&quot;InferShape&quot;</span><span class="p">);</span>
+  <span class="n">Target</span> <span class="n">target</span> <span class="o">=</span> <span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">();</span>
+  <span class="n">scope</span>         <span class="o">=</span> <span class="n">BuildScope</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">scope</span><span class="p">);</span>
+
+  <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">GraphCompiler</span> <span class="n">gc</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">scope</span><span class="p">,</span> <span class="n">graph</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">runtime_program</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="k">auto</span> <span class="n">at</span>       <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">at_data</span> <span class="o">=</span> <span class="n">at</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">DefaultHostTarget</span><span class="p">());</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">at</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">at_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.f</span><span class="p">;</span>
+
+  <span class="n">runtime_program</span><span class="o">-&gt;</span><span class="n">Execute</span><span class="p">();</span>
+
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;scope.names: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">Join</span><span class="p">(</span><span class="n">scope</span><span class="o">-&gt;</span><span class="n">var_names</span><span class="p">(),</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">output_name</span> <span class="o">=</span> <span class="s">&quot;fc_0.tmp_1&quot;</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">tensor</span>                   <span class="o">=</span> <span class="n">scope</span><span class="o">-&gt;</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">var_map_paddle_to_program</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">output_name</span><span class="p">));</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;tensor.shape: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">tensor</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">(),</span> <span class="s">&quot;,&quot;</span><span class="p">);</span>
+  <span class="k">auto</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;data: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm">TEST(Frontend, conv) {</span>
+<span class="cm">  Placeholder A(Float(32), {2, 24, 56, 45}, &quot;A&quot;);</span>
+<span class="cm">  Placeholder B(Float(32), {2, 24, 56, 45}, &quot;B&quot;);</span>
+<span class="cm">  Placeholder E(Float(32), {144, 24, 1, 1}, &quot;E&quot;);</span>
+
+<span class="cm">  Program program;</span>
+<span class="cm">  auto c = program.elementwise_add(A, B);</span>
+<span class="cm">  auto d = program.relu(c);</span>
+<span class="cm">  std::unordered_map&lt;std::string, Program::attr_t&gt; attrs;</span>
+<span class="cm">  attrs[&quot;stride&quot;]   = std::vector&lt;int&gt;({1, 1});</span>
+<span class="cm">  attrs[&quot;dilation&quot;] = std::vector&lt;int&gt;({1, 1});</span>
+<span class="cm">  attrs[&quot;padding&quot;]  = std::vector&lt;int&gt;({0, 0});</span>
+
+<span class="cm">  auto f = program.conv2d(d, E, attrs);</span>
+
+<span class="cm">  std::unordered_map&lt;std::string, Program::attr_t&gt; attrs1, attrs2;</span>
+
+<span class="cm">  attrs1[&quot;scale&quot;] = 2.0f;</span>
+<span class="cm">  attrs1[&quot;bias&quot;]  = 0.5f;</span>
+
+<span class="cm">  auto g = program.scale(f, attrs1);</span>
+
+<span class="cm">  attrs2[&quot;axis&quot;] = 1;</span>
+
+<span class="cm">  auto h = program.softmax(g, attrs2);</span>
+
+<span class="cm">  program.SetInputs({A, B, E});</span>
+<span class="cm">  program.Validate();</span>
+
+<span class="cm">  auto graph = std::make_shared&lt;hlir::framework::Graph&gt;(program);</span>
+
+<span class="cm">  hlir::framework::ApplyPass(graph.get(), &quot;InferShape&quot;);</span>
+<span class="cm">  Target target = common::DefaultHostTarget();</span>
+<span class="cm">  auto scope    = BuildScope(target, graph);</span>
+
+<span class="cm">  hlir::framework::GraphCompiler gc(target, scope, graph);</span>
+<span class="cm">  auto runtime_program = gc.Build();</span>
+<span class="cm">}</span>
+<span class="cm"> */</span>
+
+<span class="p">}</span>  <span class="c1">// namespace frontend</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

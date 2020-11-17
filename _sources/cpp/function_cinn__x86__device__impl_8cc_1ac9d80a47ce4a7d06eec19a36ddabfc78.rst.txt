@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__x86__device__impl_8cc_1ac9d80a47ce4a7d06eec19a36ddabfc78:
+
+Function cinn_x86_buffer_copy
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_x86_buffer_copy()

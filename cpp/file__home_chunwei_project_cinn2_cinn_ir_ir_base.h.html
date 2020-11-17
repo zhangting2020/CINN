@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File ir_base.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-ir-base-h">
+<span id="file-home-chunwei-project-cinn2-cinn-ir-ir-base-h"></span><h1>File ir_base.h<a class="headerlink" href="#file-ir-base-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_ir.html#dir-home-chunwei-project-cinn2-cinn-ir"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/ir</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-ir-ir-base-h" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/ir/ir_base.h</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#included-by" id="id3">Included By</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id4">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id5">Classes</a></p></li>
+<li><p><a class="reference internal" href="#enums" id="id6">Enums</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id7">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id8">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-ir-ir-base-h">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/ir/ir_base.h</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-ir-ir-base-h" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_base.h.html">Program Listing for File ir_base.h</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/common.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_common.h.html#file-home-chunwei-project-cinn2-cinn-common-common-h"><span class="std std-ref">File common.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/object.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_object.h.html#file-home-chunwei-project-cinn2-cinn-common-object-h"><span class="std std-ref">File object.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/shared.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_shared.h.html#file-home-chunwei-project-cinn2-cinn-common-shared-h"><span class="std std-ref">File shared.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/type.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_type.h.html#file-home-chunwei-project-cinn2-cinn-common-type-h"><span class="std std-ref">File type.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glog/logging.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_map.cc.html#file-home-chunwei-project-cinn2-cinn-poly-map-cc"><span class="std std-ref">File map.cc</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-framework-memory-cc"><span class="std std-ref">File memory.cc</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_string.cc.html#file-home-chunwei-project-cinn2-cinn-utils-string-cc"><span class="std std-ref">File string.cc</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc.html#file-home-chunwei-project-cinn2-cinn-utils-small-vector-cc"><span class="std std-ref">File small_vector.cc</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="included-by">
+<h2>Included By<a class="headerlink" href="#included-by" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc.html#file-home-chunwei-project-cinn2-cinn-common-cinn-value-cc"><span class="std std-ref">File cinn_value.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-op-nn-cc"><span class="std std-ref">File nn.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc"><span class="std std-ref">File broadcast.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-reduction-cc"><span class="std std-ref">File reduction.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-transform-h"><span class="std std-ref">File transform.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_function_base.h.html#file-home-chunwei-project-cinn2-cinn-ir-function-base-h"><span class="std std-ref">File function_base.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-h"><span class="std std-ref">File ir.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc.html#file-home-chunwei-project-cinn2-cinn-ir-ir-base-cc"><span class="std std-ref">File ir_base.cc</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h.html#file-home-chunwei-project-cinn2-cinn-ir-lowered-func-h"><span class="std std-ref">File lowered_func.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_dim.h.html#file-home-chunwei-project-cinn2-cinn-poly-dim-h"><span class="std std-ref">File dim.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h.html#file-home-chunwei-project-cinn2-cinn-pybind-bind-utils-h"><span class="std std-ref">File bind_utils.h</span></a></p></li>
+<li><p><a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_ir.cc.html#file-home-chunwei-project-cinn2-cinn-pybind-ir-cc"><span class="std std-ref">File ir.cc</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__ir.html#namespace-cinn-ir"><span class="std std-ref">Namespace cinn::ir</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_std.html#namespace-std"><span class="std std-ref">Namespace std</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1BinaryOpNode.html#exhale-struct-structcinn-1-1ir-1-1binaryopnode"><span class="std std-ref">Template Struct BinaryOpNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1Expr.html#exhale-struct-structcinn-1-1ir-1-1expr"><span class="std std-ref">Struct Expr</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1ExprNode.html#exhale-struct-structcinn-1-1ir-1-1exprnode"><span class="std std-ref">Template Struct ExprNode</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1FloatImm.html#exhale-struct-structcinn-1-1ir-1-1floatimm"><span class="std std-ref">Struct FloatImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1IntImm.html#exhale-struct-structcinn-1-1ir-1-1intimm"><span class="std std-ref">Struct IntImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1StringImm.html#exhale-struct-structcinn-1-1ir-1-1stringimm"><span class="std std-ref">Struct StringImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1UIntImm.html#exhale-struct-structcinn-1-1ir-1-1uintimm"><span class="std std-ref">Struct UIntImm</span></a></p></li>
+<li><p><a class="reference internal" href="structcinn_1_1ir_1_1UnaryOpNode.html#exhale-struct-structcinn-1-1ir-1-1unaryopnode"><span class="std std-ref">Template Struct UnaryOpNode</span></a></p></li>
+<li><p><a class="reference internal" href="structstd_1_1hash_3_01cinn_1_1ir_1_1Expr_01_4.html#exhale-struct-structstd-1-1hash-3-01cinn-1-1ir-1-1expr-01-4"><span class="std std-ref">Template Struct hash&lt; cinn::ir::Expr &gt;</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1IrNode.html#exhale-class-classcinn-1-1ir-1-1irnode"><span class="std std-ref">Class IrNode</span></a></p></li>
+<li><p><a class="reference internal" href="classcinn_1_1ir_1_1IrNodeRef.html#exhale-class-classcinn-1-1ir-1-1irnoderef"><span class="std std-ref">Class IrNodeRef</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1a341195f76b87f9299035c4fdea04fa7b.html#exhale-enum-namespacecinn-1-1ir-1a341195f76b87f9299035c4fdea04fa7b"><span class="std std-ref">Enum DeviceAPI</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1a1e4c1b8aec1fb20151a0a83a9c9e42f9.html#exhale-enum-namespacecinn-1-1ir-1a1e4c1b8aec1fb20151a0a83a9c9e42f9"><span class="std std-ref">Enum IrNodeTy</span></a></p></li>
+<li><p><a class="reference internal" href="enum_namespacecinn_1_1ir_1acb578243f2e77ffeb79ca3305192c80a.html#exhale-enum-namespacecinn-1-1ir-1acb578243f2e77ffeb79ca3305192c80a"><span class="std std-ref">Enum MemoryType</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1a9039c33dcc1b0f9fd8441d17bb428ab8.html#exhale-function-namespacecinn-1-1ir-1a9039c33dcc1b0f9fd8441d17bb428ab8"><span class="std std-ref">Function cinn::ir::kIrNodeTyReprs</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1af8bb91aa424338a5f18b93385e1e80bb.html#exhale-function-namespacecinn-1-1ir-1af8bb91aa424338a5f18b93385e1e80bb"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, DeviceAPI)</span></a></p></li>
+<li><p><a class="reference internal" href="function_namespacecinn_1_1ir_1ae01e2608e11de478d9cd4d6a12b7abd6.html#exhale-function-namespacecinn-1-1ir-1ae01e2608e11de478d9cd4d6a12b7abd6"><span class="std std-ref">Function cinn::ir::operator&lt;&lt;(std::ostream&amp;, MemoryType)</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_ir__base_8h_1a0a2e01a3859c34e5ff36375b75d85213.html#exhale-define-ir-base-8h-1a0a2e01a3859c34e5ff36375b75d85213"><span class="std std-ref">Define __</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a0a2e01a3859c34e5ff36375b75d85213.html#exhale-define-ir-base-8h-1a0a2e01a3859c34e5ff36375b75d85213"><span class="std std-ref">Define __</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a9aa52114e92ea91f5836dd8685604403.html#exhale-define-ir-base-8h-1a9aa52114e92ea91f5836dd8685604403"><span class="std std-ref">Define __decl__</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a9aa52114e92ea91f5836dd8685604403.html#exhale-define-ir-base-8h-1a9aa52114e92ea91f5836dd8685604403"><span class="std std-ref">Define __decl__</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a929da6769edd3bbaccd36c69409729de.html#exhale-define-ir-base-8h-1a929da6769edd3bbaccd36c69409729de"><span class="std std-ref">Define __m</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a929da6769edd3bbaccd36c69409729de.html#exhale-define-ir-base-8h-1a929da6769edd3bbaccd36c69409729de"><span class="std std-ref">Define __m</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1aef191762b17888404872700defc84649.html#exhale-define-ir-base-8h-1aef191762b17888404872700defc84649"><span class="std std-ref">Define DEVICE_API_FOR_ALL</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1abd4a81388e7169ba5c0132f18d2657fe.html#exhale-define-ir-base-8h-1abd4a81388e7169ba5c0132f18d2657fe"><span class="std std-ref">Define MEMORY_TYPE_FOR_ALL</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a545aed34f6499e30f2facca5e41ce3e3.html#exhale-define-ir-base-8h-1a545aed34f6499e30f2facca5e41ce3e3"><span class="std std-ref">Define NODETY_BINARY_OP_FOR_EACH</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a0c8539d9bc60605dda88666cf0ac30db.html#exhale-define-ir-base-8h-1a0c8539d9bc60605dda88666cf0ac30db"><span class="std std-ref">Define NODETY_CONTROL_OP_FOR_EACH</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a9cd8117debc752a2dbbf45d44733225f.html#exhale-define-ir-base-8h-1a9cd8117debc752a2dbbf45d44733225f"><span class="std std-ref">Define NODETY_FORALL</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1adc7ff8af731c62e6b314698bb515b3ff.html#exhale-define-ir-base-8h-1adc7ff8af731c62e6b314698bb515b3ff"><span class="std std-ref">Define NODETY_OP_FOR_EACH</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a876b5219120613a621228c62f8bbacd4.html#exhale-define-ir-base-8h-1a876b5219120613a621228c62f8bbacd4"><span class="std std-ref">Define NODETY_PRIMITIVE_TYPE_FOR_EACH</span></a></p></li>
+<li><p><a class="reference internal" href="define_ir__base_8h_1a4e0741783bbe80774103a261642af11d.html#exhale-define-ir-base-8h-1a4e0741783bbe80774103a261642af11d"><span class="std std-ref">Define NODETY_UNARY_OP_FOR_EACH</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_ir_ir_base.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

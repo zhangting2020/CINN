@@ -1,0 +1,30 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_frontend_interpreter_test.cc:
+
+Program Listing for File interpreter_test.cc
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_frontend_interpreter_test.cc>` (``/home/chunwei/project/cinn2/cinn/frontend/interpreter_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/frontend/interpreter.h"
+   
+   #include <gtest/gtest.h>
+   
+   #include "cinn/runtime/use_extern_funcs.h"
+   
+   DEFINE_string(model_dir, "", "");
+   
+   namespace cinn::frontend {
+   
+   TEST(Interpreter, basic) {
+     Interpreter executor({"A"}, {{1, 30}});
+     executor.LoadPaddleModel(FLAGS_model_dir, common::DefaultHostTarget());
+     executor.Run();
+     executor.GetTensor("fc_0.tmp_2");
+   }
+   
+   }  // namespace cinn::frontend

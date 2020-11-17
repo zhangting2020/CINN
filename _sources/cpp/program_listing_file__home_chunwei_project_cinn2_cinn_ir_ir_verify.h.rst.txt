@@ -1,0 +1,20 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_verify.h:
+
+Program Listing for File ir_verify.h
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_ir_verify.h>` (``/home/chunwei/project/cinn2/cinn/ir/ir_verify.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include "cinn/ir/ir.h"
+   
+   namespace cinn::ir {
+   
+   void IrVerify(Expr e);
+   
+   }  // namespace cinn::ir

@@ -1,0 +1,13 @@
+.. _exhale_function_llvm__util_8cc_1a7f1e8fad944cbd62a4582663d6f9c5b1:
+
+Function cinn::backends::llvm_type_of< int64_t >
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::llvm_type_of< int64_t >(llvm::Module *)

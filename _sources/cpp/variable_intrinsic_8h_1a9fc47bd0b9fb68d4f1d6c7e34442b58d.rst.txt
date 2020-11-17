@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a9fc47bd0b9fb68d4f1d6c7e34442b58d:
+
+Variable cinn::runtime::intrisic::call_cuda_kernel
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::call_cuda_kernel

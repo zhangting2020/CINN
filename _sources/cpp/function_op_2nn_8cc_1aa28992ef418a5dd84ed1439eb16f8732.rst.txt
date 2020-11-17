@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1aa28992ef418a5dd84ed1439eb16f8732:
+
+Function cinn::hlir::op::InferShapeForSoftmax
+=============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForSoftmax(const std::vector<std::vector<int>>&, const framework::NodeAttr&)

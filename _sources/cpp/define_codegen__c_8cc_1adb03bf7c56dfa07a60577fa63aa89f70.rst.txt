@@ -1,0 +1,13 @@
+.. _exhale_define_codegen__c_8cc_1adb03bf7c56dfa07a60577fa63aa89f70:
+
+Define APPEND_TO_NEW_BODY
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: APPEND_TO_NEW_BODY

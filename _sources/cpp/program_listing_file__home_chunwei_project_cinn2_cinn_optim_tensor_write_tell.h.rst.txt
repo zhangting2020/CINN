@@ -1,0 +1,51 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h:
+
+Program Listing for File tensor_write_tell.h
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h>` (``/home/chunwei/project/cinn2/cinn/optim/tensor_write_tell.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <set>
+   #include <string>
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/ir/ir_mutator.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   struct TensorWriteTeller : public ir::IRMutator<const Expr*> {
+     void Collect(const Expr* op) { Visit(op, op); }
+   
+     bool IsWrite(const std::string& tensor_name) const { return tensor_written.count(tensor_name); }
+   
+    private:
+     std::set<std::string> tensor_written;
+   
+     void Visit(const Expr* expr, const Expr* op) override { IRMutator::Visit(expr, op); }
+   
+     void Visit(const ir::Store* expr, const Expr* op) override {
+       auto* node = op->As<ir::Store>();
+       CHECK(node);
+       auto* tensor = node->tensor.As<ir::_Tensor_>();
+       CHECK(tensor);
+       tensor_written.insert(tensor->name);
+       IRMutator::Visit(expr, op);
+     }
+   
+     void Visit(const ir::_Tensor_* op, const Expr* expr) override {
+       auto* node = expr->As<ir::_Tensor_>();
+       if (node->is_call_node()) {
+         tensor_written.insert(node->name);
+       }
+     }
+   };
+   
+   }  // namespace optim
+   }  // namespace cinn

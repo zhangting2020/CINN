@@ -1,0 +1,129 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h:
+
+File op.h
+=========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/op.h``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``any``
+
+- ``atomic``
+
+- ``cinn/common/macros.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`)
+
+- ``cinn/utils/registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_registry.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``glog/logging.h``
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``mutex``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``unordered_map``
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_print_graph_pass_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_transform.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_framework.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1hlir_1_1framework_1_1OpRegistry`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Operator`
+
+- :ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1OpValueType`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_op_8h_1afc1e04adef47a0132bccccf5c4a810ef`
+
+- :ref:`exhale_define_op_8h_1a1370fb1ff62eff9b3c0620770e0ed990`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_op_8h_1a4f379d05a70df0f38177455603087a08`
+
+- :ref:`exhale_typedef_op_8h_1a67b383e4595792d82d1b2f2ac9b69db6`
+

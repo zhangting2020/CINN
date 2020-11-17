@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Function cinn::lang::CallExtern &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Function cinn::lang::CallLowered" href="function_compute_8cc_1a5cb0b12a417b14db6b4cd85ebca471a3.html" />
+    <link rel="prev" title="Function cinn::lang::BitwiseNot" href="function_builtin_8h_1a3d03b9393dd84dbb26b3815106facbc8.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="function-cinn-lang-callextern">
+<span id="exhale-function-compute-8cc-1abaf1ca0e208e0f402058850e294f7f33"></span><h1>Function cinn::lang::CallExtern<a class="headerlink" href="#function-cinn-lang-callextern" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_compute.cc.html#file-home-chunwei-project-cinn2-cinn-lang-compute-cc"><span class="std std-ref">File compute.cc</span></a></p></li>
+</ul>
+<div class="section" id="function-documentation">
+<h2>Function Documentation<a class="headerlink" href="#function-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp function">
+<dt id="_CPPv4N4cinn4lang10CallExternERKNSt6stringERKNSt6vectorI4ExprEE">
+<span id="_CPPv3N4cinn4lang10CallExternERKNSt6stringERKNSt6vectorI4ExprEE"></span><span id="_CPPv2N4cinn4lang10CallExternERKNSt6stringERKNSt6vectorI4ExprEE"></span><span id="cinn::lang::CallExtern__ssCR.std::vector:Expr:CR"></span><span class="target" id="compute_8cc_1abaf1ca0e208e0f402058850e294f7f33"></span>Expr <code class="sig-prename descclassname">cinn::lang<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">CallExtern</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>target</em>, <em class="property">const</em> std::vector&lt;Expr&gt; &amp;<em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4cinn4lang10CallExternERKNSt6stringERKNSt6vectorI4ExprEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Call an external function and get some tensors as result. </p>
+<p>There are two kinds of extern functions distinguished by the return type.</p>
+<p><ol class="loweralpha simple">
+<li><p>Void, there are one or more mutable tensors in the argument list. <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Tensor</span> <span class="n">tuple</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">({</span><span class="n">M</span><span class="p">},</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">CallExtern</span><span class="p">(</span><span class="s">&quot;mkl_gemm&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">});</span> <span class="p">});</span>
+</pre></div>
+</div>
+</p></li>
+</ol>
+</p>
+<p>To support returning multiple value one time, we include the tuple concept, it is a Tensor with CallOp marked with value_offset(from 0 to num_returns-1).</p>
+<p><ol class="loweralpha simple">
+<li><p>POD value, return an expression directly, and it can be inline expand in following computations. <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Tensor</span> <span class="n">tanh_out</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">({</span><span class="n">M</span><span class="p">},</span> <span class="p">[](</span><span class="n">Var</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">CallExtern</span><span class="p">(</span><span class="s">&quot;tanh&quot;</span><span class="p">,</span> <span class="n">X</span><span class="p">(</span><span class="n">i</span><span class="p">));</span> <span class="p">});</span>
+</pre></div>
+</div>
+</p></li>
+</ol>
+</p>
+<p>Will generate something like</p>
+<p><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">gemm_mkl</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">gemm_out</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code>: The name of the function to call. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: The readonly arguments(while there should be only one tensor as result). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ Symbols</a><ul>
+      <li>Previous: <a href="function_builtin_8h_1a3d03b9393dd84dbb26b3815106facbc8.html" title="previous chapter">Function cinn::lang::BitwiseNot</a></li>
+      <li>Next: <a href="function_compute_8cc_1a5cb0b12a417b14db6b4cd85ebca471a3.html" title="next chapter">Function cinn::lang::CallLowered</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/function_compute_8cc_1abaf1ca0e208e0f402058850e294f7f33.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

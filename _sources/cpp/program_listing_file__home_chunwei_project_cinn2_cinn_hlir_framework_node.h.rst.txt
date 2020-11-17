@@ -1,0 +1,135 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h:
+
+Program Listing for File node.h
+===============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/node.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <memory>
+   #include <string>
+   #include <tuple>
+   #include <unordered_map>
+   #include <utility>
+   #include <variant>
+   #include <vector>
+   
+   #include "cinn/common/graph_utils.h"
+   #include "cinn/common/shared.h"
+   #include "cinn/hlir/framework/op.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   class Node;
+   class NodeData;
+   
+   using NodePtr  = std::shared_ptr<Node>;
+   using AttrType = std::variant<bool,
+                                 float,
+                                 int,
+                                 std::string,
+                                 std::vector<bool>,
+                                 std::vector<int>,
+                                 std::vector<float>,
+                                 std::vector<std::string>>;
+   
+   struct NodeAttr {
+     using attr_t = AttrType;
+   
+     const Operator *op{nullptr};
+   
+     std::string node_name;
+   
+     std::unordered_map<std::string, attr_t> attr_store;
+   };
+   
+   std::ostream &operator<<(std::ostream &os, const NodeAttr &node_attr);
+   
+   class Node : public common::GraphNode {
+    public:
+     Node() = default;
+     Node(const Operator *op, const std::string &name, std::string id = nullptr) {
+       this->attrs.op        = op;
+       this->attrs.node_name = name;
+       this->id_             = std::move(id);
+     }
+     const char *type_info() const override { return __type_info__; }
+     std::tuple<common::GraphEdge *, common::GraphEdge *> LinkTo(NodeData *other);
+     std::string id() const override { return id_; }
+   
+     NodeAttr attrs;
+   
+     const std::vector<common::Shared<common::GraphEdge>> &inlinks_in_order() const;
+   
+     const std::vector<common::Shared<common::GraphEdge>> &outlinks_in_order() const;
+   
+     inline const Operator *op() const { return this->attrs.op; }
+   
+     inline bool is_variable() { return (this->attrs.op == nullptr); }
+   
+     inline uint32_t num_outputs() { return is_variable() ? 1 : this->op()->num_outputs; }
+   
+     inline uint32_t num_inputs() { return is_variable() ? 1 : this->op()->num_inputs; }
+   
+     template <class... Args>
+     static NodePtr Create(Args &&... args) {
+       return std::make_shared<Node>(std::forward<Args>(args)...);
+     }
+   
+     static constexpr char *__type_info__ = "hlir_framework_node";
+   
+    private:
+     std::string id_;
+     mutable std::vector<common::Shared<common::GraphEdge>> outlinks_in_order_{};
+     mutable std::vector<common::Shared<common::GraphEdge>> inlinks_in_order_{};
+   };
+   
+   class NodeData : public common::GraphNode {
+     using attr_t = AttrType;
+   
+    public:
+     NodeData(NodePtr node, uint32_t index, uint32_t version, std::string id)
+         : source_node(std::move(node)), output_index(index), version(version), id_(std::move(id)) {}
+   
+     NodeData() : source_node(), output_index(), version(), id_() {}
+   
+     std::tuple<common::GraphEdge *, common::GraphEdge *> LinkTo(Node *other);
+     static std::shared_ptr<NodeData> Create(
+         const char *op_name,
+         std::string node_name,
+         std::vector<NodeData> inputs,
+         std::string id                                = nullptr,
+         std::unordered_map<std::string, attr_t> attrs = std::unordered_map<std::string, attr_t>()) {
+       auto res                           = std::make_shared<NodeData>();
+       res->id_                           = std::move(id);
+       res->source_node                   = Node::Create();
+       res->source_node->attrs.op         = Operator::Get(op_name);
+       res->source_node->attrs.node_name  = std::move(node_name);
+       res->source_node->attrs.attr_store = attrs;
+       return res;
+     }
+   
+     const char *type_info() const override { return __type_info__; }
+     std::string id() const override { return id_; }
+   
+     NodePtr source_node;
+   
+     uint32_t output_index;
+   
+     uint32_t version;
+   
+     static constexpr char *__type_info__ = "hlir_framework_nodedata";
+   
+    private:
+     std::string id_;
+   };
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_function_type_8h_1a23ea20f5b1a5f53375ed314a35c29a4a:
+
+Function cinn::common::type_of< float * >
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::type_of< float * >()

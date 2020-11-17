@@ -1,0 +1,13 @@
+.. _exhale_function_intrinsic__types_8h_1a702a59d189a68e4cde8fb2c872b989a4:
+
+Function cinn::runtime::make_intrinsic_buffer_type
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::make_intrinsic_buffer_type(Type)

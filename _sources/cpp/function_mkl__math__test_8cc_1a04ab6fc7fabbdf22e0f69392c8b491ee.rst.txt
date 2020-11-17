@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math__test_8cc_1a04ab6fc7fabbdf22e0f69392c8b491ee:
+
+Function cinn::runtime::cpu::TEST(mkl_math, ceil)
+=================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::cpu::TEST(mkl_math, ceil)

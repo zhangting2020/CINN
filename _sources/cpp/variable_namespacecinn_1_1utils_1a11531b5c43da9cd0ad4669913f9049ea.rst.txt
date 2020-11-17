@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1_1utils_1a11531b5c43da9cd0ad4669913f9049ea:
+
+Variable cinn::utils::dot_node_counter
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_dot_lang.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::utils::dot_node_counter

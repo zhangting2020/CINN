@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1aef191762b17888404872700defc84649:
+
+Define DEVICE_API_FOR_ALL
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DEVICE_API_FOR_ALL

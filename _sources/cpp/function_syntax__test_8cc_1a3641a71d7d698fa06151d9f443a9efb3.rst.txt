@@ -1,0 +1,13 @@
+.. _exhale_function_syntax__test_8cc_1a3641a71d7d698fa06151d9f443a9efb3:
+
+Function cinn::frontend::CreateAddProgram
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::frontend::CreateAddProgram()

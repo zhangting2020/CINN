@@ -1,0 +1,29 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.cc:
+
+Program Listing for File codegen_x86.cc
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86.cc>` (``/home/chunwei/project/cinn2/cinn/backends/llvm/codegen_x86.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/backends/llvm/codegen_x86.h"
+   
+   #include <unordered_map>
+   
+   #include "llvm/IR/DerivedTypes.h"
+   #include "llvm/IR/IRBuilder.h"
+   #include "llvm/IR/Intrinsics.h"
+   #include "llvm/Support/Casting.h"
+   
+   namespace cinn::backends {
+   
+   CodeGenX86::CodeGenX86(llvm::Module *m, llvm::IRBuilder<> *b, const std::shared_ptr<SymbolTable> &vars)
+       : CodeGenLLVM(m, b, vars) {}
+   
+   CodeGenX86::~CodeGenX86() {}
+   
+   }  // namespace cinn::backends

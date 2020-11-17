@@ -1,0 +1,13 @@
+.. _exhale_function_print__graph__pass__test_8cc_1a2337921079c602c91319f8e647aee9ec:
+
+Function cinn::hlir::framework::PrintGraphPass
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_print_graph_pass_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::PrintGraphPass(Graph *)

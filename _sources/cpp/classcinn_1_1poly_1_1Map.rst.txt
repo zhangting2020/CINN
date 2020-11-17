@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1poly_1_1Map:
+
+Class Map
+=========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_map.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Type
+************
+
+- ``public cinn::poly::Aff`` (:ref:`exhale_class_classcinn_1_1poly_1_1Aff`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::poly::Map
+   :members:
+   :protected-members:
+   :undoc-members:

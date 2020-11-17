@@ -1,0 +1,99 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_poly_stage.cc:
+
+File stage.cc
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_poly>` (``/home/chunwei/project/cinn2/cinn/poly``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/poly/stage.cc``)
+---------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_poly_stage.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/axis.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_axis.h`)
+
+- ``cinn/ir/collect_ir_nodes.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes.h`)
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+- ``cinn/ir/operation.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/optim/ir_replace.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.h`)
+
+- ``cinn/poly/compute_at_transform.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_compute_at_transform.h`)
+
+- ``cinn/poly/isl_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``cinn/utils/functional.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+- ``set``
+
+- ``unordered_set``
+
+- ``utility``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__poly`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_stage_8cc_1ace45580f42933904662d62a1c48e8fe6`
+
+- :ref:`exhale_function_stage_8cc_1aa9290b92eb4f4cdfdb0b83c7b5e9ac03`
+
+- :ref:`exhale_function_stage_8cc_1a338f16b32d0f91bf77c35cf978e8d7d7`
+
+- :ref:`exhale_function_stage_8cc_1a35c39e9f446a6089114b0fd3540236a2`
+
+- :ref:`exhale_function_stage_8cc_1a382dc08ef9a321ffc3866b0a00fcbda7`
+
+- :ref:`exhale_function_stage_8cc_1a0b521eddcb4107e0ea4d4d2bc92962ff`
+
+- :ref:`exhale_function_stage_8cc_1afcdc8a8541cb757747968104c6a58cc7`
+
+- :ref:`exhale_function_stage_8cc_1ad0b8f833e42418818a1c03bda13b8a55`
+

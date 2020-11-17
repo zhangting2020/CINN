@@ -1,0 +1,13 @@
+.. _exhale_function_reduction_8cc_1a298b91459bf60549ffb427227195264e:
+
+Function cinn::hlir::pe::GetOutputShape
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::GetOutputShape(const std::vector<int>&, std::vector<Expr> *, const Tensor&, bool)

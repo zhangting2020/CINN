@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File broadcast.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-broadcast-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc"></span><h1>File broadcast.cc<a class="headerlink" href="#file-broadcast-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_hlir_pe.html#dir-home-chunwei-project-cinn2-cinn-hlir-pe"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe/broadcast.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id5">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe/broadcast.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc.html">Program Listing for File broadcast.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/ir_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_ir_util.h.html#file-home-chunwei-project-cinn2-cinn-common-ir-util-h"><span class="std std-ref">File ir_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/broadcast.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-h"><span class="std std-ref">File broadcast.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_base.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_base.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-base-h"><span class="std std-ref">File ir_base.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/ir/ir_operators.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h.html#file-home-chunwei-project-cinn2-cinn-ir-ir-operators-h"><span class="std std-ref">File ir_operators.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/lang/builtin.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_builtin.h.html#file-home-chunwei-project-cinn2-cinn-lang-builtin-h"><span class="std std-ref">File builtin.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/lang/compute.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_compute.h.html#file-home-chunwei-project-cinn2-cinn-lang-compute-h"><span class="std std-ref">File compute.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc.html#file-home-chunwei-project-cinn2-cinn-utils-small-vector-cc"><span class="std std-ref">File small_vector.cc</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__hlir.html#namespace-cinn-hlir"><span class="std std-ref">Namespace cinn::hlir</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__hlir__pe.html#namespace-cinn-hlir-pe"><span class="std std-ref">Namespace cinn::hlir::pe</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a27018cc41dc1edf105a1b016d541b0dc.html#exhale-function-pe-2broadcast-8cc-1a27018cc41dc1edf105a1b016d541b0dc"><span class="std std-ref">Function cinn::hlir::pe::Add(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a180e012d3b5344461a89ba0a25336d58.html#exhale-function-pe-2broadcast-8cc-1a180e012d3b5344461a89ba0a25336d58"><span class="std std-ref">Function cinn::hlir::pe::Add(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab9652aa49a4620dbb827a3fc6111c230.html#exhale-function-pe-2broadcast-8cc-1ab9652aa49a4620dbb827a3fc6111c230"><span class="std std-ref">Function cinn::hlir::pe::Add(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a8799f40467a4aaeffe9547b6885b9d47.html#exhale-function-pe-2broadcast-8cc-1a8799f40467a4aaeffe9547b6885b9d47"><span class="std std-ref">Function cinn::hlir::pe::Add(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a89a09691fd4a55ba8bde77e7e53df589.html#exhale-function-pe-2broadcast-8cc-1a89a09691fd4a55ba8bde77e7e53df589"><span class="std std-ref">Function cinn::hlir::pe::BitwiseAnd(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1adc3dd18a5a9a938ea9556ca470f965aa.html#exhale-function-pe-2broadcast-8cc-1adc3dd18a5a9a938ea9556ca470f965aa"><span class="std std-ref">Function cinn::hlir::pe::BitwiseAnd(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a708bb28177f4b4e3e7dcf8d17b074b64.html#exhale-function-pe-2broadcast-8cc-1a708bb28177f4b4e3e7dcf8d17b074b64"><span class="std std-ref">Function cinn::hlir::pe::BitwiseAnd(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aa58816e3b4aaa8dd27ad140062bb6c1a.html#exhale-function-pe-2broadcast-8cc-1aa58816e3b4aaa8dd27ad140062bb6c1a"><span class="std std-ref">Function cinn::hlir::pe::BitwiseAnd(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a89f4994259699a8a102d3d2f5591d821.html#exhale-function-pe-2broadcast-8cc-1a89f4994259699a8a102d3d2f5591d821"><span class="std std-ref">Function cinn::hlir::pe::BitwiseOr(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ad94367a1a002cf2d5069cfe05d9ea410.html#exhale-function-pe-2broadcast-8cc-1ad94367a1a002cf2d5069cfe05d9ea410"><span class="std std-ref">Function cinn::hlir::pe::BitwiseOr(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aba64906e05d51f149868c542bf9260cb.html#exhale-function-pe-2broadcast-8cc-1aba64906e05d51f149868c542bf9260cb"><span class="std std-ref">Function cinn::hlir::pe::BitwiseOr(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a2ebff7770e3b56b10d2be3efcbc466ce.html#exhale-function-pe-2broadcast-8cc-1a2ebff7770e3b56b10d2be3efcbc466ce"><span class="std std-ref">Function cinn::hlir::pe::BitwiseOr(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a13230236f5bb534cc302c6dffea77c46.html#exhale-function-pe-2broadcast-8cc-1a13230236f5bb534cc302c6dffea77c46"><span class="std std-ref">Function cinn::hlir::pe::BitwiseXor(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a474ae06b271be7ebc226adb0faef7577.html#exhale-function-pe-2broadcast-8cc-1a474ae06b271be7ebc226adb0faef7577"><span class="std std-ref">Function cinn::hlir::pe::BitwiseXor(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aed1c21f98a67ccf5e8877d6eac130871.html#exhale-function-pe-2broadcast-8cc-1aed1c21f98a67ccf5e8877d6eac130871"><span class="std std-ref">Function cinn::hlir::pe::BitwiseXor(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1afa403c7e0dc0b9168b48dddee417d3e9.html#exhale-function-pe-2broadcast-8cc-1afa403c7e0dc0b9168b48dddee417d3e9"><span class="std std-ref">Function cinn::hlir::pe::BitwiseXor(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a712ab7a407dc5c2fe6f1487da9e542ca.html#exhale-function-pe-2broadcast-8cc-1a712ab7a407dc5c2fe6f1487da9e542ca"><span class="std std-ref">Template Function cinn::hlir::pe::Broadcast</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab1ee458fe54d9abaf516af9e09d49d2d.html#exhale-function-pe-2broadcast-8cc-1ab1ee458fe54d9abaf516af9e09d49d2d"><span class="std std-ref">Function cinn::hlir::pe::Divide(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a8ef885f4cef4e8de65beeb4b5d689456.html#exhale-function-pe-2broadcast-8cc-1a8ef885f4cef4e8de65beeb4b5d689456"><span class="std std-ref">Function cinn::hlir::pe::Divide(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aae5019a81f4c2befada6ce91765de88c.html#exhale-function-pe-2broadcast-8cc-1aae5019a81f4c2befada6ce91765de88c"><span class="std std-ref">Function cinn::hlir::pe::Divide(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aa953a8d07d309cecbb746bc58c73eff5.html#exhale-function-pe-2broadcast-8cc-1aa953a8d07d309cecbb746bc58c73eff5"><span class="std std-ref">Function cinn::hlir::pe::Divide(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a7ac925051ab6d2f5a12c729d42b12b1b.html#exhale-function-pe-2broadcast-8cc-1a7ac925051ab6d2f5a12c729d42b12b1b"><span class="std std-ref">Function cinn::hlir::pe::Equal(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1acaf0e114cd50b5817cf8ec7961b975e2.html#exhale-function-pe-2broadcast-8cc-1acaf0e114cd50b5817cf8ec7961b975e2"><span class="std std-ref">Function cinn::hlir::pe::Equal(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a96926fdf015f4e7a74186308f6c04ffa.html#exhale-function-pe-2broadcast-8cc-1a96926fdf015f4e7a74186308f6c04ffa"><span class="std std-ref">Function cinn::hlir::pe::Equal(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab1beef429051d1b77ad79ae3d9719d4b.html#exhale-function-pe-2broadcast-8cc-1ab1beef429051d1b77ad79ae3d9719d4b"><span class="std std-ref">Function cinn::hlir::pe::Equal(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1abe9c922ea5b2388c23dca53497d9ab6b.html#exhale-function-pe-2broadcast-8cc-1abe9c922ea5b2388c23dca53497d9ab6b"><span class="std std-ref">Function cinn::hlir::pe::FloorDivide(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ad015655c6d7b87f0beae12e35afa916d.html#exhale-function-pe-2broadcast-8cc-1ad015655c6d7b87f0beae12e35afa916d"><span class="std std-ref">Function cinn::hlir::pe::FloorDivide(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ae821c519f472e24551abac6a623a3a54.html#exhale-function-pe-2broadcast-8cc-1ae821c519f472e24551abac6a623a3a54"><span class="std std-ref">Function cinn::hlir::pe::FloorDivide(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ac8409e37d7dad2853c7d82a04ef5ef0f.html#exhale-function-pe-2broadcast-8cc-1ac8409e37d7dad2853c7d82a04ef5ef0f"><span class="std std-ref">Function cinn::hlir::pe::FloorDivide(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aba1cc9860bd85cc2ab5a51f8f4bc9f49.html#exhale-function-pe-2broadcast-8cc-1aba1cc9860bd85cc2ab5a51f8f4bc9f49"><span class="std std-ref">Function cinn::hlir::pe::FloorMod(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1abf24e7d30f16c6949d31e1b3234bb09c.html#exhale-function-pe-2broadcast-8cc-1abf24e7d30f16c6949d31e1b3234bb09c"><span class="std std-ref">Function cinn::hlir::pe::FloorMod(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1add669615dcf5f36faca6a0b4e8f65d88.html#exhale-function-pe-2broadcast-8cc-1add669615dcf5f36faca6a0b4e8f65d88"><span class="std std-ref">Function cinn::hlir::pe::FloorMod(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1af59cd549a9495c124a2acb0957eb701f.html#exhale-function-pe-2broadcast-8cc-1af59cd549a9495c124a2acb0957eb701f"><span class="std std-ref">Function cinn::hlir::pe::FloorMod(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a969703f41c63a83c9d3e0ede94702af5.html#exhale-function-pe-2broadcast-8cc-1a969703f41c63a83c9d3e0ede94702af5"><span class="std std-ref">Function cinn::hlir::pe::GetBroadcastIndice</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1af6861dc67561c27ee1b569cbe5fbbf90.html#exhale-function-pe-2broadcast-8cc-1af6861dc67561c27ee1b569cbe5fbbf90"><span class="std std-ref">Function cinn::hlir::pe::GetBroadcastShape</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1abf62f5677e56bad663093fadaa4fbb75.html#exhale-function-pe-2broadcast-8cc-1abf62f5677e56bad663093fadaa4fbb75"><span class="std std-ref">Function cinn::hlir::pe::Greater(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1afe0dc715482953b4cf2ef3ee818326e5.html#exhale-function-pe-2broadcast-8cc-1afe0dc715482953b4cf2ef3ee818326e5"><span class="std std-ref">Function cinn::hlir::pe::Greater(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a3a89cd66bc4fc275d00484e87117f2ee.html#exhale-function-pe-2broadcast-8cc-1a3a89cd66bc4fc275d00484e87117f2ee"><span class="std std-ref">Function cinn::hlir::pe::Greater(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1afbb48e33f9ad1531cc7e7d626a6b04ef.html#exhale-function-pe-2broadcast-8cc-1afbb48e33f9ad1531cc7e7d626a6b04ef"><span class="std std-ref">Function cinn::hlir::pe::Greater(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ade32787de789c394feea4f2e7736d0e5.html#exhale-function-pe-2broadcast-8cc-1ade32787de789c394feea4f2e7736d0e5"><span class="std std-ref">Function cinn::hlir::pe::GreaterEqual(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a6c6543aa717aea733eb84926f2690ea4.html#exhale-function-pe-2broadcast-8cc-1a6c6543aa717aea733eb84926f2690ea4"><span class="std std-ref">Function cinn::hlir::pe::GreaterEqual(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a401fd74fbd92be744b61436821a1a168.html#exhale-function-pe-2broadcast-8cc-1a401fd74fbd92be744b61436821a1a168"><span class="std std-ref">Function cinn::hlir::pe::GreaterEqual(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a23cfd693b515a0d4ab94823012da68c8.html#exhale-function-pe-2broadcast-8cc-1a23cfd693b515a0d4ab94823012da68c8"><span class="std std-ref">Function cinn::hlir::pe::GreaterEqual(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ad26244ba842dc663ca780b03fed562c0.html#exhale-function-pe-2broadcast-8cc-1ad26244ba842dc663ca780b03fed562c0"><span class="std std-ref">Function cinn::hlir::pe::LeftShift(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a11cbbd557e85423248aa246498cf5a05.html#exhale-function-pe-2broadcast-8cc-1a11cbbd557e85423248aa246498cf5a05"><span class="std std-ref">Function cinn::hlir::pe::LeftShift(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ac5fd3c40a0a807c745c4d78e46c33cd3.html#exhale-function-pe-2broadcast-8cc-1ac5fd3c40a0a807c745c4d78e46c33cd3"><span class="std std-ref">Function cinn::hlir::pe::LeftShift(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab1e89519c2bd1facd9bcf5b23b26635f.html#exhale-function-pe-2broadcast-8cc-1ab1e89519c2bd1facd9bcf5b23b26635f"><span class="std std-ref">Function cinn::hlir::pe::LeftShift(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a8805261f278cdd0f493ffacdf8cf4198.html#exhale-function-pe-2broadcast-8cc-1a8805261f278cdd0f493ffacdf8cf4198"><span class="std std-ref">Function cinn::hlir::pe::Less(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a3179e24812652b9ab2831f3fafa0cc2f.html#exhale-function-pe-2broadcast-8cc-1a3179e24812652b9ab2831f3fafa0cc2f"><span class="std std-ref">Function cinn::hlir::pe::Less(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a8ef854d04176bd725cf2af5608d6902f.html#exhale-function-pe-2broadcast-8cc-1a8ef854d04176bd725cf2af5608d6902f"><span class="std std-ref">Function cinn::hlir::pe::Less(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aac54c706aa43b95c4a40c4ee4a1b0405.html#exhale-function-pe-2broadcast-8cc-1aac54c706aa43b95c4a40c4ee4a1b0405"><span class="std std-ref">Function cinn::hlir::pe::Less(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ac3f258dd008fd0f15990fb63daafa7d8.html#exhale-function-pe-2broadcast-8cc-1ac3f258dd008fd0f15990fb63daafa7d8"><span class="std std-ref">Function cinn::hlir::pe::LessEqual(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ad4b1f62b8c8a795d8508e8cde4d5b015.html#exhale-function-pe-2broadcast-8cc-1ad4b1f62b8c8a795d8508e8cde4d5b015"><span class="std std-ref">Function cinn::hlir::pe::LessEqual(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a8854f86260800182cca22fee6051863c.html#exhale-function-pe-2broadcast-8cc-1a8854f86260800182cca22fee6051863c"><span class="std std-ref">Function cinn::hlir::pe::LessEqual(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a5c34184f8351eb1695299716820f72a9.html#exhale-function-pe-2broadcast-8cc-1a5c34184f8351eb1695299716820f72a9"><span class="std std-ref">Function cinn::hlir::pe::LessEqual(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1af7fde89a712876fb3ff872eb16b7abf2.html#exhale-function-pe-2broadcast-8cc-1af7fde89a712876fb3ff872eb16b7abf2"><span class="std std-ref">Function cinn::hlir::pe::LogicaAnd(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a9cb4f7f64a89c703327d32d6f4d275c7.html#exhale-function-pe-2broadcast-8cc-1a9cb4f7f64a89c703327d32d6f4d275c7"><span class="std std-ref">Function cinn::hlir::pe::LogicaAnd(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a580a8a2fb8daad9c99cee477acbdf3b4.html#exhale-function-pe-2broadcast-8cc-1a580a8a2fb8daad9c99cee477acbdf3b4"><span class="std std-ref">Function cinn::hlir::pe::LogicaAnd(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a955773d4095630c23964d2e1ec11b8ee.html#exhale-function-pe-2broadcast-8cc-1a955773d4095630c23964d2e1ec11b8ee"><span class="std std-ref">Function cinn::hlir::pe::LogicaAnd(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a231aa235156d6a1c85d1c3eaa99f499e.html#exhale-function-pe-2broadcast-8cc-1a231aa235156d6a1c85d1c3eaa99f499e"><span class="std std-ref">Function cinn::hlir::pe::LogicalOr(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aa7f657119534696c42feab73c3452d6d.html#exhale-function-pe-2broadcast-8cc-1aa7f657119534696c42feab73c3452d6d"><span class="std std-ref">Function cinn::hlir::pe::LogicalOr(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a9ec5b93942f1fb843b5e6dc073582fb9.html#exhale-function-pe-2broadcast-8cc-1a9ec5b93942f1fb843b5e6dc073582fb9"><span class="std std-ref">Function cinn::hlir::pe::LogicalOr(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab3563b1139b830dc71f1e92a7a546eb2.html#exhale-function-pe-2broadcast-8cc-1ab3563b1139b830dc71f1e92a7a546eb2"><span class="std std-ref">Function cinn::hlir::pe::LogicalOr(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1abb2c8bf90cd93cf19ed5836e2dbc24d7.html#exhale-function-pe-2broadcast-8cc-1abb2c8bf90cd93cf19ed5836e2dbc24d7"><span class="std std-ref">Function cinn::hlir::pe::LogicalXOr(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a181e00e1886d3170d52a4a4ba7ba326e.html#exhale-function-pe-2broadcast-8cc-1a181e00e1886d3170d52a4a4ba7ba326e"><span class="std std-ref">Function cinn::hlir::pe::LogicalXOr(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a1cd7f0385c43fb611e29a5a146a9291a.html#exhale-function-pe-2broadcast-8cc-1a1cd7f0385c43fb611e29a5a146a9291a"><span class="std std-ref">Function cinn::hlir::pe::LogicalXOr(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a54a99a484f769c6c2e43b0f9e4ea10cc.html#exhale-function-pe-2broadcast-8cc-1a54a99a484f769c6c2e43b0f9e4ea10cc"><span class="std std-ref">Function cinn::hlir::pe::LogicalXOr(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a20a51b195a3223ed6a4e43e585a2ab73.html#exhale-function-pe-2broadcast-8cc-1a20a51b195a3223ed6a4e43e585a2ab73"><span class="std std-ref">Function cinn::hlir::pe::Maximum(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ac515e2066aa75c221792543045d33a40.html#exhale-function-pe-2broadcast-8cc-1ac515e2066aa75c221792543045d33a40"><span class="std std-ref">Function cinn::hlir::pe::Maximum(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aba115dca87ec34b098bcd2e173aaef20.html#exhale-function-pe-2broadcast-8cc-1aba115dca87ec34b098bcd2e173aaef20"><span class="std std-ref">Function cinn::hlir::pe::Maximum(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a8772ae7b6a81f75948efeb1db480c884.html#exhale-function-pe-2broadcast-8cc-1a8772ae7b6a81f75948efeb1db480c884"><span class="std std-ref">Function cinn::hlir::pe::Maximum(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a7d08832083801f33f6b2a055fce09f8c.html#exhale-function-pe-2broadcast-8cc-1a7d08832083801f33f6b2a055fce09f8c"><span class="std std-ref">Function cinn::hlir::pe::Minimum(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab1abee63f8e6db176fdca790a61da202.html#exhale-function-pe-2broadcast-8cc-1ab1abee63f8e6db176fdca790a61da202"><span class="std std-ref">Function cinn::hlir::pe::Minimum(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1af9088d759445cb392d471ec8d88573f7.html#exhale-function-pe-2broadcast-8cc-1af9088d759445cb392d471ec8d88573f7"><span class="std std-ref">Function cinn::hlir::pe::Minimum(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a74a60ff0803ec5a43c8b498374a2a1b2.html#exhale-function-pe-2broadcast-8cc-1a74a60ff0803ec5a43c8b498374a2a1b2"><span class="std std-ref">Function cinn::hlir::pe::Minimum(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a0bd44ab09ea3a96530e64a406cee004a.html#exhale-function-pe-2broadcast-8cc-1a0bd44ab09ea3a96530e64a406cee004a"><span class="std std-ref">Function cinn::hlir::pe::Mod(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a1ac07927def1e8f40a0f8e6c4445bfe4.html#exhale-function-pe-2broadcast-8cc-1a1ac07927def1e8f40a0f8e6c4445bfe4"><span class="std std-ref">Function cinn::hlir::pe::Mod(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a2391f2a22412973b7b5b1dce8fbad3d3.html#exhale-function-pe-2broadcast-8cc-1a2391f2a22412973b7b5b1dce8fbad3d3"><span class="std std-ref">Function cinn::hlir::pe::Mod(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1af231559b22f34688e2934b292c6d6216.html#exhale-function-pe-2broadcast-8cc-1af231559b22f34688e2934b292c6d6216"><span class="std std-ref">Function cinn::hlir::pe::Mod(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a62b480f06df58149d6394f89fb57d843.html#exhale-function-pe-2broadcast-8cc-1a62b480f06df58149d6394f89fb57d843"><span class="std std-ref">Function cinn::hlir::pe::Multiply(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a4f21c914dea126f69af5e6338189a560.html#exhale-function-pe-2broadcast-8cc-1a4f21c914dea126f69af5e6338189a560"><span class="std std-ref">Function cinn::hlir::pe::Multiply(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a1ea948ddfe77dd198f8f1b8a4d7d0649.html#exhale-function-pe-2broadcast-8cc-1a1ea948ddfe77dd198f8f1b8a4d7d0649"><span class="std std-ref">Function cinn::hlir::pe::Multiply(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab6449132661daac7fd293be23efe9b24.html#exhale-function-pe-2broadcast-8cc-1ab6449132661daac7fd293be23efe9b24"><span class="std std-ref">Function cinn::hlir::pe::Multiply(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a9cb4872abd6569070000def15e91cfd0.html#exhale-function-pe-2broadcast-8cc-1a9cb4872abd6569070000def15e91cfd0"><span class="std std-ref">Function cinn::hlir::pe::NotEqual(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a7c301b6925aa1e6b1e1282778198e5ab.html#exhale-function-pe-2broadcast-8cc-1a7c301b6925aa1e6b1e1282778198e5ab"><span class="std std-ref">Function cinn::hlir::pe::NotEqual(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a7e72b594a9a7a26838b69962fead9f59.html#exhale-function-pe-2broadcast-8cc-1a7e72b594a9a7a26838b69962fead9f59"><span class="std std-ref">Function cinn::hlir::pe::NotEqual(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a72b62e26412120cd583ddbb5df276663.html#exhale-function-pe-2broadcast-8cc-1a72b62e26412120cd583ddbb5df276663"><span class="std std-ref">Function cinn::hlir::pe::NotEqual(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a52eb466b2a81b639a806ac34e2288097.html#exhale-function-pe-2broadcast-8cc-1a52eb466b2a81b639a806ac34e2288097"><span class="std std-ref">Function cinn::hlir::pe::Power(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1ab5fc46819f3e918f6d1df5f9c31d7a10.html#exhale-function-pe-2broadcast-8cc-1ab5fc46819f3e918f6d1df5f9c31d7a10"><span class="std std-ref">Function cinn::hlir::pe::Power(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a1d1767407293a1ff604bb06fc54b5fec.html#exhale-function-pe-2broadcast-8cc-1a1d1767407293a1ff604bb06fc54b5fec"><span class="std std-ref">Function cinn::hlir::pe::Power(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a4a70c1c89d5f70640c14f1d4566b6589.html#exhale-function-pe-2broadcast-8cc-1a4a70c1c89d5f70640c14f1d4566b6589"><span class="std std-ref">Function cinn::hlir::pe::Power(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a4ebdd2e2c2345d3853560baef65482cf.html#exhale-function-pe-2broadcast-8cc-1a4ebdd2e2c2345d3853560baef65482cf"><span class="std std-ref">Function cinn::hlir::pe::RightShift(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a5f7dc11ada6417b3aa9f5f352c146158.html#exhale-function-pe-2broadcast-8cc-1a5f7dc11ada6417b3aa9f5f352c146158"><span class="std std-ref">Function cinn::hlir::pe::RightShift(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a0ab5a1cf3f17419873a50a31e1ebce5e.html#exhale-function-pe-2broadcast-8cc-1a0ab5a1cf3f17419873a50a31e1ebce5e"><span class="std std-ref">Function cinn::hlir::pe::RightShift(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aacda613a2280f1816eb68a6f569e48c6.html#exhale-function-pe-2broadcast-8cc-1aacda613a2280f1816eb68a6f569e48c6"><span class="std std-ref">Function cinn::hlir::pe::RightShift(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a23f39efa0d01ea0bc6ba978a1268e3a9.html#exhale-function-pe-2broadcast-8cc-1a23f39efa0d01ea0bc6ba978a1268e3a9"><span class="std std-ref">Function cinn::hlir::pe::Substract(const Tensor&amp;, const Tensor&amp;, const std::string&amp;, const Expr&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1aabfd031ab215e9e2c7f12097a53676f8.html#exhale-function-pe-2broadcast-8cc-1aabfd031ab215e9e2c7f12097a53676f8"><span class="std std-ref">Function cinn::hlir::pe::Substract(const Tensor&amp;, const Expr&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a67e1fe16e5bca5b0e787f1b8c954744c.html#exhale-function-pe-2broadcast-8cc-1a67e1fe16e5bca5b0e787f1b8c954744c"><span class="std std-ref">Function cinn::hlir::pe::Substract(const Expr&amp;, const Tensor&amp;, const std::string&amp;)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe_2broadcast_8cc_1a20f64ed0203c8b506cd2daed432327cd.html#exhale-function-pe-2broadcast-8cc-1a20f64ed0203c8b506cd2daed432327cd"><span class="std std-ref">Function cinn::hlir::pe::Substract(const Expr&amp;, const Expr&amp;)</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_pe_2broadcast_8cc_1a12ac8b672f0fae66b10d1090e7d509aa.html#exhale-define-pe-2broadcast-8cc-1a12ac8b672f0fae66b10d1090e7d509aa"><span class="std std-ref">Define HLIR_IMP_BC_PE</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

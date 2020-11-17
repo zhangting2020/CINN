@@ -1,0 +1,13 @@
+.. _exhale_define_mkl__math__test_8cc_1aca189997eee7da705e3b3fddc785e8d6:
+
+Define TEST_MKL_MATH_FP32
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TEST_MKL_MATH_FP32

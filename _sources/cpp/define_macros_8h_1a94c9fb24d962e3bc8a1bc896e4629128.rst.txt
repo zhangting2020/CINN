@@ -1,0 +1,13 @@
+.. _exhale_define_macros_8h_1a94c9fb24d962e3bc8a1bc896e4629128:
+
+Define CINN_RESULT_SHOULD_USE
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_RESULT_SHOULD_USE

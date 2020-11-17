@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a1a1360ad69857a18460b919222f698ab:
+
+Function cinn::hlir::pe::Sqrt
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Sqrt(const Tensor&, const std::string&)

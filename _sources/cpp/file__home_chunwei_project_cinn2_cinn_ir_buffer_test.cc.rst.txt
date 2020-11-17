@@ -1,0 +1,77 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc:
+
+File buffer_test.cc
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/buffer_test.cc``)
+-------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/lang/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_buffer.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/lang/lower.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`)
+
+- ``cinn/lang/placeholder.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`)
+
+- ``gtest/gtest.h``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af223e35bcfb885f567d02aabc609e536`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a9deec1be1a51e29b967921bea758e732`
+

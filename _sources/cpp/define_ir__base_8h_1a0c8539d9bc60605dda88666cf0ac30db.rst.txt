@@ -1,0 +1,13 @@
+.. _exhale_define_ir__base_8h_1a0c8539d9bc60605dda88666cf0ac30db:
+
+Define NODETY_CONTROL_OP_FOR_EACH
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: NODETY_CONTROL_OP_FOR_EACH

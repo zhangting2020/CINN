@@ -1,0 +1,13 @@
+.. _exhale_function_extern__call__process_8h_1ab9601e418afaba9e99edb15525e6e837:
+
+Function cinn::optim::ExternCallRemoveTupleGetStatements
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::ExternCallRemoveTupleGetStatements(Expr *)

@@ -1,0 +1,13 @@
+.. _exhale_function_hlir_2framework_2buffer__test_8cc_1ad5f6fe1452fa3e77b032b8a94fdbb3f1:
+
+Function cinn::hlir::framework::TEST(Buffer, basic)
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::TEST(Buffer, basic)

@@ -1,0 +1,13 @@
+.. _exhale_function_extern__func__jit__register_8cc_1a5f6b4599b8deae35be880b3da1b47001:
+
+Function cinn::backends::RegisterExternFunctionHelper
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::RegisterExternFunctionHelper(const std::string&, std::unique_ptr<FunctionProto>&&, Target, void *)

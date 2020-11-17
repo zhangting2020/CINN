@@ -1,0 +1,13 @@
+.. _exhale_function_op_2broadcast_8cc_1afbc4360bc5bd366cabee5b9d85d4ed25:
+
+Function cinn::hlir::op::InferShapeForScale
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_broadcast.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferShapeForScale(const std::vector<shape_t>&, const framework::NodeAttr&)

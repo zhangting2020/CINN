@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1ae326a1cdd37688c02437d7bdb5092777:
+
+Function cinn::hlir::pe::Trunc
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Trunc(const Tensor&, const std::string&)

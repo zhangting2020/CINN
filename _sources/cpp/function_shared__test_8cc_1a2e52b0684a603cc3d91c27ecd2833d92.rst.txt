@@ -1,0 +1,13 @@
+.. _exhale_function_shared__test_8cc_1a2e52b0684a603cc3d91c27ecd2833d92:
+
+Function cinn::common::TEST(Shared, cycle_share)
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_shared_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(Shared, cycle_share)

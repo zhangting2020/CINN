@@ -1,0 +1,36 @@
+.. _dir__home_chunwei_project_cinn2_cinn_runtime:
+
+
+Directory runtime
+=================
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn>` (``/home/chunwei/project/cinn2/cinn``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/runtime``
+
+Subdirectories
+--------------
+
+- :ref:`dir__home_chunwei_project_cinn2_cinn_runtime_cpu`
+- :ref:`dir__home_chunwei_project_cinn2_cinn_runtime_cuda`
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_buffer.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_buffer.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h`
+
+

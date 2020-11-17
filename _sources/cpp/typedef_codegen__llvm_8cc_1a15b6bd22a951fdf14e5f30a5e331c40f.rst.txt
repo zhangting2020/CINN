@@ -1,0 +1,13 @@
+.. _exhale_typedef_codegen__llvm_8cc_1a15b6bd22a951fdf14e5f30a5e331c40f:
+
+Typedef cinn::backends::BinaryInstruction
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::backends::BinaryInstruction

@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a5c7e8d9a094fc55f3ae317ebe7ec264f:
+
+Variable cinn::runtime::intrisic::get_address_repr
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::get_address_repr

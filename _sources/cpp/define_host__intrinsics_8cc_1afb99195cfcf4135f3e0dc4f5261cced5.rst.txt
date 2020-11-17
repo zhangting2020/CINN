@@ -1,0 +1,13 @@
+.. _exhale_define_host__intrinsics_8cc_1afb99195cfcf4135f3e0dc4f5261cced5:
+
+Define REGISTER_EXTERN_FUNC_1_IN_1_OUT_FLOAT
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: REGISTER_EXTERN_FUNC_1_IN_1_OUT_FLOAT

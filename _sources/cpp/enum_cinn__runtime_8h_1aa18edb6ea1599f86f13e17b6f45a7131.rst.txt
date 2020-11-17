@@ -1,0 +1,13 @@
+.. _exhale_enum_cinn__runtime_8h_1aa18edb6ea1599f86f13e17b6f45a7131:
+
+Enum cinn_buffer_kind_t
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: cinn_buffer_kind_t

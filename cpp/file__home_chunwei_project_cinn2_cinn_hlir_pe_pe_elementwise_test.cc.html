@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File pe_elementwise_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-pe-elementwise-test-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-hlir-pe-pe-elementwise-test-cc"></span><h1>File pe_elementwise_test.cc<a class="headerlink" href="#file-pe-elementwise-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_hlir_pe.html#dir-home-chunwei-project-cinn2-cinn-hlir-pe"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-hlir-pe-pe-elementwise-test-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe/pe_elementwise_test.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id5">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-hlir-pe-pe-elementwise-test-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe/pe_elementwise_test.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-hlir-pe-pe-elementwise-test-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc.html">Program Listing for File pe_elementwise_test.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/backends/llvm/execution_engine.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h.html#file-home-chunwei-project-cinn2-cinn-backends-llvm-execution-engine-h"><span class="std std-ref">File execution_engine.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/cinn.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_cinn.h.html#file-home-chunwei-project-cinn2-cinn-cinn-h"><span class="std std-ref">File cinn.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/ir_util.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_ir_util.h.html#file-home-chunwei-project-cinn2-cinn-common-ir-util-h"><span class="std std-ref">File ir_util.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/target.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_target.h.html#file-home-chunwei-project-cinn2-cinn-common-target-h"><span class="std std-ref">File target.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/common/test_helper.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_common_test_helper.h.html#file-home-chunwei-project-cinn2-cinn-common-test-helper-h"><span class="std std-ref">File test_helper.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/elementwise.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-elementwise-h"><span class="std std-ref">File elementwise.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/hlir/pe/reduction.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.h.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-reduction-h"><span class="std std-ref">File reduction.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/runtime/cpu/host_intrinsics.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-host-intrinsics-h"><span class="std std-ref">File host_intrinsics.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cinn/runtime/cpu/use_extern_funcs.h</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cpu-use-extern-funcs-h"><span class="std std-ref">File use_extern_funcs.h</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="namespaces">
+<h2>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="namespace_cinn.html#namespace-cinn"><span class="std std-ref">Namespace cinn</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__hlir.html#namespace-cinn-hlir"><span class="std std-ref">Namespace cinn::hlir</span></a></p></li>
+<li><p><a class="reference internal" href="namespace_cinn__hlir__pe.html#namespace-cinn-hlir-pe"><span class="std std-ref">Namespace cinn::hlir::pe</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1ae3e930641904881f4be7dffdb5a1f890.html#exhale-function-pe-elementwise-test-8cc-1ae3e930641904881f4be7dffdb5a1f890"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, acos)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1adfe6951ddac9a475e53527b6d6ef671f.html#exhale-function-pe-elementwise-test-8cc-1adfe6951ddac9a475e53527b6d6ef671f"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, acosh)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a600fcb90b1e672ab85587384719e1e30.html#exhale-function-pe-elementwise-test-8cc-1a600fcb90b1e672ab85587384719e1e30"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, asin)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a8a3ee563202952970408ff40d217f33f.html#exhale-function-pe-elementwise-test-8cc-1a8a3ee563202952970408ff40d217f33f"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, exp)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1aecfccccb66800aa1a9e9f8f62250449d.html#exhale-function-pe-elementwise-test-8cc-1aecfccccb66800aa1a9e9f8f62250449d"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, asinh)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a05d8bc4cda8f69cc6527fc5705a23e21.html#exhale-function-pe-elementwise-test-8cc-1a05d8bc4cda8f69cc6527fc5705a23e21"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, erf)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1ae0c295765d1c7eea05e547569573356c.html#exhale-function-pe-elementwise-test-8cc-1ae0c295765d1c7eea05e547569573356c"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, atan)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1aee2d5606be20c6c50686f28bcee1b353.html#exhale-function-pe-elementwise-test-8cc-1aee2d5606be20c6c50686f28bcee1b353"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, sqrt)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a4c48121d20a513855d793343ea3fc618.html#exhale-function-pe-elementwise-test-8cc-1a4c48121d20a513855d793343ea3fc618"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, atanh)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a7c568fc846251e7b28a08cae46d25997.html#exhale-function-pe-elementwise-test-8cc-1a7c568fc846251e7b28a08cae46d25997"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, log)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1aef16bbb1b71c6a017cb3a75fb207dc0a.html#exhale-function-pe-elementwise-test-8cc-1aef16bbb1b71c6a017cb3a75fb207dc0a"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, isnan)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1aa3b1d527131569be49e566775ef93988.html#exhale-function-pe-elementwise-test-8cc-1aa3b1d527131569be49e566775ef93988"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, log2)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a2d3735366f72fecdf4e57b4d871a6825.html#exhale-function-pe-elementwise-test-8cc-1a2d3735366f72fecdf4e57b4d871a6825"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, tanh)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1af04b754df502a70dcdb85d16dd6340ad.html#exhale-function-pe-elementwise-test-8cc-1af04b754df502a70dcdb85d16dd6340ad"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, log10)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a47cf87f7ebc475c1c30bc673365d36ca.html#exhale-function-pe-elementwise-test-8cc-1a47cf87f7ebc475c1c30bc673365d36ca"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, isfinite)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1aec38bf7effae6378fb3ab67c2131ac33.html#exhale-function-pe-elementwise-test-8cc-1aec38bf7effae6378fb3ab67c2131ac33"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, floor)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1af02cebfc649d22726a5ce7182c94c50e.html#exhale-function-pe-elementwise-test-8cc-1af02cebfc649d22726a5ce7182c94c50e"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, isinf)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a306afbf82914eb8891b26afd16316054.html#exhale-function-pe-elementwise-test-8cc-1a306afbf82914eb8891b26afd16316054"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, ceil)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a75537bf30f8c3aec720c7eded3e27e53.html#exhale-function-pe-elementwise-test-8cc-1a75537bf30f8c3aec720c7eded3e27e53"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, round)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a9cd0126b0d71858f0031ddf10df80b7a.html#exhale-function-pe-elementwise-test-8cc-1a9cd0126b0d71858f0031ddf10df80b7a"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, trunc)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a42136bea5eb47407c13d25e15a8bd1a5.html#exhale-function-pe-elementwise-test-8cc-1a42136bea5eb47407c13d25e15a8bd1a5"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, cos)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a226922fa0e9e976c3172d19b03d97786.html#exhale-function-pe-elementwise-test-8cc-1a226922fa0e9e976c3172d19b03d97786"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, cosh)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1ad84068b230f9aa5fd4855817db7ae41d.html#exhale-function-pe-elementwise-test-8cc-1ad84068b230f9aa5fd4855817db7ae41d"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, tan)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a5b2cb7fa83742eac3e7fb2ddb0e59ce3.html#exhale-function-pe-elementwise-test-8cc-1a5b2cb7fa83742eac3e7fb2ddb0e59ce3"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, sin)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1ad2a826553cfeb0c520d7adcc5be52ce4.html#exhale-function-pe-elementwise-test-8cc-1ad2a826553cfeb0c520d7adcc5be52ce4"><span class="std std-ref">Function cinn::hlir::pe::TEST(elementwise_pe, sinh)</span></a></p></li>
+<li><p><a class="reference internal" href="function_pe__elementwise__test_8cc_1a640fbd7d3ed17825deff4036db09252d.html#exhale-function-pe-elementwise-test-8cc-1a640fbd7d3ed17825deff4036db09252d"><span class="std std-ref">Template Function cinn::hlir::pe::TestElementwisePE</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define_pe__elementwise__test_8cc_1adbd6bc46fdf689f73077d93329bf9119.html#exhale-define-pe-elementwise-test-8cc-1adbd6bc46fdf689f73077d93329bf9119"><span class="std std-ref">Define TEST_ELEMENTWISE_PE_FP32</span></a></p></li>
+<li><p><a class="reference internal" href="define_pe__elementwise__test_8cc_1a097c8407d0a8f611eb2f168f721833bf.html#exhale-define-pe-elementwise-test-8cc-1a097c8407d0a8f611eb2f168f721833bf"><span class="std std-ref">Define TEST_ELEMENTWISE_PE_FP32_SET</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

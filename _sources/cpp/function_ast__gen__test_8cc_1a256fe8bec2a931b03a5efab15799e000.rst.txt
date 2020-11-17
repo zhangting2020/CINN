@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen__test_8cc_1a256fe8bec2a931b03a5efab15799e000:
+
+Function cinn::poly::TEST(TransIdentityExtentToContextId, basic)
+================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(TransIdentityExtentToContextId, basic)

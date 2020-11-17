@@ -1,0 +1,262 @@
+
+.. _namespace_cinn__backends:
+
+Namespace cinn::backends
+========================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__backends__@30`
+
+- :ref:`namespace_cinn__backends__@32`
+
+- :ref:`namespace_cinn__backends__@36`
+
+- :ref:`namespace_cinn__backends__@38`
+
+- :ref:`namespace_cinn__backends__@40`
+
+- :ref:`namespace_cinn__backends__detail`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1ExecutionOptions`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1ExternFuncID`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1FunctionProto`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1FunctionProto_1_1Builder`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1ModularEntry`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1Outputs`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1RegisterExternFunction`
+
+- :ref:`exhale_struct_structcinn_1_1backends_1_1SymbolTableGuard`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenC`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenCUDA__Dev`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenCUDA__Host`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenCX86`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenLLVM`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenLLVMforEmitter`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenX86`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1Compiler`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ElementwiseTester`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExecutionEngine`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExternFunctionEmitter`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExternFunctionEmitterRegistry`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExternFunctionLLVMEmitter`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExternFunctionProtoRegistry`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1FunctionProtoRegistry`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1IrBuilderMixin`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1LLVMIRVisitor`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1LLVMModuleOptimizer`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ModularEvaluator`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1NaiveObjectCache`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1RuntimeSymbolRegistry`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1SimpleJIT`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1SymbolTable`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_llvm__util_8h_1a51be65e2d1f2707b9ef402afd3294601`
+
+- :ref:`exhale_function_llvm__util_8cc_1ab8799bd68f68bf18fbb16a141139cc70`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1af476d911da458fd0925429299b72576e`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a6aed00b40b696acb22460c0dbb79bac6`
+
+- :ref:`exhale_function_backends_2cuda__util_8cc_1af70d8d9dde3ecb7b2fad9a5dc1f30863`
+
+- :ref:`exhale_function_backends_2cuda__util_8cc_1ae85c8f32ec28722a26b3287b0be1528f`
+
+- :ref:`exhale_function_llvm__util_8h_1aebaac4d022dbe04a70cb0f898ed32716`
+
+- :ref:`exhale_function_modular_8h_1ae46befd9a16bad80fb39168c2a8647b2`
+
+- :ref:`exhale_function_llvm__util_8h_1ad8f5499d2af89fad7f9c2ec70e7070f0`
+
+- :ref:`exhale_function_llvm__util_8cc_1a28ae7ef570a9620f2cf2a519535aa4fe`
+
+- :ref:`exhale_function_llvm__util_8cc_1a37a519c67b22d047a078f2fb33bdd011`
+
+- :ref:`exhale_function_llvm__util_8cc_1a8d3233486ff8be9ada2f1e3c94b7b418`
+
+- :ref:`exhale_function_llvm__util_8cc_1a13bf473ff88a996301a42149d4a17fd3`
+
+- :ref:`exhale_function_llvm__util_8cc_1a696f22fd53af9afb373862176a00114c`
+
+- :ref:`exhale_function_llvm__util_8cc_1aeb8b21cbcf58f62a6b9899594042e1e6`
+
+- :ref:`exhale_function_llvm__util_8cc_1a43c1c9c233d61a289b39d11e59e8aa77`
+
+- :ref:`exhale_function_llvm__util_8cc_1a7f1e8fad944cbd62a4582663d6f9c5b1`
+
+- :ref:`exhale_function_llvm__util_8cc_1adbf9b367e57a6875d7f4d5035891130d`
+
+- :ref:`exhale_function_llvm__util_8cc_1a4f27768b20a7e0a72b20e66b285ad26f`
+
+- :ref:`exhale_function_llvm__util_8cc_1ad1f23ea79bfebc77d18e405030ed23f2`
+
+- :ref:`exhale_function_codegen__llvm_8cc_1a6671a931c82f9c6ad91332d690699701`
+
+- :ref:`exhale_function_extern__func__emitter_8cc_1a2304149f4f913d1d11915de90c0157dd`
+
+- :ref:`exhale_function_codegen__c_8cc_1a8b80107752ec905ba86b6ab850eb32b7`
+
+- :ref:`exhale_function_extern__func__jit__register_8cc_1a5f6b4599b8deae35be880b3da1b47001`
+
+- :ref:`exhale_function_codegen__cuda__util_8cc_1a250c5114efada8bdbf0654e9315cbfca`
+
+- :ref:`exhale_function_extern__func__jit__register_8h_1ad407cabb0ecf16091bfebc033ae7d317`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a2b6d424c8735f86958a8c9bd7cb03bab`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1af9f1e378bbf4953fb0175c90d0a4b7a5`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a82a3f41e71fd9cb53a16494ff3bab26b`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a005d5fb74688c3d1d1788317bce1e5bb`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a01d27a9ba808a18750d504ab123987e5`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a315b1da7b3a7fcb573ad38528a827ee5`
+
+- :ref:`exhale_function_codegen__c__x86__test_8cc_1a43be4c9cdf40631c48243c672a007569`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1ab2d248154aa5cd7818b50b25bebe0a65`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1aa7d9d29eba5f6d86f3db3dcf99b99a0b`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a8b3612be5bd54fdf6461e9393cf6dba0`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1abfeae8f1c3a8635652e21dd28353bf0e`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1ac10624ebd2e67c1da78d6e60051b6702`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a8f295adf3d1a0b4d8916c50064ee1f66`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1abd869117fbdef02894b57dad40888cfc`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1ae0d7a9d5d574c1082ccc81232e9cbbef`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1afffe74009e99cac8b610437a6acb92f2`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a3c600f1d31897bbb5df3ca3ef5e5046c`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a7ff9af80cc4fd54377ef927acfa4ac51`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a5f87d75744407e0dabf44974929f08a1`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a15b2ca2b4f7139bfe35d8d870d739fa7`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a51a0d6dec502a56dbb2b19da4a6f3f23`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a488f54710abfb6372de784b13e1c6c5b`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a7790c05ac6a4a053c1525cec4e593234`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a7505900202c6216e423383a3cfefb8c8`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1a3486c2c59f0e631df98af384d7daf049`
+
+- :ref:`exhale_function_compiler__test_8cc_1a070c8e8984431e5d7e372be01edce941`
+
+- :ref:`exhale_function_compiler__test_8cc_1a1405943a1d020f3b35d25d757f1de3f1`
+
+- :ref:`exhale_function_codegen__llvm__test_8cc_1aafec561e403d822044fa506c8736e19c`
+
+- :ref:`exhale_function_codegen__llvm__test_8cc_1a5289c4c653a04d48b84640ebe65af5ed`
+
+- :ref:`exhale_function_codegen__llvm__test_8cc_1a18828d0bcb70b051eae1efe9e1254e86`
+
+- :ref:`exhale_function_codegen__llvm__test_8cc_1aeb922716267a8f9ae4d2c8f5ad6bd252`
+
+- :ref:`exhale_function_codegen__llvm__test_8cc_1a48a4ffc6f73f854cf37327115b11b33e`
+
+- :ref:`exhale_function_codegen__x86__test_8cc_1a1f160ce22f6985fceafa3fb96dba268a`
+
+- :ref:`exhale_function_execution__engine__test_8cc_1a052a81af679725cf9fce21ae6d43cfa2`
+
+- :ref:`exhale_function_execution__engine__test_8cc_1a70acc94b4c51118280a584a996c4b7b8`
+
+- :ref:`exhale_function_execution__engine__test_8cc_1a599bf8228052d689cd805ffa2f2f813d`
+
+- :ref:`exhale_function_execution__engine__test_8cc_1a62b006ef4bb666ee02e0a1c8c65fc9cf`
+
+- :ref:`exhale_function_nvrtc__util__test_8cc_1a2adbdad2e330e3ef6e0526c349f10f06`
+
+- :ref:`exhale_function_codegen__cuda__dev__test_8cc_1acacb92d84ad0f755a1334e4033900491`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_codegen__llvm_8cc_1a15b6bd22a951fdf14e5f30a5e331c40f`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_extern__func__emitter_8h_1ab09d8fa81f6d2842fba62f168cb7c377`
+
+- :ref:`exhale_variable_extern__func__emitter_8h_1a492f1659a4427910da113ce6be47bc1c`
+
+- :ref:`exhale_variable_extern__func__emitter_8h_1aee2c71cbbf8b04995ebed80f1f8962a1`
+
+- :ref:`exhale_variable_extern__func__emitter_8h_1ae3b55a12d39f4afefecc81f917020c70`
+
+- :ref:`exhale_variable_extern__func__protos_8h_1aa099ebf0d9ba70aa1dece4740ffec1b9`
+
+- :ref:`exhale_variable_extern__func__emitter__builtin_8h_1a867c1d2733a5a04c48eaf72fa04d05b0`
+
+- :ref:`exhale_variable_extern__func__emitter__builtin_8h_1ab88fd1c676adbfc8ad9564bddf81276d`
+
+- :ref:`exhale_variable_codegen__cuda__host_8cc_1a3db3929e441e4e6a8e14ef692e206904`
+
+- :ref:`exhale_variable_codegen__c_8cc_1ade6c3cc7ecd85f7509c4ea36e63f3c09`

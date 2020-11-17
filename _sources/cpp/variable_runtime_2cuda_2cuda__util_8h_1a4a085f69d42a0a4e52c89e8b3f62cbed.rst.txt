@@ -1,0 +1,13 @@
+.. _exhale_variable_runtime_2cuda_2cuda__util_8h_1a4a085f69d42a0a4e52c89e8b3f62cbed:
+
+Variable cinn::runtime::cuda::kCUDAMaxCards
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::cuda::kCUDAMaxCards

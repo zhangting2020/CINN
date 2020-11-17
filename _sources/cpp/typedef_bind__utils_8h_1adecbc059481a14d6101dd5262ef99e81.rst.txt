@@ -1,0 +1,13 @@
+.. _exhale_typedef_bind__utils_8h_1adecbc059481a14d6101dd5262ef99e81:
+
+Typedef cinn::pybind::UnaryOp
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::pybind::UnaryOp

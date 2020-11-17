@@ -1,0 +1,13 @@
+.. _exhale_define_lang_8cc_1a0a628cf25b799f534d1012099d6295b8:
+
+Define INIT_PLACEHOLDER
+=======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_lang.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: INIT_PLACEHOLDER

@@ -1,0 +1,13 @@
+.. _exhale_function_reduction_8cc_1a3bbeb25c85185eb51057906c230325ee:
+
+Function cinn::hlir::pe::GetRealAxes
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::GetRealAxes(int, const std::vector<Expr>&, std::vector<int> *)

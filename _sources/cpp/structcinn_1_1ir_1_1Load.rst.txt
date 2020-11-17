@@ -1,0 +1,26 @@
+.. _exhale_struct_structcinn_1_1ir_1_1Load:
+
+Struct Load
+===========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public cinn::ir::ExprNode< Load >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::LoadStoreAddrMnger`` (:ref:`exhale_struct_structcinn_1_1ir_1_1LoadStoreAddrMnger`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::Load
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1a500b29448a61345ae07eb056fbaf800c:
+
+Function cinn::hlir::pe::Sign
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Sign(const Tensor&, const std::string&)

@@ -1,0 +1,90 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_common_object.h:
+
+File object.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_common>` (``/home/chunwei/project/cinn2/cinn/common``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/common/object.h``)
+-----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_common_object.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/shared.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`)
+
+- ``cstring``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_object.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_shared_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_union_find.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_paddle_model_to_program.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_common.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_optim.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__common`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1common_1_1Object`
+
+- :ref:`exhale_struct_classcinn_1_1common_1_1Shared`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_object_8h_1abf1ac23ce284fa7a5c2ec2abfd332dd9`
+
+- :ref:`exhale_typedef_object_8h_1ac716a907dd817387ad1b8786b257c933`
+

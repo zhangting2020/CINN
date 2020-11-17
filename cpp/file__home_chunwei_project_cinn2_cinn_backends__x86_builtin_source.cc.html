@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File _x86_builtin_source.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="file-x86-builtin-source-cc">
+<span id="file-home-chunwei-project-cinn2-cinn-backends-x86-builtin-source-cc"></span><h1>File _x86_builtin_source.cc<a class="headerlink" href="#file-x86-builtin-source-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="dir__home_chunwei_project_cinn2_cinn_backends.html#dir-home-chunwei-project-cinn2-cinn-backends"><span class="std std-ref">Parent directory</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends</span></code>)</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#definition-home-chunwei-project-cinn2-cinn-backends-x86-builtin-source-cc" id="id1">Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/_x86_builtin_source.cc</span></code>)</a></p></li>
+<li><p><a class="reference internal" href="#includes" id="id2">Includes</a></p></li>
+<li><p><a class="reference internal" href="#classes" id="id3">Classes</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#defines" id="id5">Defines</a></p></li>
+</ul>
+</div>
+<div class="section" id="definition-home-chunwei-project-cinn2-cinn-backends-x86-builtin-source-cc">
+<h2>Definition (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/backends/_x86_builtin_source.cc</span></code>)<a class="headerlink" href="#definition-home-chunwei-project-cinn2-cinn-backends-x86-builtin-source-cc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="program_listing_file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc.html">Program Listing for File _x86_builtin_source.cc</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="includes">
+<h2>Includes<a class="headerlink" href="#includes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">immintrin.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdint.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vector</span></code> (<a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc.html#file-home-chunwei-project-cinn2-cinn-utils-small-vector-cc"><span class="std std-ref">File small_vector.cc</span></a>)</p></li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="structExternalVec.html#exhale-struct-structexternalvec"><span class="std std-ref">Template Struct ExternalVec</span></a></p></li>
+<li><p><a class="reference internal" href="structStackVec.html#exhale-struct-structstackvec"><span class="std std-ref">Template Struct StackVec</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a1eeac84b071474ea39d2547f2b88067c.html#exhale-function-x86-builtin-source-8cc-1a1eeac84b071474ea39d2547f2b88067c"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a2081d95b19acac17a88c487b0f099841.html#exhale-function-x86-builtin-source-8cc-1a2081d95b19acac17a88c487b0f099841"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1aa035487f974b02bf7b318ae6c5a79b81.html#exhale-function-x86-builtin-source-8cc-1aa035487f974b02bf7b318ae6c5a79b81"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a0e5a5a3e9db43a141318282e7880d477.html#exhale-function-x86-builtin-source-8cc-1a0e5a5a3e9db43a141318282e7880d477"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a3a7ae1f99b25e448670b47085c1d7c8d.html#exhale-function-x86-builtin-source-8cc-1a3a7ae1f99b25e448670b47085c1d7c8d"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a83df1248d481a246981b2c4053187504.html#exhale-function-x86-builtin-source-8cc-1a83df1248d481a246981b2c4053187504"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1afa6251afe7444cc8a497965272e15e0d.html#exhale-function-x86-builtin-source-8cc-1afa6251afe7444cc8a497965272e15e0d"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1adce47e13a8900a85fc71b123dcddd9cf.html#exhale-function-x86-builtin-source-8cc-1adce47e13a8900a85fc71b123dcddd9cf"><span class="std std-ref">Function cinn_avx256_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a2aabfe092c8f5895c4ba0573facb4821.html#exhale-function-x86-builtin-source-8cc-1a2aabfe092c8f5895c4ba0573facb4821"><span class="std std-ref">Function cinn_avx256_add_double</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a549192e2147105dccb70b95783b1b2fa.html#exhale-function-x86-builtin-source-8cc-1a549192e2147105dccb70b95783b1b2fa"><span class="std std-ref">Function cinn_avx256_add_float</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a95f281cc466cbb16cc3bce12d51997a2.html#exhale-function-x86-builtin-source-8cc-1a95f281cc466cbb16cc3bce12d51997a2"><span class="std std-ref">Function cinn_avx256_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ad4854f6b37c912520fe5fa6f371f6630.html#exhale-function-x86-builtin-source-8cc-1ad4854f6b37c912520fe5fa6f371f6630"><span class="std std-ref">Function cinn_avx256_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1aaea6ed507ffb3320a3148f906f00c9b6.html#exhale-function-x86-builtin-source-8cc-1aaea6ed507ffb3320a3148f906f00c9b6"><span class="std std-ref">Function cinn_avx256_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a44ed16b39a536a0f2274ea8dfee62bf9.html#exhale-function-x86-builtin-source-8cc-1a44ed16b39a536a0f2274ea8dfee62bf9"><span class="std std-ref">Function cinn_avx256_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a78a1ff6c7c1713f1a4c07791e8b985c4.html#exhale-function-x86-builtin-source-8cc-1a78a1ff6c7c1713f1a4c07791e8b985c4"><span class="std std-ref">Function cinn_avx256_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ae654052dbd30eb77b30c149b31b89674.html#exhale-function-x86-builtin-source-8cc-1ae654052dbd30eb77b30c149b31b89674"><span class="std std-ref">Function cinn_avx256_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a6136d42412981dc1296a69a8b497d1ab.html#exhale-function-x86-builtin-source-8cc-1a6136d42412981dc1296a69a8b497d1ab"><span class="std std-ref">Function cinn_avx256_load()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a5240bdd7a82be054412689432dcef6c8.html#exhale-function-x86-builtin-source-8cc-1a5240bdd7a82be054412689432dcef6c8"><span class="std std-ref">Function cinn_avx256_load()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ae582dfa6474c7a9ba13a3d8cbeb124f6.html#exhale-function-x86-builtin-source-8cc-1ae582dfa6474c7a9ba13a3d8cbeb124f6"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a6f75929dcf56d90d778dfb043dfc2514.html#exhale-function-x86-builtin-source-8cc-1a6f75929dcf56d90d778dfb043dfc2514"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a25a8440fcec0579d45725d0339214cf3.html#exhale-function-x86-builtin-source-8cc-1a25a8440fcec0579d45725d0339214cf3"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1aa76cac8f7a7f37df2ebe0a5263150cc3.html#exhale-function-x86-builtin-source-8cc-1aa76cac8f7a7f37df2ebe0a5263150cc3"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ab83723d96ee4b518c4878e98993c6bfb.html#exhale-function-x86-builtin-source-8cc-1ab83723d96ee4b518c4878e98993c6bfb"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ae33d9b1a216e2335a6b3aa25524bbfbc.html#exhale-function-x86-builtin-source-8cc-1ae33d9b1a216e2335a6b3aa25524bbfbc"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a790954fdecd4d5bdbed0aea0ba7456f9.html#exhale-function-x86-builtin-source-8cc-1a790954fdecd4d5bdbed0aea0ba7456f9"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1abf4d7ac40e896d1eb1d8dd3224a3d9ab.html#exhale-function-x86-builtin-source-8cc-1abf4d7ac40e896d1eb1d8dd3224a3d9ab"><span class="std std-ref">Function cinn_avx256_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ad0016d90570b62c580672855d4e9ce59.html#exhale-function-x86-builtin-source-8cc-1ad0016d90570b62c580672855d4e9ce59"><span class="std std-ref">Function cinn_avx256_set1()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a415ee48735917c09084b2e57edaaeb89.html#exhale-function-x86-builtin-source-8cc-1a415ee48735917c09084b2e57edaaeb89"><span class="std std-ref">Function cinn_avx256_set1()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1aac33c5f53f2e490acad8107cab1fb671.html#exhale-function-x86-builtin-source-8cc-1aac33c5f53f2e490acad8107cab1fb671"><span class="std std-ref">Function cinn_avx256_store()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a882e328782cee648c5830fb9afad654f.html#exhale-function-x86-builtin-source-8cc-1a882e328782cee648c5830fb9afad654f"><span class="std std-ref">Function cinn_avx256_store()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ab91929cbe24d773e787eff1fea9bcaa6.html#exhale-function-x86-builtin-source-8cc-1ab91929cbe24d773e787eff1fea9bcaa6"><span class="std std-ref">Function cinn_avx256_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ac16576506a6a03c3463d6d81cb614dc4.html#exhale-function-x86-builtin-source-8cc-1ac16576506a6a03c3463d6d81cb614dc4"><span class="std std-ref">Function cinn_avx256_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a25834adcab71349fdf98ff30d3b541ee.html#exhale-function-x86-builtin-source-8cc-1a25834adcab71349fdf98ff30d3b541ee"><span class="std std-ref">Function cinn_avx256_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a16d43bd773dc89fb8ae3f54c5fdaa788.html#exhale-function-x86-builtin-source-8cc-1a16d43bd773dc89fb8ae3f54c5fdaa788"><span class="std std-ref">Function cinn_avx256_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ac695ff7798935cda665897a2eb199875.html#exhale-function-x86-builtin-source-8cc-1ac695ff7798935cda665897a2eb199875"><span class="std std-ref">Function cinn_avx256_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a2e6cb4b34ad8c2ed13e9847124675f9e.html#exhale-function-x86-builtin-source-8cc-1a2e6cb4b34ad8c2ed13e9847124675f9e"><span class="std std-ref">Function cinn_avx256_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a8325a550911c771e471c3de118cf4af3.html#exhale-function-x86-builtin-source-8cc-1a8325a550911c771e471c3de118cf4af3"><span class="std std-ref">Function cinn_avx512_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1abb3497cbb93e0887931183e1cad580cc.html#exhale-function-x86-builtin-source-8cc-1abb3497cbb93e0887931183e1cad580cc"><span class="std std-ref">Function cinn_avx512_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a72c8a268768e7af5dc7829d55b3a31d1.html#exhale-function-x86-builtin-source-8cc-1a72c8a268768e7af5dc7829d55b3a31d1"><span class="std std-ref">Function cinn_avx512_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a6d47b1148ba92d08ed9f4ac5bc87339f.html#exhale-function-x86-builtin-source-8cc-1a6d47b1148ba92d08ed9f4ac5bc87339f"><span class="std std-ref">Function cinn_avx512_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a5ac351f27fbb3639c2ec8ad11978f3d8.html#exhale-function-x86-builtin-source-8cc-1a5ac351f27fbb3639c2ec8ad11978f3d8"><span class="std std-ref">Function cinn_avx512_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a643b673b9a0c59b52e0cfd92b16c3b27.html#exhale-function-x86-builtin-source-8cc-1a643b673b9a0c59b52e0cfd92b16c3b27"><span class="std std-ref">Function cinn_avx512_add()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a76d9ea0b8c53fecf37e41845e31afa67.html#exhale-function-x86-builtin-source-8cc-1a76d9ea0b8c53fecf37e41845e31afa67"><span class="std std-ref">Function cinn_avx512_add_double</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a5d74ef37d300ccd9eefb478a5551bae1.html#exhale-function-x86-builtin-source-8cc-1a5d74ef37d300ccd9eefb478a5551bae1"><span class="std std-ref">Function cinn_avx512_add_float</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a4d8437f56c53af8bd9c0d5c47f6b6b84.html#exhale-function-x86-builtin-source-8cc-1a4d8437f56c53af8bd9c0d5c47f6b6b84"><span class="std std-ref">Function cinn_avx512_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a5808e15ad06a943f56faa937f8e45585.html#exhale-function-x86-builtin-source-8cc-1a5808e15ad06a943f56faa937f8e45585"><span class="std std-ref">Function cinn_avx512_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a397f44ff6d181208296a17323f1322e7.html#exhale-function-x86-builtin-source-8cc-1a397f44ff6d181208296a17323f1322e7"><span class="std std-ref">Function cinn_avx512_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a027277eac1cea400b3c23cb3362af005.html#exhale-function-x86-builtin-source-8cc-1a027277eac1cea400b3c23cb3362af005"><span class="std std-ref">Function cinn_avx512_div()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a3cb7ba5f237b7a6180ee7e0521322397.html#exhale-function-x86-builtin-source-8cc-1a3cb7ba5f237b7a6180ee7e0521322397"><span class="std std-ref">Function cinn_avx512_load()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a6969a0712fbc896818fad77d2568c1fe.html#exhale-function-x86-builtin-source-8cc-1a6969a0712fbc896818fad77d2568c1fe"><span class="std std-ref">Function cinn_avx512_load()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ab7a3d06894d718787549dfe461b01c0b.html#exhale-function-x86-builtin-source-8cc-1ab7a3d06894d718787549dfe461b01c0b"><span class="std std-ref">Function cinn_avx512_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a01229243400417a01aa8da41c295080a.html#exhale-function-x86-builtin-source-8cc-1a01229243400417a01aa8da41c295080a"><span class="std std-ref">Function cinn_avx512_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a9a6a0c8332f0ac9ca1f7500ffae54c61.html#exhale-function-x86-builtin-source-8cc-1a9a6a0c8332f0ac9ca1f7500ffae54c61"><span class="std std-ref">Function cinn_avx512_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ae908f80ffdc66d13af7243391b583a17.html#exhale-function-x86-builtin-source-8cc-1ae908f80ffdc66d13af7243391b583a17"><span class="std std-ref">Function cinn_avx512_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a375d7a4f81fb3df3930c2784d238058d.html#exhale-function-x86-builtin-source-8cc-1a375d7a4f81fb3df3930c2784d238058d"><span class="std std-ref">Function cinn_avx512_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a56a092191ef7b33cd909b109983f4935.html#exhale-function-x86-builtin-source-8cc-1a56a092191ef7b33cd909b109983f4935"><span class="std std-ref">Function cinn_avx512_mul()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a85eee3931ba82bc01a08266f0dd637f2.html#exhale-function-x86-builtin-source-8cc-1a85eee3931ba82bc01a08266f0dd637f2"><span class="std std-ref">Function cinn_avx512_set1()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1afe91962db8396122a22b928b2ff0c0e3.html#exhale-function-x86-builtin-source-8cc-1afe91962db8396122a22b928b2ff0c0e3"><span class="std std-ref">Function cinn_avx512_set1()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a43333427019ec2e65b076088d802ca11.html#exhale-function-x86-builtin-source-8cc-1a43333427019ec2e65b076088d802ca11"><span class="std std-ref">Function cinn_avx512_store()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ae7a3771e7ce36410860322a1417257d6.html#exhale-function-x86-builtin-source-8cc-1ae7a3771e7ce36410860322a1417257d6"><span class="std std-ref">Function cinn_avx512_store()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1ad1340351ba10499f0799237c3b38cadf.html#exhale-function-x86-builtin-source-8cc-1ad1340351ba10499f0799237c3b38cadf"><span class="std std-ref">Function cinn_avx512_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a6f2b36795da077904d59b63f53100884.html#exhale-function-x86-builtin-source-8cc-1a6f2b36795da077904d59b63f53100884"><span class="std std-ref">Function cinn_avx512_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a905cf8f85b8f6675264474dcec93f6ad.html#exhale-function-x86-builtin-source-8cc-1a905cf8f85b8f6675264474dcec93f6ad"><span class="std std-ref">Function cinn_avx512_sub()</span></a></p></li>
+<li><p><a class="reference internal" href="function___x86__builtin__source_8cc_1a99dcebe2509eab393ae37fb0c9377c9d.html#exhale-function-x86-builtin-source-8cc-1a99dcebe2509eab393ae37fb0c9377c9d"><span class="std std-ref">Function cinn_avx512_sub()</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="defines">
+<h2>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="define___x86__builtin__source_8cc_1a9150d47ac0e5e7d4a02ee2b3a84b9d86.html#exhale-define-x86-builtin-source-8cc-1a9150d47ac0e5e7d4a02ee2b3a84b9d86"><span class="std std-ref">Define __</span></a></p></li>
+<li><p><a class="reference internal" href="define___x86__builtin__source_8cc_1a9150d47ac0e5e7d4a02ee2b3a84b9d86.html#exhale-define-x86-builtin-source-8cc-1a9150d47ac0e5e7d4a02ee2b3a84b9d86"><span class="std std-ref">Define __</span></a></p></li>
+<li><p><a class="reference internal" href="define___x86__builtin__source_8cc_1ae5d885a61a4a51e9eed221d5ef83fb25.html#exhale-define-x86-builtin-source-8cc-1ae5d885a61a4a51e9eed221d5ef83fb25"><span class="std std-ref">Define _CINN_X86_BUILTIN_SOURCE_</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_compute__at__postprocess_8h_1afcbb0ba2f0da908362560765e4f4d886:
+
+Function cinn::lang::detail::ReplaceParamWithConsumerAxis(const poly::ComputeAtInfo&, const std::vector<Var>&, Expr \*)
+=======================================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::detail::ReplaceParamWithConsumerAxis(const poly::ComputeAtInfo&, const std::vector<Var>&, Expr *)

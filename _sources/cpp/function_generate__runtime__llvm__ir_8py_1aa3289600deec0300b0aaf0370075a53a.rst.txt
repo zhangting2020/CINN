@@ -1,0 +1,13 @@
+.. _exhale_function_generate__runtime__llvm__ir_8py_1aa3289600deec0300b0aaf0370075a53a:
+
+Function generate_runtime_llvm_ir::main
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_generate_runtime_llvm_ir.py`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: generate_runtime_llvm_ir::main()

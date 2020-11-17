@@ -1,0 +1,34 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_scope_test.cc:
+
+Program Listing for File scope_test.cc
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_scope_test.cc>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/scope_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/hlir/framework/scope.h"
+   
+   #include <gtest/gtest.h>
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   TEST(Scope, basic) {
+     Scope scope;
+     auto* var    = scope.Var<Tensor>("key");
+     auto& tensor = std::get<Tensor>(*var);
+     tensor->Resize(Shape{{3, 1}});
+     auto* data = tensor->mutable_data<float>(common::DefaultHostTarget());
+     data[0]    = 0.f;
+     data[1]    = 1.f;
+     data[2]    = 2.f;
+   }
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

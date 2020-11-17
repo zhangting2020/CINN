@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1poly_1_1TimeDim:
+
+Struct TimeDim
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::poly::TimeDim
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1ir_1_1IrVerifyVisitor:
+
+Struct IrVerifyVisitor
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_verify.cc`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::IRMutator<>`` (:ref:`exhale_class_classcinn_1_1ir_1_1IRMutator`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::IrVerifyVisitor
+   :members:
+   :protected-members:
+   :undoc-members:

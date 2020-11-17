@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1ir_1_1CudaAxisInfo:
+
+Struct CudaAxisInfo
+===================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::CudaAxisInfo
+   :members:
+   :protected-members:
+   :undoc-members:

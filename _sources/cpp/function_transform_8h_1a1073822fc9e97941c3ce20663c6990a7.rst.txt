@@ -1,0 +1,13 @@
+.. _exhale_function_transform_8h_1a1073822fc9e97941c3ce20663c6990a7:
+
+Function cinn::hlir::pe::Mul(const ir::Tensor&, const ir::Tensor&, int, const std::vector<ir::Expr>&, const ir::Var&, const std::string&)
+=========================================================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Mul(const ir::Tensor&, const ir::Tensor&, int, const std::vector<ir::Expr>&, const ir::Var&, const std::string&)

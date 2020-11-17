@@ -1,0 +1,13 @@
+.. _exhale_variable_extern__func__emitter__builtin_8h_1ab88fd1c676adbfc8ad9564bddf81276d:
+
+Variable cinn::backends::extern_tanh_v_host_repr
+================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::backends::extern_tanh_v_host_repr

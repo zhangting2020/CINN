@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8cc_1a787783077a409f69ef0ec3d3ec47a169:
+
+Function cinn_cpu_floor_fp32(float)
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_floor_fp32(float)

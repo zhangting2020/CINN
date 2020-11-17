@@ -1,0 +1,13 @@
+.. _exhale_function_instruction__test_8cc_1aa84a0ff9b11582b0446bdb6da587345a:
+
+Function cinn::hlir::framework::TEST(Instruction, basic)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_instruction_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::TEST(Instruction, basic)

@@ -1,0 +1,97 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_lang.cc:
+
+File lang.cc
+============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/lang.cc``)
+----------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_lang.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/lang/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_buffer.h`)
+
+- ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/lang/lower.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`)
+
+- ``cinn/lang/placeholder.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`)
+
+- ``cinn/pybind/bind.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`)
+
+- ``cinn/pybind/bind_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``pybind11/functional.h``
+
+- ``variant``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_lang_8cc_1a6e1aaa875997354acf3d3976cea17416`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_lang_8cc_1ab2f9c7e0ed103659499d2c4561777ac5`
+
+- :ref:`exhale_define_lang_8cc_1a8c6b0fe950fb16be4bfa7bbbed77710b`
+
+- :ref:`exhale_define_lang_8cc_1a0a628cf25b799f534d1012099d6295b8`
+
+- :ref:`exhale_define_lang_8cc_1a93e172afcbdb963f73b361e8472f9654`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_lang_8cc_1ac08df896540664767655cbba569fe23b`
+

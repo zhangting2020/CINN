@@ -1,0 +1,66 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.cc:
+
+File lower_function_call_bind_vars.cc
+=====================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/lower_function_call_bind_vars.cc``)
+----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/optim/lower_function_call_bind_vars.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_lower__function__call__bind__vars_8cc_1a7aba6f31d034d2d9cf47bfcb2c59ba5a`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_lower__function__call__bind__vars_8cc_1a5f5d92e23e9ae3e5a6978c288b4a8bd8`
+

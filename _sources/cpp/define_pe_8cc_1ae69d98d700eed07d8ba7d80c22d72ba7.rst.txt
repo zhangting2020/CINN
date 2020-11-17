@@ -1,0 +1,13 @@
+.. _exhale_define_pe_8cc_1ae69d98d700eed07d8ba7d80c22d72ba7:
+
+Define BIND_UNARY
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_pe.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: BIND_UNARY

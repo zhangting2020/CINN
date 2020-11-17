@@ -1,0 +1,13 @@
+.. _exhale_define_cas__test_8cc_1aeedba2affe381e43f1ca69c93bb5bdcf:
+
+Define TEST_SOLVE
+=================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: TEST_SOLVE

@@ -1,0 +1,21 @@
+.. _dir__home_chunwei_project_cinn2_cinn_hlir_pass:
+
+
+Directory pass
+==============
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir>` (``/home/chunwei/project/cinn2/cinn/hlir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/hlir/pass``
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_infershape.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h`
+
+

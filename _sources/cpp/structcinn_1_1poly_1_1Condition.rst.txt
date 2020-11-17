@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1poly_1_1Condition:
+
+Struct Condition
+================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_map.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::poly::Condition
+   :members:
+   :protected-members:
+   :undoc-members:

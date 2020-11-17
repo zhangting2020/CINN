@@ -1,0 +1,57 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_scope_test.cc:
+
+File scope_test.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/scope_test.cc``)
+------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_scope_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/scope.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_scope__test_8cc_1ad0add17e85882726cb87a72a571a0a5c`
+

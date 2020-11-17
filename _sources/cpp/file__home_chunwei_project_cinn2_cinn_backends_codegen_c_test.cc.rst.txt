@@ -1,0 +1,89 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc:
+
+File codegen_c_test.cc
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/codegen_c_test.cc``)
+----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/lang/lower.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`)
+
+- ``cinn/lang/placeholder.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`)
+
+- ``cinn/optim/ir_simplify.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h`)
+
+- ``cinn/runtime/cpu/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`)
+
+- ``gtest/gtest.h``
+
+- ``sstream``
+
+- ``tuple``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a6aed00b40b696acb22460c0dbb79bac6`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a01d27a9ba808a18750d504ab123987e5`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a2b6d424c8735f86958a8c9bd7cb03bab`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a315b1da7b3a7fcb573ad38528a827ee5`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1af9f1e378bbf4953fb0175c90d0a4b7a5`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a82a3f41e71fd9cb53a16494ff3bab26b`
+
+- :ref:`exhale_function_codegen__c__test_8cc_1a005d5fb74688c3d1d1788317bce1e5bb`
+

@@ -1,0 +1,85 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc:
+
+File op_nn_test.cc
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_op>` (``/home/chunwei/project/cinn2/cinn/hlir/op``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/op/op_nn_test.cc``)
+-----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/target.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_target.h`)
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/op_strategy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``cinn/hlir/pe/nn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``gtest/gtest.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_op__nn__test_8cc_1ae0b55effe5c3cc3242002895579550f9`
+
+- :ref:`exhale_function_op__nn__test_8cc_1af5dd55d6be935a7128b1c60c41e05c33`
+
+- :ref:`exhale_function_op__nn__test_8cc_1ad49596aa9dd8545c4a06d7f3e46c3f1a`
+
+- :ref:`exhale_function_op__nn__test_8cc_1a53b559d444c2548dd062e7ab11527c34`
+
+- :ref:`exhale_function_op__nn__test_8cc_1af705709b48d1cd9f278c02873c3f1442`
+

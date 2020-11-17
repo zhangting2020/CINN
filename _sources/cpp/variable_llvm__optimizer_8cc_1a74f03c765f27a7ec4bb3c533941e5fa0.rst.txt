@@ -1,0 +1,13 @@
+.. _exhale_variable_llvm__optimizer_8cc_1a74f03c765f27a7ec4bb3c533941e5fa0:
+
+Variable is_module_pass_manager_
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: is_module_pass_manager_

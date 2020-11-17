@@ -1,0 +1,13 @@
+.. _exhale_function_syntax_8cc_1aebec2ccb21a33595c40f5fcf44ca03ee:
+
+Function cinn::frontend::LoadPaddleProgram(const std::string&, Scope \*, bool, const common::Target&)
+=====================================================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::frontend::LoadPaddleProgram(const std::string&, Scope *, bool, const common::Target&)

@@ -1,0 +1,13 @@
+.. _exhale_function_map_8cc_1aaa68cbaaac11c88413c83e78e7d14531:
+
+Function cinn::poly::operator<<(std::ostream&, const Map&)
+==========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::operator<<(std::ostream&, const Map&)

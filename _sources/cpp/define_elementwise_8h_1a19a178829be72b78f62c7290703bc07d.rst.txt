@@ -1,0 +1,13 @@
+.. _exhale_define_elementwise_8h_1a19a178829be72b78f62c7290703bc07d:
+
+Define HLIR_DCL_UNARY_PE
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: HLIR_DCL_UNARY_PE

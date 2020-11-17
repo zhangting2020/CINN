@@ -1,0 +1,83 @@
+.. _dir__home_chunwei_project_cinn2_cinn_optim:
+
+
+Directory optim
+===============
+
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn>` (``/home/chunwei/project/cinn2/cinn``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``/home/chunwei/project/cinn2/cinn/optim``
+
+
+Files
+-----
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_call_arg_list_to_pod_value.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cast_simplify_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compare_simplify_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_eliminate_broadcast_in_forloop.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_eliminate_broadcast_in_forloop.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_extern_call_process.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_fold_cinn_call_arguments.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_fold_cinn_call_arguments.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_if_simplify_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_insert_debug_log_callee.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_var_with_expr.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_tensor_write_tell.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for_test.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_unroll_loops.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_unroll_loops.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.cc`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops.h`
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+

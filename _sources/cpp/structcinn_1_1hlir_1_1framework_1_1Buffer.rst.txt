@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1hlir_1_1framework_1_1Buffer:
+
+Struct Buffer
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_buffer.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::hlir::framework::Buffer
+   :members:
+   :protected-members:
+   :undoc-members:

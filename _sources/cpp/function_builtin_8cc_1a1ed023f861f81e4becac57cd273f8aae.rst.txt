@@ -1,0 +1,13 @@
+.. _exhale_function_builtin_8cc_1a1ed023f861f81e4becac57cd273f8aae:
+
+Function cinn::lang::Isnan
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::Isnan(Expr)

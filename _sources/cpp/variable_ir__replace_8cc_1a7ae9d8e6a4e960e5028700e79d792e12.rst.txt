@@ -1,0 +1,13 @@
+.. _exhale_variable_ir__replace_8cc_1a7ae9d8e6a4e960e5028700e79d792e12:
+
+Variable from_
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_replace.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: from_

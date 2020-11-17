@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File optimize_test.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-optimize-test-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-optim-optimize-test-cc"></span><h1>Program Listing for File optimize_test.cc<a class="headerlink" href="#program-listing-for-file-optimize-test-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_optim_optimize_test.cc.html#file-home-chunwei-project-cinn2-cinn-optim-optimize-test-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/optim/optimize_test.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/optim/optimize.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">optim</span> <span class="p">{</span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">Optimize</span><span class="p">,</span> <span class="n">Unroll</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">C</span>      <span class="o">=</span> <span class="n">Compute</span><span class="p">({</span><span class="n">Expr</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">Expr</span><span class="p">(</span><span class="mi">20</span><span class="p">)},</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="n">Var</span> <span class="n">i</span><span class="p">,</span> <span class="n">Var</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.f</span><span class="p">;</span> <span class="p">});</span>
+  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Split</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Unroll</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;matmul&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">});</span>
+
+  <span class="k">auto</span> <span class="n">out</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">ROC(</span><span class="s"></span>
+<span class="s">{</span>
+<span class="s">  for (i, 100)</span>
+<span class="s">  {</span>
+<span class="s">    for (j_outer, 4)</span>
+<span class="s">    {</span>
+<span class="s">      {</span>
+<span class="s">        tensor[i, (5 * j_outer)] = (1 + A[i, (5 * j_outer)])</span>
+<span class="s">      }</span>
+<span class="s">      {</span>
+<span class="s">        tensor[i, (1 + (5 * j_outer))] = (1 + A[i, (1 + (5 * j_outer))])</span>
+<span class="s">      }</span>
+<span class="s">      {</span>
+<span class="s">        tensor[i, (2 + (5 * j_outer))] = (1 + A[i, (2 + (5 * j_outer))])</span>
+<span class="s">      }</span>
+<span class="s">      {</span>
+<span class="s">        tensor[i, (3 + (5 * j_outer))] = (1 + A[i, (3 + (5 * j_outer))])</span>
+<span class="s">      }</span>
+<span class="s">      {</span>
+<span class="s">        tensor[i, (4 + (5 * j_outer))] = (1 + A[i, (4 + (5 * j_outer))])</span>
+<span class="s">      }</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="dl">)ROC</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="n">EXPECT_EQ</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">func</span><span class="o">-&gt;</span><span class="n">body</span><span class="p">)),</span> <span class="n">utils</span><span class="o">::</span><span class="n">Trim</span><span class="p">(</span><span class="n">out</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// namespace optim</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_optim_optimize_test.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

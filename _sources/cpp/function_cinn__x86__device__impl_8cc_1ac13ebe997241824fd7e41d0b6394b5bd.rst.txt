@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__x86__device__impl_8cc_1ac13ebe997241824fd7e41d0b6394b5bd:
+
+Function cinn_x86_sync
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_x86_sync()

@@ -1,0 +1,68 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.h:
+
+File intrinsic_types.h
+======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/intrinsic_types.h``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic_types.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__runtime`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1runtime_1_1BufferType`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_intrinsic__types_8h_1a702a59d189a68e4cde8fb2c872b989a4`
+

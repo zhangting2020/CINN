@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__x86__device__impl_8cc_1a6655037c4d6fc95eee837956e8b8616d:
+
+Function cinn_x86_free
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_x86_device_impl.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_x86_free(void *, cinn_buffer_t *)

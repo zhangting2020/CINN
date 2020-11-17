@@ -1,0 +1,117 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_buffer.h:
+
+File buffer.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/buffer.h``)
+-------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_buffer.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_buffer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_buffer.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1__Buffer__`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Buffer`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1ab34e366aeab67f67f3588a2e2de60d67`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ab8b6b5b5a076409c527f8064f1d1452d`
+

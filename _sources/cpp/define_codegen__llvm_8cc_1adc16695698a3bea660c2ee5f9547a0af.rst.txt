@@ -1,0 +1,13 @@
+.. _exhale_define_codegen__llvm_8cc_1adc16695698a3bea660c2ee5f9547a0af:
+
+Define __IR_EMITTER_DEFINE_CMP_VISITOR
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __IR_EMITTER_DEFINE_CMP_VISITOR

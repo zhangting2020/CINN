@@ -1,0 +1,174 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_base.h:
+
+File ir_base.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_base.h``)
+--------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_base.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/common/object.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`)
+
+- ``cinn/common/shared.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_shared.h`)
+
+- ``cinn/common/type.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_type.h`)
+
+- ``glog/logging.h``
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_dim.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+- :ref:`namespace_std`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1BinaryOpNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1Expr`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1FloatImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1IntImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1StringImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1UIntImm`
+
+- :ref:`exhale_struct_structcinn_1_1ir_1_1UnaryOpNode`
+
+- :ref:`exhale_struct_structstd_1_1hash_3_01cinn_1_1ir_1_1Expr_01_4`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IrNode`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1IrNodeRef`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a341195f76b87f9299035c4fdea04fa7b`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1a1e4c1b8aec1fb20151a0a83a9c9e42f9`
+
+- :ref:`exhale_enum_namespacecinn_1_1ir_1acb578243f2e77ffeb79ca3305192c80a`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a9039c33dcc1b0f9fd8441d17bb428ab8`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1af8bb91aa424338a5f18b93385e1e80bb`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1ae01e2608e11de478d9cd4d6a12b7abd6`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_ir__base_8h_1a0a2e01a3859c34e5ff36375b75d85213`
+
+- :ref:`exhale_define_ir__base_8h_1a0a2e01a3859c34e5ff36375b75d85213`
+
+- :ref:`exhale_define_ir__base_8h_1a9aa52114e92ea91f5836dd8685604403`
+
+- :ref:`exhale_define_ir__base_8h_1a9aa52114e92ea91f5836dd8685604403`
+
+- :ref:`exhale_define_ir__base_8h_1a929da6769edd3bbaccd36c69409729de`
+
+- :ref:`exhale_define_ir__base_8h_1a929da6769edd3bbaccd36c69409729de`
+
+- :ref:`exhale_define_ir__base_8h_1aef191762b17888404872700defc84649`
+
+- :ref:`exhale_define_ir__base_8h_1abd4a81388e7169ba5c0132f18d2657fe`
+
+- :ref:`exhale_define_ir__base_8h_1a545aed34f6499e30f2facca5e41ce3e3`
+
+- :ref:`exhale_define_ir__base_8h_1a0c8539d9bc60605dda88666cf0ac30db`
+
+- :ref:`exhale_define_ir__base_8h_1a9cd8117debc752a2dbbf45d44733225f`
+
+- :ref:`exhale_define_ir__base_8h_1adc7ff8af731c62e6b314698bb515b3ff`
+
+- :ref:`exhale_define_ir__base_8h_1a876b5219120613a621228c62f8bbacd4`
+
+- :ref:`exhale_define_ir__base_8h_1a4e0741783bbe80774103a261642af11d`
+

@@ -1,0 +1,67 @@
+
+.. _file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc:
+
+File test_matmul.cc
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests_benchmark>` (``/home/chunwei/project/cinn2/tests/benchmark``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/benchmark/test_matmul.cc``)
+---------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``gtest/gtest.h``
+
+- ``tests/benchmark/test_matmul.h`` (:ref:`file__home_chunwei_project_cinn2_tests_benchmark_test_matmul.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__tests`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_test__matmul_8cc_1a0ebe3f92ad5b4cc05dbca5ec385de02e`
+
+- :ref:`exhale_function_test__matmul_8cc_1a47f72e42d85fb0f531f53d63493d4ba2`
+
+- :ref:`exhale_function_test__matmul_8cc_1aa6dc81d9e404ddabda6d7e4831e8c5ce`
+
+- :ref:`exhale_function_test__matmul_8cc_1a6ffe19c6d522c3d97d300d9a0eb625fb`
+
+- :ref:`exhale_function_test__matmul_8cc_1af736ec0cf5765f47de495b8a2548dd71`
+
+- :ref:`exhale_function_test__matmul_8cc_1af55c9a3f3cc74fd672e9e65c56b39430`
+
+- :ref:`exhale_function_test__matmul_8cc_1a5206f22e3e9419eccd71b1aa9aacd351`
+

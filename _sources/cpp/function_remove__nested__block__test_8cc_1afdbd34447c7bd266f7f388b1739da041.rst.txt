@@ -1,0 +1,13 @@
+.. _exhale_function_remove__nested__block__test_8cc_1afdbd34447c7bd266f7f388b1739da041:
+
+Function cinn::optim::TEST(RemoveNestedBlock, basic)
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_remove_nested_block_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::TEST(RemoveNestedBlock, basic)

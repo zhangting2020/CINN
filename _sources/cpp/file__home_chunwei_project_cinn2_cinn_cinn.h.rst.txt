@@ -1,0 +1,142 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_cinn.h:
+
+File cinn.h
+===========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn>` (``/home/chunwei/project/cinn2/cinn``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/cinn.h``)
+--------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_cinn.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`)
+
+- ``cinn/backends/codegen_c_x86.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86.h`)
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
+
+- ``cinn/lang/compute.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute.h`)
+
+- ``cinn/lang/lower.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`)
+
+- ``cinn/lang/placeholder.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`)
+
+- ``cinn/optim/optimize.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_x86_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_syntax_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_schedule.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_broadcast_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_elementwise_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_pe_transform_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_collect_ir_nodes_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_map_extern_call.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_polyfor_to_for_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_vectorize_loops_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math_test.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+

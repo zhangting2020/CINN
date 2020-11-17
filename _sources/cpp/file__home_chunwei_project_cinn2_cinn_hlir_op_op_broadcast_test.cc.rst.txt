@@ -1,0 +1,73 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc:
+
+File op_broadcast_test.cc
+=========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_op>` (``/home/chunwei/project/cinn2/cinn/hlir/op``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/op/op_broadcast_test.cc``)
+------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_op_op_broadcast_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/op_strategy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``cinn/hlir/pe/broadcast.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`)
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``gtest/gtest.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_op__broadcast__test_8cc_1a45309dc4e132a6ca25bf4c6e982fe20b`
+
+- :ref:`exhale_function_op__broadcast__test_8cc_1a8dab94fe35a147b276eda99291b7acc6`
+

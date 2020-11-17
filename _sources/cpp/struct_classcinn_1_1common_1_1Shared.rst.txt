@@ -1,0 +1,26 @@
+.. _exhale_struct_classcinn_1_1common_1_1Shared:
+
+Template Struct Shared
+======================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_object.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public cinn::hlir::framework::Tensor`` (:ref:`exhale_class_classcinn_1_1hlir_1_1framework_1_1Tensor`)
+- ``public cinn::poly::StageMap`` (:ref:`exhale_class_classcinn_1_1poly_1_1StageMap`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::common::Shared
+   :members:
+   :protected-members:
+   :undoc-members:

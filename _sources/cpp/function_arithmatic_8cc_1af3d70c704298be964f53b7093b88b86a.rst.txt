@@ -1,0 +1,13 @@
+.. _exhale_function_arithmatic_8cc_1af3d70c704298be964f53b7093b88b86a:
+
+Function cinn::common::IsPureMath
+=================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_arithmatic.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::IsPureMath(Expr)

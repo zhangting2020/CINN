@@ -1,0 +1,53 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h:
+
+File use_extern_funcs.h
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_runtime>` (``/home/chunwei/project/cinn2/cinn/runtime``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/runtime/use_extern_funcs.h``)
+----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/runtime/cpu/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`)
+
+- ``cinn/runtime/cuda/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_use_extern_funcs.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_frontend_interpreter_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.cc`
+
+
+

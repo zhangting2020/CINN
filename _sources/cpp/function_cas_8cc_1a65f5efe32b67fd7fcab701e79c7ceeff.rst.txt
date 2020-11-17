@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1a65f5efe32b67fd7fcab701e79c7ceeff:
+
+Function cinn::common::detail::ConvertCasToCinn
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::ConvertCasToCinn(Expr)

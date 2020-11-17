@@ -1,0 +1,13 @@
+.. _exhale_variable_namespacecinn_1a207d22c80285dbe0335e5468436e8516:
+
+Variable cinn::kernel
+=====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::kernel

@@ -1,0 +1,72 @@
+
+.. _file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc:
+
+File test03_convolution_main.cc
+===============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests>` (``/home/chunwei/project/cinn2/tests``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/test03_convolution_main.cc``)
+-----------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_test03_convolution_main.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``gtest/gtest.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1a2a1768d662477c3900397b615d6daf1c`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_namespacecinn_1a6fd210800dc6dadd34f2673fd62c5383`
+
+- :ref:`exhale_variable_namespacecinn_1a16d029a792e59daa29b1f4b81a7465db`
+
+- :ref:`exhale_variable_namespacecinn_1a9ec546b90d4ec1de3a05b05dafd6a891`
+
+- :ref:`exhale_variable_namespacecinn_1a207d22c80285dbe0335e5468436e8516`
+
+- :ref:`exhale_variable_namespacecinn_1a65bb3e84a0e27ad096c05cb186595808`
+
+- :ref:`exhale_variable_namespacecinn_1a5f5166cdb44c343d66ba45177060d056`
+
+- :ref:`exhale_variable_namespacecinn_1a3e0055a9251339f1e2d56106d1879abc`
+

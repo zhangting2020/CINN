@@ -1,0 +1,25 @@
+.. _exhale_struct_structcinn_1_1ir_1_1__LoweredFunc__:
+
+Struct _LoweredFunc_
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::ir::ExprNode< _LoweredFunc_ >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::_LoweredFunc_
+   :members:
+   :protected-members:
+   :undoc-members:

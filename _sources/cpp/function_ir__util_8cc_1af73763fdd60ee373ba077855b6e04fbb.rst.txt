@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1af73763fdd60ee373ba077855b6e04fbb:
+
+Function cinn::common::CheckTensorUniqueInExpr
+==============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::CheckTensorUniqueInExpr(Expr)

@@ -1,0 +1,13 @@
+.. _exhale_function_ir__util_8cc_1af69d9913dee6589635fed8873fd0d624:
+
+Function cinn::common::select
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::select(Expr, Expr, Expr)

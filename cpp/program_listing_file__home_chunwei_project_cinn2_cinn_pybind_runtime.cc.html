@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File runtime.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-runtime-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-pybind-runtime-cc"></span><h1>Program Listing for File runtime.cc<a class="headerlink" href="#program-listing-for-file-runtime-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_runtime.cc.html#file-home-chunwei-project-cinn2-cinn-pybind-runtime-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/pybind/runtime.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;glog/logging.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/numpy.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/operators.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/stl.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/pybind/bind.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/runtime/cinn_runtime.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">py</span> <span class="o">=</span> <span class="n">pybind11</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">pybind</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="p">{</span>
+<span class="k">using</span> <span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">BindCinnRuntime</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="p">);</span>
+
+<span class="n">cinn_type_t</span> <span class="nf">NumpyTypeToCinn</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span> <span class="n">dt</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">dt</span><span class="p">.</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">cinn_int32_t</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dt</span><span class="p">.</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">cinn_int64_t</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dt</span><span class="p">.</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">cinn_uint32_t</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dt</span><span class="p">.</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">cinn_uint64_t</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dt</span><span class="p">.</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">cinn_float32_t</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">dt</span><span class="p">.</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">cinn_float64_t</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">cinn_unk_t</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">cinn_buffer_t</span> <span class="o">*</span><span class="nf">CreateBufferFromNumpy</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">array</span> <span class="n">data</span><span class="p">,</span> <span class="n">cinn_device_kind_t</span> <span class="n">device</span><span class="p">,</span> <span class="kt">int</span> <span class="n">align</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">cinn_type_t</span> <span class="n">type</span> <span class="o">=</span> <span class="n">NumpyTypeToCinn</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">dtype</span><span class="p">());</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">shape</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">copy_n</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">data</span><span class="p">.</span><span class="n">ndim</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">shape</span><span class="p">));</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">new_</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">align</span><span class="p">);</span>
+  <span class="n">cinn_buffer_malloc</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buffer</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">data</span><span class="p">.</span><span class="n">nbytes</span><span class="p">());</span>
+
+  <span class="k">return</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">py</span><span class="o">::</span><span class="n">array</span> <span class="n">BufferHostMemoryToNumpy</span><span class="p">(</span><span class="n">cinn_buffer_t</span> <span class="o">&amp;</span><span class="n">buffer</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// NOLINT</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">dtype</span> <span class="n">dt</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_int32_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_int64_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_uint32_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_uint64_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_float32_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">cinn_float64_t</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Not supported type found&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">array</span><span class="o">::</span><span class="n">ShapeContainer</span> <span class="n">shape</span><span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">dims</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">dims</span> <span class="o">+</span> <span class="n">buffer</span><span class="p">.</span><span class="n">dimensions</span><span class="p">);</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">array</span> <span class="n">array</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">shape</span><span class="p">));</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">mutable_data</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">mutable_data</span><span class="p">();</span>
+  <span class="n">cinn_buffer_copy_to_host</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buffer</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">device</span> <span class="o">==</span> <span class="n">cinn_x86_device</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">mutable_data</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">memory</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">memory_size</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CINN_RUNTIME_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">VoidPointer</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">{</span><span class="k">nullptr</span><span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">BindSpecialTypes</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">VoidPointer</span><span class="o">&gt;</span> <span class="n">void_ptr</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;VoidPointer&quot;</span><span class="p">);</span>
+  <span class="n">void_ptr</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+
+<span class="cp">#define VOID_PTR_SUPPORT_TYPE(__type) \</span>
+<span class="cp">  void_ptr.def(&quot;set&quot;, [](VoidPointer &amp;self, __type *p) { self.ptr = static_cast&lt;void *&gt;(p); })</span>
+
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">char</span><span class="p">);</span>
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">int8_t</span><span class="p">);</span>
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">int16_t</span><span class="p">);</span>
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">int32_t</span><span class="p">);</span>
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">int64_t</span><span class="p">);</span>
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">float</span><span class="p">);</span>
+  <span class="n">VOID_PTR_SUPPORT_TYPE</span><span class="p">(</span><span class="kt">double</span><span class="p">);</span>
+<span class="cp">#undef VOID_PTR_SUPPORT_TYPE</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;nullptr&quot;</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">VoidPointer</span><span class="p">();</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">BindCinnRuntime</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">cinn_type_code_t</span><span class="o">&gt;</span> <span class="n">cinn_type_code</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_type_code_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_type_code</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_type_unk&quot;</span><span class="p">,</span> <span class="n">cinn_type_unk</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_type_int&quot;</span><span class="p">,</span> <span class="n">cinn_type_int</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_type_uint&quot;</span><span class="p">,</span> <span class="n">cinn_type_uint</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_type_float&quot;</span><span class="p">,</span> <span class="n">cinn_type_float</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_type_handle&quot;</span><span class="p">,</span> <span class="n">cinn_type_handle</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">export_values</span><span class="p">();</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">cinn_type_t</span><span class="o">&gt;</span> <span class="n">cinn_type</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_type_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_type</span><span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;code&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_type_t</span><span class="o">::</span><span class="n">code</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;bits&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_type_t</span><span class="o">::</span><span class="n">bits</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;lanes&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_type_t</span><span class="o">::</span><span class="n">lanes</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">cinn_type_code_t</span><span class="p">,</span> <span class="kt">uint8_t</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;code&quot;</span><span class="p">),</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;bits&quot;</span><span class="p">),</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;lanes&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">self</span> <span class="o">==</span> <span class="n">cinn_type_t</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">self</span> <span class="o">!=</span> <span class="n">cinn_type_t</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;bytes&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_type_t</span><span class="o">::</span><span class="n">bytes</span><span class="p">);</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_unk_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_unk_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_int32_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_int32_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_int64_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_int64_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_uint32_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_uint32_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_uint64_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_uint64_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_float32_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_float32_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_float64_t&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_float64_t</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">cinn_device_kind_t</span><span class="o">&gt;</span> <span class="n">cinn_device_kind</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_device_kind_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_device_kind</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_unk_device&quot;</span><span class="p">,</span> <span class="n">cinn_unk_device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_x86_device&quot;</span><span class="p">,</span> <span class="n">cinn_x86_device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_opencl_device&quot;</span><span class="p">,</span> <span class="n">cinn_opencl_device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_arm_device&quot;</span><span class="p">,</span> <span class="n">cinn_arm_device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">export_values</span><span class="p">();</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">enum_</span><span class="o">&lt;</span><span class="n">cinn_buffer_kind_t</span><span class="o">&gt;</span> <span class="n">cinn_buffer_kind</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_buffer_kind_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_buffer_kind</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_buffer_on_host&quot;</span><span class="p">,</span> <span class="n">cinn_buffer_on_host</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;cinn_buffer_on_device&quot;</span><span class="p">,</span> <span class="n">cinn_buffer_on_device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">export_values</span><span class="p">();</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">cinn_device_interface_t</span><span class="o">&gt;</span> <span class="n">cinn_device_interface</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_device_interface_t&quot;</span><span class="p">);</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_device_release&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_device_release</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_copy_to_host&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_copy_to_host</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_copy_to_device&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_copy_to_device</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_copy&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_copy</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_device_sync&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_device_sync</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_malloc&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_malloc</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_malloc&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">VoidPointer</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">,</span> <span class="n">cinn_buffer_t</span> <span class="o">*</span><span class="n">buffer</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cinn_buffer_malloc</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">ptr</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span> <span class="p">});</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_free&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_free</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_get_data_handle&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_get_data_handle</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_get_data_const_handle&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_get_data_const_handle</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span><span class="o">&gt;</span> <span class="n">cinn_buffer</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_buffer_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_buffer</span><span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;device_interface&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">device_interface</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;memory&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">memory</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;flag&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">flag</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">type</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;dimensions&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">dimensions</span><span class="p">)</span>
+      <span class="c1">//.def_readwrite(&quot;dims&quot;, &amp;cinn_buffer_t::dims)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;lazy&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">lazy</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;memory_size&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">memory_size</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;align&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">align</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def_static</span><span class="p">(</span><span class="s">&quot;new&quot;</span><span class="p">,</span>
+                  <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">new_</span><span class="p">,</span>
+                  <span class="n">arg</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">),</span>
+                  <span class="n">arg</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">),</span>
+                  <span class="n">arg</span><span class="p">(</span><span class="s">&quot;shape&quot;</span><span class="p">),</span>
+                  <span class="n">arg</span><span class="p">(</span><span class="s">&quot;align&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">py</span><span class="o">::</span><span class="n">return_value_policy</span><span class="o">::</span><span class="n">reference</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def_static</span><span class="p">(</span><span class="s">&quot;delete&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">delete_</span><span class="p">)</span>
+      <span class="c1">// .def_static(&quot;alloc&quot;, &amp;cinn_buffer_t::alloc)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;resize&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">resize</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;num_elements&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">num_elements</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;on_host&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">on_host</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;on_device&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">on_device</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set_on_host&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">set_on_host</span><span class="p">,</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set_on_device&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">set_on_device</span><span class="p">,</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;device_sync&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">device_sync</span><span class="p">,</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;ctx&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;begin&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">begin</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">return_value_policy</span><span class="o">::</span><span class="n">reference</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;end&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">end</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">return_value_policy</span><span class="o">::</span><span class="n">reference</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;get_flag&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">get_flag</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set_flag&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_t</span><span class="o">::</span><span class="n">set_flag</span><span class="p">)</span>
+      <span class="c1">// Python methods</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">BufferHostMemoryToNumpy</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">CreateBufferFromNumpy</span><span class="p">),</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">),</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;device&quot;</span><span class="p">),</span> <span class="n">arg</span><span class="p">(</span><span class="s">&quot;align&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_x86_device_interface&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_x86_device_interface</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_load_float32&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_load_float32</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_buffer_load_float64&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_buffer_load_float64</span><span class="p">);</span>
+  <span class="c1">//.def(&quot;cinn_buffer_slice&quot;, &amp;cinn_buffer_slice,</span>
+  <span class="c1">//     py::return_value_policy::reference);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">cinn_value_t</span><span class="o">&gt;</span> <span class="n">cinn_value</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_value_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_value</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def_property</span><span class="p">(</span>
+          <span class="s">&quot;v_int64&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="kt">int64_t</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">v_int64</span><span class="p">;</span> <span class="p">},</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">int64_t</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">.</span><span class="n">v_int64</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def_property</span><span class="p">(</span>
+          <span class="s">&quot;v_float64&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="kt">double</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">v_float64</span><span class="p">;</span> <span class="p">},</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">double</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">.</span><span class="n">v_float64</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def_property</span><span class="p">(</span>
+          <span class="s">&quot;v_handle&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">v_handle</span><span class="p">;</span> <span class="p">},</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">.</span><span class="n">v_handle</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def_property</span><span class="p">(</span>
+          <span class="s">&quot;v_str&quot;</span><span class="p">,</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">v_str</span><span class="p">;</span> <span class="p">},</span>
+          <span class="p">[](</span><span class="n">cinn_value_t</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">.</span><span class="n">v_str</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span> <span class="p">});</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">cinn_pod_value_t</span><span class="o">&gt;</span> <span class="n">cinn_pod_value</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;cinn_pod_value_t&quot;</span><span class="p">);</span>
+  <span class="n">cinn_pod_value</span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">cinn_value_t</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="n">cinn_buffer_t</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_double&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="kt">double</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_float&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="kt">float</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_int32&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="kt">int32_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_int64&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="kt">int64_t</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_void_p&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="kt">void</span> <span class="o">*</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_cinn_buffer_t_p&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="n">cinn_buffer_t</span> <span class="o">*</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;to_char_p&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="k">operator</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;type_code&quot;</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">overload_cast</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="n">type_code</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">const_</span><span class="p">))</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;data_addr&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_t</span><span class="o">::</span><span class="n">data_addr</span><span class="p">);</span>
+
+  <span class="n">m</span><span class="o">-&gt;</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_pod_value_to_float&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_to_float</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_pod_value_to_double&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_to_double</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_pod_value_to_int64&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_to_int64</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_pod_value_to_int32&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_to_int32</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_pod_value_to_void_p&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_to_void_p</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;cinn_pod_value_to_buffer_p&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">cinn_pod_value_to_buffer_p</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace</span>
+
+<span class="kt">void</span> <span class="n">BindRuntime</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">BindSpecialTypes</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+  <span class="n">BindCinnRuntime</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn::pybind</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_pybind_runtime.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

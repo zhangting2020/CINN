@@ -1,0 +1,79 @@
+
+.. _namespace_cinn__tests:
+
+Namespace cinn::tests
+=====================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1ElementwiseAddTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulArrayPackingTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulBlockTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulLoopPermutationTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulSplitTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulTileTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1MatmulVectorizeTester`
+
+- :ref:`exhale_class_classcinn_1_1tests_1_1OpBenchmarkTester`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_test02__helper_8h_1ab4e0290a8bef144dfe6a96ff43f5c8bb`
+
+- :ref:`exhale_function_test02__helper_8h_1a4f99a1c48e78fac84ea11048cfbbb57b`
+
+- :ref:`exhale_function_test02__helper_8h_1ac93195ed550b03610243d888a03143c9`
+
+- :ref:`exhale_function_test02__helper_8h_1a222166bec7969828315e0bc78bb879e5`
+
+- :ref:`exhale_function_test02__helper_8h_1a5b2ef05a6488c26914d09badeb593022`
+
+- :ref:`exhale_function_test02__helper_8h_1acffb3feda77acf2e612b722b3313f934`
+
+- :ref:`exhale_function_test02__helper_8h_1a210599c49ccf2c5d45b0c563bae1f536`
+
+- :ref:`exhale_function_test02__helper_8h_1a294473e8010d8834c15bf49a7e6721d0`
+
+- :ref:`exhale_function_test02__helper_8h_1af120ab2fd2a753d4d872c5518afad763`
+
+- :ref:`exhale_function_test02__helper_8h_1a45789c7f69188f62ae4f343f0f6533ae`
+
+- :ref:`exhale_function_test__matmul_8cc_1aa6dc81d9e404ddabda6d7e4831e8c5ce`
+
+- :ref:`exhale_function_test__elementwise_8cc_1add0aad53754ec2da3cfd987defd2fe29`
+
+- :ref:`exhale_function_test__elementwise_8cc_1ab95c64eb508b7c778110cbab4acc5747`
+
+- :ref:`exhale_function_test__matmul_8cc_1af55c9a3f3cc74fd672e9e65c56b39430`
+
+- :ref:`exhale_function_test__matmul_8cc_1a0ebe3f92ad5b4cc05dbca5ec385de02e`
+
+- :ref:`exhale_function_test__matmul_8cc_1a47f72e42d85fb0f531f53d63493d4ba2`
+
+- :ref:`exhale_function_test__matmul_8cc_1a6ffe19c6d522c3d97d300d9a0eb625fb`
+
+- :ref:`exhale_function_test__matmul_8cc_1af736ec0cf5765f47de495b8a2548dd71`
+
+- :ref:`exhale_function_test__matmul_8cc_1a5206f22e3e9419eccd71b1aa9aacd351`

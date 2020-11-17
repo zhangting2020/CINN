@@ -1,0 +1,72 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h:
+
+Program Listing for File graph.h
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h>` (``/home/chunwei/project/cinn2/cinn/hlir/framework/graph.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <any>
+   #include <memory>
+   #include <string>
+   #include <unordered_map>
+   #include <vector>
+   
+   #include "cinn/common/graph_utils.h"
+   #include "cinn/frontend/syntax.h"
+   #include "cinn/hlir/framework/node.h"
+   
+   namespace cinn {
+   namespace hlir {
+   namespace framework {
+   
+   class Graph : public cinn::common::Graph {
+    public:
+     explicit Graph(const frontend::Program& prog);
+   
+     std::vector<NodeData*> outputs;
+   
+     std::unordered_map<std::string, std::shared_ptr<std::any>> attrs;
+   
+     void RegisterNode(size_t key, Node* node) { this->common::Graph::RegisterNode(key, node->as<common::GraphNode>()); }
+     void RegisterNode(size_t key, NodeData* node) {
+       this->common::Graph::RegisterNode(key, node->as<common::GraphNode>());
+     }
+     void RegisterNode(const std::string& key, Node* node) {
+       this->common::Graph::RegisterNode(key, node->as<common::GraphNode>());
+     }
+     void RegisterNode(const std::string& key, NodeData* node) {
+       this->common::Graph::RegisterNode(key, node->as<common::GraphNode>());
+     }
+   
+     template <typename T>
+     inline const T& GetAttrs(const std::string& attr_name) const {
+       auto it = attrs.find(attr_name);
+       CHECK(it != attrs.end()) << "Cannot find attribute [" << attr_name << "] in the graph";
+       return std::any_cast<const T&>(*it->second);
+     }
+   
+     template <typename T>
+     inline T& GetMutableAttrs(const std::string& attr_name) {
+       auto it = attrs.find(attr_name);
+       CHECK(it != attrs.end()) << "Cannot find attribute [" << attr_name << "] in the graph";
+       return std::any_cast<T&>(*it->second);
+     }
+   
+     inline bool HasAttr(const std::string& attr_name) const {
+       auto it = attrs.find(attr_name);
+       return it != attrs.end();
+     }
+   
+    private:
+     CINN_DISALLOW_COPY_AND_ASSIGN(Graph);
+   };
+   
+   }  // namespace framework
+   }  // namespace hlir
+   }  // namespace cinn

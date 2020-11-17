@@ -1,0 +1,69 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.h:
+
+File llvm_optimizer.h
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends_llvm>` (``/home/chunwei/project/cinn2/cinn/backends/llvm``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/llvm/llvm_optimizer.h``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``functional`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_functional.cc`)
+
+- ``llvm/IR/Instruction.h``
+
+- ``llvm/IR/LegacyPassManager.h``
+
+- ``llvm/IR/Module.h``
+
+- ``llvm/Pass.h``
+
+- ``llvm/Target/TargetMachine.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_optimizer.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__backends`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1LLVMModuleOptimizer`
+

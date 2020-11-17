@@ -1,0 +1,13 @@
+.. _exhale_define_cinn__runtime_8h_1aa2455a107a577911de6e5f28a075002e:
+
+Define CINN_CHECKP
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_CHECKP

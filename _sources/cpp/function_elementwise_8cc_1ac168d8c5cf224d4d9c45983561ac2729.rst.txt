@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1ac168d8c5cf224d4d9c45983561ac2729:
+
+Function cinn::hlir::pe::Asin
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Asin(const Tensor&, const std::string&)

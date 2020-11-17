@@ -1,0 +1,13 @@
+.. _exhale_variable_runtime_8cc_1add9af9569af79ec26dd741fb226b38ba:
+
+Variable ptr
+============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_runtime.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: ptr

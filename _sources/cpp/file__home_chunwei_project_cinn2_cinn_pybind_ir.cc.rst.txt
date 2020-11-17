@@ -1,0 +1,104 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_pybind_ir.cc:
+
+File ir.cc
+==========
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_pybind>` (``/home/chunwei/project/cinn2/cinn/pybind``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/pybind/ir.cc``)
+--------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_pybind_ir.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/ir_base.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`)
+
+- ``cinn/ir/ir_operators.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_operators.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+- ``cinn/ir/lowered_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_lowered_func.h`)
+
+- ``cinn/ir/operation.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`)
+
+- ``cinn/ir/registry.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_registry.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+- ``cinn/lang/packed_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``cinn/pybind/bind.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.h`)
+
+- ``cinn/pybind/bind_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`)
+
+- ``llvm/Support/FormatVariadic.h``
+
+- ``pybind11/functional.h``
+
+- ``pybind11/operators.h``
+
+- ``pybind11/stl.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``type_traits``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__pybind`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_pybind_2ir_8cc_1a43f7de1c1182b4beb9ecf40611c52e0a`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_pybind_2ir_8cc_1aeea2af7e57919c3f022cc897497f7ba0`
+
+- :ref:`exhale_define_pybind_2ir_8cc_1ae9c5e2b7c317cc92fb20357df21d7f6f`
+
+- :ref:`exhale_define_pybind_2ir_8cc_1a90d43d9f711c3fefc847c210527606d9`
+
+- :ref:`exhale_define_pybind_2ir_8cc_1a7bf9187e7e5ed01023a3962041e16ff2`
+
+- :ref:`exhale_define_pybind_2ir_8cc_1a9492f139b6b5120e668941dcd44a9a53`
+
+- :ref:`exhale_define_pybind_2ir_8cc_1a7de8d11fc40976ee4d5a636ab90570d3`
+

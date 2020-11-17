@@ -1,0 +1,13 @@
+.. _exhale_typedef_pass_8h_1a126928dffab7bb7d276b64ff1c8a1459:
+
+Typedef cinn::hlir::framework::PassFunction
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::PassFunction

@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn__type__t:
+
+Struct cinn_type_t
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn_type_t
+   :members:
+   :protected-members:
+   :undoc-members:

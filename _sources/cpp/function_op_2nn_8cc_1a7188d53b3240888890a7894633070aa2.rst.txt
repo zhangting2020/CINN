@@ -1,0 +1,13 @@
+.. _exhale_function_op_2nn_8cc_1a7188d53b3240888890a7894633070aa2:
+
+Function cinn::hlir::op::InferDtypeForPool
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_nn.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::op::InferDtypeForPool(const std::vector<Type>&, const framework::NodeAttr&)

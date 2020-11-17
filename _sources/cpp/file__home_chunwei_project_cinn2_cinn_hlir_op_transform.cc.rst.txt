@@ -1,0 +1,75 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_op_transform.cc:
+
+File transform.cc
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_op>` (``/home/chunwei/project/cinn2/cinn/hlir/op``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/op/transform.cc``)
+----------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_op_transform.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/op_strategy.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`)
+
+- ``cinn/hlir/pe/transform.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__op`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_op_2transform_8cc_1aa4ac3c469985690bdff587f745042303`
+
+- :ref:`exhale_function_op_2transform_8cc_1ab9e985b484c2e3dd7b580f6d610a315c`
+
+- :ref:`exhale_function_op_2transform_8cc_1a090d46af0c3f19d6d05b18337bf8e146`
+
+- :ref:`exhale_function_op_2transform_8cc_1a3975ba8c127ea30e066a3890b9999463`
+
+- :ref:`exhale_function_op_2transform_8cc_1a9eb4c8ad173d7974914e2dbf20fd219c`
+
+- :ref:`exhale_function_op_2transform_8cc_1a23988ad6d0371a78da069f25093a06ed`
+
+- :ref:`exhale_function_op_2transform_8cc_1a01cc771baea08b59665c27862b29b886`
+

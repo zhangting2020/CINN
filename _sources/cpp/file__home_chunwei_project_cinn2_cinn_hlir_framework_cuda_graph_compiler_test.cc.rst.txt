@@ -1,0 +1,127 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc:
+
+File cuda_graph_compiler_test.cc
+================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_hlir_framework>` (``/home/chunwei/project/cinn2/cinn/hlir/framework``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/hlir/framework/cuda_graph_compiler_test.cc``)
+--------------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``any``
+
+- ``cinn/backends/codegen_cuda_dev.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_dev.h`)
+
+- ``cinn/backends/codegen_cuda_host.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_host.h`)
+
+- ``cinn/backends/codegen_cuda_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_cuda_util.h`)
+
+- ``cinn/backends/cuda_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_cuda_util.h`)
+
+- ``cinn/backends/extern_func_jit_register.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`)
+
+- ``cinn/backends/llvm/execution_engine.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_execution_engine.h`)
+
+- ``cinn/backends/llvm/simple_jit.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_simple_jit.h`)
+
+- ``cinn/backends/nvrtc_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util.h`)
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/common/cuda_test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_cuda_test_helper.h`)
+
+- ``cinn/common/ir_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_ir_util.h`)
+
+- ``cinn/common/test_helper.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_test_helper.h`)
+
+- ``cinn/hlir/framework/graph.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph.h`)
+
+- ``cinn/hlir/framework/graph_compiler.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_graph_compiler.h`)
+
+- ``cinn/hlir/framework/node.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.h`)
+
+- ``cinn/hlir/framework/op.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op.h`)
+
+- ``cinn/hlir/framework/pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_pass.h`)
+
+- ``cinn/hlir/framework/scope.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_scope.h`)
+
+- ``cinn/hlir/op/use_ops.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_use_ops.h`)
+
+- ``cinn/hlir/pass/use_pass.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pass_use_pass.h`)
+
+- ``cinn/hlir/pe/broadcast.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.h`)
+
+- ``cinn/ir/ir_printer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.h`)
+
+- ``cinn/lang/packed_func.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_packed_func.h`)
+
+- ``cinn/runtime/cpu/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_use_extern_funcs.h`)
+
+- ``cinn/runtime/cuda/cuda_module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_module.h`)
+
+- ``cinn/runtime/cuda/cuda_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.h`)
+
+- ``cinn/runtime/use_extern_funcs.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_runtime_use_extern_funcs.h`)
+
+- ``gtest/gtest.h``
+
+- ``stdlib.h``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``tuple``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__hlir`
+
+- :ref:`namespace_cinn__hlir__framework`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1af36b8939e330a02f860fbb385fc0f0c5`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1ab7f80b12f64e3b2b63b368ae95d21f4d`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1a78c1de8a1fa487fb5a9ea90a36e22e12`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1a67fa58e8f9eb347f9fc509f9e84c086b`
+
+- :ref:`exhale_function_cuda__graph__compiler__test_8cc_1a2220cced09dfe609160c0b5e25889ee1`
+

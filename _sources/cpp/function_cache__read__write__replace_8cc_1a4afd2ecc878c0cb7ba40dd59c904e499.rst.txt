@@ -1,0 +1,13 @@
+.. _exhale_function_cache__read__write__replace_8cc_1a4afd2ecc878c0cb7ba40dd59c904e499:
+
+Function cinn::optim::CacheReadWriteReplace
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::CacheReadWriteReplace(Expr *, poly::StageMap, std::map<std::string, ir::Tensor> *)

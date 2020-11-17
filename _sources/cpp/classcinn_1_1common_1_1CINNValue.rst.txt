@@ -1,0 +1,25 @@
+.. _exhale_class_classcinn_1_1common_1_1CINNValue:
+
+Class CINNValue
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn_pod_value_t`` (:ref:`exhale_struct_structcinn__pod__value__t`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::common::CINNValue
+   :members:
+   :protected-members:
+   :undoc-members:

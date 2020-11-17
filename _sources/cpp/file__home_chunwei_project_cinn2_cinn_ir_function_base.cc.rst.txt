@@ -1,0 +1,46 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_function_base.cc:
+
+File function_base.cc
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/function_base.cc``)
+---------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_function_base.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/function_base.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+

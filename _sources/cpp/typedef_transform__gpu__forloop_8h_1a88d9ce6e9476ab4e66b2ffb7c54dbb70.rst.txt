@@ -1,0 +1,13 @@
+.. _exhale_typedef_transform__gpu__forloop_8h_1a88d9ce6e9476ab4e66b2ffb7c54dbb70:
+
+Typedef cinn::optim::forloop_infos_t
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::optim::forloop_infos_t

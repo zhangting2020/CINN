@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a9deec1be1a51e29b967921bea758e732:
+
+Function cinn::ir::TEST(Buffer, bind_to_multiple_tensors)
+=========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::TEST(Buffer, bind_to_multiple_tensors)

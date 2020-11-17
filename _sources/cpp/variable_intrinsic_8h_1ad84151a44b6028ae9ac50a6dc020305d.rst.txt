@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1ad84151a44b6028ae9ac50a6dc020305d:
+
+Variable cinn::runtime::intrisic::pod_value_to_void_p
+=====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::pod_value_to_void_p

@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8cc_1acd67fa844acabc8ae2fe5dab83916b03:
+
+Function cinn::hlir::pe::Atanh
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Atanh(const Tensor&, const std::string&)

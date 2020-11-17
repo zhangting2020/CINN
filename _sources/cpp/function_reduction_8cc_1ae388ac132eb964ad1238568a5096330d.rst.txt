@@ -1,0 +1,13 @@
+.. _exhale_function_reduction_8cc_1ae388ac132eb964ad1238568a5096330d:
+
+Template Function cinn::hlir::pe::Reduce
+========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Reduce(const Tensor&, poly::StageMap, const std::vector<Expr>&, const FuncOp&, bool, const ir::Expr&, const std::string&)

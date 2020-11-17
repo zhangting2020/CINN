@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File cinn_runtime.h &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-cinn-runtime-h">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h"></span><h1>Program Listing for File cinn_runtime.h<a class="headerlink" href="#program-listing-for-file-cinn-runtime-h" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h.html#file-home-chunwei-project-cinn2-cinn-runtime-cinn-runtime-h"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/runtime/cinn_runtime.h</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef CINN_RUNTIME_CINN_RUNTIME_H_</span>
+<span class="cp">#define CINN_RUNTIME_CINN_RUNTIME_H_</span>
+<span class="cp">#ifdef __cplusplus</span>
+<span class="cp">#pragma once</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stddef.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#define CINN_ALWAYS_INLINE __attribute__((always_inline)) inline</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="n">cinn_type_code_t</span> <span class="p">{</span>
+  <span class="n">cinn_type_unk</span>    <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">cinn_type_int</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">cinn_type_uint</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">cinn_type_float</span>  <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">cinn_type_handle</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">}</span> <span class="n">cinn_type_code_t</span><span class="p">;</span>
+
+<span class="cp">#ifndef CINN_ATTRIBUTE_ALIGN</span>
+<span class="cp">#define CINN_ATTRIBUTE_ALIGN(n) __attribute__((aligned(n)))</span>
+<span class="cp">#endif</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">cinn_type_t</span> <span class="p">{</span>
+<span class="cp">#if __cplusplus &gt;= 201103L</span>
+  <span class="n">CINN_ATTRIBUTE_ALIGN</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">cinn_type_code_t</span> <span class="n">code</span><span class="p">;</span>
+<span class="cp">#else</span>
+  <span class="kt">uint8_t</span> <span class="n">code</span><span class="p">;</span>
+<span class="cp">#endif</span>
+
+  <span class="kt">uint8_t</span> <span class="n">bits</span><span class="p">;</span>
+
+  <span class="kt">uint16_t</span> <span class="n">lanes</span><span class="p">;</span>
+
+  <span class="kt">uint8_t</span> <span class="n">num_asterisks</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="nf">cinn_type_t</span><span class="p">()</span> <span class="o">:</span> <span class="n">code</span><span class="p">(</span><span class="n">cinn_type_int</span><span class="p">),</span> <span class="n">bits</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">lanes</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="nf">cinn_type_t</span><span class="p">(</span><span class="n">cinn_type_code_t</span> <span class="n">code</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">bits</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">lanes</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">code</span><span class="p">(</span><span class="n">code</span><span class="p">),</span> <span class="n">bits</span><span class="p">(</span><span class="n">bits</span><span class="p">),</span> <span class="n">lanes</span><span class="p">(</span><span class="n">lanes</span><span class="p">),</span> <span class="n">num_asterisks</span><span class="p">(</span><span class="n">num_asterisks</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">cinn_type_t</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">code</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">code</span> <span class="o">&amp;&amp;</span> <span class="n">bits</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">bits</span> <span class="o">&amp;&amp;</span> <span class="n">lanes</span> <span class="o">==</span> <span class="n">other</span><span class="p">.</span><span class="n">lanes</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="k">const</span> <span class="n">cinn_type_t</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="p">(</span><span class="o">*</span><span class="k">this</span> <span class="o">==</span> <span class="n">other</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">uint16_t</span> <span class="n">bytes</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="n">bits</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mi">8</span><span class="p">;</span> <span class="p">}</span>
+<span class="cp">#endif  </span><span class="c1">// __cplusplus</span>
+<span class="p">}</span> <span class="n">cinn_type_t</span><span class="p">;</span>
+
+<span class="c1">// @{</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_unk_t</span><span class="p">();</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_int32_t</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_int64_t</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_uint32_t</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_uint64_t</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_float32_t</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">extern</span> <span class="n">cinn_type_t</span> <span class="nf">cinn_float64_t</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_asterisks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+<span class="c1">// @}</span>
+
+<span class="k">typedef</span> <span class="kt">int</span> <span class="n">cinn_dimension_t</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="n">cinn_device_kind_t</span> <span class="p">{</span>
+  <span class="n">cinn_unk_device</span>    <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="c1">// Undefined device.</span>
+  <span class="n">cinn_x86_device</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>   <span class="c1">// X86 device</span>
+  <span class="n">cinn_opencl_device</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>   <span class="c1">// OpenCL device</span>
+  <span class="n">cinn_arm_device</span>    <span class="o">=</span> <span class="mi">2</span>    <span class="c1">// ARM device</span>
+<span class="p">}</span> <span class="n">cinn_device_kind_t</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="k">enum</span> <span class="n">cinn_buffer_kind_t</span> <span class="p">{</span>
+  <span class="n">cinn_buffer_on_host</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">cinn_buffer_on_device</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>  <span class="c1">// ! buffer on device e.g. GPU.</span>
+<span class="p">}</span> <span class="n">cinn_buffer_kind_t</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">cinn_device_interface_impl_t</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">cinn_device_interface_t</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">malloc</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">free</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">sync</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">release</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">cinn_device_interface_t</span><span class="o">*</span> <span class="n">device_interface</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">copy_to_host</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">copy_to_device</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">buffer_copy</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">dst</span><span class="p">);</span>
+  <span class="k">struct</span> <span class="n">cinn_device_interface_impl_t</span><span class="o">*</span> <span class="n">impl</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_device_release</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">cinn_device_interface_t</span><span class="o">*</span> <span class="n">device_interface</span><span class="p">);</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Copy image data from device to host memory.</span>
+<span class="cm"> */</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_buffer_copy_to_host</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_buffer_copy_to_device</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_buffer_copy</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">dst</span><span class="p">);</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_device_sync</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_buffer_malloc</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="nf">cinn_buffer_free</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+
+<span class="k">extern</span> <span class="kt">void</span><span class="o">*</span> <span class="nf">cinn_buffer_get_data_handle</span><span class="p">(</span><span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+<span class="k">extern</span> <span class="kt">void</span><span class="o">*</span> <span class="nf">cinn_buffer_get_data_const_handle</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+
+<span class="cp">#define CINN_BUFFER_MAX_DIMS 8</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span> <span class="p">{</span>
+  <span class="n">cinn_device_kind_t</span> <span class="n">device</span><span class="p">;</span>
+
+  <span class="k">const</span> <span class="k">struct</span> <span class="n">cinn_device_interface_t</span><span class="o">*</span> <span class="n">device_interface</span><span class="p">;</span>
+
+  <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">memory</span><span class="p">;</span>
+
+  <span class="kt">uint64_t</span> <span class="n">flag</span><span class="p">;</span>
+
+  <span class="n">cinn_type_t</span> <span class="n">type</span><span class="p">;</span>
+
+  <span class="kt">int32_t</span> <span class="n">dimensions</span><span class="p">;</span>
+  <span class="n">cinn_dimension_t</span> <span class="n">dims</span><span class="p">[</span><span class="n">CINN_BUFFER_MAX_DIMS</span><span class="p">];</span>
+
+  <span class="kt">char</span> <span class="n">lazy</span><span class="p">;</span>
+
+  <span class="kt">uint64_t</span> <span class="n">memory_size</span><span class="p">;</span>
+
+  <span class="kt">uint16_t</span> <span class="n">align</span><span class="p">;</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+  <span class="n">cinn_buffer_t</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">device</span><span class="p">(</span><span class="n">cinn_unk_device</span><span class="p">),</span>
+        <span class="n">device_interface</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span>
+        <span class="n">memory</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span>
+        <span class="n">flag</span><span class="p">(</span><span class="mi">0UL</span><span class="p">),</span>
+        <span class="n">type</span><span class="p">(</span><span class="n">cinn_type_t</span><span class="p">()),</span>
+        <span class="n">dimensions</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">memory_size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">align</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">lazy</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="k">static</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">new_</span><span class="p">(</span><span class="n">cinn_device_kind_t</span> <span class="n">device</span><span class="p">,</span>
+                                    <span class="n">cinn_type_t</span> <span class="n">type</span><span class="p">,</span>
+                                    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">shape</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">align</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">static</span> <span class="kt">void</span> <span class="nf">delete_</span><span class="p">(</span><span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">delete</span> <span class="n">x</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">~</span><span class="n">cinn_buffer_t</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="c1">// NOTE the buffer should be resized first.</span>
+  <span class="k">static</span> <span class="kt">void</span> <span class="n">alloc</span><span class="p">(</span><span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span><span class="p">);</span>
+
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">void</span> <span class="nf">resize</span><span class="p">(</span><span class="k">const</span> <span class="n">cinn_dimension_t</span><span class="o">*</span> <span class="n">dims</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dimensions</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">dimensions</span><span class="p">;</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">dims</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">dimensions</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">cinn_dimension_t</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">uint64_t</span> <span class="nf">num_elements</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="kt">uint64_t</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dimensions</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">res</span> <span class="o">*=</span> <span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">bool</span> <span class="nf">on_host</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">get_flag</span><span class="p">(</span><span class="n">cinn_buffer_on_host</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">bool</span> <span class="nf">on_device</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">get_flag</span><span class="p">(</span><span class="n">cinn_buffer_on_device</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">void</span> <span class="nf">set_on_host</span><span class="p">(</span><span class="kt">bool</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span> <span class="n">set_flag</span><span class="p">(</span><span class="n">cinn_buffer_on_host</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">void</span> <span class="nf">set_on_device</span><span class="p">(</span><span class="kt">bool</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span> <span class="n">set_flag</span><span class="p">(</span><span class="n">cinn_buffer_on_device</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">int</span> <span class="nf">device_sync</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">ctx</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">device_interface</span> <span class="o">&amp;&amp;</span> <span class="n">device_interface</span><span class="o">-&gt;</span><span class="n">sync</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">device_interface</span><span class="o">-&gt;</span><span class="n">sync</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="nf">begin</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="nf">end</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">memory</span> <span class="o">+</span> <span class="n">num_elements</span><span class="p">()</span> <span class="o">*</span> <span class="n">type</span><span class="p">.</span><span class="n">bytes</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">bool</span> <span class="nf">get_flag</span><span class="p">(</span><span class="n">cinn_buffer_kind_t</span> <span class="n">flag</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">flag</span> <span class="o">&amp;</span> <span class="n">flag</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">void</span> <span class="nf">set_flag</span><span class="p">(</span><span class="n">cinn_buffer_kind_t</span> <span class="n">flag</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>
+      <span class="k">this</span><span class="o">-&gt;</span><span class="n">flag</span> <span class="o">|=</span> <span class="n">flag</span><span class="p">;</span>
+    <span class="k">else</span>
+      <span class="k">this</span><span class="o">-&gt;</span><span class="n">flag</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">flag</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="cp">#endif  </span><span class="c1">// __cplusplus</span>
+<span class="p">}</span> <span class="n">cinn_buffer_t</span><span class="p">;</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="nf">cinn_buffer_new</span><span class="p">(</span><span class="n">cinn_device_kind_t</span> <span class="n">device</span><span class="p">,</span>
+                               <span class="n">cinn_type_t</span> <span class="n">type</span><span class="p">,</span>
+                               <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">shape</span><span class="p">,</span>
+                               <span class="kt">int</span> <span class="n">align</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="k">struct</span> <span class="n">cinn_device_interface_impl_t</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">malloc</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">free</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">sync</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">release</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">copy_to_host</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">copy_to_device</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">buffer_copy</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span> <span class="n">context</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">src</span><span class="p">,</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">dst</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// The device implementations</span>
+<span class="k">extern</span> <span class="k">struct</span> <span class="n">cinn_device_interface_t</span><span class="o">*</span> <span class="nf">cinn_x86_device_interface</span><span class="p">();</span>
+
+<span class="kr">inline</span> <span class="kt">float</span> <span class="nf">cinn_buffer_load_float32</span><span class="p">(</span><span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">((</span><span class="kt">float</span><span class="o">*</span><span class="p">)</span><span class="n">buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">)[</span><span class="n">index</span><span class="p">];</span>  <span class="c1">// NOLINT</span>
+<span class="p">}</span>
+<span class="kr">inline</span> <span class="kt">double</span> <span class="nf">cinn_buffer_load_float64</span><span class="p">(</span><span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">((</span><span class="kt">double</span><span class="o">*</span><span class="p">)</span><span class="n">buf</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">)[</span><span class="n">index</span><span class="p">];</span>  <span class="c1">// NOLINT</span>
+<span class="p">}</span>
+<span class="cp">#endif  </span><span class="c1">// __cplusplus</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+<span class="cp">#endif</span>
+
+<span class="n">CINN_ALWAYS_INLINE</span> <span class="kt">void</span><span class="o">*</span> <span class="n">cinn_buffer_slice</span><span class="p">(</span><span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">buf</span><span class="p">,</span> <span class="kt">uint32_t</span> <span class="n">offset</span><span class="p">);</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+
+<span class="k">static</span> <span class="kr">inline</span> <span class="kt">int32_t</span> <span class="n">cinn_min</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">?</span> <span class="nl">a</span> <span class="p">:</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">static</span> <span class="kr">inline</span> <span class="kt">int32_t</span> <span class="n">cinn_max</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">?</span> <span class="nl">a</span> <span class="p">:</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>  <span class="c1">// extern &quot;C&quot;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifndef CINN_RUNTIME_NOT_IMPLEMENTED</span>
+<span class="cp">#define CINN_RUNTIME_NOT_IMPLEMENTED     \</span>
+<span class="cp">  do {                                   \</span>
+<span class="cp">    fprintf(stderr, &quot;Not Implemented!&quot;); \</span>
+<span class="cp">    abort();                             \</span>
+<span class="cp">  } while (false);</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#define ASSERT_NOT_NULL(v__)          \</span>
+<span class="cp">  if (!v__) {                         \</span>
+<span class="cp">    fprintf(stderr, #v__ &quot; is null&quot;); \</span>
+<span class="cp">    return -1;                        \</span>
+<span class="cp">  }</span>
+<span class="cp">#define CINN_LOG(fmt, ...)                                                          \</span>
+<span class="cp">  do {                                                                              \</span>
+<span class="cp">    fprintf(stderr, &quot;%s:%d:%s(): &quot; fmt, __FILE__, __LINE__, __func__, __VA_ARGS__); \</span>
+<span class="cp">  } while (0)</span>
+
+<span class="cp">#define CINN_CHECK(cond)                \</span>
+<span class="cp">  if (!(cond)) {                        \</span>
+<span class="cp">    CINN_LOG(&quot;check %s failed&quot;, #cond); \</span>
+<span class="cp">    abort();                            \</span>
+<span class="cp">  }</span>
+<span class="cp">#define CINN_CHECK_LT(a, b)                                \</span>
+<span class="cp">  if (!(a &lt; b)) {                                          \</span>
+<span class="cp">    cinn_print_debug_string(&quot;check %d &gt; %d failed&quot;, a, b); \</span>
+<span class="cp">    abort();                                               \</span>
+<span class="cp">  }</span>
+<span class="cp">#define CINN_CHECKP(cond, ...) \</span>
+<span class="cp">  if (!(cond)) {               \</span>
+<span class="cp">    CINN_LOG(__VA_ARGS__);     \</span>
+<span class="cp">    abort();                   \</span>
+<span class="cp">  }</span>
+<span class="cp">#define CINN_CHECK_EQ(a, b)                                        \</span>
+<span class="cp">  {                                                                \</span>
+<span class="cp">    if ((a) != (b)) {                                              \</span>
+<span class="cp">      CINN_LOG(&quot;check %s == %s failed, %d != %d&quot;, #a, #b, (a), b); \</span>
+<span class="cp">      abort();                                                     \</span>
+<span class="cp">    }                                                              \</span>
+<span class="cp">  }                                                                \</span>
+<span class="cp">  while (false)                                                    \</span>
+<span class="cp">    ;  </span><span class="c1">// NOLINT</span>
+
+<span class="cp">#endif  </span><span class="c1">// CINN_RUNTIME_CINN_RUNTIME_H_</span>
+
+<span class="k">union</span> <span class="n">cinn_value_t</span> <span class="p">{</span>
+  <span class="kt">int64_t</span> <span class="n">v_int64</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="n">v_float64</span><span class="p">;</span>
+  <span class="kt">void</span><span class="o">*</span> <span class="n">v_handle</span><span class="p">;</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">v_str</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">cinn_pod_value_t</span> <span class="p">{</span>
+<span class="cp">#ifdef __cplusplus</span>
+  <span class="c1">// @{ PodValue</span>
+
+  <span class="n">cinn_pod_value_t</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+  <span class="n">cinn_pod_value_t</span><span class="p">(</span><span class="n">cinn_value_t</span> <span class="n">value</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type_code</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">value</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="kt">int64_t</span> <span class="n">value</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="kt">float</span> <span class="n">value</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="kt">double</span> <span class="n">value</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+  <span class="k">explicit</span> <span class="nf">cinn_pod_value_t</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+
+
+  <span class="k">operator</span> <span class="nf">double</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">operator</span> <span class="nf">float</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">operator</span> <span class="nf">int32_t</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">operator</span> <span class="nf">int64_t</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">operator</span> <span class="kt">void</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">operator</span> <span class="n">cinn_buffer_t</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">operator</span> <span class="kt">char</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="nf">type_code</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">type_code_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span><span class="o">*</span> <span class="nf">data_addr</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+  <span class="k">static</span> <span class="kt">int</span> <span class="n">type_code</span><span class="p">();</span>
+
+  <span class="kt">void</span> <span class="nf">set_type_code</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">type_code_</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="nf">set_value</span><span class="p">(</span><span class="k">union</span> <span class="n">cinn_value_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="n">value_</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">protected</span><span class="o">:</span>
+  <span class="c1">// @}</span>
+<span class="cp">#endif  </span><span class="c1">// __cplusplus</span>
+  <span class="kt">int</span> <span class="n">type_code_</span><span class="p">;</span>
+  <span class="k">union</span> <span class="n">cinn_value_t</span> <span class="n">value_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">cinn_pod_value_t</span> <span class="n">cinn_pod_value_t</span><span class="p">;</span>
+
+<span class="c1">// the LoweredFunc pointer type for JIT usage.</span>
+<span class="k">typedef</span> <span class="nf">void</span> <span class="p">(</span><span class="o">*</span><span class="n">lower_func_ptr_t</span><span class="p">)(</span><span class="kt">void</span><span class="o">*</span><span class="p">,</span> <span class="kt">int32_t</span><span class="p">);</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+<span class="cp">#endif</span>
+<span class="c1">// @{</span>
+<span class="kt">float</span> <span class="n">cinn_pod_value_to_float</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+<span class="kt">double</span> <span class="nf">cinn_pod_value_to_double</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+<span class="kt">int64_t</span> <span class="nf">cinn_pod_value_to_int64</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+<span class="kt">int32_t</span> <span class="nf">cinn_pod_value_to_int32</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+<span class="kt">void</span><span class="o">*</span> <span class="nf">cinn_pod_value_to_void_p</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+<span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="nf">cinn_pod_value_to_buffer_p</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+<span class="c1">// @}</span>
+
+<span class="c1">// @{</span>
+<span class="kt">void</span> <span class="nf">float_to_cinn_pod_value</span><span class="p">(</span><span class="kt">float</span> <span class="n">v</span><span class="p">,</span> <span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">out</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">int32_to_cinn_pod_value</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">v</span><span class="p">,</span> <span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">out</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">handle_to_cinn_pod_value</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">out</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">buffer_p_to_cinn_pod_value</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">out</span><span class="p">);</span>
+<span class="c1">// @}</span>
+
+<span class="kt">void</span> <span class="nf">cinn_print_debug_string</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="p">...);</span>
+
+<span class="kt">void</span> <span class="nf">cinn_print_debug_args</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">count</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">cinn_args_construct</span><span class="p">(</span><span class="n">cinn_pod_value_t</span><span class="o">*</span> <span class="n">arr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">count</span><span class="p">,</span> <span class="p">...);</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>  <span class="c1">// extern &quot;C&quot;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">cinn_type_t</span> <span class="n">cinn_type_of</span><span class="p">();</span>
+
+<span class="cp">#endif  </span><span class="c1">// __cplusplus</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_function_cas__test_8cc_1ad5848e55ad72c2448d40c993929bafcf:
+
+Function cinn::common::TEST(CAS, Mod)
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::TEST(CAS, Mod)

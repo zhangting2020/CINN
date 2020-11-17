@@ -1,0 +1,13 @@
+.. _exhale_function_cas_8cc_1a739a2d31db2e1ad724164a222ef7f886:
+
+Function cinn::common::detail::CASasSymbol
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cas.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::detail::CASasSymbol(Expr)

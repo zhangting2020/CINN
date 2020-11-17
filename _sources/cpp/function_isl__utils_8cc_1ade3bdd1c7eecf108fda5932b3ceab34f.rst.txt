@@ -1,0 +1,13 @@
+.. _exhale_function_isl__utils_8cc_1ade3bdd1c7eecf108fda5932b3ceab34f:
+
+Function cinn::poly::isl_simplify(isl_set __isl_take \*)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_isl_utils.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::isl_simplify(isl_set __isl_take *)

@@ -1,0 +1,25 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.h:
+
+Program Listing for File compute_inline_expand.h
+================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_compute_inline_expand.h>` (``/home/chunwei/project/cinn2/cinn/optim/compute_inline_expand.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <set>
+   
+   #include "cinn/cinn.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void ComputeInlineExpand(Expr* expr, poly::StageMap stages);
+   
+   }  // namespace optim
+   }  // namespace cinn

@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8h_1a2ac2a6c2ed31b2a9a24e81a6d1fcce6c:
+
+Function cinn_buffer_free(void \*, struct cinn_buffer_t \*)
+===========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_buffer_free(void *, struct cinn_buffer_t *)

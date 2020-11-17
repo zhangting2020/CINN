@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1common_1_1DebugManager:
+
+Class DebugManager
+==================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_debug_manager.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::common::DebugManager
+   :members:
+   :protected-members:
+   :undoc-members:

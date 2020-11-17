@@ -1,0 +1,13 @@
+.. _exhale_function_stage__test_8cc_1af3415b8e8984594d65aa35d9faa1f47b:
+
+Function cinn::poly::TEST(Stage, split)
+=======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::TEST(Stage, split)

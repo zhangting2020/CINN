@@ -1,0 +1,42 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_compare_simplify_test.cc:
+
+Program Listing for File compare_simplify_test.cc
+=================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_compare_simplify_test.cc>` (``/home/chunwei/project/cinn2/cinn/optim/compare_simplify_test.cc``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cinn/optim/compare_simplify.h"
+   #include <gtest/gtest.h>
+   #include "cinn/ir/ir_operators.h"
+   #include "cinn/ir/ir_printer.h"
+   
+   namespace cinn::optim {
+   
+   TEST(CompareSimplify, basic_true) {
+     Expr a = (Expr(1) > Expr(2));
+     LOG(INFO) << a;
+   
+     CompareSimplify(&a);
+   
+     LOG(INFO) << a;
+   
+     ASSERT_EQ(utils::GetStreamCnt(a), "0");
+   }
+   
+   TEST(CompareSimplify, basic_false) {
+     Expr a = (Expr(1) < Expr(2));
+     LOG(INFO) << a;
+   
+     CompareSimplify(&a);
+   
+     LOG(INFO) << a;
+   
+     ASSERT_EQ(utils::GetStreamCnt(a), "1");
+   }
+   
+   }  // namespace cinn::optim

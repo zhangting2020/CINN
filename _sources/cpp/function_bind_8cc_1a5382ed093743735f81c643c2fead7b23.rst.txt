@@ -1,0 +1,13 @@
+.. _exhale_function_bind_8cc_1a5382ed093743735f81c643c2fead7b23:
+
+Function cinn::pybind::PYBIND11_MODULE
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::pybind::PYBIND11_MODULE(core_api, m)

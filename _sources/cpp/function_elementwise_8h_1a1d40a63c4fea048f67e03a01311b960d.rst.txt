@@ -1,0 +1,13 @@
+.. _exhale_function_elementwise_8h_1a1d40a63c4fea048f67e03a01311b960d:
+
+Function cinn::hlir::pe::Reinterpret
+====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_elementwise.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Reinterpret(const ir::Tensor&, const std::string&)

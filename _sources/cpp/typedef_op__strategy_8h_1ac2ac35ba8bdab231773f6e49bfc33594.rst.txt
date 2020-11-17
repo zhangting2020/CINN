@@ -1,0 +1,13 @@
+.. _exhale_typedef_op__strategy_8h_1ac2ac35ba8bdab231773f6e49bfc33594:
+
+Typedef cinn::hlir::framework::CINNSchedule
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_op_strategy.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::hlir::framework::CINNSchedule

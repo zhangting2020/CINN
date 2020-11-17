@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1abbada5bee20399eec981b9cdeeccacea:
+
+Function cinn::utils::Uppercase
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Uppercase(const std::string&)

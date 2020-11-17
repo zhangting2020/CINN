@@ -1,0 +1,13 @@
+.. _exhale_function_test02__matmul__case_8cc_1aa65d796131626bb8dd13f54ec207bc4f:
+
+Function TEST(test02, basic)
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_matmul_case.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: TEST(test02, basic)

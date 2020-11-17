@@ -1,0 +1,13 @@
+.. _exhale_function_nvrtc__util__test_8cc_1a2adbdad2e330e3ef6e0526c349f10f06:
+
+Function cinn::backends::TEST(NVRTC_Compiler, basic)
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_nvrtc_util_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::backends::TEST(NVRTC_Compiler, basic)

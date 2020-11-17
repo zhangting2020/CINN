@@ -1,0 +1,13 @@
+.. _exhale_function_test02__helper_8h_1a4f99a1c48e78fac84ea11048cfbbb57b:
+
+Function cinn::tests::CreateExecutionEngine
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::tests::CreateExecutionEngine(const cinn::ir::Module&)

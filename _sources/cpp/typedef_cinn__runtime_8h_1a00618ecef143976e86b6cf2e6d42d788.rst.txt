@@ -1,0 +1,13 @@
+.. _exhale_typedef_cinn__runtime_8h_1a00618ecef143976e86b6cf2e6d42d788:
+
+Typedef cinn_device_kind_t
+==========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn_device_kind_t

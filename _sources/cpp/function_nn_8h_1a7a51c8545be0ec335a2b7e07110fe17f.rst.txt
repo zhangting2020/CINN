@@ -1,0 +1,13 @@
+.. _exhale_function_nn_8h_1a7a51c8545be0ec335a2b7e07110fe17f:
+
+Template Function cinn::hlir::pe::Relu
+======================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_nn.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Relu(const ir::Tensor&, T, const std::string&)

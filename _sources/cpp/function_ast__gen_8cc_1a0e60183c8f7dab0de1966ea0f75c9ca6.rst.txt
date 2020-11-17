@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen_8cc_1a0e60183c8f7dab0de1966ea0f75c9ca6:
+
+Function cinn::poly::EatBlock
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::EatBlock(const isl::ast_node&, ir::Expr *)

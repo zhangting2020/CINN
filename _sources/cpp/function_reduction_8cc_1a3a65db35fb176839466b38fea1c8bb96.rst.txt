@@ -1,0 +1,13 @@
+.. _exhale_function_reduction_8cc_1a3a65db35fb176839466b38fea1c8bb96:
+
+Function cinn::hlir::pe::Sum
+============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::pe::Sum(const ir::Tensor&, poly::StageMap, const std::vector<Expr>&, bool, const Expr&, const std::string&)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1ac99879b47665ba0e2a5bc6197fa2f35a:
+
+Function cinn::utils::Replace
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::Replace(std::string *, const std::string&, const std::string&)

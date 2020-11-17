@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8cc_1ad29f64c82506300073334e59b7e27426:
+
+Function cinn_cpu_atanh_fp32(float)
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_atanh_fp32(float)

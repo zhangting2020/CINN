@@ -1,0 +1,170 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_tensor.h:
+
+File tensor.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/tensor.h``)
+-------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_tensor.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/graph_utils.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`)
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/ir/function_base.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_function_base.h`)
+
+- ``cinn/lang/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_buffer.h`)
+
+- ``cinn/poly/stage.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`)
+
+- ``isl/cpp.h``
+
+- ``map`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_map.cc`)
+
+- ``memory`` (:ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_memory.cc`)
+
+- ``set``
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``unordered_map``
+
+- ``utility``
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_function_prototype.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_schedule.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_reduction.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_hlir_pe_transform.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_printer.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_operation.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_placeholder.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_simplify.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_poly_scheduler.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_schedule_test.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_ir.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_pybind_lang.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+- :ref:`namespace_cinn__ir__detail`
+
+- :ref:`namespace_cinn__lang`
+
+- :ref:`namespace_std`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structstd_1_1hash_3_01cinn_1_1ir_1_1Tensor_01_4`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1__Operation__`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1__Tensor__`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Operation`
+
+- :ref:`exhale_class_classcinn_1_1ir_1_1Tensor`
+
+- :ref:`exhale_class_structcinn_1_1lang_1_1Placeholder`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_ir_2tensor_8h_1a0a0c6a845e649e02c69af4cdc0db75c8`
+
+- :ref:`exhale_function_ir_2tensor_8h_1a3edb484fcdb6a463f185d8911981efc2`
+
+- :ref:`exhale_function_ir_2tensor_8h_1af4d362cdf14f87ec7722d5f17b115545`
+

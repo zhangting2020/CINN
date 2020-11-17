@@ -1,0 +1,57 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.cc:
+
+File replace_const_param_to_integer.cc
+======================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_optim>` (``/home/chunwei/project/cinn2/cinn/optim``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/optim/replace_const_param_to_integer.cc``)
+-----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir_mutator.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_mutator.h`)
+
+- ``cinn/optim/replace_const_param_to_integer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_const_param_to_integer.h`)
+
+- ``cinn/poly/ast_gen.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.h`)
+
+- ``cinn/utils/string.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn__optim`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_replace__const__param__to__integer_8cc_1ab923cd62977580e3bf04b6a2f0dded5c`
+

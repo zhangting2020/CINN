@@ -1,0 +1,32 @@
+.. _exhale_class_classcinn_1_1common_1_1GraphEdge:
+
+Class GraphEdge
+===============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public cinn::common::Object`` (:ref:`exhale_struct_structcinn_1_1common_1_1Object`)
+
+
+Derived Types
+*************
+
+- ``public cinn::poly::DataFlowGraphEdge`` (:ref:`exhale_struct_structcinn_1_1poly_1_1DataFlowGraphEdge`)
+- ``public cinn::poly::ScheduleGraphEdge`` (:ref:`exhale_struct_structcinn_1_1poly_1_1ScheduleGraphEdge`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::common::GraphEdge
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_function_cuda__graph__compiler__test_8cc_1ab7f80b12f64e3b2b63b368ae95d21f4d:
+
+Function cinn::hlir::framework::CudaSetRandData
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_cuda_graph_compiler_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::CudaSetRandData(const Tensor&, const Target&)

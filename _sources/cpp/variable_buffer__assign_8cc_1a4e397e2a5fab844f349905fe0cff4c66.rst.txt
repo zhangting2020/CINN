@@ -1,0 +1,13 @@
+.. _exhale_variable_buffer__assign_8cc_1a4e397e2a5fab844f349905fe0cff4c66:
+
+Variable tensor_name
+====================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_buffer_assign.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: tensor_name

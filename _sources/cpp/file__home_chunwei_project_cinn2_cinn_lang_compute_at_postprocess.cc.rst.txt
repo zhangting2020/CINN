@@ -1,0 +1,88 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc:
+
+File compute_at_postprocess.cc
+==============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_lang>` (``/home/chunwei/project/cinn2/cinn/lang``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/lang/compute_at_postprocess.cc``)
+--------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/ir_util.h``
+
+- ``cinn/ir/ir_mutator.h``
+
+- ``cinn/ir/ir_operators.h``
+
+- ``cinn/ir/ir_printer.h``
+
+- ``cinn/ir/tensor.h``
+
+- ``cinn/lang/compute_at_postprocess.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h`)
+
+- ``cinn/optim/ir_replace.h``
+
+- ``cinn/optim/ir_simplify.h``
+
+- ``cinn/poly/compute_at_transform.h``
+
+- ``cinn/poly/stage.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__lang`
+
+- :ref:`namespace_cinn__lang__detail`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structcinn_1_1lang_1_1CorrectComputeAtRelatedIndiceMutator`
+
+- :ref:`exhale_struct_structcinn_1_1lang_1_1detail_1_1NormalizeProducerDomainMutator`
+
+- :ref:`exhale_struct_structcinn_1_1lang_1_1detail_1_1ResetProducerLoadIndiceInConsumerMutator`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_compute__at__postprocess_8cc_1a256a36d4e50ef5d51635aa4b347feba8`
+
+- :ref:`exhale_function_compute__at__postprocess_8cc_1a1b9cbe9e2d8c66d361a1cf9ad268ff22`
+
+- :ref:`exhale_function_compute__at__postprocess_8cc_1a430478dac18cb6d9daaa46c903a9c53f`
+

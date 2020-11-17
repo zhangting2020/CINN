@@ -1,0 +1,78 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc:
+
+File ir_base.cc
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_ir>` (``/home/chunwei/project/cinn2/cinn/ir``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/ir/ir_base.cc``)
+---------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_ir_ir_base.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/common/cinn_value.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.h`)
+
+- ``cinn/common/common.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_common_common.h`)
+
+- ``cinn/ir/buffer.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`)
+
+- ``cinn/ir/ir.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`)
+
+- ``cinn/ir/ir_base.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_base.h`)
+
+- ``cinn/ir/ir_visitor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_ir_visitor.h`)
+
+- ``cinn/ir/module.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_module.h`)
+
+- ``cinn/ir/tensor.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__ir`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a5aee0dde69c3de745e33d290e1667fa7`
+
+- :ref:`exhale_function_namespacecinn_1_1ir_1a4ce55322defceea3c083b1a68a17c2d4`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_ir__base_8cc_1a7ac54924c8d0da33823cf8d0b9b46203`
+
+- :ref:`exhale_define_ir__base_8cc_1a7ac54924c8d0da33823cf8d0b9b46203`
+

@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File broadcast.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-broadcast-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc"></span><h1>Program Listing for File broadcast.cc<a class="headerlink" href="#program-listing-for-file-broadcast-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc.html#file-home-chunwei-project-cinn2-cinn-hlir-pe-broadcast-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/hlir/pe/broadcast.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/pe/broadcast.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_base.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_operators.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/builtin.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/compute.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">hlir</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">pe</span> <span class="p">{</span>
+
+<span class="k">using</span> <span class="n">common</span><span class="o">::</span><span class="n">make_zero</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">lang</span><span class="o">::</span><span class="n">Compute</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">GetBroadcastShape</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">shape1</span><span class="p">,</span>
+                       <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">shape2</span><span class="p">,</span>
+                       <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;*</span> <span class="n">common_shape</span><span class="p">,</span>
+                       <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;*</span> <span class="n">broadcast_flag1</span><span class="p">,</span>
+                       <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;*</span> <span class="n">broadcast_flag2</span><span class="p">,</span>
+                       <span class="kt">int</span><span class="o">*</span> <span class="n">axis_offset</span><span class="p">,</span>
+                       <span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">axis</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">common_shape</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">broadcast_flag1</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">broadcast_flag2</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">size1</span>                    <span class="o">=</span> <span class="n">shape1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">shape2_new</span> <span class="o">=</span> <span class="n">shape2</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">axis</span><span class="p">.</span><span class="n">defined</span><span class="p">())</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">axis_val</span> <span class="o">=</span> <span class="n">axis</span><span class="p">.</span><span class="n">as_int32</span><span class="p">();</span>
+    <span class="n">CHECK_GE</span><span class="p">(</span><span class="n">axis_val</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;wrong axis: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">axis_val</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">CHECK_GE</span><span class="p">(</span><span class="n">shape1</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">shape2</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;A&#39;s shape should be no less than B&#39;s when axis is defined</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">axis_val</span><span class="p">,</span> <span class="kt">int</span><span class="p">(</span><span class="n">shape1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="n">shape2</span><span class="p">.</span><span class="n">size</span><span class="p">()))</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot;wrong axis: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">axis_val</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; is not &lt;= &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">shape1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="n">shape2</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">axis_val</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="o">*</span><span class="n">axis_offset</span> <span class="o">=</span> <span class="n">shape1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="n">shape2</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="n">axis_val</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="o">*</span><span class="n">axis_offset</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// specified axis to align, we insert Expr one in tensor B so as to align right with tensor A.</span>
+        <span class="n">shape2_new</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+        <span class="c1">// flag is used to indicate whether to include the indice or not.</span>
+        <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">int</span> <span class="n">size2</span> <span class="o">=</span> <span class="n">shape2_new</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="n">Expr</span> <span class="n">one</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="n">axis_offset</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="o">*</span><span class="n">axis_offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">size1</span><span class="p">,</span> <span class="n">size2</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// traverse from right to left to get the output shape and broadcast flag</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">var1</span> <span class="o">=</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">].</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">var2</span> <span class="o">=</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">].</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">_Var_</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">MathEqual</span><span class="p">(</span><span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">],</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="c1">// broadcast flags are recorded in a reverse order</span>
+      <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+      <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">MathEqual</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+      <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">MathEqual</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]));</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+      <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">MathEqual</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]))</span> <span class="p">{</span>
+      <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">MathEqual</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]));</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+      <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">var1</span> <span class="o">&amp;&amp;</span> <span class="n">var2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Expr</span> <span class="n">max_var</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Max</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">],</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">max_var</span><span class="p">);</span>
+      <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+      <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">var1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+      <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">var2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="n">broadcast_flag1</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+      <span class="n">broadcast_flag2</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Incompatible broadcast dims &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">shape1</span><span class="p">[</span><span class="n">size1</span> <span class="o">-</span> <span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; and &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">shape2_new</span><span class="p">[</span><span class="n">size2</span> <span class="o">-</span> <span class="n">i</span><span class="p">]</span>
+                 <span class="o">&lt;&lt;</span> <span class="s">&quot; in: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">shape1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; and &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">shape2_new</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">size1</span> <span class="o">!=</span> <span class="n">size2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">max_size</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">size1</span><span class="p">,</span> <span class="n">size2</span><span class="p">);</span>
+    <span class="k">auto</span><span class="o">&amp;</span> <span class="n">shape</span>  <span class="o">=</span> <span class="p">(</span><span class="n">size1</span> <span class="o">&gt;</span> <span class="n">size2</span><span class="p">)</span> <span class="o">?</span> <span class="nl">shape1</span> <span class="p">:</span> <span class="n">shape2_new</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">var_l</span>   <span class="o">=</span> <span class="p">(</span><span class="n">size1</span> <span class="o">&gt;</span> <span class="n">size2</span><span class="p">)</span> <span class="o">?</span> <span class="nl">broadcast_flag1</span> <span class="p">:</span> <span class="n">broadcast_flag2</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">var_s</span>   <span class="o">=</span> <span class="p">(</span><span class="n">size1</span> <span class="o">&gt;</span> <span class="n">size2</span><span class="p">)</span> <span class="o">?</span> <span class="nl">broadcast_flag2</span> <span class="p">:</span> <span class="n">broadcast_flag1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">max_size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">common_shape</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape</span><span class="p">[</span><span class="n">max_size</span> <span class="o">-</span> <span class="n">i</span><span class="p">]);</span>
+      <span class="n">var_l</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+      <span class="n">var_s</span><span class="o">-&gt;</span><span class="n">emplace_back</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">GetBroadcastIndice</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">indice</span><span class="p">,</span>
+                        <span class="k">const</span> <span class="n">Tensor</span><span class="o">&amp;</span> <span class="n">tensor_a</span><span class="p">,</span>
+                        <span class="k">const</span> <span class="n">Tensor</span><span class="o">&amp;</span> <span class="n">tensor_b</span><span class="p">,</span>
+                        <span class="kt">int</span> <span class="n">axis_offset</span><span class="p">,</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;*</span> <span class="n">broadcast_indice1</span><span class="p">,</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;*</span> <span class="n">broadcast_indice2</span><span class="p">,</span>
+                        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span> <span class="n">broadcast_flags1</span><span class="p">,</span>
+                        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span> <span class="n">broadcast_flags2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">broadcast_indice1</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">broadcast_indice2</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">broadcast_indice1</span><span class="o">-&gt;</span><span class="n">empty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">broadcast_indice2</span><span class="o">-&gt;</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">flag_size</span> <span class="o">=</span> <span class="n">broadcast_flags1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="n">CHECK_GE</span><span class="p">(</span><span class="n">indice</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">flag_size</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">flag_size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">broadcast_flags1</span><span class="p">[</span><span class="n">flag_size</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+        <span class="c1">// broadcast indices are added from left to right</span>
+        <span class="n">broadcast_indice1</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">indice</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">broadcast_indice1</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">broadcast_flags2</span><span class="p">[</span><span class="n">flag_size</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">broadcast_indice2</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">indice</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">flag_size</span> <span class="o">-</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">tensor_b</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="n">axis_offset</span> <span class="o">&amp;&amp;</span>
+                 <span class="n">broadcast_indice2</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">tensor_b</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// insert indice 0 when have not yet reached the dimension of tensor. Meanwhile we have to consider the case of</span>
+        <span class="c1">// axis alignment.</span>
+        <span class="n">broadcast_indice2</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">Expr</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">FuncOp</span><span class="o">&gt;</span>
+<span class="n">Tensor</span> <span class="n">Broadcast</span><span class="p">(</span><span class="k">const</span> <span class="n">FuncOp</span><span class="o">&amp;</span> <span class="n">op</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">Tensor</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">Tensor</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">output_name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+                 <span class="k">const</span> <span class="n">Expr</span><span class="o">&amp;</span> <span class="n">axis</span>               <span class="o">=</span> <span class="n">Expr</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">common_shape</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">broadcast_flags1</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">broadcast_flags2</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">broadcast_indice1</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;</span> <span class="n">broadcast_indice2</span><span class="p">;</span>
+  <span class="c1">// the counts of left-shift of tensor b so as to right alignment</span>
+  <span class="kt">int</span> <span class="n">axis_offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="n">GetBroadcastShape</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">common_shape</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">broadcast_flags1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">broadcast_flags2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">axis_offset</span><span class="p">,</span> <span class="n">axis</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Expr</span><span class="o">&gt;&amp;</span> <span class="n">indice</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">GetBroadcastIndice</span><span class="p">(</span>
+        <span class="n">indice</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">axis_offset</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">broadcast_indice1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">broadcast_indice2</span><span class="p">,</span> <span class="n">broadcast_flags1</span><span class="p">,</span> <span class="n">broadcast_flags2</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">op</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="n">broadcast_indice1</span><span class="p">),</span> <span class="n">b</span><span class="p">(</span><span class="n">broadcast_indice2</span><span class="p">));</span>
+  <span class="p">};</span>
+  <span class="n">Tensor</span> <span class="n">output</span> <span class="o">=</span> <span class="n">Compute</span><span class="p">(</span><span class="n">common_shape</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">output_name</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">output</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp">#define HLIR_IMP_BC_PE(name__, compute__)                                                             \</span>
+<span class="cp">  Tensor name__(const Tensor&amp; A, const Tensor&amp; B, const std::string&amp; output_name, const Expr&amp; axis) { \</span>
+<span class="cp">    auto fn = [&amp;](const Expr&amp; a, const Expr&amp; b) { compute__ };                                        \</span>
+<span class="cp">    return Broadcast(fn, A, B, output_name, axis);                                                    \</span>
+<span class="cp">  }                                                                                                   \</span>
+<span class="cp">  Tensor name__(const Tensor&amp; A, const Expr&amp; B, const std::string&amp; output_name) {                     \</span>
+<span class="cp">    auto fn = [&amp;](const Expr&amp; a, const Expr&amp; b) { compute__ };                                        \</span>
+<span class="cp">    return Compute(                                                                                   \</span>
+<span class="cp">        A-&gt;shape, [&amp;](const std::vector&lt;Expr&gt;&amp; indice) { return fn(A(indice), B); }, output_name);    \</span>
+<span class="cp">  }                                                                                                   \</span>
+<span class="cp">  Tensor name__(const Expr&amp; A, const Tensor&amp; B, const std::string&amp; output_name) {                     \</span>
+<span class="cp">    auto fn = [&amp;](const Expr&amp; a, const Expr&amp; b) { compute__ };                                        \</span>
+<span class="cp">    return Compute(                                                                                   \</span>
+<span class="cp">        B-&gt;shape, [&amp;](const std::vector&lt;Expr&gt;&amp; indice) { return fn(A, B(indice)); }, output_name);    \</span>
+<span class="cp">  }                                                                                                   \</span>
+<span class="cp">  Expr name__(const Expr&amp; a, const Expr&amp; b) { compute__ }</span>
+
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Add</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Substract</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Multiply</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Divide</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">FloorDivide</span><span class="p">,</span> <span class="k">return</span> <span class="n">lang</span><span class="o">::</span><span class="n">Floor</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">););</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Mod</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">FloorMod</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">lang</span><span class="o">::</span><span class="n">Floor</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Maximum</span><span class="p">,</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Max</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">););</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Minimum</span><span class="p">,</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Min</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">););</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Power</span><span class="p">,</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Power</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">););</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">LeftShift</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">RightShift</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">LogicaAnd</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">LogicalOr</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">||</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">LogicalXOr</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">BitwiseAnd</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">BitwiseOr</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">BitwiseXor</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Greater</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Less</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">Equal</span><span class="p">,</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">EQ</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">););</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">NotEqual</span><span class="p">,</span> <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">NE</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">););</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">GreaterEqual</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">;);</span>
+<span class="n">HLIR_IMP_BC_PE</span><span class="p">(</span><span class="n">LessEqual</span><span class="p">,</span> <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;);</span>
+
+<span class="p">}</span>  <span class="c1">// namespace pe</span>
+<span class="p">}</span>  <span class="c1">// namespace hlir</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_hlir_pe_broadcast.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

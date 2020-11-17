@@ -1,0 +1,13 @@
+.. _exhale_function_ir_2tensor_8h_1af4d362cdf14f87ec7722d5f17b115545:
+
+Function cinn::lang::InitReduceTensor
+=====================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::InitReduceTensor(poly::StageMap, const ir::Tensor&, const Target&)

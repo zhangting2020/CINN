@@ -1,0 +1,13 @@
+.. _exhale_function_transform__gpu__forloop_8cc_1ad82647b5a7dd6ec59b71b1bacdf8e59b:
+
+Function cinn::optim::RemoveGpuForloopsAxis
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_transform_gpu_forloop.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::RemoveGpuForloopsAxis(Expr *)

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1ac7950f8a97cdfa90fd86a681c7478aed:
+
+Template Function cinn::utils::GetStreamCnt
+===========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::GetStreamCnt(const T&)

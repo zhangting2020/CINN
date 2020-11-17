@@ -1,0 +1,13 @@
+.. _exhale_typedef_bind__utils_8h_1af3bff136f41e39faf2597c10e6276ce8:
+
+Typedef cinn::pybind::ValueVar
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_pybind_bind_utils.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::pybind::ValueVar

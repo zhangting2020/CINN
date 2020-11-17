@@ -1,0 +1,13 @@
+.. _exhale_typedef_cinn__runtime_8h_1ae659016a50e5079ca62142a5ff36bd2a:
+
+Typedef lower_func_ptr_t
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: lower_func_ptr_t

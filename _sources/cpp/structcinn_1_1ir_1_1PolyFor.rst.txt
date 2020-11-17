@@ -1,0 +1,26 @@
+.. _exhale_struct_structcinn_1_1ir_1_1PolyFor:
+
+Struct PolyFor
+==============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_ir.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public cinn::ir::ExprNode< PolyFor >`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ExprNode`)
+- ``public cinn::ir::ForBase`` (:ref:`exhale_struct_structcinn_1_1ir_1_1ForBase`)
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::ir::PolyFor
+   :members:
+   :protected-members:
+   :undoc-members:

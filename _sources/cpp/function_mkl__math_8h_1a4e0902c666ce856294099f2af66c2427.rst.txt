@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math_8h_1a4e0902c666ce856294099f2af66c2427:
+
+Function cinn_mkl_tanh_v_fp64()
+===============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_mkl_tanh_v_fp64()

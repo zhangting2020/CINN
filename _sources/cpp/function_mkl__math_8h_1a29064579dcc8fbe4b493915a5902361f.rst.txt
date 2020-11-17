@@ -1,0 +1,13 @@
+.. _exhale_function_mkl__math_8h_1a29064579dcc8fbe4b493915a5902361f:
+
+Function cinn_mkl_exp_v_fp32()
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_mkl_math.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_mkl_exp_v_fp32()

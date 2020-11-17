@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1a707dd50172be25173c39bfb8f97a4bab:
+
+Function cinn::ir::CreateStage
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_tensor.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::CreateStage(Tensor)

@@ -1,0 +1,13 @@
+.. _exhale_variable_intrinsic_8h_1a191318e746b2d405c55b59f62a7c0a07:
+
+Variable cinn::runtime::intrisic::pod_value_to_float
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_intrinsic.h`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cinn::runtime::intrisic::pod_value_to_float

@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1ir_1ab8b6b5b5a076409c527f8064f1d1452d:
+
+Function cinn::ir::operator<(const ir::Buffer&, const ir::Buffer&)
+==================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_ir_buffer.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::ir::operator<(const ir::Buffer&, const ir::Buffer&)

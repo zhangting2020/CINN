@@ -1,0 +1,13 @@
+.. _exhale_define_host__intrinsics_8cc_1a74b481e1fb93a1bb7cfcf1e365a833f2:
+
+Define CINN_IMP_CPU_FUNC_FP32
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_IMP_CPU_FUNC_FP32

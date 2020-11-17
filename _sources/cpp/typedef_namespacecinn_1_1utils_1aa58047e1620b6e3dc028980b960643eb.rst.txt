@@ -1,0 +1,13 @@
+.. _exhale_typedef_namespacecinn_1_1utils_1aa58047e1620b6e3dc028980b960643eb:
+
+Typedef cinn::utils::SmallVector
+================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn::utils::SmallVector

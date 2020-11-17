@@ -1,0 +1,13 @@
+.. _exhale_function_stage_8cc_1a35c39e9f446a6089114b0fd3540236a2:
+
+Function cinn::poly::InnerName(const std::string&)
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_stage.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::InnerName(const std::string&)

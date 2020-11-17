@@ -1,0 +1,13 @@
+.. _exhale_function_runtime_2cuda_2cuda__util_8cc_1a44550dcf1a7ff5242f1fcdf3accb0903:
+
+Function cinn::runtime::cuda::cinn_call_cuda_kernel
+===================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cuda_cuda_util.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::runtime::cuda::cinn_call_cuda_kernel(void *, cinn_pod_value_t *, int, int, int, int, int, int, int, void *)

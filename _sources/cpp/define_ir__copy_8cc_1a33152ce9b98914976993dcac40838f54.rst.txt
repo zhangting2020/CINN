@@ -1,0 +1,13 @@
+.. _exhale_define_ir__copy_8cc_1a33152ce9b98914976993dcac40838f54:
+
+Define __
+=========
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_ir_copy.cc`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: __

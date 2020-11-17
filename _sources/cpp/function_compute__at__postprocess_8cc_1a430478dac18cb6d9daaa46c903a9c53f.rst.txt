@@ -1,0 +1,13 @@
+.. _exhale_function_compute__at__postprocess_8cc_1a430478dac18cb6d9daaa46c903a9c53f:
+
+Function cinn::lang::UpdateComputeAtBufferShape
+===============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::lang::UpdateComputeAtBufferShape(Expr *, poly::StageMap)

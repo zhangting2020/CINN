@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8h_1a4956a1b7f09c842fc33b7d8c85151eef:
+
+Function cinn_float64_t()
+=========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_float64_t()

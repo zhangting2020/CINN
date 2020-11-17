@@ -1,0 +1,37 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_ir_context.h:
+
+Program Listing for File context.h
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_ir_context.h>` (``/home/chunwei/project/cinn2/cinn/ir/context.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   #include <memory>
+   #include "cinn/common/type.h"
+   
+   namespace cinn {
+   namespace ir {
+   
+   class CINNContext {
+    public:
+     template <typename Type>
+     Type GetType();
+   
+     std::string GetUniqueName(std::string_view name_hint);
+   
+     ~CINNContext();
+   
+     class Impl;
+     Impl& GetImpl() { return *impl_; }
+   
+    private:
+     std::unique_ptr<Impl> impl_;
+   };
+   
+   }  // namespace ir
+   }  // namespace cinn

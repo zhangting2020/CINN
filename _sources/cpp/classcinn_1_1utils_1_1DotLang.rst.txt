@@ -1,0 +1,16 @@
+.. _exhale_class_classcinn_1_1utils_1_1DotLang:
+
+Class DotLang
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_dot_lang.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: cinn::utils::DotLang
+   :members:
+   :protected-members:
+   :undoc-members:

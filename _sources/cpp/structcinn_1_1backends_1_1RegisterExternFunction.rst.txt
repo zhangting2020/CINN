@@ -1,0 +1,16 @@
+.. _exhale_struct_structcinn_1_1backends_1_1RegisterExternFunction:
+
+Struct RegisterExternFunction
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cinn::backends::RegisterExternFunction
+   :members:
+   :protected-members:
+   :undoc-members:

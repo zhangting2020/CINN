@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__runtime_8cc_1a4a05c0ded83cbd18456c792ee7d37750:
+
+Function cinn_print_debug_string(const char \*, ...)
+====================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_print_debug_string(const char *, ...)

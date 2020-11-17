@@ -1,0 +1,13 @@
+.. _exhale_define_utils_2registry_8h_1aff84d06c33f82f55a62681caed5df48c:
+
+Define CINN_REGISTRY_REGISTER
+=============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_registry.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_REGISTRY_REGISTER

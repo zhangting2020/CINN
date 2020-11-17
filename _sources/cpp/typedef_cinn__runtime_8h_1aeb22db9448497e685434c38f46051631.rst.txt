@@ -1,0 +1,13 @@
+.. _exhale_typedef_cinn__runtime_8h_1aeb22db9448497e685434c38f46051631:
+
+Typedef cinn_dimension_t
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cinn_dimension_t

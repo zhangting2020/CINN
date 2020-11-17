@@ -1,0 +1,13 @@
+.. _exhale_function_cinn__value_8cc_1ad157f32e931d77872cf5dc29feb3f03e:
+
+Function cinn::common::CINNValue::TypeCode< poly::StageMap >
+============================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_cinn_value.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::CINNValue::TypeCode< poly::StageMap >()

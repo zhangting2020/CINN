@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1_1utils_1aad97e7401a3f347ee0ac4cd3033f2120:
+
+Function cinn::utils::TEST(string, Endswith)
+============================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_utils_string_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::utils::TEST(string, Endswith)

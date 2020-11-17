@@ -1,0 +1,13 @@
+.. _exhale_function_infershape__pass__test_8cc_1a53a045d4514042eb5cb292aae13b3a55:
+
+Function cinn::hlir::framework::TEST(Operator, GetAttrs)
+========================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_infershape_pass_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::TEST(Operator, GetAttrs)

@@ -1,0 +1,67 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_poly_graph.h:
+
+Program Listing for File graph.h
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_poly_graph.h>` (``/home/chunwei/project/cinn2/cinn/poly/graph.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <memory>
+   #include <string>
+   #include <vector>
+   
+   #include "cinn/common/graph_utils.h"
+   #include "cinn/poly/stage.h"
+   
+   namespace cinn {
+   namespace poly {
+   
+   struct DataFlowGraphNode : public common::GraphNode {
+     DataFlowGraphNode* group_parent{};
+     Shared<Stage> stage;
+   
+     explicit DataFlowGraphNode(Stage* stage) : stage(stage) {}
+   
+     std::string id() const override;
+   
+     const DataFlowGraphNode* group_ancestor() const;
+     DataFlowGraphNode* group_ancestor();
+   
+     int group_height() const;
+   
+     bool IsLinkedTo(const DataFlowGraphNode* node) const;
+   
+     static DataFlowGraphNode* MergeGroup(DataFlowGraphNode* a, DataFlowGraphNode* b);
+   
+     static bool TransformedDomainIsSame(const DataFlowGraphNode* a, const DataFlowGraphNode* b);
+   };
+   
+   struct DataFlowGraphEdge : public common::GraphEdge {};
+   
+   struct DataFlowGraph : public common::Graph {};
+   
+   std::unique_ptr<DataFlowGraph> CreateGraph(const std::vector<Stage*>& stages,
+                                              const std::vector<std::pair<std::string, std::string>>& extra_links = {});
+   
+   namespace detail {
+   
+   struct Group {
+     Group() = default;
+     explicit Group(const std::vector<Shared<DataFlowGraphNode>>& nodes) : nodes(nodes) {}
+   
+     std::vector<Shared<DataFlowGraphNode>> nodes;
+     std::vector<std::string> dimension_names;
+   };
+   
+   std::vector<Group> PartitionGraphByIterationDomain(common::Graph* graph);
+   
+   }  // namespace detail
+   
+   }  // namespace poly
+   }  // namespace cinn

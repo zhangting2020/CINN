@@ -1,0 +1,24 @@
+
+.. _program_listing_file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.h:
+
+Program Listing for File lower_function_call_bind_vars.h
+========================================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file__home_chunwei_project_cinn2_cinn_optim_lower_function_call_bind_vars.h>` (``/home/chunwei/project/cinn2/cinn/optim/lower_function_call_bind_vars.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include "cinn/ir/ir.h"
+   #include "cinn/ir/module.h"
+   
+   namespace cinn {
+   namespace optim {
+   
+   void LowerFunctionCallBindVars(Expr *m);
+   
+   }  // namespace optim
+   }  // namespace cinn

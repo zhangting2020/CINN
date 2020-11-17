@@ -1,0 +1,13 @@
+.. _exhale_function_op__nn__test_8cc_1af5dd55d6be935a7128b1c60c41e05c33:
+
+Function cinn::hlir::framework::TEST(Operator, Operator_Pool2d_Test0)
+=====================================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_op_op_nn_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::TEST(Operator, Operator_Pool2d_Test0)

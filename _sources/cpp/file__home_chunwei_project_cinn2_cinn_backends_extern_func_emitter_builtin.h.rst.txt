@@ -1,0 +1,86 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h:
+
+File extern_func_emitter_builtin.h
+==================================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_backends>` (``/home/chunwei/project/cinn2/cinn/backends``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/backends/extern_func_emitter_builtin.h``)
+----------------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/backends/codegen_c.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_codegen_c.h`)
+
+- ``cinn/backends/extern_func_emitter.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.h`)
+
+- ``cinn/backends/extern_func_protos.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_protos.h`)
+
+- ``cinn/backends/llvm/codegen_llvm.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_codegen_llvm.h`)
+
+- ``cinn/backends/llvm/llvm_util.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_backends_llvm_llvm_util.h`)
+
+- ``string`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_string.cc`)
+
+- ``vector`` (:ref:`file__home_chunwei_project_cinn2_cinn_utils_small_vector.cc`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_emitter_builtin.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_backends_extern_func_jit_register.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__backends`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1CodeGenLLVMforEmitter`
+
+- :ref:`exhale_class_classcinn_1_1backends_1_1ExternFunctionLLVMEmitter`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_extern__func__emitter__builtin_8h_1a867c1d2733a5a04c48eaf72fa04d05b0`
+
+- :ref:`exhale_variable_extern__func__emitter__builtin_8h_1ab88fd1c676adbfc8ad9564bddf81276d`
+

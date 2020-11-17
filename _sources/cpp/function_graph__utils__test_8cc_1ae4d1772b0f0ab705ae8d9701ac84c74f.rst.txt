@@ -1,0 +1,13 @@
+.. _exhale_function_graph__utils__test_8cc_1ae4d1772b0f0ab705ae8d9701ac84c74f:
+
+Function cinn::common::CreateGraph0
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_graph_utils_test.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::common::CreateGraph0()

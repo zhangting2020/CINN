@@ -1,0 +1,84 @@
+
+.. _file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc:
+
+File test02_matmul_main.cc
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_tests>` (``/home/chunwei/project/cinn2/tests``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/tests/test02_matmul_main.cc``)
+------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_tests_test02_matmul_main.cc.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/cinn.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_cinn.h`)
+
+- ``cinn/optim/optimize.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_optim_optimize.h`)
+
+- ``gtest/gtest.h``
+
+- ``tests/test02_helper.h`` (:ref:`file__home_chunwei_project_cinn2_tests_test02_helper.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_namespacecinn_1ad2558e7df111295b0c0ea79c3e896764`
+
+- :ref:`exhale_function_namespacecinn_1ada735d7c28ca634b00ffb9064a63d3bb`
+
+- :ref:`exhale_function_namespacecinn_1a0ad5fde1292ad5ea6ebe494cd08d94f5`
+
+- :ref:`exhale_function_namespacecinn_1a790f9ec1f07b4775f75d59aae2fafc58`
+
+- :ref:`exhale_function_namespacecinn_1a1ce0f9515e9dd0d1ef05d6bf30259992`
+
+- :ref:`exhale_function_namespacecinn_1acbfa6a31047b2191c820f7f89011ef2b`
+
+- :ref:`exhale_function_namespacecinn_1a1d17ef5f3a4ba4d762e3bd427d8f666c`
+
+- :ref:`exhale_function_namespacecinn_1aa28136d51a8ae32a1de9a3008e548218`
+
+- :ref:`exhale_function_namespacecinn_1a282ac9458a2073d0c718bf1dbb3e8a2e`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_namespacecinn_1aa3b06bc0f33a58e7bc2b3cacc141e80a`
+
+- :ref:`exhale_variable_namespacecinn_1a1f54c53d70476aee4d8709a52b0e9ed4`
+
+- :ref:`exhale_variable_namespacecinn_1a35b8264f36458a1b133098a223b17cde`
+

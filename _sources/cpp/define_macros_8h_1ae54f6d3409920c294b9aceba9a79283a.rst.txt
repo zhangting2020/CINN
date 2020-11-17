@@ -1,0 +1,13 @@
+.. _exhale_define_macros_8h_1ae54f6d3409920c294b9aceba9a79283a:
+
+Define CINN_USE_REGISTER
+========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_common_macros.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_USE_REGISTER

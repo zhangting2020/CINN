@@ -1,0 +1,13 @@
+.. _exhale_define_cinn__runtime_8h_1a8c58d792d547396ca770cc718e4fd9a9:
+
+Define CINN_RUNTIME_NOT_IMPLEMENTED
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cinn_runtime.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CINN_RUNTIME_NOT_IMPLEMENTED

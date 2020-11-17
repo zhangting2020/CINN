@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File framework.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-framework-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-pybind-framework-cc"></span><h1>Program Listing for File framework.cc<a class="headerlink" href="#program-listing-for-file-framework-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_pybind_framework.cc.html#file-home-chunwei-project-cinn2-cinn-pybind-framework-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/pybind/framework.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pybind11/functional.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/numpy.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/operators.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/pybind11.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pybind11/stl.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/cinn_value.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/frontend/interpreter.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/node.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/op.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/op_strategy.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/framework/scope.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/hlir/op/use_ops.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">pybind</span> <span class="p">{</span>
+
+<span class="k">namespace</span> <span class="n">py</span> <span class="o">=</span> <span class="n">pybind11</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">cinn</span><span class="o">::</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="p">;</span>  <span class="c1">// NOLINT</span>
+
+<span class="kt">void</span> <span class="nf">BindFramework</span><span class="p">(</span><span class="n">pybind11</span><span class="o">::</span><span class="n">module</span> <span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">Operator</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;Operator&quot;</span><span class="p">).</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;get_op_attrs&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Operator</span><span class="o">::</span><span class="n">GetAttrs</span><span class="o">&lt;</span><span class="n">StrategyFunction</span><span class="o">&gt;</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">StrategyFunction</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;OpValueType&quot;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;apply_strategy&quot;</span><span class="p">,</span>
+           <span class="p">[](</span><span class="n">OpValueType</span><span class="o">&lt;</span><span class="n">StrategyFunction</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span>
+              <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">,</span>
+              <span class="k">const</span> <span class="n">NodeAttr</span> <span class="o">&amp;</span><span class="n">attrs</span><span class="p">,</span>
+              <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">inputs</span><span class="p">,</span>
+              <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">out_types</span><span class="p">,</span>
+              <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">output_shapes</span><span class="p">,</span>
+              <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+             <span class="k">const</span> <span class="n">Operator</span> <span class="o">*</span><span class="n">op_ptr</span> <span class="o">=</span> <span class="n">Operator</span><span class="o">::</span><span class="n">Get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+             <span class="k">auto</span> <span class="n">impl</span> <span class="o">=</span> <span class="n">OpStrategy</span><span class="o">::</span><span class="n">SelectImpl</span><span class="p">(</span><span class="n">self</span><span class="p">[</span><span class="n">op_ptr</span><span class="p">](</span><span class="n">attrs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">out_types</span><span class="p">,</span> <span class="n">output_shapes</span><span class="p">,</span> <span class="n">target</span><span class="p">));</span>
+             <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="o">&gt;</span> <span class="n">temp_inputs</span><span class="p">;</span>
+             <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">;</span>
+             <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">tensor</span> <span class="p">:</span> <span class="n">inputs</span><span class="p">)</span> <span class="p">{</span>
+               <span class="n">res</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tensor</span><span class="p">);</span>
+               <span class="n">temp_inputs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">CINNValue</span><span class="p">(</span><span class="n">tensor</span><span class="p">));</span>
+             <span class="p">}</span>
+             <span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span> <span class="n">C</span> <span class="o">=</span> <span class="n">impl</span><span class="o">-&gt;</span><span class="n">fcompute</span><span class="p">(</span><span class="n">common</span><span class="o">::</span><span class="n">CINNValuePack</span><span class="p">{</span><span class="n">temp_inputs</span><span class="p">});</span>
+             <span class="n">poly</span><span class="o">::</span><span class="n">StageMap</span> <span class="n">stages</span>   <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+             <span class="c1">// make sure all the tensors in the stages before schedule launch.</span>
+             <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+               <span class="n">ir</span><span class="o">::</span><span class="n">Expr</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+               <span class="n">stages</span><span class="o">-&gt;</span><span class="n">InsertLazily</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">as_tensor_ref</span><span class="p">());</span>
+             <span class="p">}</span>
+             <span class="n">C</span> <span class="o">=</span> <span class="n">impl</span><span class="o">-&gt;</span><span class="n">fschedule</span><span class="p">(</span><span class="n">C</span><span class="p">);</span>
+             <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+               <span class="n">ir</span><span class="o">::</span><span class="n">Expr</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+               <span class="n">res</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">as_tensor_ref</span><span class="p">());</span>
+             <span class="p">}</span>
+             <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="n">res</span><span class="p">);</span>
+             <span class="k">return</span> <span class="n">func</span><span class="p">;</span>
+           <span class="p">});</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">NodeAttr</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;NodeAttr&quot;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def_readwrite</span><span class="p">(</span><span class="s">&quot;attr_store&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_store</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set_attr&quot;</span><span class="p">,</span>
+           <span class="p">[](</span><span class="n">NodeAttr</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">,</span> <span class="n">NodeAttr</span><span class="o">::</span><span class="n">attr_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="p">.</span><span class="n">attr_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;get_attr&quot;</span><span class="p">,</span>
+           <span class="p">[](</span><span class="n">NodeAttr</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+             <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">attr_store</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Didn&#39;t find value with key [&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">key</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;].&quot;</span><span class="p">;</span>
+             <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">attr_store</span><span class="p">[</span><span class="n">key</span><span class="p">];</span>
+           <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;__str__&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">NodeAttr</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">utils</span><span class="o">::</span><span class="n">GetStreamCnt</span><span class="p">(</span><span class="n">self</span><span class="p">);</span> <span class="p">});</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">Scope</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;Scope&quot;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>  <span class="c1">//</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;get_tensor&quot;</span><span class="p">,</span>
+           <span class="p">[](</span><span class="n">Scope</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+             <span class="n">py</span><span class="o">::</span><span class="n">dtype</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
+             <span class="k">auto</span> <span class="n">t</span>       <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">GetTensor</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+             <span class="n">py</span><span class="o">::</span><span class="n">array</span><span class="o">::</span><span class="n">ShapeContainer</span> <span class="n">shape</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">().</span><span class="n">begin</span><span class="p">(),</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">().</span><span class="n">end</span><span class="p">());</span>
+             <span class="n">py</span><span class="o">::</span><span class="n">array</span> <span class="n">array</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">shape</span><span class="p">));</span>
+             <span class="k">auto</span> <span class="o">*</span><span class="n">mutable_data</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">mutable_data</span><span class="p">();</span>
+             <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">)</span> <span class="p">{</span>
+               <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">mutable_data</span><span class="p">,</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+             <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">NVGPU</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#ifdef CINN_WITH_CUDA</span>
+               <span class="n">CUDA_CALL</span><span class="p">(</span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">mutable_data</span><span class="p">,</span>
+                                    <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">)),</span>
+                                    <span class="n">t</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span>
+                                    <span class="n">cudaMemcpyDeviceToHost</span><span class="p">));</span>
+<span class="cp">#else</span>
+               <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span><span class="s">&quot;To use CUDA backends, you need to set WITH_CUDA ON!&quot;</span><span class="p">;</span>
+<span class="cp">#endif</span>
+             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+               <span class="n">CINN_NOT_IMPLEMENTED</span>
+             <span class="p">}</span>
+             <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+           <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;var_names&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Scope</span><span class="o">::</span><span class="n">var_names</span><span class="p">);</span>
+
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;SharedTensor&quot;</span><span class="p">);</span>
+  <span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">common</span><span class="o">::</span><span class="n">Shared</span><span class="o">&lt;</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">_Tensor_</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">m</span><span class="p">,</span> <span class="s">&quot;Tensor&quot;</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;shape&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">();</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set_type&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="n">Type</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">set_type</span><span class="p">(</span><span class="n">type</span><span class="p">);</span> <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">,</span>
+           <span class="p">[](</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+             <span class="n">py</span><span class="o">::</span><span class="n">dtype</span> <span class="n">dt</span><span class="p">;</span>
+             <span class="c1">// set float by default</span>
+             <span class="n">dt</span> <span class="o">=</span> <span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">();</span>
+             <span class="n">py</span><span class="o">::</span><span class="n">array</span><span class="o">::</span><span class="n">ShapeContainer</span> <span class="n">shape</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">().</span><span class="n">begin</span><span class="p">(),</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">data</span><span class="p">().</span><span class="n">end</span><span class="p">());</span>
+             <span class="n">py</span><span class="o">::</span><span class="n">array</span> <span class="n">array</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">shape</span><span class="p">));</span>
+             <span class="kt">void</span> <span class="o">*</span><span class="n">array_data</span> <span class="o">=</span> <span class="n">array</span><span class="p">.</span><span class="n">mutable_data</span><span class="p">();</span>
+             <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">)</span> <span class="p">{</span>
+               <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">array_data</span><span class="p">,</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(),</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">));</span>
+             <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">NVGPU</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#ifdef CINN_WITH_CUDA</span>
+               <span class="n">CUDA_CALL</span><span class="p">(</span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">array_data</span><span class="p">,</span>
+                                    <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">)),</span>
+                                    <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span>
+                                    <span class="n">cudaMemcpyDeviceToHost</span><span class="p">));</span>
+<span class="cp">#else</span>
+               <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span><span class="s">&quot;To use CUDA backends, you need to set WITH_CUDA ON!&quot;</span><span class="p">;</span>
+<span class="cp">#endif</span>
+             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+               <span class="n">CINN_NOT_IMPLEMENTED</span>
+             <span class="p">}</span>
+             <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+           <span class="p">})</span>
+      <span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;from_numpy&quot;</span><span class="p">,</span> <span class="p">[](</span><span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">Tensor</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">,</span> <span class="n">py</span><span class="o">::</span><span class="n">array</span> <span class="n">array</span><span class="p">,</span> <span class="k">const</span> <span class="n">common</span><span class="o">::</span><span class="n">Target</span> <span class="o">&amp;</span><span class="n">target</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CHECK</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">dtype</span><span class="p">().</span><span class="n">is</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">dtype</span><span class="o">::</span><span class="n">of</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">()))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;currently only support float32 data type as input&quot;</span><span class="p">;</span>
+        <span class="n">hlir</span><span class="o">::</span><span class="n">framework</span><span class="o">::</span><span class="n">shape_t</span> <span class="n">shape</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">copy_n</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">array</span><span class="p">.</span><span class="n">ndim</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">shape</span><span class="p">));</span>
+        <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">shape</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">shape</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[](</span><span class="kt">int32_t</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span> <span class="p">}),</span>
+                 <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">());</span>
+        <span class="k">auto</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">mutable_data</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">target</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">X86</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">float</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">data</span><span class="p">())[</span><span class="n">i</span><span class="p">];</span>
+          <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">arch</span> <span class="o">==</span> <span class="n">Target</span><span class="o">::</span><span class="n">Arch</span><span class="o">::</span><span class="n">NVGPU</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#ifdef CINN_WITH_CUDA</span>
+          <span class="n">CUDA_CALL</span><span class="p">(</span><span class="n">cudaMemcpy</span><span class="p">(</span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="kt">void</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                               <span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">float</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">data</span><span class="p">()),</span>
+                               <span class="n">self</span><span class="o">-&gt;</span><span class="n">shape</span><span class="p">().</span><span class="n">numel</span><span class="p">()</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span>
+                               <span class="n">cudaMemcpyHostToDevice</span><span class="p">));</span>
+<span class="cp">#else</span>
+               <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span><span class="s">&quot;To use CUDA backends, you need to set WITH_CUDA ON!&quot;</span><span class="p">;</span>
+<span class="cp">#endif</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="n">CINN_NOT_IMPLEMENTED</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+<span class="p">}</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn::pybind</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_pybind_framework.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

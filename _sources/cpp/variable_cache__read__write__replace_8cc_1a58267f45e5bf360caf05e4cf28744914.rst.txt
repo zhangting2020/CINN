@@ -1,0 +1,13 @@
+.. _exhale_variable_cache__read__write__replace_8cc_1a58267f45e5bf360caf05e4cf28744914:
+
+Variable cache_reader_names
+===========================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_cache_read_write_replace.cc`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: cache_reader_names

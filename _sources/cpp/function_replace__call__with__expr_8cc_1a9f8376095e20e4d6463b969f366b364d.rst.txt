@@ -1,0 +1,13 @@
+.. _exhale_function_replace__call__with__expr_8cc_1a9f8376095e20e4d6463b969f366b364d:
+
+Function cinn::optim::ReplaceCallWithExpr
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_optim_replace_call_with_expr.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::optim::ReplaceCallWithExpr(Expr *, const std::string&, const Expr&)

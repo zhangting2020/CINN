@@ -1,0 +1,13 @@
+.. _exhale_function_gtest__main_8cc_1a3c04138a5bfe5d72780bb7e82a18e627:
+
+Function main
+=============
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_gtest_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: main(int, char **)

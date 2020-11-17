@@ -1,0 +1,73 @@
+
+.. _file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h:
+
+File compute_at_postprocess.h
+=============================
+
+|exhale_lsh| :ref:`Parent directory <dir__home_chunwei_project_cinn2_cinn_lang>` (``/home/chunwei/project/cinn2/cinn/lang``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/home/chunwei/project/cinn2/cinn/lang/compute_at_postprocess.h``)
+-------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cinn/ir/ir.h``
+
+- ``cinn/ir/tensor.h``
+
+- ``map``
+
+- ``string``
+
+- ``unordered_map``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_compute_at_postprocess.cc`
+
+- :ref:`file__home_chunwei_project_cinn2_cinn_lang_lower_impl.cc`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_cinn`
+
+- :ref:`namespace_cinn__lang`
+
+- :ref:`namespace_cinn__lang__detail`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_compute__at__postprocess_8h_1afcbb0ba2f0da908362560765e4f4d886`
+

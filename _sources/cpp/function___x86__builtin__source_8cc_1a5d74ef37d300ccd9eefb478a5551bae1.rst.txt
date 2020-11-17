@@ -1,0 +1,13 @@
+.. _exhale_function___x86__builtin__source_8cc_1a5d74ef37d300ccd9eefb478a5551bae1:
+
+Function cinn_avx512_add_float
+==============================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_backends__x86_builtin_source.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_avx512_add_float(const __m512&, const __m512&)

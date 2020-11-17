@@ -1,0 +1,13 @@
+.. _exhale_function_ast__gen_8cc_1a3401f6a8e5a30af68b6980ffb10b2a3c:
+
+Function cinn::poly::detail::GetTupleName
+=========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_poly_ast_gen.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::poly::detail::GetTupleName(isl_ast_node *)

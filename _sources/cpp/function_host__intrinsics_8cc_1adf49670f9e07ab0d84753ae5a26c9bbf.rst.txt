@@ -1,0 +1,13 @@
+.. _exhale_function_host__intrinsics_8cc_1adf49670f9e07ab0d84753ae5a26c9bbf:
+
+Function cinn_cpu_bitwise_xor_int32
+===================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_runtime_cpu_host_intrinsics.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn_cpu_bitwise_xor_int32(int, int)

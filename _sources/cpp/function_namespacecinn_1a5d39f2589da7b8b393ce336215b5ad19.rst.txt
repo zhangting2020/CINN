@@ -1,0 +1,13 @@
+.. _exhale_function_namespacecinn_1a5d39f2589da7b8b393ce336215b5ad19:
+
+Function cinn::TEST(test01_elementwise_add, basic)
+==================================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_tests_test01_elementwise_add_main.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::TEST(test01_elementwise_add, basic)

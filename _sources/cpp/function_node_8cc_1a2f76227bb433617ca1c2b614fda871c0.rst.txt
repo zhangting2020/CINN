@@ -1,0 +1,13 @@
+.. _exhale_function_node_8cc_1a2f76227bb433617ca1c2b614fda871c0:
+
+Function cinn::hlir::framework::operator<<
+==========================================
+
+- Defined in :ref:`file__home_chunwei_project_cinn2_cinn_hlir_framework_node.cc`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: cinn::hlir::framework::operator<<(std::ostream&, const NodeAttr&)

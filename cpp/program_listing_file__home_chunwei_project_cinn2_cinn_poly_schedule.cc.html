@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Listing for File schedule.cc &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="program-listing-for-file-schedule-cc">
+<span id="program-listing-file-home-chunwei-project-cinn2-cinn-poly-schedule-cc"></span><h1>Program Listing for File schedule.cc<a class="headerlink" href="#program-listing-for-file-schedule-cc" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_poly_schedule.cc.html#file-home-chunwei-project-cinn2-cinn-poly-schedule-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/poly/schedule.cc</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/schedule.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sstream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/common/graph_utils.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_printer.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir_visitor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/tensor.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/naive_scheduler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/poly/poly_scheduler.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/utils/string.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">cinn</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">poly</span> <span class="p">{</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">TimeSchedule</span><span class="o">::</span><span class="n">__str__</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">kMaxDims</span><span class="p">);</span>
+
+  <span class="c1">// generate range: [dup, t0, t1...]</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">range_dims</span><span class="p">,</span> <span class="n">cond_dims</span><span class="p">;</span>
+  <span class="n">range_dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;r&quot;</span><span class="p">);</span>  <span class="c1">// root level</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">range_dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;t&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+    <span class="n">range_dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;d&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cond_dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;d&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+    <span class="n">cond_dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;t&quot;</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="c1">// generate conditions</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">conds</span><span class="p">;</span>
+  <span class="n">conds</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;r=%d&quot;</span><span class="p">,</span> <span class="n">root_time_</span><span class="p">));</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">conds</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;%s=%s&quot;</span><span class="p">,</span> <span class="n">cond_dims</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">].</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span><span class="p">).</span><span class="n">c_str</span><span class="p">()));</span>
+    <span class="n">conds</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;%s=%s&quot;</span><span class="p">,</span> <span class="n">cond_dims</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">dim</span><span class="p">.</span><span class="n">c_str</span><span class="p">()));</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">utils</span><span class="o">::</span><span class="n">StringFormat</span><span class="p">(</span><span class="s">&quot;{ %s[%s] -&gt; [%s]: %s }&quot;</span><span class="p">,</span>
+                             <span class="n">id_</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span>
+                             <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">domain_dims</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">).</span><span class="n">c_str</span><span class="p">(),</span>
+                             <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">range_dims</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">).</span><span class="n">c_str</span><span class="p">(),</span>
+                             <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">conds</span><span class="p">,</span> <span class="s">&quot; and &quot;</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">TimeSchedule</span><span class="o">::</span><span class="n">final_axis_names</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">dims</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span><span class="p">).</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="n">dims</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">dim</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">dims</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">TimeSchedule</span><span class="o">::</span><span class="n">TimeSchedule</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dims</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">dims</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">kMaxDims</span><span class="p">);</span>
+  <span class="n">id_</span>         <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+  <span class="n">domain_dims</span> <span class="o">=</span> <span class="n">dims</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">dim</span> <span class="p">:</span> <span class="n">domain_dims</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">dim</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+    <span class="n">time_dims_</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">TimeSchedule</span><span class="o">::</span><span class="n">OrderAfter</span><span class="p">(</span><span class="k">const</span> <span class="n">TimeSchedule</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">space_size</span><span class="p">(),</span> <span class="n">other</span><span class="p">.</span><span class="n">space_size</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;space not match&quot;</span><span class="p">;</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">space_size</span><span class="p">());</span>
+  <span class="n">CHECK_GE</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">time_dims_</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+
+  <span class="n">root_time_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">root_time_</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">root_time_</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">level</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">root_time_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">root_time_</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">root_time_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">time</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">this</span><span class="o">-&gt;</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">level</span><span class="p">].</span><span class="n">time</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">level</span><span class="p">].</span><span class="n">time</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">time_dims_</span><span class="p">[</span><span class="n">level</span><span class="p">].</span><span class="n">time</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">isl</span><span class="o">::</span><span class="n">map</span> <span class="n">TimeSchedule</span><span class="o">::</span><span class="n">to_isl</span><span class="p">(</span><span class="n">isl</span><span class="o">::</span><span class="n">ctx</span> <span class="n">ctx</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;isl: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">__str__</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">__str__</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">TimeSchedule</span><span class="o">::</span><span class="n">id</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">id_</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+  <span class="k">return</span> <span class="n">id_</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">TimeSchedule</span><span class="o">::</span><span class="n">ResizeTimeSpace</span><span class="p">(</span><span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LE</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">kMaxDims</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">time_dims_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">time_dims_</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/*</span>
+<span class="cm">std::unique_ptr&lt;Schedule&gt; CreateSchedule(const ir::Tensor &amp;tensor, ScheduleKind schedule_kind) {</span>
+<span class="cm">  auto stages = GatherStagesInTensors({tensor});</span>
+<span class="cm">  VLOG(3) &lt;&lt; &quot;collected &quot; &lt;&lt; stages.size() &lt;&lt; &quot; stages&quot;;</span>
+<span class="cm">  return CreateSchedule(stages, schedule_kind);</span>
+<span class="cm">}</span>
+<span class="cm"> */</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Schedule</span><span class="o">&gt;</span> <span class="n">CreateSchedule</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Stage</span> <span class="o">*&gt;</span> <span class="o">&amp;</span><span class="n">stages</span><span class="p">,</span>
+                                         <span class="n">ScheduleKind</span> <span class="n">schedule_kind</span><span class="p">,</span>
+                                         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span><span class="n">extra_links</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">stages</span><span class="p">.</span><span class="n">empty</span><span class="p">());</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">stage</span> <span class="p">:</span> <span class="n">stages</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;stage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">stage</span><span class="o">-&gt;</span><span class="n">domain</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">schedule_kind</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">ScheduleKind</span><span class="o">::</span><span class="nl">Naive</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">NaiveScheduler</span> <span class="n">scheduler</span><span class="p">(</span><span class="n">stages</span><span class="p">);</span>
+      <span class="k">return</span> <span class="n">scheduler</span><span class="p">.</span><span class="n">BuildSchedule</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">ScheduleKind</span><span class="o">::</span><span class="nl">Poly</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">PolyScheduler</span> <span class="n">scheduler</span><span class="p">(</span><span class="n">stages</span><span class="p">,</span> <span class="n">extra_links</span><span class="p">);</span>
+      <span class="k">return</span> <span class="n">scheduler</span><span class="p">.</span><span class="n">BuildSchedule</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="n">CINN_NOT_IMPLEMENTED</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">CollectScheduleMapFromGroup</span><span class="p">(</span><span class="k">const</span> <span class="n">ScheduleGroup</span> <span class="o">&amp;</span><span class="n">group</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Stage</span> <span class="o">*&gt;</span> <span class="n">stages</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">node</span> <span class="p">:</span> <span class="n">group</span><span class="p">.</span><span class="n">nodes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CHECK</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">stage</span><span class="p">);</span>
+    <span class="n">stages</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">stage</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">PolyGroupScheduler</span> <span class="n">group_scheduler</span><span class="p">(</span><span class="n">stages</span><span class="p">);</span>
+  <span class="n">group_scheduler</span><span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="n">group_scheduler</span><span class="p">.</span><span class="n">schedule_map</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">SchedulerBase</span><span class="o">::</span><span class="n">AddStage</span><span class="p">(</span><span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">registration_finalized_</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;element registration has been finalized.&quot;</span><span class="p">;</span>
+  <span class="n">space_size_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">space_size_</span><span class="p">,</span> <span class="n">isl_map_dim</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">transform</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">));</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;space_size: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">space_size_</span><span class="p">;</span>
+  <span class="n">VLOG</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;schedule: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">.</span><span class="n">transform</span><span class="p">();</span>
+
+  <span class="c1">// Use the dimensions from element&#39;s schedule&#39;s range as the new domain dimensions because in Element, the schedule is</span>
+  <span class="c1">// like &#39;{ S0[i,j] -&gt; S0[i_outer, i_inner, j] }&#39;, the scheduler should schedule base on the range.</span>
+  <span class="k">auto</span> <span class="n">dims</span>      <span class="o">=</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">transform</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">id</span> <span class="o">=</span> <span class="n">isl_map_get_tuple_name</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">transform</span><span class="p">().</span><span class="n">get</span><span class="p">(),</span> <span class="n">isl_dim_in</span><span class="p">);</span>
+  <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">RegisterNode</span><span class="p">(</span>
+      <span class="n">x</span><span class="p">.</span><span class="n">id</span><span class="p">(),</span> <span class="n">common</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">isl_get_dim_names</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">transform</span><span class="p">(),</span> <span class="n">isl_dim_out</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">));</span>
+
+  <span class="c1">// record the longest dimensions.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">dims</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">detailed_dimension_names_</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="n">detailed_dimension_names_</span> <span class="o">=</span> <span class="n">dims</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ctx_</span><span class="p">.</span><span class="n">get</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">ctx_</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">domain</span><span class="p">().</span><span class="n">ctx</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">ctx_</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">x</span><span class="p">.</span><span class="n">domain</span><span class="p">().</span><span class="n">ctx</span><span class="p">().</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;isl ctx not match&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">SchedulerBase</span><span class="o">::</span><span class="n">FinishStageAdd</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">*</span><span class="nl">node</span> <span class="p">:</span> <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">nodes</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">schedule_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">safe_as</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">depend</span> <span class="p">:</span> <span class="n">schedule_node</span><span class="o">-&gt;</span><span class="n">stage</span><span class="o">-&gt;</span><span class="n">ctrl_depends</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="o">*</span><span class="n">depend_node</span> <span class="o">=</span> <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">RetriveNode</span><span class="p">(</span><span class="n">depend</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">depend_node</span><span class="p">)</span> <span class="p">{</span>            <span class="c1">// some dependencies might be in another graph.</span>
+        <span class="n">depend_node</span><span class="o">-&gt;</span><span class="n">LinkTo</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>  <span class="c1">// Add link from extra depend statment to current node.</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">CHECK</span><span class="p">(</span><span class="o">!</span><span class="n">schedule_graph_</span><span class="p">.</span><span class="n">nodes</span><span class="p">().</span><span class="n">empty</span><span class="p">())</span>
+      <span class="o">&lt;&lt;</span> <span class="s">&quot;No node is registered to the graph, use RegisterElement to collect some elements&quot;</span><span class="p">;</span>
+  <span class="n">registration_finalized_</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">item</span> <span class="p">:</span> <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">nodes</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">VLOG</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;original dims in time_schedule: &quot;</span>
+            <span class="o">&lt;&lt;</span> <span class="n">utils</span><span class="o">::</span><span class="n">Join</span><span class="p">(</span><span class="n">item</span><span class="o">-&gt;</span><span class="n">safe_as</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">time_schedule</span><span class="p">.</span><span class="n">domain_dims</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
+    <span class="n">item</span><span class="o">-&gt;</span><span class="n">safe_as</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">time_schedule</span><span class="p">.</span><span class="n">ResizeTimeSpace</span><span class="p">(</span><span class="n">space_size_</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">SchedulerBase</span><span class="o">::</span><span class="n">WrapIteratorNames</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">names</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">names</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>        <span class="c1">// fake name for time space.</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>  <span class="c1">// name for the corresponding iterator.</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">SchedulerBase</span> <span class="o">&amp;</span><span class="n">SchedulerBase</span><span class="o">::</span><span class="n">After</span><span class="p">(</span><span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_LT</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">space_size_</span><span class="p">);</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">a_node</span> <span class="o">=</span> <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">RetriveNode</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">safe_as</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="o">*</span><span class="n">b_node</span> <span class="o">=</span> <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">RetriveNode</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">safe_as</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">a_node</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;no node called &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; registered in the graph&quot;</span><span class="p">;</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">b_node</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;no node called &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; registered in the graph&quot;</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="p">[</span><span class="n">a_edge</span><span class="p">,</span> <span class="n">b_edge</span><span class="p">]</span>                  <span class="o">=</span> <span class="n">a_node</span><span class="o">-&gt;</span><span class="n">LinkTo</span><span class="o">&lt;</span><span class="n">ScheduleGraphEdge</span><span class="o">&gt;</span><span class="p">(</span><span class="n">b_node</span><span class="p">);</span>  <span class="c1">// NOLINT</span>
+  <span class="n">a_edge</span><span class="o">-&gt;</span><span class="n">as</span><span class="o">&lt;</span><span class="n">ScheduleGraphEdge</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span><span class="p">;</span>
+  <span class="n">b_edge</span><span class="o">-&gt;</span><span class="n">as</span><span class="o">&lt;</span><span class="n">ScheduleGraphEdge</span><span class="o">&gt;</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span><span class="p">;</span>
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">SchedulerBase</span> <span class="o">&amp;</span><span class="n">SchedulerBase</span><span class="o">::</span><span class="n">Before</span><span class="p">(</span><span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Stage</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">After</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">level</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">SchedulerBase</span><span class="o">::</span><span class="n">schedule_map</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">isl</span><span class="o">::</span><span class="n">map</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">node</span> <span class="p">:</span> <span class="n">schedule_graph_</span><span class="p">.</span><span class="n">nodes</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">schedule_node</span>      <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">safe_as</span><span class="o">&lt;</span><span class="n">ScheduleGraphNode</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">res</span><span class="p">[</span><span class="n">schedule_node</span><span class="o">-&gt;</span><span class="n">id</span><span class="p">()]</span> <span class="o">=</span> <span class="n">schedule_node</span><span class="o">-&gt;</span><span class="n">time_schedule</span><span class="p">.</span><span class="n">to_isl</span><span class="p">(</span><span class="n">Context</span><span class="o">::</span><span class="n">Global</span><span class="p">().</span><span class="n">isl_ctx</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ScheduleGraphNode</span><span class="o">::</span><span class="n">__type_info__</span> <span class="o">=</span> <span class="s">&quot;ScheduleGraphNode&quot;</span><span class="p">;</span>
+
+<span class="p">}</span>  <span class="c1">// namespace poly</span>
+<span class="p">}</span>  <span class="c1">// namespace cinn</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp/program_listing_file__home_chunwei_project_cinn2_cinn_poly_schedule.cc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
