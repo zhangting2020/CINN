@@ -1,0 +1,420 @@
+.. only:: html
+
+    .. note::
+        :class: sphx-glr-download-link-note
+
+        Click :ref:`here <sphx_glr_download_tutorials_schedule_primitives.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr_tutorials_schedule_primitives.py:
+
+
+Schedule Primitives in CINN
+===============================
+
+In this tutorial, we will guide you through the examples of using schedule primitives.
+
+
+.. code-block:: default
+
+
+    import cinn
+    import numpy as np
+
+
+
+
+
+
+
+
+declare some variables for latter use
+Expr is short for expression.
+
+
+.. code-block:: default
+
+    m = cinn.Expr(32)
+    n = cinn.Expr(8)
+
+    print(m, n)
+    # get the integer contained in an integer expression
+    print(m.int())
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    32 8
+    32
+
+
+
+
+A schedule can be created from a list of Tensors.
+
+
+.. code-block:: default
+
+
+    # declare an elementwise multiply
+    A = cinn.Placeholder('float32', 'A', (m, n))
+    B = cinn.Placeholder('float32', 'B', (m, n))
+    C = cinn.compute((m, n), lambda v: A(v[0], v[1]) * B(v[0], v[1]), name='C')
+
+    # create the stages for further schedule
+    stages = cinn.create_stages([C])
+
+    # lower will transform the computation to real code
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B.to_tensor(), C])
+    print(fn)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B, _C)
+    {
+      for (i, 32)
+      {
+        for (j, 8)
+        {
+          C[i, j] = (A[i, j] * B[i, j])
+        }
+      }
+    }
+
+
+
+
+One schedule is composed by multiple stages. We provide several
+methods to schedule each stage.
+
+split
+------
+:code:`split` can partition a specific axis into two axises by :code: `factor`.
+
+
+.. code-block:: default
+
+    A = cinn.Placeholder('float32', 'A', (m, ))
+    B = cinn.compute((m, ), lambda v: A(v[0]) * 2., name='B')
+
+    stages = cinn.create_stages([B])
+    i0, i1 = stages[B].split(level=0, factor=4)
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B])
+    print(fn)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B)
+    {
+      for (i_outer, 8)
+      {
+        for (i_inner, 4)
+        {
+          B[((4 * i_outer) + i_inner)] = (2 * A[((4 * i_outer) + i_inner)])
+        }
+      }
+    }
+
+
+
+
+tile
+------
+:code:`tile` can partition two adjacent axises into blocks.
+
+
+.. code-block:: default
+
+    A = cinn.Placeholder('float32', 'A', (m, n))
+    B = cinn.Placeholder('float32', 'B', (m, n))
+    C = cinn.compute((m, n), lambda v: A(v[0], v[1]) * B(v[0], v[1]), name='C')
+
+    stages = cinn.create_stages([C])
+
+    i, j = stages[C].axis(0), stages[C].axis(1)
+    i_outer, i_inner, j_inner, j_outer = stages[C].tile(i, j, 4, 4)
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B.to_tensor(), C])
+    print(fn)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B, _C)
+    {
+      for (i_outer, 8)
+      {
+        for (i_inner, 4)
+        {
+          for (j_outer, 2)
+          {
+            for (j_inner, 4)
+            {
+              C[((4 * i_outer) + i_inner), ((4 * j_outer) + j_inner)] = (A[((4 * i_outer) + i_inner), ((4 * j_outer) + j_inner)] * B[((4 * i_outer) + i_inner), ((4 * j_outer) + j_inner)])
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+reorder
+---------
+:code:`reorder` can reorder the axises in the specified order.
+
+
+.. code-block:: default
+
+    A = cinn.Placeholder('float32', 'A', (m, n))
+    B = cinn.Placeholder('float32', 'B', (m, n))
+    C = cinn.compute((m, n), lambda v: A(v[0], v[1]) * B(v[0], v[1]), name='C')
+
+    stages = cinn.create_stages([C])
+    i0, i1 = stages[C].axis(0), stages[C].axis(1)
+    stages[C].reorder([i1, i0])
+
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B.to_tensor(), C])
+    print(fn)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B, _C)
+    {
+      for (j, 8)
+      {
+        for (i, 32)
+        {
+          C[i, j] = (A[i, j] * B[i, j])
+        }
+      }
+    }
+
+
+
+
+unroll
+------
+:code:`unroll` unroll a specific axis.
+
+
+.. code-block:: default
+
+    A = cinn.Placeholder('float32', 'A', (m, n))
+    B = cinn.Placeholder('float32', 'B', (m, n))
+    C = cinn.compute((m, n), lambda v: A(v[0], v[1]) * B(v[0], v[1]), name='C')
+
+    stages = cinn.create_stages([C])
+    i1 = stages[C].axis(1)
+    stages[C].unroll(i1)
+
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B.to_tensor(), C])
+    print(fn)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B, _C)
+    {
+      for (i, 32)
+      {
+        {
+          C[i, 0] = (A[i, 0] * B[i, 0])
+        }
+        {
+          C[i, 1] = (A[i, 1] * B[i, 1])
+        }
+        {
+          C[i, 2] = (A[i, 2] * B[i, 2])
+        }
+        {
+          C[i, 3] = (A[i, 3] * B[i, 3])
+        }
+        {
+          C[i, 4] = (A[i, 4] * B[i, 4])
+        }
+        {
+          C[i, 5] = (A[i, 5] * B[i, 5])
+        }
+        {
+          C[i, 6] = (A[i, 6] * B[i, 6])
+        }
+        {
+          C[i, 7] = (A[i, 7] * B[i, 7])
+        }
+      }
+    }
+
+
+
+
+compute_inline
+----------------
+:code:`compute_inline` marks a stage as inline, then the computation
+body will be expanded and inserted at the location where the tensor
+is referenced.
+
+
+.. code-block:: default
+
+    A = cinn.Placeholder('float32', 'A', (m, n))
+    B = cinn.Placeholder('float32', 'B', (m, n))
+    C = cinn.compute((m, n), lambda v: A(v[0], v[1]) * B(v[0], v[1]), name='C')
+
+    # C1[i,j] = C[i,j] + B[i,j]
+    C1 = cinn.compute([m, n], lambda v: C(v[0], v[1]) + B(v[0], v[1]), "C1")
+    # C2[i,j] = C1[i,j] + B[i,j]
+    C2 = cinn.compute([m, n], lambda v: C1(v[0], v[1]) + B(v[0], v[1]), "C2")
+
+    stages = cinn.create_stages([C, C1, C2])
+
+    stages[C].compute_inline()
+    stages[C1].compute_inline()
+
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B.to_tensor(), C2])
+    print(fn)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B, _C2)
+    {
+      for (i, 32)
+      {
+        for (j, 8)
+        {
+          C2[i, j] = ((2 * B[i, j]) + (A[i, j] * B[i, j]))
+        }
+      }
+    }
+
+
+
+
+bind
+----------------
+:code:`bind` can bind a specified axis with a thread axis.
+
+
+.. code-block:: default
+
+    A = cinn.Placeholder('float32', 'A', (m, n))
+    B = cinn.Placeholder('float32', 'B', (m, n))
+    C = cinn.compute((m, n), lambda v: A(v[0], v[1]) * B(v[0], v[1]), name='C')
+
+    stages = cinn.create_stages([C])
+    stages[C].bind(0, "blockIdx.x")
+    stages[C].bind(1, "threadIdx.x")
+
+    fn = cinn.lower("fn", stages, [A.to_tensor(), B.to_tensor(), C])
+    print(fn)
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    function fn (_A, _B, _C)
+    {
+      if ((blockIdx.x < 32)) {
+        {
+          if ((threadIdx.x < 8)) {
+            {
+              C[blockIdx.x, threadIdx.x] = (A[blockIdx.x, threadIdx.x] * B[blockIdx.x, threadIdx.x])
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 0 minutes  0.081 seconds)
+
+
+.. _sphx_glr_download_tutorials_schedule_primitives.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download sphx-glr-download-python
+
+     :download:`Download Python source code: schedule_primitives.py <schedule_primitives.py>`
+
+
+
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+     :download:`Download Jupyter notebook: schedule_primitives.ipynb <schedule_primitives.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_
