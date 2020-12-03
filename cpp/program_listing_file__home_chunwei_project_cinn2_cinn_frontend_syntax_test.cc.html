@@ -146,7 +146,7 @@
   <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
 
   <span class="n">Placeholder</span> <span class="nf">a</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">B</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">},</span> <span class="s">&quot;A&quot;</span><span class="p">);</span>
-  <span class="n">Placeholder</span> <span class="nf">w</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">},</span> <span class="s">&quot;W&quot;</span><span class="p">);</span>  <span class="c1">// weight</span>
+  <span class="n">Placeholder</span> <span class="nf">w</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">},</span> <span class="s">&quot;W&quot;</span><span class="p">);</span>  <span class="c1">// weight</span>
   <span class="n">Placeholder</span> <span class="nf">b</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="p">{</span><span class="n">N</span><span class="p">},</span> <span class="s">&quot;B&quot;</span><span class="p">);</span>     <span class="c1">// bias</span>
 
   <span class="n">Program</span> <span class="n">program</span><span class="p">;</span>
@@ -288,6 +288,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 </ul>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../matmul.html">C++ DSL API tutorial: Matrix Multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
 </ul>
 

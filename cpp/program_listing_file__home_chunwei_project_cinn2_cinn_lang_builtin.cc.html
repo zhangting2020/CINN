@@ -42,6 +42,10 @@
 <p>↰ <a class="reference internal" href="file__home_chunwei_project_cinn2_cinn_lang_builtin.cc.html#file-home-chunwei-project-cinn2-cinn-lang-builtin-cc"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/home/chunwei/project/cinn2/cinn/lang/builtin.cc</span></code>)</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;cinn/lang/builtin.h&quot;</span><span class="cp"></span>
 
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;limits&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp"></span>
+
 <span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;cinn/common/ir_util.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;cinn/ir/ir.h&quot;</span><span class="cp"></span>
@@ -92,10 +96,7 @@
 <span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Asinh</span><span class="p">,</span> <span class="n">asinh</span><span class="p">);</span>
 <span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Atan</span><span class="p">,</span> <span class="n">atan</span><span class="p">);</span>
 <span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Atanh</span><span class="p">,</span> <span class="n">atanh</span><span class="p">);</span>
-<span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Isnan</span><span class="p">,</span> <span class="n">isnan</span><span class="p">);</span>
 <span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Tanh</span><span class="p">,</span> <span class="n">tanh</span><span class="p">);</span>
-<span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Isfinite</span><span class="p">,</span> <span class="n">isfinite</span><span class="p">);</span>
-<span class="n">EXTERN_CALL_IMP</span><span class="p">(</span><span class="n">Isinf</span><span class="p">,</span> <span class="n">isinf</span><span class="p">);</span>
 
 <span class="n">Expr</span> <span class="nf">min_value</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">lanes</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
@@ -132,6 +133,74 @@
   <span class="k">return</span> <span class="n">Expr</span><span class="p">();</span>
 <span class="p">}</span>
 
+<span class="n">Expr</span> <span class="nf">Abs</span><span class="p">(</span><span class="n">Expr</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Type</span> <span class="n">type</span>      <span class="o">=</span> <span class="n">e</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">();</span>
+  <span class="n">Type</span> <span class="n">bool_type</span> <span class="o">=</span> <span class="n">Bool</span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">lanes</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_uint</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_int</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">node</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">IntImm</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">abs</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">Select</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">e</span> <span class="o">&gt;</span> <span class="n">make_const</span><span class="p">(</span><span class="n">e</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">(),</span> <span class="mi">0</span><span class="p">),</span> <span class="n">e</span><span class="p">,</span> <span class="o">-</span><span class="n">e</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_float</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">node</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">FloatImm</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">fabs</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">CallExtern</span><span class="p">(</span><span class="s">&quot;fabs&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">e</span><span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Expr</span> <span class="nf">IsNan</span><span class="p">(</span><span class="n">Expr</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">e</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">();</span>
+  <span class="c1">// Type bool_type = Bool(type.lanes());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_int</span><span class="p">()</span> <span class="o">||</span> <span class="n">type</span><span class="p">.</span><span class="n">is_uint</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_bool</span><span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="n">type</span><span class="p">.</span><span class="n">lanes</span><span class="p">());</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_float</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">auto</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">As</span><span class="o">&lt;</span><span class="n">ir</span><span class="o">::</span><span class="n">FloatImm</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_bool</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">isnan</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">),</span> <span class="n">type</span><span class="p">.</span><span class="n">lanes</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="n">Expr</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">arg</span> <span class="o">=</span> <span class="n">ir</span><span class="o">::</span><span class="n">Cast</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Float</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">e</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">CallExtern</span><span class="p">(</span><span class="s">&quot;isnan&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">arg</span><span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">type</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;is not supported for isnan op.&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Expr</span> <span class="nf">Infinity</span><span class="p">(</span><span class="k">const</span> <span class="n">Type</span><span class="o">&amp;</span> <span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">CHECK_EQ</span><span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">lanes</span><span class="p">(),</span> <span class="mi">1U</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_float</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">64</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">infinity</span><span class="p">());</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">32</span> <span class="o">||</span> <span class="n">type</span><span class="p">.</span><span class="n">bits</span><span class="p">()</span> <span class="o">==</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">make_const</span><span class="p">(</span><span class="n">type</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;::</span><span class="n">infinity</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Cannot decide infinity for type &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">type</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">Expr</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">Expr</span> <span class="nf">IsInf</span><span class="p">(</span><span class="n">Expr</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">e</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_int</span><span class="p">()</span> <span class="o">||</span> <span class="n">type</span><span class="p">.</span><span class="n">is_uint</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">common</span><span class="o">::</span><span class="n">make_bool</span><span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="n">type</span><span class="p">.</span><span class="n">lanes</span><span class="p">());</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">type</span><span class="p">.</span><span class="n">is_float</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ir</span><span class="o">::</span><span class="n">EQ</span><span class="o">::</span><span class="n">Make</span><span class="p">(</span><span class="n">Abs</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">Infinity</span><span class="p">(</span><span class="n">type</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">IsNan</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">LOG</span><span class="p">(</span><span class="n">FATAL</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">type</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;is not supported for isinf op.&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">e</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Expr</span> <span class="nf">IsFinite</span><span class="p">(</span><span class="n">Expr</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="n">IsInf</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">IsNan</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="p">}</span>
+
 <span class="p">}</span>  <span class="c1">// namespace lang</span>
 <span class="p">}</span>  <span class="c1">// namespace cinn</span>
 </pre></div>
@@ -162,6 +231,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 </ul>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../matmul.html">C++ DSL API tutorial: Matrix Multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
 </ul>
 

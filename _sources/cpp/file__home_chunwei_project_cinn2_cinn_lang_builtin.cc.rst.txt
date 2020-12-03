@@ -39,6 +39,12 @@ Includes
 
 - ``cinn/lang/builtin.h`` (:ref:`file__home_chunwei_project_cinn2_cinn_lang_builtin.h`)
 
+- ``cmath``
+
+- ``limits``
+
+- ``utility``
+
 
 
 
@@ -56,6 +62,8 @@ Namespaces
 Functions
 ---------
 
+
+- :ref:`exhale_function_builtin_8cc_1a1da4cee56001e3f81f32f15041d0e219`
 
 - :ref:`exhale_function_builtin_8cc_1aea8e64842652eeeff6407b904fa6658a`
 
@@ -81,11 +89,13 @@ Functions
 
 - :ref:`exhale_function_builtin_8cc_1a88f4e39516d4074158c5227c0664ef29`
 
-- :ref:`exhale_function_builtin_8cc_1a7063a3c36a5379165cd6b7717410a1ff`
+- :ref:`exhale_function_builtin_8cc_1a82f7e49136d956199f4db0ba9d17f03f`
 
-- :ref:`exhale_function_builtin_8cc_1a8e11aa6f4faf1d10440fdde7df31f232`
+- :ref:`exhale_function_builtin_8cc_1a04da1a5f63413cae80258c514933c632`
 
-- :ref:`exhale_function_builtin_8cc_1a1ed023f861f81e4becac57cd273f8aae`
+- :ref:`exhale_function_builtin_8cc_1a5466c705c382f14eb59c5b8f3a8a69db`
+
+- :ref:`exhale_function_builtin_8cc_1ae6070fafb543a5f85c909f5410ec1071`
 
 - :ref:`exhale_function_builtin_8cc_1abe25ad846e4d23d09016937adb5ec3b3`
 

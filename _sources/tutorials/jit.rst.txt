@@ -15,7 +15,7 @@ JIT in CINN
 In this tutorial, we will introduce the JIT module that execute the DSL on X86 and NV GPU.
 
 
-.. code-block:: default
+.. code-block:: python
 
 
     import cinn
@@ -32,7 +32,7 @@ In this tutorial, we will introduce the JIT module that execute the DSL on X86 a
 declare some variables for latter use
 
 
-.. code-block:: default
+.. code-block:: python
 
     m = cinn.Expr(64)
     n = cinn.Expr(64)
@@ -50,16 +50,16 @@ Decleare the computation
 -------------------------
 
 
-.. code-block:: default
+.. code-block:: python
 
     A = cinn.Placeholder("float32", "A", [m, k])
     B = cinn.Placeholder("float32", "B", [k, n])
 
     kr = cinn.Var(k.as_int32(), "kr")
-    C = cinn.compute(
-        [m, n],
-        lambda v: cinn.reduce_sum(A(v[0], kr.expr()) * B(kr.expr(), v[1]), [kr]),
-        "C")
+    C = cinn.compute([
+        m, n
+    ], lambda v: cinn.reduce_sum(A(v[0], kr.expr()) * B(kr.expr(), v[1]), [kr]),
+                     "C")
 
     stages = cinn.create_stages([C])
 
@@ -82,7 +82,7 @@ Create a JIT engine.
 
 
 
-.. code-block:: default
+.. code-block:: python
 
     jit = cinn.ExecutionEngine()
     jit.link(module)
@@ -98,7 +98,7 @@ Execute the compiled function
 
 
 
-.. code-block:: default
+.. code-block:: python
 
     a = runtime.cinn_buffer_t(
         np.random.randn(m.int(), k.int()).astype("float32"),
@@ -124,19 +124,19 @@ Execute the compiled function
 
  .. code-block:: none
 
-    [[ 0.20805684 -2.564396    0.734971   ... -6.17445    -4.023818
-       5.22364   ]
-     [ 3.4880047  -0.2661617   1.7321587  ...  1.3556725   0.46721712
-       1.4649411 ]
-     [ 0.9291652   2.8222187  -2.6322293  ... -3.4036188   0.30136183
-      -1.4505364 ]
+    [[-5.489874   -1.0777674   1.4283981  ... -3.3682566   3.8158815
+       4.4715624 ]
+     [ 1.8785542  -0.32769722  0.72304666 ...  0.14175397 -0.3881283
+      -0.0455142 ]
+     [-1.2069216   1.0240661  -0.25844085 ...  0.07099149 -2.5579264
+      -3.3781223 ]
      ...
-     [-2.8878996  -3.1311612   0.27523142 ... -1.8145417  -1.2416092
-      -3.6517022 ]
-     [ 2.4187803  -3.4975255   3.7851086  ...  2.1840713  -5.1889195
-      -1.4386691 ]
-     [-0.4903983   1.5858265   1.3257875  ...  3.2400572   1.2034146
-       1.2009368 ]]
+     [ 2.3223798   3.2436218   2.1774147  ...  1.3702399  -4.5730515
+      -2.9715736 ]
+     [ 1.8179103   2.0285437   0.9935504  ...  1.201145   -2.0230737
+      -4.510609  ]
+     [ 0.1739968  -0.48102716  1.367404   ...  2.2996309   0.31303534
+       2.9150646 ]]
 
 
 
@@ -144,7 +144,7 @@ Execute the compiled function
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.244 seconds)
+   **Total running time of the script:** ( 0 minutes  0.365 seconds)
 
 
 .. _sphx_glr_download_tutorials_jit.py:

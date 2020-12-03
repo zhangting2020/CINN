@@ -35,6 +35,8 @@ Includes
 
 - ``cinn/ir/ir_operators.h``
 
+- ``vector``
+
 
 
 Included By
@@ -59,15 +61,21 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_builtin_8h_1a1da4cee56001e3f81f32f15041d0e219`
+- :ref:`exhale_function_builtin_8h_1ac0aa2488013e4ec537cf83e16f99a1a7`
 
 - :ref:`exhale_function_builtin_8h_1a3d03b9393dd84dbb26b3815106facbc8`
+
+- :ref:`exhale_function_builtin_8h_1a8ed0063d75eaec0452b23798f33ea8da`
+
+- :ref:`exhale_function_builtin_8h_1a1c059e68f4fbf76e4bc7859a91d67cc7`
 
 - :ref:`exhale_function_builtin_8h_1a2f35bdc41529afd6a618ff6ea530042a`
 
 - :ref:`exhale_function_builtin_8h_1a4877503347ceae6a73f41fe403a76700`
 
 - :ref:`exhale_function_builtin_8h_1a1c6bef63552638643270a6fc342d645b`
+
+- :ref:`exhale_function_builtin_8h_1a164efa7ecea1a534f4c42d36f390d1a5`
 
 - :ref:`exhale_function_builtin_8h_1a291e13e4c96065f199fdc18e759b13cc`
 
@@ -84,6 +92,8 @@ Functions
 - :ref:`exhale_function_builtin_8h_1a9ea7bb5c3f0095e6c39da5ef4dbf617d`
 
 - :ref:`exhale_function_builtin_8h_1abd319f122021bc53fb97ee4fbb53abc2`
+
+- :ref:`exhale_function_builtin_8h_1afccaf5147235d649084dac489defcae5`
 
 - :ref:`exhale_function_builtin_8h_1a9bb87bba03f6494aebca8e6886a4e67d`
 

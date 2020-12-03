@@ -29,6 +29,8 @@ Includes
 --------
 
 
+- ``cinn/backends/cuda_util.h``
+
 - ``cinn/common/common.h``
 
 - ``cinn/common/context.h``

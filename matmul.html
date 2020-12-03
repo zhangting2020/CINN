@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C++ DSL API tutorial: Matrix Multiplication &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="C++ Symbols" href="cpp/library_root.html" />
+    <link rel="prev" title="Schedule Primitives in CINN" href="tutorials/schedule_primitives.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="c-dsl-api-tutorial-matrix-multiplication">
+<h1>C++ DSL API tutorial: Matrix Multiplication<a class="headerlink" href="#c-dsl-api-tutorial-matrix-multiplication" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will guide you through the basic usage of the C++ DSL API.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/cinn.h&quot;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">cinn</span><span class="p">;</span>  <span class="c1">// NOLINT</span>
+</pre></div>
+</div>
+<div class="section" id="computation-basic-defition">
+<h2>Computation basic defition<a class="headerlink" href="#computation-basic-defition" title="Permalink to this headline">¶</a></h2>
+<p>Declare some varialbe for latter usages.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="n">Expr</span> <span class="nf">M</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">N</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span> <span class="n">K</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+  <span class="n">Var</span> <span class="nf">k</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="s">&quot;k0&quot;</span><span class="p">);</span>  <span class="c1">// the reduce axis</span>
+</pre></div>
+</div>
+<p>Placeholder represents the input arguments for a computation.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">A</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">});</span>
+  <span class="n">Placeholder</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">B</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>Define a computation to get the result tensor C.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">C</span> <span class="o">=</span>
+      <span class="n">Compute</span><span class="p">({</span><span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">}</span> <span class="cm">/*domain*/</span><span class="p">,</span> <span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="n">Expr</span> <span class="n">i</span><span class="p">,</span> <span class="n">Expr</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ReduceSum</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">{</span><span class="n">k</span><span class="p">}</span> <span class="cm">/*reduce axis*/</span><span class="p">);</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>Generate the stages to get the default schedules.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">stages</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">}</span> <span class="cm">/*the endpoints*/</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Print the generated IR, the <code class="docutils literal notranslate"><span class="pre">Lower</span></code> method just map a computation to the underlying CINN IR.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">Lower</span><span class="p">(</span><span class="s">&quot;fn0&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">{</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">}</span> <span class="cm">/*argument list of the fn*/</span><span class="p">);</span>
+  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;fn0:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">fn</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This will generate the code like</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="nf">fn0</span> <span class="p">(</span><span class="n">_A</span><span class="p">,</span> <span class="n">_B</span><span class="p">,</span> <span class="n">_tensor</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">tensor__reduce_init</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">tensor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k0</span><span class="p">,</span> <span class="n">j</span><span class="p">]))</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Print the IR as C code</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="n">Target</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">CodeGenC</span> <span class="nf">codegen</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+  <span class="n">Module</span><span class="o">::</span><span class="n">Builder</span> <span class="n">builder</span><span class="p">(</span><span class="s">&quot;module0&quot;</span><span class="p">,</span> <span class="n">Target</span><span class="p">());</span>
+  <span class="n">builder</span><span class="p">.</span><span class="n">AddFunction</span><span class="p">(</span><span class="n">fn</span><span class="p">);</span>
+  <span class="n">codegen</span><span class="p">.</span><span class="n">SetInlineBuiltinCodes</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>  <span class="c1">// Disable inserting the predefined runtime codes to the generated code.</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">C_source</span> <span class="o">=</span> <span class="n">codegen</span><span class="p">.</span><span class="n">Compile</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="n">CodeGenC</span><span class="o">::</span><span class="n">OutputKind</span><span class="o">::</span><span class="n">CImpl</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and will get some code like</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;cinn_runtime.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">fn0</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">_args</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">num_args</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">const</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">_A</span> <span class="o">=</span> <span class="n">cinn_pod_value_to_buffer_p</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(((</span><span class="n">cinn_pod_value_t</span><span class="o">*</span><span class="p">)(</span><span class="n">_args</span><span class="p">))[</span><span class="mi">0</span><span class="p">]));</span>
+  <span class="k">const</span> <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">_B</span> <span class="o">=</span> <span class="n">cinn_pod_value_to_buffer_p</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(((</span><span class="n">cinn_pod_value_t</span><span class="o">*</span><span class="p">)(</span><span class="n">_args</span><span class="p">))[</span><span class="mi">1</span><span class="p">]));</span>
+  <span class="n">cinn_buffer_t</span><span class="o">*</span> <span class="n">_tensor</span> <span class="o">=</span> <span class="n">cinn_pod_value_to_buffer_p</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(((</span><span class="n">cinn_pod_value_t</span><span class="o">*</span><span class="p">)(</span><span class="n">_args</span><span class="p">))[</span><span class="mi">2</span><span class="p">]));</span>
+  <span class="n">cinn_buffer_malloc</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="mi">0</span><span class="p">),</span> <span class="n">_tensor</span><span class="p">);</span>
+  <span class="k">const</span> <span class="kt">float</span><span class="o">*</span> <span class="n">A</span> <span class="o">=</span> <span class="p">((</span><span class="k">const</span> <span class="kt">float</span><span class="o">*</span><span class="p">)(</span><span class="n">_A</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">));</span>
+  <span class="k">const</span> <span class="kt">float</span><span class="o">*</span> <span class="n">B</span> <span class="o">=</span> <span class="p">((</span><span class="k">const</span> <span class="kt">float</span><span class="o">*</span><span class="p">)(</span><span class="n">_B</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">));</span>
+  <span class="kt">float</span><span class="o">*</span> <span class="n">tensor</span> <span class="o">=</span> <span class="p">((</span><span class="kt">float</span><span class="o">*</span><span class="p">)(</span><span class="n">_tensor</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">));</span>
+  <span class="kt">float</span><span class="o">*</span> <span class="n">tensor__reduce_init</span> <span class="o">=</span> <span class="p">((</span><span class="kt">float</span><span class="o">*</span><span class="p">)(</span><span class="n">_tensor</span><span class="o">-&gt;</span><span class="n">memory</span><span class="p">));</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int32_t</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">tensor__reduce_init</span><span class="p">[((</span><span class="mi">200</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int32_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int32_t</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">;</span> <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int32_t</span> <span class="n">k0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k0</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">;</span> <span class="n">k0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">tensor</span><span class="p">[((</span><span class="mi">200</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor</span><span class="p">[((</span><span class="mi">200</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="n">A</span><span class="p">[((</span><span class="mi">50</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">k0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[((</span><span class="mi">200</span> <span class="o">*</span> <span class="n">k0</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="p">)]));</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+  <span class="n">cinn_buffer_free</span><span class="p">((</span><span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="mi">0</span><span class="p">),</span> <span class="n">_tensor</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-schedule">
+<h2>Basic schedule<a class="headerlink" href="#basic-schedule" title="Permalink to this headline">¶</a></h2>
+<p>The computation defines the basic way to compute the result while the schedules will guide the system to generate
+different codes. Each kind of code will result in different performance.
+Lets create a new stages to hold some schedules.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="k">auto</span> <span class="n">stages1</span> <span class="o">=</span> <span class="n">CreateStages</span><span class="p">({</span><span class="n">C</span><span class="p">});</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Tile</span></code> method will split the 0-th and 1-th axis tile by tile of 4.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>  <span class="n">stages1</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">Tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The newly generated code is as follows</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="nf">fn1</span> <span class="p">(</span><span class="n">_A</span><span class="p">,</span> <span class="n">_B</span><span class="p">,</span> <span class="n">_tensor</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">tensor__reduce_init</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i_outer</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i_inner</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">j_outer</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j_inner</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+          <span class="p">{</span>
+            <span class="n">tensor</span><span class="p">[((</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i_outer</span><span class="p">)</span> <span class="o">+</span> <span class="n">i_inner</span><span class="p">),</span> <span class="p">((</span><span class="mi">4</span> <span class="o">*</span> <span class="n">j_outer</span><span class="p">)</span> <span class="o">+</span> <span class="n">j_inner</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor</span><span class="p">[((</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i_outer</span><span class="p">)</span> <span class="o">+</span> <span class="n">i_inner</span><span class="p">),</span> <span class="p">((</span><span class="mi">4</span> <span class="o">*</span> <span class="n">j_outer</span><span class="p">)</span> <span class="o">+</span> <span class="n">j_inner</span><span class="p">)]</span> <span class="o">+</span> <span class="p">(</span><span class="n">A</span><span class="p">[((</span><span class="mi">4</span> <span class="o">*</span> <span class="n">i_outer</span><span class="p">)</span> <span class="o">+</span> <span class="n">i_inner</span><span class="p">),</span> <span class="n">k0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k0</span><span class="p">,</span> <span class="p">((</span><span class="mi">4</span> <span class="o">*</span> <span class="n">j_outer</span><span class="p">)</span> <span class="o">+</span> <span class="n">j_inner</span><span class="p">)]))</span>
+                                                                           <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Build from source code</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">C++ DSL API tutorial: Matrix Multiplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp/library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tutorials/schedule_primitives.html" title="previous chapter">Schedule Primitives in CINN</a></li>
+      <li>Next: <a href="cpp/library_root.html" title="next chapter">C++ Symbols</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/matmul.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

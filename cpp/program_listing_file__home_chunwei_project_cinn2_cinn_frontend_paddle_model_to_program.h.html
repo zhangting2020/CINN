@@ -51,6 +51,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;variant&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
 
+<span class="cp">#include</span> <span class="cpf">&quot;cinn/backends/cuda_util.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;cinn/common/common.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;cinn/common/context.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;cinn/common/object.h&quot;</span><span class="cp"></span>
@@ -115,9 +116,11 @@
   <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">var_model_to_program_map</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">var_model_to_program_map_</span><span class="p">;</span> <span class="p">}</span>
 
  <span class="k">protected</span><span class="o">:</span>
-  <span class="kt">void</span> <span class="n">AddVar</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variable</span><span class="o">&amp;</span> <span class="n">var</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">AddVar</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variable</span><span class="o">&amp;</span> <span class="n">var</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">replace</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
 
   <span class="n">Variable</span> <span class="nf">GetVar</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="nf">TransposeVar</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">);</span>
 
  <span class="k">private</span><span class="o">:</span>
   <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="n">paddle</span><span class="o">::</span><span class="n">cpp</span><span class="o">::</span><span class="n">OpDesc</span><span class="o">&amp;</span><span class="p">)</span><span class="o">&gt;&gt;</span> <span class="n">op_mappers_</span><span class="p">;</span>
@@ -159,6 +162,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 </ul>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../matmul.html">C++ DSL API tutorial: Matrix Multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
 </ul>
 

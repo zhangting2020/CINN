@@ -252,6 +252,15 @@
   <span class="k">return</span> <span class="n">instr</span><span class="p">.</span><span class="n">GetOutput</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
 
+<span class="n">Variable</span> <span class="n">Program</span><span class="o">::</span><span class="n">mulbias</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">Variable</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variable</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">,</span> <span class="k">const</span> <span class="n">Variable</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x_num_col_dims</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y_num_col_dims</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Instruction</span> <span class="n">instr</span><span class="p">(</span><span class="s">&quot;mulbias&quot;</span><span class="p">,</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">});</span>
+  <span class="n">instr</span><span class="p">.</span><span class="n">SetAttr</span><span class="p">(</span><span class="s">&quot;x_num_col_dims&quot;</span><span class="p">,</span> <span class="n">x_num_col_dims</span><span class="p">);</span>
+  <span class="n">instr</span><span class="p">.</span><span class="n">SetAttr</span><span class="p">(</span><span class="s">&quot;y_num_col_dims&quot;</span><span class="p">,</span> <span class="n">y_num_col_dims</span><span class="p">);</span>
+  <span class="n">AppendInstruction</span><span class="p">(</span><span class="n">instr</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">instr</span><span class="p">.</span><span class="n">GetOutput</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">_Instruction_</span><span class="o">::</span><span class="n">debug_string</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
   <span class="k">struct</span> <span class="n">Visit</span> <span class="p">{</span>
     <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="o">&amp;</span> <span class="n">s_</span><span class="p">;</span>
@@ -332,6 +341,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
 </ul>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../matmul.html">C++ DSL API tutorial: Matrix Multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ Symbols</a></li>
 </ul>
 

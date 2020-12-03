@@ -21,7 +21,7 @@
     <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="C++ Symbols" href="../cpp/library_root.html" />
+    <link rel="next" title="C++ DSL API tutorial: Matrix Multiplication" href="../matmul.html" />
     <link rel="prev" title="JIT in CINN" href="jit.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -46,18 +46,18 @@
 <div class="sphx-glr-example-title section" id="schedule-primitives-in-cinn">
 <span id="sphx-glr-tutorials-schedule-primitives-py"></span><h1>Schedule Primitives in CINN<a class="headerlink" href="#schedule-primitives-in-cinn" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we will guide you through the examples of using schedule primitives.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cinn</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cinn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 <p>declare some variables for latter use
 Expr is short for expression.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Expr</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 <span class="c1"># get the integer contained in an integer expression</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">int</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">int</span><span class="p">())</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -66,7 +66,7 @@ Expr is short for expression.</p>
 </pre></div>
 </div>
 <p>A schedule can be created from a list of Tensors.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># declare an elementwise multiply</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># declare an elementwise multiply</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
@@ -76,7 +76,7 @@ Expr is short for expression.</p>
 
 <span class="c1"># lower will transform the computation to real code</span>
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -97,13 +97,13 @@ methods to schedule each stage.</p>
 <div class="section" id="split">
 <h2>split<a class="headerlink" href="#split" title="Permalink to this headline">¶</a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">split</span></code> can partition a specific axis into two axises by :code: <cite>factor</cite>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
 
 <span class="n">stages</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">create_stages</span><span class="p">([</span><span class="n">B</span><span class="p">])</span>
 <span class="n">i0</span><span class="p">,</span> <span class="n">i1</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -120,10 +120,34 @@ methods to schedule each stage.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="fuse">
+<h2>fuse<a class="headerlink" href="#fuse" title="Permalink to this headline">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">fuse</span></code> can fuse two specific axises into a axis.
+It is the reverse operation of <cite>split</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="n">stages</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">create_stages</span><span class="p">([</span><span class="n">B</span><span class="p">])</span>
+<span class="n">i0</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="o">.</span><span class="n">fuse</span><span class="p">(</span><span class="n">level0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level1</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>function fn (_A, _B)
+{
+  for (i_j_fused, 256)
+  {
+    B[(i_j_fused / 8), (i_j_fused % 8)] = (2 * A[(i_j_fused / 8), (i_j_fused % 8)])
+  }
+}
+</pre></div>
+</div>
+</div>
 <div class="section" id="tile">
 <h2>tile<a class="headerlink" href="#tile" title="Permalink to this headline">¶</a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">tile</span></code> can partition two adjacent axises into blocks.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
@@ -132,7 +156,7 @@ methods to schedule each stage.</p>
 <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">i_outer</span><span class="p">,</span> <span class="n">i_inner</span><span class="p">,</span> <span class="n">j_inner</span><span class="p">,</span> <span class="n">j_outer</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -158,7 +182,7 @@ methods to schedule each stage.</p>
 <div class="section" id="reorder">
 <h2>reorder<a class="headerlink" href="#reorder" title="Permalink to this headline">¶</a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">reorder</span></code> can reorder the axises in the specified order.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
@@ -167,7 +191,7 @@ methods to schedule each stage.</p>
 <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">reorder</span><span class="p">([</span><span class="n">i1</span><span class="p">,</span> <span class="n">i0</span><span class="p">])</span>
 
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -187,7 +211,7 @@ methods to schedule each stage.</p>
 <div class="section" id="unroll">
 <h2>unroll<a class="headerlink" href="#unroll" title="Permalink to this headline">¶</a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">unroll</span></code> unroll a specific axis.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
@@ -196,7 +220,7 @@ methods to schedule each stage.</p>
 <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">unroll</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span>
 
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -238,7 +262,7 @@ methods to schedule each stage.</p>
 <p><code class="code docutils literal notranslate"><span class="pre">compute_inline</span></code> marks a stage as inline, then the computation
 body will be expanded and inserted at the location where the tensor
 is referenced.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
@@ -253,7 +277,7 @@ is referenced.</p>
 <span class="n">stages</span><span class="p">[</span><span class="n">C1</span><span class="p">]</span><span class="o">.</span><span class="n">compute_inline</span><span class="p">()</span>
 
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C2</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -273,7 +297,7 @@ is referenced.</p>
 <div class="section" id="bind">
 <h2>bind<a class="headerlink" href="#bind" title="Permalink to this headline">¶</a></h2>
 <p><code class="code docutils literal notranslate"><span class="pre">bind</span></code> can bind a specified axis with a thread axis.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
 
@@ -282,7 +306,7 @@ is referenced.</p>
 <span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;threadIdx.x&quot;</span><span class="p">)</span>
 
 <span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -300,7 +324,136 @@ is referenced.</p>
 }
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.081 seconds)</p>
+</div>
+<div class="section" id="compute-at">
+<h2>compute_at<a class="headerlink" href="#compute-at" title="Permalink to this headline">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">compute_at</span></code> can specify the stage to be computed at
+another stage’s scope.
+The input param <cite>other</cite> specifies the other stage.
+The input param <cite>level</cite> specifies the stage’s scope(which loop)
+to be computed at.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">B</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">C</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+<span class="n">stages</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">create_stages</span><span class="p">([</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;---------Before compute_at---------&quot;</span><span class="p">)</span>
+<span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;---------After compute_at---------&quot;</span><span class="p">)</span>
+<span class="n">stages</span><span class="p">[</span><span class="n">C</span><span class="p">]</span><span class="o">.</span><span class="n">compute_at</span><span class="p">(</span><span class="n">other</span><span class="o">=</span><span class="n">stages</span><span class="p">[</span><span class="n">D</span><span class="p">],</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fn2</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>---------Before compute_at---------
+function fn (_A, _B, _C, _D)
+{
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      C[i, j] = (A[i, j, j] * B[i, j, j])
+    }
+  }
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      D[i, j] = (1 + C[i, j])
+    }
+  }
+}
+---------After compute_at---------
+function fn (_A, _B, _C, _D)
+{
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      C[i, j] = (A[i, j, j] * B[i, j, j])
+      D[i, j] = (1 + C[i, j])
+    }
+  }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="cache-read">
+<h2>cache_read<a class="headerlink" href="#cache-read" title="Permalink to this headline">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">cache_read</span></code> can create a cache Tensor and load the origin
+Tensor’s data into this buffer.
+It will replace all the reading in the readers with the cache.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="n">stages</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">create_stages</span><span class="p">([</span><span class="n">B</span><span class="p">])</span>
+<span class="n">ACR</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">()]</span><span class="o">.</span><span class="n">cache_read</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">B</span><span class="p">],</span> <span class="n">stages</span><span class="p">)</span>
+<span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">ACR</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>function fn (_A, _A_read_cache, _B)
+{
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      A_read_cache[i, j] = A[i, j]
+    }
+  }
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      B[i, j] = (2 * A_read_cache[i, j])
+    }
+  }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="cache-write">
+<h2>cache_write<a class="headerlink" href="#cache-write" title="Permalink to this headline">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">cache_write</span></code> can create a cache for writing to the
+original tensor.
+It will store the data in the cache memory first, then
+write to the output tensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">compute</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">A</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+
+<span class="n">stages</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">create_stages</span><span class="p">([</span><span class="n">B</span><span class="p">])</span>
+<span class="n">BCR</span> <span class="o">=</span> <span class="n">stages</span><span class="p">[</span><span class="n">B</span><span class="p">]</span><span class="o">.</span><span class="n">cache_write</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">)</span>
+<span class="n">fn</span> <span class="o">=</span> <span class="n">cinn</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;fn&quot;</span><span class="p">,</span> <span class="n">stages</span><span class="p">,</span> <span class="p">[</span><span class="n">A</span><span class="o">.</span><span class="n">to_tensor</span><span class="p">(),</span> <span class="n">B</span><span class="p">,</span> <span class="n">BCR</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>function fn (_A, _B, _B_cache_write_out)
+{
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      B[i, j] = (2 * A[i, j])
+    }
+  }
+  for (i, 32)
+  {
+    for (j, 8)
+    {
+      B_cache_write_out[i, j] = B[i, j]
+    }
+  }
+}
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.418 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-tutorials-schedule-primitives-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/b545a077dc1f286ad2c74ee39e55b358/schedule_primitives.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">schedule_primitives.py</span></code></a></p>
@@ -337,6 +490,7 @@ is referenced.</p>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a></li>
 </ul>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../matmul.html">C++ DSL API tutorial: Matrix Multiplication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cpp/library_root.html">C++ Symbols</a></li>
 </ul>
 
@@ -346,7 +500,7 @@ is referenced.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">Tutorials</a><ul>
       <li>Previous: <a href="jit.html" title="previous chapter">JIT in CINN</a></li>
-      <li>Next: <a href="../cpp/library_root.html" title="next chapter">C++ Symbols</a></li>
+      <li>Next: <a href="../matmul.html" title="next chapter">C++ DSL API tutorial: Matrix Multiplication</a></li>
   </ul></li>
   </ul></li>
 </ul>
