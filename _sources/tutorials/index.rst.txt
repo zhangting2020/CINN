@@ -33,6 +33,27 @@ This page contains the tutorials about CINN.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we will introduce several ways to optimize the performance of the matrix mult...">
+
+.. only:: html
+
+ .. figure:: /tutorials/images/thumb/sphx_glr_matmul_thumb.png
+     :alt: Ways to optimize Matrix Multiplication on CPU
+
+     :ref:`sphx_glr_tutorials_matmul.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /tutorials/matmul
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we will guide you through the examples of using schedule primitives. ">
 
 .. only:: html
