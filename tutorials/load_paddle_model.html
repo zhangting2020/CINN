@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Load and Execute Paddle Model &#8212; cinn 0.1-alpha documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JIT in CINN" href="jit.html" />
+    <link rel="prev" title="Tutorials" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-tutorials-load-paddle-model-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="load-and-execute-paddle-model">
+<span id="sphx-glr-tutorials-load-paddle-model-py"></span><h1>Load and Execute Paddle Model<a class="headerlink" href="#load-and-execute-paddle-model" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we will show you how to load and execute a paddle model in CINN.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cinn</span>
+<span class="kn">from</span> <span class="nn">cinn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">cinn.frontend</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">cinn.framework</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">cinn.common</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="section" id="prepare-to-load-model">
+<h2>Prepare to Load Model<a class="headerlink" href="#prepare-to-load-model" title="Permalink to this headline">¶</a></h2>
+<p>Declare the params and prepare to load and execute the paddle model.</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">enable_gpu</span></code> implies whether to run CINN on CUDA backends.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">mnodel_dir</span></code> is the path where the paddle model is stored.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">input_tensor</span></code> is the name of input tensor in the model.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">target_tensor</span></code> is the name of output tensor we want.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">x_shape</span></code> is the input tensor’s shape of the model</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">enable_gpu</span> <span class="o">=</span> <span class="s2">&quot;OFF&quot;</span>
+<span class="n">model_dir</span> <span class="o">=</span> <span class="s2">&quot;./ResNet18&quot;</span>
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="s1">&#39;image&#39;</span>
+<span class="n">target_tensor</span> <span class="o">=</span> <span class="s1">&#39;save_infer_model/scale_0&#39;</span>
+<span class="n">x_shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Set the target backend</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">enable_gpu</span> <span class="o">==</span> <span class="s2">&quot;ON&quot;</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">DefaultNVGPUTarget</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">DefaultHostTarget</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Set the input tensor and init interpreter</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">executor</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">([</span><span class="n">input_tensor</span><span class="p">],</span> <span class="p">[</span><span class="n">x_shape</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="load-model-to-cinn">
+<h2>Load Model to CINN<a class="headerlink" href="#load-model-to-cinn" title="Permalink to this headline">¶</a></h2>
+<p>Load the paddle model and transform it into CINN IR</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">mnodel_dir</span></code> is the path where the paddle model is stored.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">target</span></code> is the backend to execute model on.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">params_combined</span></code> implies whether the params of paddle</p></li>
+</ul>
+<p>model is stored in one file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params_combined</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">executor</span><span class="o">.</span><span class="n">load_paddle_model</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">params_combined</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get input tensor and set input data</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a_t</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">get_tensor</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+<a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">x_data</span></a> <span class="o">=</span> <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.random.html#numpy.random.random" title="numpy.random.random" class="sphx-glr-backref-module-numpy-random sphx-glr-backref-type-np-function"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span></a><span class="p">(</span><span class="n">x_shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+<span class="n">a_t</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">x_data</span></a><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get output tensor and init its data to zero.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span></a> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">get_tensor</span><span class="p">(</span><span class="n">target_tensor</span><span class="p">)</span>
+<a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span><span class="o">.</span><span class="n">from_numpy</span></a><span class="p">(</span><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.zeros" title="numpy.zeros" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-function"><span class="n">np</span><span class="o">.</span><span class="n">zeros</span></a><span class="p">(</span><a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span></a><span class="o">.</span><span class="n">shape</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span> <span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="execute-model">
+<h2>Execute Model<a class="headerlink" href="#execute-model" title="Permalink to this headline">¶</a></h2>
+<p>Execute the model and get output tensor’s data.
+* <code class="code docutils literal notranslate"><span class="pre">out</span></code> is the data of output tensor we want.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">executor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span></a> <span class="o">=</span> <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span><span class="o">.</span><span class="n">numpy</span></a><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Execution Done!</span><span class="se">\n</span><span class="s2">Result shape is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span></a><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Result data is:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <a href="http://docs.scipy.org/doc/numpy-1.9.1/reference/generated/numpy.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-np-class"><span class="n">out</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Execution Done!
+Result shape is:
+ (2, 1000)
+Result data is:
+ [[4.0888681e-05 4.5216634e-04 8.9577434e-04 ... 9.7412085e-05
+  7.5427452e-05 2.2597418e-03]
+ [3.8815684e-05 5.0507579e-04 7.3965755e-04 ... 1.1313002e-04
+  7.5919466e-05 2.9408315e-03]]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  12.527 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-tutorials-load-paddle-model-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/628a656a17d21dc4d2f810d362aba0e7/load_paddle_model.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">load_paddle_model.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/8730f0bbe2157ae21937ce852d73d498/load_paddle_model.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">load_paddle_model.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">cinn</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Build from source code</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matmul.html">C++ DSL API tutorial: Matrix Multiplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp/library_root.html">C++ Symbols</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Tutorials</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Tutorials</a></li>
+      <li>Next: <a href="jit.html" title="next chapter">JIT in CINN</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, cinn team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tutorials/load_paddle_model.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

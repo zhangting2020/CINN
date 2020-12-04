@@ -12,6 +12,27 @@ This page contains the tutorials about CINN.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we will show you how to load and execute a paddle model in CINN. ">
+
+.. only:: html
+
+ .. figure:: /tutorials/images/thumb/sphx_glr_load_paddle_model_thumb.png
+     :alt: Load and Execute Paddle Model
+
+     :ref:`sphx_glr_tutorials_load_paddle_model.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /tutorials/load_paddle_model
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we will introduce the JIT module that execute the DSL on X86 and NV GPU. ">
 
 .. only:: html
