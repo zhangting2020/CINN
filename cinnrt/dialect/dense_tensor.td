@@ -44,14 +44,15 @@ class FillTensorWithConstantOp<string dtype> :
 
   let arguments = (ins
       TensorType:$input,
+      ChainType:$chain,
       AnyAttr:$value
   );
-  let results = (outs);
+  let results = (outs ChainType);
 
   // TODO: can be removed?
   //let parser  = [{ return cinnrt::dt::parseFillTensorWithConstantOp(parser, result); }];
   //let printer = [{ return cinnrt::dt::printFillTensorWithConstantOp(p, *this); }];
-  let assemblyFormat = "`(` $input `:` type($input) `)`  attr-dict";
+  let assemblyFormat = "`(` $input `:` type($input) $chain `:` type($chain) `)`  attr-dict";
 }
 
 def PrintTensorOp : DT_Op<"print_tensor"> {
@@ -97,6 +98,22 @@ foreach dtype = ["ui8", "ui16", "ui32", "ui64", "i32", "f32", "f64", "i64"] in {
   def DT_CreateUninitTensorOp_#dtype : CreateUninitTensorOp<dtype>;
   def DT_FillTensorOp_#dtype : FillTensorWithConstantOp<dtype>;
   def DT_SetTensorOp_#dtype : SetTensorOp<dtype>;
+}
+
+def GetBufferOp : DT_Op<"get_buffer"> {
+  let summary = "dt.get_buffer operation";
+
+  let description = [{
+    dt.get_buffer returns the Buffer that holds the data.
+
+    Example:
+      %t = dt.create_uninitialized_tensor.i32.2 [3 : i32, 2 : i32]
+      %ch2 = dt.get_buffer %t
+  }];
+
+  let arguments = (ins TensorType:$input, ChainType:$chain);
+  let results = (outs BufferType:$out_buffer, ChainType:$out_chain);
+  let assemblyFormat = "`(` $input `,` $chain `)` attr-dict `:` type($input) `->` type($out_buffer)";
 }
 
 #endif  // DT_OPS

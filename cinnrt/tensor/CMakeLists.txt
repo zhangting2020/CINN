@@ -3,6 +3,7 @@ set(srcs
   tensor_metadata.cc
   dense_host_tensor.cc
   dense_tensor_view.cc
+  buffer.cc
   )
 
 foreach(cpp ${srcs})

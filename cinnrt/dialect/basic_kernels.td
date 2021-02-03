@@ -107,9 +107,24 @@ class PrintOp<string suffix, Type type> : CINN_Op<"print." # suffix> {
   let verifier = ?;
 }
 
-//def PrintI32Op : PrintOp<"i32", I32>;
-//def PrintI64Op : PrintOp<"i64", I64>;
+def PrintI32Op : PrintOp<"i32", I32>;
+def PrintI64Op : PrintOp<"i64", I64>;
 def PrintF32Op : PrintOp<"f32", F32>;
-//def PrintF64Op : PrintOp<"f64", F64>;
+def PrintF64Op : PrintOp<"f64", F64>;
+
+
+// ----------------------- chain related -------------------------
+def NewChainOp : CINN_Op<"new_chain", [NoSideEffect]> {
+  let summary = "host executor chain constructor";
+  let description = [{
+    The "cinn.new_chain" operation returns a !cinn.chain value, which can be fed
+    into a side-effecting operation that does not depend on anything.
+  }];
+
+  let arguments = (ins);
+  let results = (outs ChainType);
+  let assemblyFormat = "attr-dict";
+  let verifier = ?;
+}
 
 #endif  // basic kernels

@@ -3,6 +3,8 @@
 #include <memory>
 #include <utility>
 
+#include "cinn/common/shared.h"
+#include "cinnrt/tensor/buffer.h"
 #include "cinnrt/tensor/tensor_metadata.h"
 #include "cinnrt/tensor/tensor_shape.h"
 
@@ -49,7 +51,8 @@ class DenseHostTensor : public HostTensor {
 
   const TensorShape& shape() const;
 
-  const cinn::hlir::framework::Buffer* buffer() const;
+  const tensor::Buffer& buffer() const { return *buffer_.get(); }
+  tensor::Buffer& buffer() { return *buffer_.get(); }
 
   void* raw_data() const;
 
@@ -59,7 +62,7 @@ class DenseHostTensor : public HostTensor {
 
  private:
   // TODO(Superjomn) Discard the dependency of the Buffer in cinncore or create a general buffer in common.
-  std::shared_ptr<cinn::hlir::framework::Buffer> buffer_;
+  cinn::common::Shared<tensor::Buffer> buffer_;
 };
 
 }  // namespace cinnrt::tensor

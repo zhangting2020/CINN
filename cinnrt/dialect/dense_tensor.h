@@ -3,6 +3,7 @@
 #include <mlir/IR/OpDefinition.h>
 #include <mlir/Interfaces/SideEffectInterfaces.h>
 
+#include <mlir/IR/OpImplementation.h>
 #include <string>
 
 using namespace mlir;  // NOLINT

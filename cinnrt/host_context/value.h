@@ -7,7 +7,9 @@
 #include <vector>
 #include "cinn/common/object.h"
 #include "cinn/common/shared.h"
+#include "cinnrt/host_context/chain.h"
 #include "cinnrt/host_context/function.h"
+#include "cinnrt/host_context/sreference.h"
 #include "cinnrt/tensor/dense_host_tensor.h"
 #include "cinnrt/tensor/dense_tensor_view.h"
 #include "cinnrt/tensor/tensor_shape.h"
@@ -23,9 +25,11 @@ using ValueVariantType = std::variant<int16_t,
                                       float,
                                       double,
                                       bool,
+                                      Chain,
                                       tensor::TensorShape,
                                       tensor::DenseHostTensor,
                                       MlirFunctionExecutable*,
+                                      SReference<tensor::Buffer>,
                                       std::vector<int16_t>,
                                       std::vector<int32_t>,
                                       std::vector<int64_t>,
@@ -55,6 +59,7 @@ class Value : public cinn::common::Object {
   explicit Value(std::vector<double>&& x) : data(x) {}
   explicit Value(tensor::TensorShape&& x) : data(std::move(x)) {}
   explicit Value(tensor::DenseHostTensor&& x) : data(std::move(x)) {}
+  explicit Value(SReference<tensor::Buffer>&& x) : data(std::move(x)) {}
   explicit Value(MlirFunctionExecutable* x) : data(x) {}
 
   template <typename T>

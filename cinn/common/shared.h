@@ -59,6 +59,12 @@ struct Shared {
   inline const T* self() const { return p_; }
   // @}
 
+  inline T* release() {
+    auto* res = p_;
+    Reset(nullptr);
+    return res;
+  }
+
   inline bool same_as(const Shared& other) { return p_ == other.p_; }
   inline bool defined() const { return p_; }
   inline bool operator<(const Shared& other) const { return p_ < other.p_; }

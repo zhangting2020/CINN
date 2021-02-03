@@ -421,6 +421,8 @@ class MlirProgramTestExecutor : public MlirToRuntimeTranslator {
       impl_->runtime = &runtime;
 
       auto& blocks = func.getBlocks();
+      if (blocks.empty()) return;
+
       CHECK_EQ(blocks.size(), 1UL) << "function with more than one block is not supported yet";
 
       for (auto& op : blocks.front()) {

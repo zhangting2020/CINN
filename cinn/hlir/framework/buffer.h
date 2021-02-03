@@ -17,7 +17,7 @@ namespace framework {
 /**
  * Buffer helps to hold the memory, and offers a set of methods to help manage the memory.
  */
-struct Buffer final {
+struct Buffer {
   Buffer() = default;
   explicit Buffer(const common::Target& target) { SetTarget(target); }
 

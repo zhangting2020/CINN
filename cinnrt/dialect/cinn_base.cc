@@ -2,6 +2,7 @@
 
 #include "cinnrt/dialect/basic_kernels.h"
 #include "cinnrt/dialect/dense_tensor.h"
+#include "cinnrt/dialect/types.h"
 
 namespace cinnrt::dialect {
 
@@ -10,7 +11,7 @@ void CINNDialect::initialize() {
   allowUnknownTypes();
   allowUnknownOperations();
 
-  addTypes<cinnrt::dt::TensorType>();
+  addTypes<cinnrt::dt::TensorType, cinnrt::ChainType, cinnrt::BufferType>();
 
 #define GET_OP_LIST
   addOperations<
@@ -62,6 +63,10 @@ mlir::Type CINNDialect::parseType(mlir::DialectAsmParser &parser) const {
     if (parser.parseGreater()) return mlir::Type();
 
     return cinnrt::dt::TensorType::get(*targetType, *layoutType, *precisionType);
+  } else if (keyword == "chain") {
+    return cinnrt::ChainType::get(getContext());
+  } else if (keyword == "buffer") {
+    return cinnrt::BufferType::get(getContext());
   }
   parser.emitError(parser.getCurrentLocation(), "unknown cinn type: ") << keyword;
   return mlir::Type();

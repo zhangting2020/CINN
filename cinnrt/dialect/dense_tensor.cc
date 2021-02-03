@@ -16,6 +16,7 @@
 
 #include "cinnrt/common/global.h"
 #include "cinnrt/dialect/tensor_shape.h"
+#include "cinnrt/dialect/types.h"
 
 namespace cinnrt::dt {
 

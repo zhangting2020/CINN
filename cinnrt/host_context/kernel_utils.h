@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "cinnrt/host_context/kernel_frame.h"
+#include "cinnrt/host_context/sreference.h"
 #include "cinnrt/host_context/value.h"
 
 namespace cinnrt {
@@ -15,9 +16,14 @@ template <typename T>
 class Argument {
  public:
   explicit Argument(ValueRef value) : value_(value) {}
+  explicit Argument(Value* value) : value_(value) {}
 
   ValueRef& value() { return value_; }
   const ValueRef& value() const { return value_; }
+
+  T* operator->() { return &value_.get<T>(); }
+  const T* operator->() const { return &value_.get<T>(); }
+  T& operator*() const { return get(); }
 
   T& get() const { return value_.get<T>(); }
 
@@ -65,21 +71,20 @@ class RemainingResults {
 template <typename T>
 class Result {
  public:
-  explicit Result(ValueRef* result) : result_(result) {}
+  explicit Result(Value* result) : result_(result) {}
 
   template <typename... Args>
   void Emplace(Args&&... args) {
-    ValueRef v;
     Set(T(std::forward<Args>(args)...));
   }
 
-  void Set(Argument<T> argument) {
-    CHECK(!result_->IsValid());
-    *result_ = argument.value();
-  }
+  void Set(Argument<T> argument) { result_ = argument.value().get(); }
+
+  void Set(T&& argument) { result_->set(std::move(argument)); }
+  void Set(const T& argument) { result_->set(argument); }
 
  private:
-  ValueRef* result_{};
+  Value* result_{};
 };
 
 template <typename T>
@@ -173,7 +178,7 @@ struct KernelImpl<Return (*)(Args...), impl_fn> {
     static void Invoke(KernelFrame* frame, const PreviousArgs&... pargs) {
       static_assert(out_idx != -1, "Do not place Results after RemainingResults");
       static_assert(const_idx == 0, "Arguments and results should appear before attributes");
-      Result<Head> arg(&frame->GetResults()[out_idx]);
+      Result<Head> arg(frame->GetResults()[out_idx]);
       KernelCallHelper<Tail...>::template Invoke<in_idx, out_idx + 1, const_idx>(frame, pargs..., arg);
     }
   };

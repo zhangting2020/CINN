@@ -10,6 +10,7 @@
 #include <mlir/IR/StandardTypes.h>
 #include <mlir/IR/TypeUtilities.h>
 #include <mlir/Support/LogicalResult.h>
+#include "cinnrt/dialect/types.h"
 
 namespace cinnrt::dialect {
 using namespace mlir;

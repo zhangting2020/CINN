@@ -1,11 +1,11 @@
 #include "cinnrt/kernel/basic_kernels.h"
-
 #include <iostream>
-
+#include "cinnrt/host_context/chain.h"
 #include "cinnrt/host_context/kernel_registry.h"
 #include "cinnrt/host_context/kernel_utils.h"
 
 namespace cinnrt::kernel {
+using namespace host_context;  // NOLINT
 
 template <typename T>
 T add(T a, T b) {
@@ -32,9 +32,13 @@ void print(T a) {
   std::cout << a << std::endl;
 }
 
+static Chain NewChain() { return Chain(); }
+
 void RegisterBasicKernels(host_context::KernelRegistry *registry) {
   RegisterIntBasicKernels(registry);
   RegisterFloatBasicKernels(registry);
+
+  registry->AddKernel("cinn.new_chain", CINN_KERNEL(NewChain));
 }
 
 void RegisterIntBasicKernels(host_context::KernelRegistry *registry) {
