@@ -17,8 +17,8 @@ TEST(OpExecutable, basic) {
   registry.AddKernel("cinn.test.add.i32", CINN_KERNEL(add));
 
   SymbolTable table;
-  table.Register("a", 1);
-  table.Register("b", 2);
+  table.Insert("a", 1);
+  table.Insert("b", 2);
 
   OpExecutableBuilder executable("cinn.test.add.i32", &table, &registry);
   executable.AppendArgument("a");
@@ -33,8 +33,8 @@ TEST(OpExecutable, basic) {
   ASSERT_EQ(results.front()->get<int32_t>(), 3);
 
   // check symbol table contains the same result instance.
-  LOG(INFO) << "type: " << table.GetValue("c")->type_info();
-  int c = table.GetValue("c")->get<int32_t>();
+  LOG(INFO) << "type: " << table.Lookup("c")->type_info();
+  int c = table.Lookup("c")->get<int32_t>();
   ASSERT_EQ(c, 3);
 }
 

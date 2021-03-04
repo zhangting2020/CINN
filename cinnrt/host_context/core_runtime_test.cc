@@ -20,9 +20,9 @@ TEST(CoreRuntime, basic) {
 
   CoreRuntimeBuilder builder(&registry);
   auto* table = builder.symbol_table();
-  table->Register("a", 1);
-  table->Register("b", 2);
-  table->Register("d", 4);
+  table->Insert("a", 1);
+  table->Insert("b", 2);
+  table->Insert("d", 4);
 
   // c = a + b
   auto* op0 = builder.NewOpExecutable("cinn.test.addi32", "main");
@@ -38,9 +38,9 @@ TEST(CoreRuntime, basic) {
 
   builder.Execute();
 
-  ASSERT_EQ(table->GetValue("d")->get<int>(), 4);
-  ASSERT_EQ(table->GetValue("c")->get<int>(), 3);
-  ASSERT_EQ(table->GetValue("e")->get<int>(), -1);
+  ASSERT_EQ(table->Lookup("d")->get<int>(), 4);
+  ASSERT_EQ(table->Lookup("c")->get<int>(), 3);
+  ASSERT_EQ(table->Lookup("e")->get<int>(), -1);
 }
 
 TEST(CoreRuntime, function) {
@@ -60,8 +60,8 @@ TEST(CoreRuntime, function) {
                                                        std::make_pair("b", ValueRef(new Value(2)))}};
   builder.FeedInArgs(llvm::ArrayRef<std::pair<std::string, ValueRef>>(feeds.data(), feeds.size()));
 
-  ASSERT_EQ(table->Get<int>("a"), 1);
-  ASSERT_EQ(table->Get<int>("b"), 2);
+  ASSERT_EQ(table->Lookup<int>("a"), 1);
+  ASSERT_EQ(table->Lookup<int>("b"), 2);
   ASSERT_EQ(table->size(), 2UL);
 
   auto* op = builder.NewOpExecutable("cinn.test.addi32", "main");

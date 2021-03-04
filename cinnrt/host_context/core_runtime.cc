@@ -44,7 +44,7 @@ OpExecutableBuilder* CoreRuntimeBuilder::NewOpExecutable(std::string_view op_nam
 
 void CoreRuntimeBuilder::FeedInArgs(llvm::ArrayRef<std::pair<std::string, ValueRef>> args) {
   for (auto& item : args) {
-    symbol_table()->Register(item.first, item.second);
+    symbol_table()->Insert(item.first, item.second);
   }
 }
 
@@ -56,7 +56,7 @@ void CoreRuntimeBuilder::SetKernelRegistry(KernelRegistry* x) {
 llvm::SmallVector<ValueRef, 4> CoreRuntime::GetResults(llvm::ArrayRef<std::string_view> arg_names) {
   llvm::SmallVector<ValueRef, 4> results;
   for (auto& name : arg_names) {
-    results.push_back(ValueRef(symbol_table()->GetValue(name)));
+    results.push_back(ValueRef(symbol_table()->Lookup(name)));
   }
 
   return results;

@@ -32,18 +32,17 @@ std::string_view OpExecutable::name() const { return impl_->name; }
 OpExecutableBuilder::OpExecutableBuilder(std::string_view op_name,
                                          SymbolTable* symbol_table,
                                          KernelRegistry* kernel_registry)
-    : OpExecutable(new Impl(op_name, symbol_table, kernel_registry)) {
-  // Cpu kernel registry is the default KernelRegistry.
+    : OpExecutable(new Impl(op_name, symbol_table, kernel_registry ? kernel_registry : GetCpuKernelRegistry())) {
   impl_->kernel_impl = impl_->kernel_registry->GetKernel(op_name);
   // TODO(Superjomn) support other device other than CPU.
   CHECK(impl_->kernel_impl) << "No CPU kernel called " << op_name;
 }
 
 void OpExecutableBuilder::AppendArgument(std::string_view name) {
-  if (!impl_->symbol_table->GetValue(name)) {
-    impl_->symbol_table->Register(name);
+  if (!impl_->symbol_table->Lookup(name)) {
+    impl_->symbol_table->Insert(name);
   }
-  impl_->frame.AddArgument(impl_->symbol_table->GetValue(name));
+  impl_->frame.AddArgument(impl_->symbol_table->Lookup(name));
 }
 
 void OpExecutableBuilder::AppendArgument(Value* value) { impl_->frame.AddArgument(value); }
@@ -54,7 +53,7 @@ const KernelFrame& OpExecutable::frame() const { return impl_->frame; }
 void OpExecutableBuilder::SetResults(llvm::ArrayRef<std::string> result_names) {
   llvm::SmallVector<Value*, 3> results;
   for (int result_id = 0; result_id < result_names.size(); result_id++) {
-    Value* value = impl_->symbol_table->Register(result_names[result_id]);
+    Value* value = impl_->symbol_table->Insert(result_names[result_id]);
     results.push_back(value);
   }
   impl_->frame.SetResults(results);
