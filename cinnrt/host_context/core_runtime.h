@@ -17,6 +17,11 @@ class SymbolTable;
  * CoreRuntime encapsulate the execution for a sequence of ops.
  * Each function call will bind to a CoreRuntime instance, push the argument Values in to the argument-list, and get the
  * result Values from the return-list.
+ *
+ * Each `cinn.call` operation instance will hold a CoreRuntime instance(some kind of a runtimie cache).
+ *
+ * For performance issue, the CoreRuntime hold some runtime cache, such as the KernelFrame which avoid lookup the input
+ * and output Values each execution.
  */
 class CoreRuntime : public std::enable_shared_from_this<CoreRuntime> {
  public:

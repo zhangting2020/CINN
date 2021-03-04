@@ -5,7 +5,6 @@
 #include <mlir/IR/Diagnostics.h>
 #include <mlir/IR/Function.h>
 #include <mlir/IR/OperationSupport.h>
-#include <mlir/Parser.h>
 
 #include <iostream>
 #include <memory>
@@ -296,8 +295,6 @@ Value* MlirToRuntimeTranslator::AddValue(mlir::Value value) {
 
 MlirToRuntimeTranslator::~MlirToRuntimeTranslator() {}
 
-void MlirToRuntimeTranslator::UpdateCurFuncName(std::string_view name) { impl_->cur_func_name = name; }
-
 MlirToRuntimeTranslator::MlirToRuntimeTranslator(mlir::ModuleOp module, CoreRuntimeBuilder* runtime) : impl_(new Impl) {
   CHECK(runtime);
   impl_->module  = module;
@@ -325,6 +322,7 @@ bool MlirToRuntimeTranslator::EmitCallOp(mlir::Operation* op, function_defs_t* f
   CHECK(function_table);
   if (op->getName().getStringRef() != "cinn.call") return false;
 
+  // cinn.call is a normal kernel registered to the KernelRegistry.
   impl_->cur_op = impl_->runtime->NewOpExecutable(op->getName().getStringRef().str(), impl_->cur_func_name);
 
   auto callee      = op->getAttr("callee");

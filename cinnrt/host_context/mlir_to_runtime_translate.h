@@ -21,7 +21,7 @@ class ValueRef;
 class KernelRegistry;
 
 /**
- * MlirToRuntimeTranslator helps to translate a MLIR program to a CoreRuntime.
+ * MlirToRuntimeTranslator helps to translate a MLIR module to a CoreRuntime.
  * This is the base class of all the modules those parse a MLIR program and finally generate a CoreRuntime.
  */
 class MlirToRuntimeTranslator {
@@ -63,8 +63,6 @@ class MlirToRuntimeTranslator {
   Value* AddValue(mlir::Value value);
 
   Value* AddValue(mlir::Value mlir_value, Value* value);
-
-  void UpdateCurFuncName(std::string_view name);
 
  protected:
   struct Impl;

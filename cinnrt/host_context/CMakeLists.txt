@@ -19,6 +19,7 @@ cc_test(test_kernel_registry SRCS kernel_registry_test.cc DEPS cinncore ${MLIR_I
 cc_test(test_op_executable SRCS op_executable_test.cc DEPS cinncore ${MLIR_IR_LIBS})
 cc_test(test_core_runtime SRCS core_runtime_test.cc DEPS cinncore ${MLIR_IR_LIBS})
 cc_test(test_mlir_to_runtime_translate SRCS mlir_to_runtime_translate_test.cc DEPS cinncore ${MLIR_IR_LIBS})
+cc_test(test_symbol_table SRCS symbol_table_test.cc DEPS cinncore ${MLIR_IR_LIBS})
 
 cinn_exec_check(test_mlir_exec_on_basic mlir_tests/basic.mlir)
 cinn_exec_check(test_mlir_exec_on_shape mlir_tests/shape.mlir)
