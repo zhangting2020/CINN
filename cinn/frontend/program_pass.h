@@ -15,12 +15,12 @@ class ProgramPass {
  public:
   /**
    * \brief Apply a sequence of passes on a program.
-   * @param g The input program to apply passes on.
+   * @param prog The input program to apply passes on.
    * @param passes The sequence of pass.
    * @return The program after being modified by the passes.
    */
-  Program* Apply(Program* prog, const std::vector<std::string>& passes) const;
-  virtual Program* ApplyImpl(Program* prog) const { return nullptr; }
+  static void Apply(Program* prog, const common::Target& target, const std::vector<std::string>& passes);
+  virtual void ApplyImpl(Program* prog, const common::Target& target) const {}
 
   std::string name;
 };
@@ -30,6 +30,12 @@ class ProgramPassRegistry : public Registry<ProgramPass> {
   static ProgramPassRegistry* Global() {
     static ProgramPassRegistry x;
     return &x;
+  }
+
+  inline const ProgramPass* Get(const std::string& name) {
+    const ProgramPass* pass = Registry<ProgramPass>::Find(name);
+    CHECK(pass) << "Pass [" << name << "] is not registered";
+    return pass;
   }
 
   inline ProgramPass* __REGISTER__(const std::string& name, ProgramPass* pass) {

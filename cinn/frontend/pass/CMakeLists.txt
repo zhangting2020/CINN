@@ -1,6 +1,6 @@
 core_gather_headers()
 
-gather_srcs(SRCS
+gather_srcs(cinnapi_src SRCS
     decomposer.cc
     )
 

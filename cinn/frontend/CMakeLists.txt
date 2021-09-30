@@ -6,8 +6,8 @@ gather_srcs(cinnapi_src SRCS
   interpreter.cc
   base_builder.cc
   net_builder.cc
-  cinn_builder.cc)
-  pass.cc)
+  cinn_builder.cc
+  program_pass.cc)
 
 if(NOT WITH_CUDA)
   cc_test(test_frontend_syntax

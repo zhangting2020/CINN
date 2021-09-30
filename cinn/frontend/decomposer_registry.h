@@ -54,7 +54,7 @@ class Decomposer {
     return *this;
   }
 
-  void Run(const Instruction& instr, const DecomposerContext& context) { kernel_(instr, context); }
+  void Run(const Instruction& instr, const DecomposerContext& context) const { kernel_(instr, context); }
 
   std::string name;
 
