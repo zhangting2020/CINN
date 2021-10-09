@@ -72,6 +72,7 @@ TEST(DecomposePass, basic) {
 
   auto graph = std::make_shared<hlir::framework::Graph>(prog, target);
   hlir::framework::ApplyPass(graph.get(), "InferShape");
+  hlir::framework::ApplyPass(graph.get(), "OpFusion");
   auto scope = BuildScope(target, graph);
   hlir::framework::GraphCompiler gc(target, scope, graph);
   auto runtime_program = gc.Build();
