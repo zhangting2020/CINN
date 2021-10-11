@@ -170,8 +170,7 @@ struct Program {
       : instrs_(std::move(instrs)), inputs_(std::move(inputs)) {}
 
   void SetInputs(const std::vector<Variable>& xs);
-  void CleanInstructions() { instrs_.clear(); }
-  std::vector<Instruction> GetInstructions() { return instrs_; }
+  std::vector<Variable> GetInputs() { return inputs_; }
 
   /**
    * create scalar with the specific value and type

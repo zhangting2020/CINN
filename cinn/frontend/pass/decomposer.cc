@@ -8,19 +8,22 @@ namespace pass {
 class DecomposerPass : public ProgramPass {
  public:
   void ApplyImpl(Program* prog, const common::Target& target) const {
-    auto instrs = prog->GetInstructions();
-    prog->CleanInstructions();
-    DecomposerContext context(prog);
-    for (int i = 0; i < instrs.size(); i++) {
-      auto instr      = instrs[i];
+    // step 1: set the inputs of the origin program to the new program
+    CinnBuilder builder("decomposer_builder");
+    builder.SetInputs(prog->GetInputs());
+
+    // step 2: use primitive instructions to build the new program
+    DecomposerContext context(&builder);
+    for (int i = 0; i < prog->size(); i++) {
+      auto instr      = (*prog)[i];
       auto decomposer = InstrDecomposerRegistry::Global()->Find(instr->op_type, target);
       if (decomposer) {
         decomposer->Run(instr, context);
       } else {
-        prog->AppendInstruction(instr);
+        builder.AppendInstruction(instr);
       }
     }
-    prog->Validate();
+    *prog = builder.Build();
   }
 };
 

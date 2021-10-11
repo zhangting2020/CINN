@@ -9,15 +9,15 @@ void relu(const Instruction& instr, const DecomposerContext& context) {
   CHECK_EQ(instr->inputs.size(), 1UL) << " 1 input tensor for " << instr->op_type;
   CHECK_EQ(instr->outputs.size(), 1UL) << "1 output tensor for " << instr->op_type;
   auto x       = instr->inputs[0];
-  auto outputs = instr->outputs;
-  auto program = context.program;
+  auto output  = instr->outputs[0];
+  auto builder = context.builder;
 
-  auto zero_var   = program->primitive_const_scalar<float>(0.f, common::UniqName("zero"));
-  auto bcast_zero = program->primitive_broadcast_to(zero_var, x->shape, {0});
-  auto out        = program->primitive_max(x, bcast_zero);
+  auto zero_var   = builder->ConstScalar<float>(0.f, common::UniqName("zero"));
+  auto bcast_zero = builder->BroadcastTo(zero_var, x->shape, {0});
+  auto out        = builder->Max(x, bcast_zero);
 
   // out needs to be mapped to origin out_id
-  out.set_id(outputs[0]->id);
+  out.set_id(output->id);
 }
 
 }  // namespace decomposer

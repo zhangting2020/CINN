@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "cinn/common/target.h"
+#include "cinn/frontend/cinn_builder.h"
 #include "cinn/frontend/syntax.h"
 
 namespace cinn {
@@ -14,9 +15,9 @@ class Decomposer;
 
 class DecomposerContext {
  public:
-  explicit DecomposerContext(Program* prog) : program(prog) {}
+  explicit DecomposerContext(CinnBuilder* cinn_builder) : builder(cinn_builder) {}
 
-  Program* program{nullptr};
+  CinnBuilder* builder{nullptr};
 };
 
 class InstrDecomposerRegistry : public Registry<Decomposer> {
