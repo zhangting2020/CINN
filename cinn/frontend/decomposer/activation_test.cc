@@ -1,3 +1,17 @@
+// Copyright (c) 2021 CINN Authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include <gtest/gtest.h>
 
 #include <random>
@@ -42,7 +56,7 @@ Target GetTarget() {
 #endif
 }
 
-void RunProgram(const NetBuilder& builder, const Target& target, const std::vector<std::string>& inputs) {
+void RunProgram(NetBuilder& builder, const Target& target, const std::vector<std::string>& inputs) {
   auto prog = builder.Build();
   ProgramPass::Apply(&prog, target, {"Decomposer"});
   auto graph = std::make_shared<hlir::framework::Graph>(prog, target);
@@ -78,20 +92,7 @@ TEST(Decomposer, relu_grad) {
 
   Target target                   = GetTarget();
   std::vector<std::string> inputs = {"Dout", "Out"};
-  // TODO(zhangting2020): Will enable after InferDtype for CompareOp be fixed.
-  // RunProgram(builder, target, inputs);
-}
-
-TEST(Decomposer, compare) {
-  NetBuilder builder("relu_grad");
-  auto dout = builder.CreateInput(Float(32), {20, 10});
-  auto out  = builder.CreateInput(Float(32), {20, 10});
-  auto dx   = builder.relu_grad(dout, out);
-
-  Target target                   = GetTarget();
-  std::vector<std::string> inputs = {"Dout", "Out"};
-  // TODO(zhangting2020): Will enable after InferDtype for CompareOp fixed.
-  // RunProgram(builder, target, inputs);
+  RunProgram(builder, target, inputs);
 }
 
 }  // namespace cinn::frontend
