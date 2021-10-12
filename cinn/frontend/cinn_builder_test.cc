@@ -29,6 +29,9 @@ Program CreateTestProgram() {
   CinnBuilder builder("cinn_builder");
   auto a = builder.CreateInput(Float(32), {M, N / 2}, "A");
   auto b = builder.CreateInput(Float(32), {M, N / 2}, "B");
+  auto c = builder.Compare(a, b, ComparisonKind::kGt);
+  auto d = builder.Select(c, a, b);
+  /*
   auto c = builder.Add(a, b);
   auto x = builder.Div(a, b);
   auto d = builder.Concat(c, x, 1);
@@ -39,6 +42,7 @@ Program CreateTestProgram() {
   auto i = builder.Max(e, h);
   auto j = builder.Min(e, h);
   auto k = builder.Mul(i, j);
+  */
 
   auto program = builder.Build();
   return program;
